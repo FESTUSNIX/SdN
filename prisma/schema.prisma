@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Unit {
+  id Int @id @default(autoincrement())
+  name String
+  logo String
+  majors Major[]
+}
+
+model Major {
+  id Int @id @default(autoincrement())
+  unit Unit @relation(fields: [unitId], references: [id])
+  unitId Int
+  name String
+  cost Int
+  qualifications MajorQualification[]
+}
+
+model MajorQualification {
+  id Int @id @default(autoincrement())
+  major Major @relation(fields: [majorId], references: [id])
+  qualification Qualification @relation(fields: [qualificationId], references: [id])
+  majorId Int
+  qualificationId Int
+}
+
+model Qualification {
+  id Int @id @default(autoincrement())
+  name  String @unique
+  type MajorType
+  majors MajorQualification[]
+}
+
+
+enum MajorType {
+  OGOLNE
+  ZAWODOWE
+  SPECJALISTYCZNE
+}

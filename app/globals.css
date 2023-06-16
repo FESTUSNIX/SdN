@@ -25,3 +25,35 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
+@layer components {
+	.wrapper {
+		max-width: calc(100vw - 4rem);
+		width: 100%;
+		margin: 0 auto;
+	}
+
+	@screen sm {
+		.wrapper {
+			max-width: calc(100vw - 6rem);
+		}
+	}
+	@screen md {
+		.wrapper {
+			max-width: calc(100vw - 8rem);
+		}
+	}
+
+	@screen xl {
+		.wrapper {
+			max-width: calc(100vw - 14rem);
+		}
+	}
+
+	@screen 2xl {
+		.wrapper {
+			max-width: 1280px;
+		}
+	}
+}
