@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,39 +8,111 @@ datasource db {
 }
 
 model Unit {
-  id Int @id @default(autoincrement())
-  name String
-  logo String
-  majors Major[]
+  id          Int      @id @default(autoincrement())
+  name        String
+  logo        String
+  isPublic    Boolean  @default(true)
+  nip         String?
+  regon       String?
+  /// uczelnia / placówka doskonalenia nauczycieli / inna
+  unitType    String   @default("uczelnia")
+  website     String?
+  address     UnitAddress?
+  majors      Major[]
+  updatedAt   DateTime?             @updatedAt
+
 }
 
 model Major {
-  id Int @id @default(autoincrement())
-  unit Unit @relation(fields: [unitId], references: [id])
-  unitId Int
-  name String
-  cost Int
-  qualifications MajorQualification[]
+  id                    Int                  @id @default(autoincrement())
+  name                  String
+  cost                  Int
+  canPayInInstallments  Boolean              @default(false)
+  /// Miejsce prowadzenia zajęć
+  address               String?
+  approvedOnlineStudy   Boolean              @default(true)
+  certificates          String[]
+  completionConditions  String?
+  daysOfWeek            DaysOfWeek[] 
+  description           String
+  durationInHours       Int
+  startDate             DateTime? @db.Date
+  endDate               DateTime? @db.Date
+  isOnline              Boolean              @default(false)
+  onlineDuration        Int?
+  formOfStudy           String             @default("zaoczne")
+  numberOfSemesters     Int
+  organisator           String
+  recruitmentConditions String?
+  /// Program studiów
+  syllabus              String?
+  updatedAt             DateTime             @updatedAt @default(now())
+  contact               ContactPerson?
+  unit                  Unit             @relation(fields: [unitId], references: [id])
+  unitId                Int
+  qualifications        MajorQualification[]
+}
+
+model ContactPerson {
+  id      Int    @id @default(autoincrement())
+  name    String
+  email   String
+  phone   String
+  majorId Int    @unique
+  major   Major  @relation(fields: [majorId], references: [id])
+}
+
+model UnitAddress {
+  id     Int    @id @default(autoincrement())
+  street String
+  postalCode String
+  cityId Int
+  unitId Int    @unique
+  city   City   @relation(fields: [cityId], references: [id])
+  unit   Unit   @relation(fields: [unitId], references: [id])
 }
 
 model MajorQualification {
-  id Int @id @default(autoincrement())
-  major Major @relation(fields: [majorId], references: [id])
-  qualification Qualification @relation(fields: [qualificationId], references: [id])
-  majorId Int
+  id              Int           @id @default(autoincrement())
+  majorId         Int
   qualificationId Int
+  major           Major         @relation(fields: [majorId], references: [id])
+  qualification   Qualification @relation(fields: [qualificationId], references: [id])
 }
 
 model Qualification {
-  id Int @id @default(autoincrement())
-  name  String @unique
-  type MajorType
+  id     Int                  @id @default(autoincrement())
+  name   String               @unique
+  type   MajorType
   majors MajorQualification[]
 }
 
+model Voivodeship {
+  id     Int    @id @default(autoincrement())
+  name   String
+  cities City[]
+}
+
+model City {
+  id            Int         @id @default(autoincrement())
+  name          String
+  voivodeshipId Int
+  unitAddress       UnitAddress[]
+  voivodeship   Voivodeship @relation(fields: [voivodeshipId], references: [id])
+}
 
 enum MajorType {
   OGOLNE
   ZAWODOWE
   SPECJALISTYCZNE
+}
+
+enum DaysOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
 }
