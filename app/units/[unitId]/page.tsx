@@ -1,6 +1,7 @@
 import { Major, Unit } from '@prisma/client'
 import React from 'react'
 import Majors from './components/Majors'
+import { H1 } from '@/app/components/elements/Typography'
 
 type Props = { params: { unitId: number } }
 
@@ -18,7 +19,7 @@ const UnitPage = async ({ params }: Props) => {
 
 	return (
 		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
-			<h1 className='text-4xl font-black text-emerald-500 mb-24'>{unit.name}</h1>
+			<H1 className='mb-24'>{unit.name}</H1>
 
 			<Majors majors={unit.majors} />
 		</main>
