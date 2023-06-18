@@ -8,48 +8,48 @@ datasource db {
 }
 
 model Unit {
-  id          Int      @id @default(autoincrement())
-  name        String
-  logo        String
-  isPublic    Boolean  @default(true)
-  nip         String?
-  regon       String?
+  id        Int          @id @default(autoincrement())
+  name      String
+  logo      String
+  isPublic  Boolean      @default(true)
+  nip       String?
+  regon     String?
   /// uczelnia / placówka doskonalenia nauczycieli / inna
-  unitType    String   @default("uczelnia")
-  website     String?
-  address     UnitAddress?
-  majors      Major[]
-  updatedAt   DateTime?             @updatedAt
-
+  unitType  String       @default("uczelnia")
+  website   String?
+  updatedAt DateTime?    @updatedAt
+  majors    Major[]
+  address   UnitAddress?
 }
 
 model Major {
   id                    Int                  @id @default(autoincrement())
   name                  String
   cost                  Int
-  canPayInInstallments  Boolean              @default(false)
+  unitId                Int
   /// Miejsce prowadzenia zajęć
   address               String?
-  approvedOnlineStudy   Boolean              @default(true)
-  certificates          String[]
+  isRegulated           Boolean              @default(true)
+  certificates          String?
   completionConditions  String?
-  daysOfWeek            DaysOfWeek[] 
+  daysOfWeek            DaysOfWeek[]
   description           String
-  durationInHours       Int
-  startDate             DateTime? @db.Date
-  endDate               DateTime? @db.Date
-  isOnline              Boolean              @default(false)
-  onlineDuration        Int?
-  formOfStudy           String             @default("zaoczne")
+  formOfStudy           String               @default("zaoczne")
   numberOfSemesters     Int
   organisator           String
   recruitmentConditions String?
+  majorLevel            MajorLevel          @default(PODYPLOMOWE)  
   /// Program studiów
   syllabus              String?
-  updatedAt             DateTime             @updatedAt @default(now())
+  updatedAt             DateTime             @default(now()) @updatedAt
+  canPayInInstallments  Boolean              @default(false)
+  durationInHours       Int
+  isOnline              Boolean              @default(false)
+  onlineDuration        Int?
+  endDate               DateTime?            @db.Date
+  startDate             DateTime?            @db.Date
   contact               ContactPerson?
-  unit                  Unit             @relation(fields: [unitId], references: [id])
-  unitId                Int
+  unit                  Unit                 @relation(fields: [unitId], references: [id], onUpdate: NoAction)
   qualifications        MajorQualification[]
 }
 
@@ -63,13 +63,13 @@ model ContactPerson {
 }
 
 model UnitAddress {
-  id     Int    @id @default(autoincrement())
-  street String
+  id         Int    @id @default(autoincrement())
+  street     String
   postalCode String
-  cityId Int
-  unitId Int    @unique
-  city   City   @relation(fields: [cityId], references: [id])
-  unit   Unit   @relation(fields: [unitId], references: [id])
+  cityId     Int
+  unitId     Int    @unique
+  city       City   @relation(fields: [cityId], references: [id])
+  unit       Unit   @relation(fields: [unitId], references: [id])
 }
 
 model MajorQualification {
@@ -94,17 +94,18 @@ model Voivodeship {
 }
 
 model City {
-  id            Int         @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   name          String
   voivodeshipId Int
-  unitAddress       UnitAddress[]
-  voivodeship   Voivodeship @relation(fields: [voivodeshipId], references: [id])
+  voivodeship   Voivodeship   @relation(fields: [voivodeshipId], references: [id])
+  unitAddress   UnitAddress[]
 }
 
 enum MajorType {
   OGOLNE
   ZAWODOWE
   SPECJALISTYCZNE
+  INNE
 }
 
 enum DaysOfWeek {
@@ -115,4 +116,12 @@ enum DaysOfWeek {
   FRIDAY
   SATURDAY
   SUNDAY
+}
+
+
+enum MajorLevel {
+  PIERWSZEGO_STOPNIA
+  DRUGIEGO_STOPNIA
+  JEDNOLITE_MAGISTERSKIE
+  PODYPLOMOWE
 }
