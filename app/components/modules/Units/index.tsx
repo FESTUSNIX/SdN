@@ -1,9 +1,8 @@
 import React from 'react'
 import { Major, Unit } from '@prisma/client'
-import Image from 'next/image'
-import { getUnits } from '@/lib/prisma/getUnits'
-import Majors from '../Majors'
 import Link from 'next/link'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/app/components/elements/Card'
+import { Button } from '../../elements/Button'
 
 type Props = {}
 
@@ -21,14 +20,22 @@ const Units = async (props: Props) => {
 		<section className='py-24 w-full'>
 			<div className='flex flex-col gap-4'>
 				{units.map(unit => (
-					<Link
-						href={`/unit/${unit.id}`}
-						key={unit.id}
-						className='p-8 w-full rounded-md bg-emerald-800/20 border border-emerald-700/20'>
-						<h2 className='text-xl font-semibold'>{unit.name}</h2>
-						<p className='text-neutral-500 text-sm mb-8'>ID - {unit.id}</p>
-
-						<Majors majors={unit.majors} />
+					<Link href={`/units/${unit.id}`} key={unit.id} className='grow'>
+						<Card className='h-full flex flex-col'>
+							<CardHeader>
+								<CardTitle>{unit.name}</CardTitle>
+								<CardDescription className='capitalize'>{unit.unitType}</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<p>Kierunki</p>
+								{unit.majors.splice(0, 3).map(major => (
+									<div key={major.id}>{major.name}</div>
+								))}
+							</CardContent>
+							<CardFooter className='mt-auto'>
+								<Button variant={'secondary'}>View</Button>
+							</CardFooter>
+						</Card>
 					</Link>
 				))}
 			</div>
