@@ -10,7 +10,8 @@ datasource db {
 model Unit {
   id        Int          @id @default(autoincrement())
   name      String
-  logo      String
+  notes     String
+  logo      String?
   isPublic  Boolean      @default(true)
   nip       String?
   regon     String?
@@ -85,6 +86,7 @@ model Qualification {
   name   String               @unique
   type   MajorType
   majors MajorQualification[]
+  keywords String[]
 }
 
 model Voivodeship {
