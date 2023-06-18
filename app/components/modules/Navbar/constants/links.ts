@@ -4,11 +4,7 @@ export const links = [
 		path: '/units'
 	},
 	{
-		label: 'About',
-		path: '/about'
-	},
-	{
-		label: 'Contact',
-		path: '/contact'
+		label: 'Admin',
+		path: '/admin'
 	}
 ]
