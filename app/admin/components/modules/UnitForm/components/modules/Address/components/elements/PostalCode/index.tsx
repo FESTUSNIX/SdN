@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/elements/Form'
-import { form } from '@/app/admin/components/modules/UnitForm/types/FormType'
+import { form } from '@/app/admin/components/modules/UnitForm/FormDefinition'
 import { Input } from '@/app/components/elements/Input'
 import ReactInputMask from 'react-input-mask'
 

@@ -1,26 +1,10 @@
 import { FormControl, FormField, FormItem, FormLabel } from '@/app/components/elements/Form'
 import { Switch } from '@/app/components/elements/Switch'
 import React from 'react'
-import { UseFormReturn } from 'react-hook-form'
+import { form } from '@/app/admin/components/modules/UnitForm/FormDefinition'
 
 type Props = {
-	form: UseFormReturn<
-		{
-			name: string
-			logo: string
-			isPublic: boolean
-			unitType: 'uczelnia' | 'placówka doskonalenia nauczycieli' | 'inna'
-			otherUnitType: string
-			website: string
-			street: string
-			postalCode: string
-			cityId: number
-			nip?: string | undefined
-			regon?: string | undefined
-		},
-		any,
-		undefined
-	>
+	form: form
 }
 
 const IsPublic = ({ form }: Props) => {

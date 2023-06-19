@@ -1,9 +1,8 @@
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/elements/Card'
 import Street from './components/elements/Street'
-import { form } from '../../../types/FormType'
+import { form } from '@/app/admin/components/modules/UnitForm/FormDefinition'
 import PostalCode from './components/elements/PostalCode'
-import City from './components/elements/City'
 
 type Props = {
 	form: form
@@ -19,8 +18,6 @@ const Address = ({ form }: Props) => {
 				<Street form={form} />
 
 				<PostalCode form={form} />
-
-				<City form={form} />
 			</CardContent>
 		</Card>
 	)
