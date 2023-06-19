@@ -7,30 +7,19 @@ import {
 	FormLabel,
 	FormMessage
 } from '@/app/components/elements/Form'
-import { UseFormReturn } from 'react-hook-form'
 import { Input } from '@/app/components/elements/Input'
+import { form } from '@/app/admin/components/modules/UnitForm/FormDefinition'
 
 type Props = {
-	form: UseFormReturn<
-		{
-			name: string
-			logo: string
-			isPublic: boolean
-			unitType: 'uczelnia' | 'placówka doskonalenia nauczycieli' | 'inna'
-			otherUnitType: string
-			website: string
-			street: string
-			postalCode: string
-			cityId: number
-			nip?: string | undefined
-			regon?: string | undefined
-		},
-		any,
-		undefined
-	>
+	form: form
 }
 
 const Logo = ({ form }: Props) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (!e?.target?.files?.[0]) return
+		form.setValue('logo', e?.target?.files?.[0])
+	}
+
 	return (
 		<FormField
 			control={form.control}
@@ -39,7 +28,15 @@ const Logo = ({ form }: Props) => {
 				<FormItem>
 					<FormLabel>Logo</FormLabel>
 					<FormControl>
-						<Input placeholder='https://my-logo/logo.png' {...field} />
+						<Input
+							placeholder='https://my-logo/logo.png'
+							type='file'
+							name={field.name}
+							ref={field.ref}
+							onBlur={field.onBlur}
+							value={undefined}
+							onChange={handleChange}
+						/>
 					</FormControl>
 					<FormMessage />
 				</FormItem>

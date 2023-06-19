@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
 import { Button } from '@/app/components/elements/Button'
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
@@ -14,57 +13,58 @@ import Website from './components/elements/Website'
 import Address from './components/modules/Address'
 import Regon from './components/elements/Regon'
 import { Form } from '@/app/components/elements/Form'
-
-const formSchema = z.object({
-	name: z.string().min(2, {
-		message: 'Username must be at least 2 characters.'
-	}),
-	logo: z.string().url(),
-	isPublic: z.boolean().default(true),
-	nip: z.string().optional(),
-	regon: z.string().optional(),
-	unitType: z.enum(['uczelnia', 'placówka doskonalenia nauczycieli', 'inna']),
-	otherUnitType: z.string(),
-	website: z.string().url(),
-	street: z
-		.string({
-			required_error: 'Please enter a street address.'
-		})
-		.min(2, { message: 'Street address must be at least 2 characters.' }),
-	postalCode: z.string().regex(/^\d{2}-\d{3}$/, {
-		message: 'Postal code must be in format 00-000.'
-	}),
-	cityId: z
-		.number({
-			required_error: 'Please select a city'
-		})
-		.positive({
-			message: 'Please select a city'
-		})
-})
+import Notes from './components/elements/Notes'
+import { addUnit } from '@/lib/prisma/addUnit'
+import City from './components/elements/City'
+import { FormValues, defaultValues, formSchema } from './FormDefinition'
+import Email from './components/elements/Email'
+import { Separator } from '@/app/components/elements/Separator/separator'
+import { Muted } from '@/app/components/elements/Typography'
+import { v4 as uuidv4 } from 'uuid'
+import { supabase } from '@/lib/supabase/supabase'
 
 const UnitForm = () => {
-	const form = useForm<z.infer<typeof formSchema>>({
+	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
-		defaultValues: {
-			name: '',
-			logo: '',
-			isPublic: true,
-			nip: '',
-			regon: '',
-			unitType: 'uczelnia',
-			otherUnitType: '',
-			website: '',
-			street: '',
-			postalCode: '',
-			cityId: 0
-		}
+		defaultValues
 	})
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		console.log(values)
+	const updateImageToSupabase = async (values: FormValues) => {
+		const filename = `${uuidv4()}-${values.logo.name}`
+
+		const { data, error } = await supabase.storage.from('unit-logos').upload(`${filename}`, values.logo, {
+			cacheControl: '3600',
+			upsert: false
+		})
+
+		if (error) throw new Error(error.message)
+
+		const filepath = data?.path
+
+		return filepath
+	}
+
+	async function onSubmit(values: FormValues) {
+		const filepath = await updateImageToSupabase(values)
+
+		const newUnit = {
+			name: values.name,
+			logo: filepath,
+			isPublic: values.isPublic,
+			email: values.email,
+			nip: values.nip ?? null,
+			cityId: values.cityId,
+			regon: values.regon ?? null,
+			unitType: values.unitType !== 'inna' ? values.unitType : values.otherUnitType!,
+			website: values.website,
+			notes: values.notes ?? null,
+			address: {
+				street: values.street,
+				postalCode: values.postalCode,
+				cityId: values.cityId
+			}
+		}
+		await addUnit(newUnit)
 	}
 
 	useEffect(() => {
@@ -81,19 +81,30 @@ const UnitForm = () => {
 			<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
 				<Name form={form} />
 
+				<Email form={form} />
+
+				<UnitType form={form} />
+
+				<City form={form} />
+
+				<Website form={form} />
+
 				<Logo form={form} />
 
 				<IsPublic form={form} />
+
+				<div>
+					<Muted>Optional</Muted>
+					<Separator className='my-2' />
+				</div>
 
 				<NIP form={form} />
 
 				<Regon form={form} />
 
-				<UnitType form={form} />
-
-				<Website form={form} />
-
 				<Address form={form} />
+
+				<Notes form={form} />
 
 				<Button type='submit'>Submit</Button>
 			</form>
