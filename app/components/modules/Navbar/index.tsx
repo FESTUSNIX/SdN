@@ -6,7 +6,7 @@ import { Button } from '../../elements/Button'
 
 const Navbar = () => {
 	return (
-		<nav className='bg-background px-12 py-4 border-b border-border sticky top-0 left-0 w-full'>
+		<nav className='bg-background px-12 py-4 border-b border-border sticky top-0 left-0 w-full z-50'>
 			<div className='wrapper flex items-center justify-between'>
 				<div className='text-xl font-black text-accent-foreground'>
 					<Link href={'/'}>SdN</Link>
