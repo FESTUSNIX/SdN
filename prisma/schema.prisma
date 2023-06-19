@@ -10,14 +10,16 @@ datasource db {
 model Unit {
   id        Int          @id @default(autoincrement())
   name      String
-  notes     String
-  logo      String?
+  email     String
   isPublic  Boolean      @default(true)
+  notes     String?
+  website   String?
+  unitType  String       @default("uczelnia")
+  cityId    Int
+  city      City         @relation(fields: [cityId], references: [id])
+  logo      String?
   nip       String?
   regon     String?
-  /// uczelnia / placówka doskonalenia nauczycieli / inna
-  unitType  String       @default("uczelnia")
-  website   String?
   updatedAt DateTime?    @updatedAt
   majors    Major[]
   address   UnitAddress?
@@ -28,7 +30,6 @@ model Major {
   name                  String
   cost                  Int
   unitId                Int
-  /// Miejsce prowadzenia zajęć
   address               String?
   isRegulated           Boolean              @default(true)
   certificates          String?
@@ -40,7 +41,6 @@ model Major {
   organisator           String
   recruitmentConditions String?
   majorLevel            MajorLevel          @default(PODYPLOMOWE)  
-  /// Program studiów
   syllabus              String?
   updatedAt             DateTime             @default(now()) @updatedAt
   canPayInInstallments  Boolean              @default(false)
@@ -101,6 +101,7 @@ model City {
   voivodeshipId Int
   voivodeship   Voivodeship   @relation(fields: [voivodeshipId], references: [id])
   unitAddress   UnitAddress[]
+  units         Unit[]
 }
 
 enum MajorType {
