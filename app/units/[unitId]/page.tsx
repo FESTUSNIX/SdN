@@ -9,7 +9,7 @@ import { getBaseUrl } from '@/lib/utils/getBaseUrl'
 type Props = { params: { unitId: number } }
 
 const UnitPage = async ({ params }: Props) => {
-	const res = await fetch(`${getBaseUrl()}/api/getUnit?id=${params.unitId}`)
+	const res = await fetch(`${getBaseUrl() ?? ''}/api/getUnit?id=${params.unitId}`)
 
 	if (!res.ok) {
 		console.log(res)

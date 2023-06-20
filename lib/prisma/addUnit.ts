@@ -4,7 +4,7 @@ import { getBaseUrl } from '../utils/getBaseUrl'
 export async function addUnit(
 	unitData: Omit<Unit, 'updatedAt' | 'id'> & { address: Omit<UnitAddress, 'id' | 'unitId'> }
 ) {
-	const res = await fetch(`${getBaseUrl()}/api/addUnit`, {
+	const res = await fetch(`${getBaseUrl() ?? ''}/api/addUnit`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

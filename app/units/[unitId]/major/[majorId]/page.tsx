@@ -6,7 +6,7 @@ import React from 'react'
 type Props = { params: { majorId: number } }
 
 const getMajor = async (id: number) => {
-	const res = await fetch(`${getBaseUrl()}/api/getMajor?id=${id}`)
+	const res = await fetch(`${getBaseUrl() ?? ''}/api/getMajor?id=${id}`)
 
 	if (!res.ok) {
 		console.log(res)
