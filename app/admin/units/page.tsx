@@ -2,19 +2,12 @@ import { H1 } from '@/app/components/elements/Typography'
 import UnitForm from '../components/modules/UnitForm'
 import { Sheet, SheetTrigger } from '@/app/components/elements/Sheet'
 import { Button } from '@/app/components/elements/Button'
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow
-} from '@/app/components/elements/Table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/elements/Table'
 import { getUnits } from '@/lib/prisma/getUnits'
 import Link from 'next/link'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/elements/Tooltip'
 
-export default async function UnitPage() {
+export default async function UnitsPage() {
 	const units = await getUnits()
 
 	return (
@@ -58,7 +51,7 @@ export default async function UnitPage() {
 											<TooltipTrigger asChild>
 												{unit.website ? (
 													<Button variant='secondary' asChild>
-														<Link href={unit.website} target='_blank' rel='noopener' >
+														<Link href={unit.website} target='_blank' rel='noopener'>
 															URL
 														</Link>
 													</Button>

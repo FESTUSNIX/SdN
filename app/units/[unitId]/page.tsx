@@ -5,8 +5,17 @@ import { H1 } from '@/app/components/elements/Typography'
 import Image from 'next/image'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { getBaseUrl } from '@/lib/utils/getBaseUrl'
+import { getUnits } from '@/lib/prisma/getUnits'
 
 type Props = { params: { unitId: number } }
+
+export async function generateStaticParams() {
+	const units = await getUnits()
+
+	return units.map(unit => ({
+		unitId: unit.id
+	}))
+}
 
 const UnitPage = async ({ params }: Props) => {
 	const res = await fetch(`${getBaseUrl() ?? ''}/api/getUnit?id=${params.unitId}`)
