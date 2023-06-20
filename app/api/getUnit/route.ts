@@ -10,11 +10,25 @@ export async function GET(request: NextRequest) {
 				id: Number(id) ?? undefined
 			},
 			include: {
+				city: {
+					select: {
+						id: true,
+						name: true,
+						voivodeship: true
+					}
+				},
 				majors: {
 					select: {
 						id: true,
-						unitId: true,
 						name: true
+					}
+				},
+				address: {
+					select: {
+						id: true,
+						street: true,
+						city: true,
+						postalCode: true
 					}
 				}
 			}

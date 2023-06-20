@@ -11,6 +11,12 @@ export async function GET(request: NextRequest) {
 						unitId: true,
 						name: true
 					}
+				},
+				city: {
+					select: {
+						id: true,
+						name: true
+					}
 				}
 			}
 		})
