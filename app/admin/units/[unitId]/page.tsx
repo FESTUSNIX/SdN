@@ -10,22 +10,26 @@ import { getBaseUrl } from '@/lib/utils/getBaseUrl'
 type Props = { params: { unitId: number } }
 
 export async function generateStaticParams() {
-	const units = await getUnits()
-
-	return units.map(unit => ({
-		unitId: unit.id
-	}))
-}
-
-const UnitPage = async ({ params }: Props) => {
-	const res = await fetch(`${getBaseUrl() ?? ''}/api/getUnit?id=${params.unitId}`)
+	const res = await fetch(`${getBaseUrl() ?? ''}/api/getUnits`, {
+		next: {
+			tags: ['units']
+		}
+	})
 
 	if (!res.ok) {
 		console.log(res)
 		throw new Error('Failed to fetch')
 	}
 
-	const unit: Unit & { majors: Major[] } = await res.json()
+	const data: (Unit & { majors: Major[] } & { city: { id: number; name: string } })[] = await res.json()
+
+	return data.map(unit => ({
+		unitId: unit.id
+	}))
+}
+
+const UnitPage = async ({ params }: Props) => {
+	const unit = await getUnit(params.unitId)
 
 	return (
 		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
