@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { getUnit } from '@/lib/prisma/getUnit'
 import { getUnits } from '@/lib/prisma/getUnits'
+import { getBaseUrl } from '@/lib/utils/getBaseUrl'
 
 type Props = { params: { unitId: number } }
 
@@ -17,7 +18,14 @@ export async function generateStaticParams() {
 }
 
 const UnitPage = async ({ params }: Props) => {
-	const unit = await getUnit(params.unitId)
+	const res = await fetch(`${getBaseUrl() ?? ''}/api/getUnit?id=${params.unitId}`)
+
+	if (!res.ok) {
+		console.log(res)
+		throw new Error('Failed to fetch')
+	}
+
+	const unit: Unit & { majors: Major[] } = await res.json()
 
 	return (
 		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
