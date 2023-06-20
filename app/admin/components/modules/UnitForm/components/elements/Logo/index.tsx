@@ -38,6 +38,7 @@ const Logo = ({ form }: Props) => {
 							onChange={handleChange}
 						/>
 					</FormControl>
+					<FormDescription>Max 6MB</FormDescription>
 					<FormMessage />
 				</FormItem>
 			)}
