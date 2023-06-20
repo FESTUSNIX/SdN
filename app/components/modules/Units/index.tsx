@@ -7,7 +7,7 @@ import { Button } from '../../elements/Button'
 type Props = {}
 
 const Units = async (props: Props) => {
-	const res = await fetch(`${process.env.BASE_URL}/api/getUnits`)
+	const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getUnits`)
 
 	if (!res.ok) {
 		console.log(res)

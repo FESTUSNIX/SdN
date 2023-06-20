@@ -1,7 +1,7 @@
 import { Major, Unit } from '@prisma/client'
 
 export async function getUnit(id: number) {
-	const res = await fetch(`${process.env.BASE_URL ?? ''}/api/getUnit?id=${id}`)
+	const res = await fetch(`${process.env.NEXT_PUBLIC_URL ?? ''}/api/getUnit?id=${id}`)
 
 	if (!res.ok) {
 		console.log(res)

@@ -3,7 +3,7 @@ import { Unit, UnitAddress } from '@prisma/client'
 export async function addUnit(
 	unitData: Omit<Unit, 'updatedAt' | 'id'> & { address: Omit<UnitAddress, 'id' | 'unitId'> }
 ) {
-	const res = await fetch(`${process.env.BASE_URL ?? ''}/api/addUnit`, {
+	const res = await fetch(`${process.env.NEXT_PUBLIC_URL ?? ''}/api/addUnit`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
