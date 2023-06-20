@@ -4,12 +4,16 @@ import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/app/components/elements/Card'
 import { Button } from '../../elements/Button'
 import { getUnits } from '@/lib/prisma/getUnits'
+import { getCities } from '@/lib/prisma/getCities'
+import { getBaseUrl } from '@/lib/utils/getBaseUrl'
+import prisma from '@/prisma/client'
+import axios from 'axios'
 
-type Props = {}
+const Units = async () => {
+	const res = await fetch(`${getBaseUrl()}/api/getUnits`)
 
-const Units = async (props: Props) => {
-	const units = await getUnits()
-
+	const units: (Unit & { majors: Major[] } & { city: { id: number; name: string } })[] = await res.json()
+	console.log(units)
 	return (
 		<section className='py-24 w-full'>
 			<div className='flex flex-col gap-4'>

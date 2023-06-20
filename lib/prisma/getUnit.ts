@@ -1,4 +1,4 @@
-import { Major, Unit } from '@prisma/client'
+import { City, Major, Unit, Voivodeship } from '@prisma/client'
 import { getBaseUrl } from '../utils/getBaseUrl'
 
 export async function getUnit(id: number) {
@@ -11,25 +11,20 @@ export async function getUnit(id: number) {
 
 	const unit: Unit & {
 		city: {
-			select: {
-				id: true
-				name: true
-				voivodeship: true
-			}
+			id: number
+			name: string
+			voivodeship: Voivodeship
 		}
 		majors: {
-			select: {
-				id: true
-				name: true
-			}
-		}
+			id: number
+			name: string
+			unitId: number
+		}[]
 		address: {
-			select: {
-				id: true
-				street: true
-				city: true
-				postalCode: true
-			}
+			id: number
+			street: string
+			city: City
+			postalCode: string
 		}
 	} = await res.json()
 

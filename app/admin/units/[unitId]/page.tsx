@@ -9,26 +9,26 @@ import { getBaseUrl } from '@/lib/utils/getBaseUrl'
 
 type Props = { params: { unitId: number } }
 
-export async function generateStaticParams() {
-	const res = await fetch(`${getBaseUrl() ?? ''}/api/getUnits`, {
-		next: {
-			tags: ['units']
-		}
-	})
+// export async function generateStaticParams() {
+// 	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/getUnits`, {
+// 		next: {
+// 			tags: ['units']
+// 		}
+// 	})
 
-	if (!res.ok) {
-		console.log(res)
-		throw new Error('Failed to fetch')
-	}
+// 	if (!res.ok) {
+// 		console.log(res)
+// 		throw new Error('Failed to fetch')
+// 	}
 
-	const data: (Unit & { majors: Major[] } & { city: { id: number; name: string } })[] = await res.json()
+// 	const data: (Unit & { majors: Major[] } & { city: { id: number; name: string } })[] = await res.json()
 
-	return data.map(unit => ({
-		unitId: unit.id
-	}))
-}
+// 	return data.map(unit => ({
+// 		unitId: unit.id.toString()
+// 	}))
+// }
 
-const UnitPage = async ({ params }: Props) => {
+const AdminUnitPage = async ({ params }: Props) => {
 	const unit = await getUnit(params.unitId)
 
 	return (
@@ -44,4 +44,4 @@ const UnitPage = async ({ params }: Props) => {
 	)
 }
 
-export default UnitPage
+export default AdminUnitPage

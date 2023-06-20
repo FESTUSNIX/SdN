@@ -6,26 +6,31 @@ import Image from 'next/image'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { getBaseUrl } from '@/lib/utils/getBaseUrl'
 import { getUnits } from '@/lib/prisma/getUnits'
+import { getUnit } from '@/lib/prisma/getUnit'
 
 type Props = { params: { unitId: number } }
 
-export async function generateStaticParams() {
-	const units = await getUnits()
+// export async function generateStaticParams() {
+// 	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/getUnits`, {
+// 		next: {
+// 			tags: ['units']
+// 		}
+// 	})
 
-	return units.map(unit => ({
-		unitId: unit.id
-	}))
-}
+// 	if (!res.ok) {
+// 		console.log(res)
+// 		throw new Error('Failed to fetch')
+// 	}
 
-const UnitPage = async ({ params }: Props) => {
-	const res = await fetch(`${getBaseUrl() ?? ''}/api/getUnit?id=${params.unitId}`)
+// 	const data: (Unit & { majors: Major[] } & { city: { id: number; name: string } })[] = await res.json()
 
-	if (!res.ok) {
-		console.log(res)
-		throw new Error('Failed to fetch')
-	}
+// 	return data.map(unit => ({
+// 		unitId: unit.id.toString()
+// 	}))
+// }
 
-	const unit: Unit & { majors: Major[] } = await res.json()
+export default async function UnitPage({ params }: Props) {
+	const unit = await getUnit(params.unitId)
 
 	return (
 		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
@@ -45,5 +50,3 @@ const UnitPage = async ({ params }: Props) => {
 		</main>
 	)
 }
-
-export default UnitPage

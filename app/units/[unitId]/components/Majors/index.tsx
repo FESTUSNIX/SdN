@@ -4,7 +4,11 @@ import Link from 'next/link'
 import React from 'react'
 
 type Props = {
-	majors: Major[]
+	majors: {
+		id: number
+		name: string
+		unitId: number
+	}[]
 }
 
 const Majors = ({ majors }: Props) => {

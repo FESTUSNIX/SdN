@@ -17,7 +17,7 @@ const UnitType = ({ form }: Props) => {
 				render={({ field }) => (
 					<FormItem>
 						<FormLabel>Unit Type</FormLabel>
-						<Select onValueChange={field.onChange} defaultValue={field.value}>
+						<Select onValueChange={field.onChange as (value: string) => void} defaultValue={field.value}>
 							<FormControl>
 								<SelectTrigger>
 									<SelectValue placeholder='Select type of unit' />
