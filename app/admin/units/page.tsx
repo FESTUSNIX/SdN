@@ -19,7 +19,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/
 
 export default async function UnitPage() {
 	const units = await getUnits()
-	console.log(units)
+
 	return (
 		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
 			<H1 className='mb-24'>Units panel</H1>

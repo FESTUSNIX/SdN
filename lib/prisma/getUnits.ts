@@ -1,4 +1,4 @@
-import { City, Major, Unit } from '@prisma/client'
+import {  Major, Unit } from '@prisma/client'
 
 export async function getUnits() {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_URL ?? ''}/api/getUnits`, {

@@ -7,7 +7,7 @@ import { Button } from '@/app/components/elements/Button'
 type Props = { params: { unitId: number } }
 
 const getUnits = async () => {
-	const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getUnits`)
+	const res = await fetch(`${process.env.NEXT_PUBLIC_URL ?? ''}/api/getUnits`)
 
 	if (!res.ok) {
 		console.log(res)

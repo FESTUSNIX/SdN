@@ -8,7 +8,7 @@ import { urlFor } from '@/lib/supabase/getUrlFor'
 type Props = { params: { unitId: number } }
 
 const UnitPage = async ({ params }: Props) => {
-	const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getUnit?id=${params.unitId}`)
+	const res = await fetch(`${process.env.NEXT_PUBLIC_URL ?? ''}/api/getUnit?id=${params.unitId}`)
 
 	if (!res.ok) {
 		console.log(res)
@@ -31,7 +31,7 @@ const UnitPage = async ({ params }: Props) => {
 			<p>unitType - {unit.unitType}</p>
 			<p>website - {unit.website}</p>
 
-			<Majors majors={unit.majors} />
+			{unit.majors && <Majors majors={unit.majors} />}
 		</main>
 	)
 }

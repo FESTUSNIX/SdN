@@ -77,7 +77,6 @@ const UnitForm = () => {
 			const res = await addUnit(newUnit)
 			const revalidate = await fetch('/api/revalidate?tag=units')
 
-			console.log(revalidate)
 			toast.success('Added a new Unit', {
 				id: submitToast
 			})

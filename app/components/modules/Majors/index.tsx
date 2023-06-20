@@ -6,7 +6,6 @@ type Props = {
 }
 
 const Majors = ({ majors }: Props) => {
-	console.log(majors)
 
 	return (
 		<div className=''>
