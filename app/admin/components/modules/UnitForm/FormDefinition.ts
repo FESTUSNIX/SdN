@@ -1,7 +1,7 @@
 import { UseFormReturn } from 'react-hook-form'
 import * as z from 'zod'
 
-const MAX_FILE_SIZE = 500000
+const MAX_FILE_SIZE = 6291456
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
 
 export const formSchema = z
@@ -12,7 +12,7 @@ export const formSchema = z
 		logo: z
 			.custom<File>()
 			.refine(file => file !== undefined, 'Image is required.')
-			.refine(file => file?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+			.refine(file => file?.size <= MAX_FILE_SIZE, `Max file size is 6MB.`)
 			.refine(file => ACCEPTED_IMAGE_TYPES.includes(file?.type), '.jpg, .jpeg, .png and .webp files are accepted.'),
 
 		email: z.string().email({
@@ -49,19 +49,19 @@ export const formSchema = z
 export type FormValues = z.infer<typeof formSchema>
 
 export const defaultValues: FormValues = {
-	name: 'dfsdfsdfs',
+	name: '',
 	logo: undefined as any,
-	email: 'dfsdfsdfs@fgsdf.pl',
+	email: '',
 	isPublic: true,
-	nip: '1234567890',
-	regon: '123456789',
+	nip: '',
+	regon: '',
 	unitType: 'uczelnia',
 	otherUnitType: '',
-	website: 'https://dfsdfsdfs.pl',
-	street: 'dfsdfsdfs',
-	postalCode: '12-123',
+	website: '',
+	street: '',
+	postalCode: '',
 	cityId: 0,
-	notes: 'dfsdfsdfs'
+	notes: ''
 }
 
 export type form = UseFormReturn<FormValues, any, undefined>
