@@ -13,7 +13,7 @@ model Unit {
   email     String
   isPublic  Boolean      @default(true)
   notes     String?
-  website   String?
+  website   String
   unitType  String       @default("uczelnia")
   cityId    Int
   city      City         @relation(fields: [cityId], references: [id])
@@ -70,7 +70,7 @@ model UnitAddress {
   cityId     Int
   unitId     Int    @unique
   city       City   @relation(fields: [cityId], references: [id])
-  unit       Unit   @relation(fields: [unitId], references: [id])
+  unit       Unit   @relation(fields: [unitId], references: [id], onDelete: Cascade)
 }
 
 model MajorQualification {
