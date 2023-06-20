@@ -1,25 +1,10 @@
-import { Major, Unit } from '@prisma/client'
 import Link from 'next/link'
 import React from 'react'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/app/components/elements/Card'
 import { Button } from '@/app/components/elements/Button'
+import { getUnits } from '@/lib/prisma/getUnits'
 
-type Props = { params: { unitId: number } }
-
-const getUnits = async () => {
-	const res = await fetch(`${process.env.NEXT_PUBLIC_URL ?? ''}/api/getUnits`)
-
-	if (!res.ok) {
-		console.log(res)
-		throw new Error('Failed to fetch')
-	}
-
-	const units: (Unit & { majors: Major[] })[] = await res.json()
-
-	return units
-}
-
-const UnitPage = async ({ params }: Props) => {
+const UnitPage = async () => {
 	const units = await getUnits()
 
 	return (

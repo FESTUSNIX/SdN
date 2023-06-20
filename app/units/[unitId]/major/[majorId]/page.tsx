@@ -1,11 +1,12 @@
 import { H1 } from '@/app/components/elements/Typography'
+import { getBaseUrl } from '@/lib/utils/getBaseUrl'
 import { Major, Qualification } from '@prisma/client'
 import React from 'react'
 
 type Props = { params: { majorId: number } }
 
 const getMajor = async (id: number) => {
-	const res = await fetch(`${process.env.NEXT_PUBLIC_URL ?? ''}/api/getMajor?id=${id}`)
+	const res = await fetch(`${getBaseUrl()}/api/getMajor?id=${id}`)
 
 	if (!res.ok) {
 		console.log(res)

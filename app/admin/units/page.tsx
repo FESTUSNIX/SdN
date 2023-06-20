@@ -1,19 +1,16 @@
-import { H1, H2 } from '@/app/components/elements/Typography'
+import { H1 } from '@/app/components/elements/Typography'
 import UnitForm from '../components/modules/UnitForm'
 import { Sheet, SheetTrigger } from '@/app/components/elements/Sheet'
 import { Button } from '@/app/components/elements/Button'
 import {
 	Table,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableHead,
 	TableHeader,
 	TableRow
 } from '@/app/components/elements/Table'
-import { getUnit } from '@/lib/prisma/getUnit'
 import { getUnits } from '@/lib/prisma/getUnits'
-import { Major, Unit } from '@prisma/client'
 import Link from 'next/link'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/elements/Tooltip'
 

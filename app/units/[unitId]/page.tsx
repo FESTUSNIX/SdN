@@ -4,11 +4,12 @@ import Majors from './components/Majors'
 import { H1 } from '@/app/components/elements/Typography'
 import Image from 'next/image'
 import { urlFor } from '@/lib/supabase/getUrlFor'
+import { getBaseUrl } from '@/lib/utils/getBaseUrl'
 
 type Props = { params: { unitId: number } }
 
 const UnitPage = async ({ params }: Props) => {
-	const res = await fetch(`${process.env.NEXT_PUBLIC_URL ?? ''}/api/getUnit?id=${params.unitId}`)
+	const res = await fetch(`${getBaseUrl()}/api/getUnit?id=${params.unitId}`)
 
 	if (!res.ok) {
 		console.log(res)
