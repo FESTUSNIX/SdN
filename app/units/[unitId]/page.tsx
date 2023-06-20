@@ -10,24 +10,13 @@ import { getUnit } from '@/lib/prisma/getUnit'
 
 type Props = { params: { unitId: number } }
 
-// export async function generateStaticParams() {
-// 	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/getUnits`, {
-// 		next: {
-// 			tags: ['units']
-// 		}
-// 	})
+export async function generateStaticParams() {
+	const units = await getUnits()
 
-// 	if (!res.ok) {
-// 		console.log(res)
-// 		throw new Error('Failed to fetch')
-// 	}
-
-// 	const data: (Unit & { majors: Major[] } & { city: { id: number; name: string } })[] = await res.json()
-
-// 	return data.map(unit => ({
-// 		unitId: unit.id.toString()
-// 	}))
-// }
+	return units.map(unit => ({
+		unitId: unit.id.toString()
+	}))
+}
 
 export default async function UnitPage({ params }: Props) {
 	const unit = await getUnit(params.unitId)
