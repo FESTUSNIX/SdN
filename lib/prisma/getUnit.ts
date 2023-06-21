@@ -2,7 +2,7 @@ import { City, Major, Unit, Voivodeship } from '@prisma/client'
 import getBaseURL from '../utils/getBaseURL'
 
 export async function getUnit(id: number) {
-	const res = await fetch(getBaseURL(`/api/getUnit?id=${id}`))
+	const res = await fetch(`${getBaseURL()}/api/getUnit?id=${id}`)
 
 	if (!res.ok) {
 		console.log(res)

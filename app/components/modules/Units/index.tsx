@@ -6,7 +6,7 @@ import { Button } from '../../elements/Button'
 import getBaseURL from '@/lib/utils/getBaseURL'
 
 const Units = async () => {
-	const res = await fetch(getBaseURL(`/api/getUnits`))
+	const res = await fetch(`${getBaseURL()}/api/getUnits`)
 
 	const units: (Unit & { majors: Major[] } & { city: { id: number; name: string } })[] = await res.json()
 	console.log(units)
