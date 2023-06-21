@@ -2,7 +2,7 @@ import prisma from '@/prisma/client'
 
 export async function getUnits() {
 	try {
-		const data = await prisma.unit.findMany({
+		const units = await prisma.unit.findMany({
 			include: {
 				majors: {
 					select: {
@@ -20,7 +20,7 @@ export async function getUnits() {
 			}
 		})
 
-		return { units: data }
+		return { units }
 	} catch (error) {
 		return { error }
 	}
