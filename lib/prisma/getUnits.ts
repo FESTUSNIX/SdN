@@ -19,5 +19,5 @@ export async function getUnits() {
 		}
 	})
 
-	return units
+	return { units }
 }
