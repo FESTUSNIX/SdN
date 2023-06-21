@@ -35,7 +35,7 @@ export default async function UnitsPage() {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{units.map((unit) => (
+						{units.map((unit: any) => (
 							<TableRow key={unit.id}>
 								<TableCell className='font-medium'>
 									<Link href={`/admin/units/${unit.id}`} key={unit.id}>
