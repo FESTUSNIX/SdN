@@ -12,7 +12,7 @@ const Units = async () => {
 	return (
 		<section className='py-24 w-full'>
 			<div className='flex flex-col gap-4'>
-				{units.map(unit => (
+				{units.map((unit: any) => (
 					<Link href={`/units/${unit.id}`} key={unit.id} className='grow'>
 						<Card className='h-full flex flex-col'>
 							<CardHeader>
@@ -21,7 +21,7 @@ const Units = async () => {
 							</CardHeader>
 							<CardContent>
 								<p>Kierunki</p>
-								{unit.majors.splice(0, 3).map(major => (
+								{unit.majors.splice(0, 3).map((major: any) => (
 									<div key={major.id}>{major.name}</div>
 								))}
 							</CardContent>
