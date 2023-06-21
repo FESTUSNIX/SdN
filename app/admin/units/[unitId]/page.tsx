@@ -8,13 +8,13 @@ import { getUnits } from '@/lib/prisma/getUnits'
 
 type Props = { params: { unitId: number } }
 
-export async function generateStaticParams() {
-	const units = await getUnits()
+// export async function generateStaticParams() {
+// 	const units = await getUnits()
 
-	return units.map(unit => ({
-		unitId: unit.id.toString()
-	}))
-}
+// 	return units.map((unit: any) => ({
+// 		unitId: unit.id.toString()
+// 	}))
+// }
 
 const AdminUnitPage = async ({ params }: Props) => {
 	const unit = await getUnit(params.unitId)

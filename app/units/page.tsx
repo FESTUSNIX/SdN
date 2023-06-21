@@ -10,7 +10,7 @@ const UnitPage = async () => {
 	return (
 		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
 			<div className='flex flex-wrap gap-4 w-full'>
-				{units.map(unit => (
+				{units.map((unit: any) => (
 					<Link href={`/units/${unit.id}`} key={unit.id} className='grow'>
 						<Card className='h-full flex flex-col'>
 							<CardHeader>
@@ -18,7 +18,7 @@ const UnitPage = async () => {
 								<CardDescription className='capitalize'>{unit.unitType}</CardDescription>
 							</CardHeader>
 							<CardContent>
-								{unit.majors.splice(0, 3).map(major => (
+								{unit.majors.splice(0, 3).map((major: any) => (
 									<div key={major.id}>{major.name}</div>
 								))}
 							</CardContent>
