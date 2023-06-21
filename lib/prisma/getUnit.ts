@@ -33,7 +33,6 @@ export async function getUnit(id: number) {
 				}
 			}
 		})
-		console.log('UNIT ===', unit)
 		return { unit: unit }
 	} catch (error) {
 		return { error }
