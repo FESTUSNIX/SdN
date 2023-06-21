@@ -6,34 +6,25 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/elemen
 import { ScrollArea } from '@/app/components/elements/ScrollArea'
 import { cn } from '@/lib/utils'
 import { Check, ChevronsUpDown } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, { cache, use, useEffect, useState } from 'react'
 
 type Props = {
 	form: form
 }
 
+const getCities = cache(() =>
+	fetch('/api/cities', {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).then(res => res.json())
+)
+
 const City = ({ form }: Props) => {
 	const [open, setOpen] = useState(false)
-	const [cities, setCities] = useState<{ id: number; name: string }[]>([])
 
-	useEffect(() => {
-		fetch(`/api/getCities`)
-			.then(res => {
-				if (!res.ok) {
-					throw new Error('Failed to fetch')
-				}
-
-				return res.json()
-			})
-			.then(data => {
-				setCities(data)
-			})
-			.catch(err => {
-				console.log(err)
-				throw new Error(err.message)
-			})
-	}, [])
-
+	const cities = use<{ id: number; name: string }[]>(getCities())
 	return (
 		<FormField
 			control={form.control}
