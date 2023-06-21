@@ -9,16 +9,18 @@ import { getUnit } from '@/lib/prisma/getUnit'
 
 type Props = { params: { unitId: number } }
 
-// export async function generateStaticParams() {
-// 	const units = await getUnits()
+export async function generateStaticParams() {
+	const { units } = await getUnits()
 
-// 	return units.map((unit: any) => ({
-// 		unitId: unit.id.toString()
-// 	}))
-// }
+	return units?.map((unit: any) => ({
+		unitId: unit.id.toString()
+	}))
+}
 
 export default async function UnitPage({ params }: Props) {
-	const unit = await getUnit(params.unitId)
+	const { unit } = await getUnit(params.unitId)
+
+	if (!unit) return null
 
 	return (
 		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
