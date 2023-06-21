@@ -1,15 +1,19 @@
-import { City, Major, Unit } from '@prisma/client'
-import getBaseURL from '../utils/getBaseURL'
+import prisma from '@/prisma/client'
 
-export const getCities = async () => {
-	const res = await fetch(`${getBaseURL()}/api/getCities`)
+export async function getCities() {
+	try {
+		const cities = await prisma.city.findMany({
+			orderBy: {
+				name: 'asc'
+			},
+			select: {
+				id: true,
+				name: true
+			}
+		})
 
-	if (!res.ok) {
-		console.log(res)
-		throw new Error('Failed to fetch')
+		return { cities }
+	} catch (error) {
+		return { error }
 	}
-
-	const data: City[] = await res.json()
-
-	return data
 }

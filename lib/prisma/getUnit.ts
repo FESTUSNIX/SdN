@@ -1,34 +1,41 @@
 import { City, Major, Unit, Voivodeship } from '@prisma/client'
 import getBaseURL from '../utils/getBaseURL'
+import prisma from '@/prisma/client'
 
 export async function getUnit(id: number) {
-	const res = await fetch(`${getBaseURL()}/api/getUnit?id=${id}`)
-	console.log(`GET_UNIT_SINGLE === ${getBaseURL()}/api/getUnit?id=${id}`)
-	console.log('RES MESSAGE - unit', (res as any).message)
-
-	if (!res.ok) {
-		console.log(res)
-		throw new Error('Failed to fetch')
+	try {
+		const unit = await prisma.unit.findFirst({
+			where: {
+				id: Number(id)
+			},
+			include: {
+				city: {
+					select: {
+						id: true,
+						name: true,
+						voivodeship: true
+					}
+				},
+				majors: {
+					select: {
+						id: true,
+						name: true,
+						unitId: true
+					}
+				},
+				address: {
+					select: {
+						id: true,
+						street: true,
+						city: true,
+						postalCode: true
+					}
+				}
+			}
+		})
+		console.log('UNIT ===', unit)
+		return { unit: unit }
+	} catch (error) {
+		return { error }
 	}
-
-	const unit: Unit & {
-		city: {
-			id: number
-			name: string
-			voivodeship: Voivodeship
-		}
-		majors: {
-			id: number
-			name: string
-			unitId: number
-		}[]
-		address: {
-			id: number
-			street: string
-			city: City
-			postalCode: string
-		}
-	} = await res.json()
-	console.log('DATA-UNIT', unit)
-	return unit
 }
