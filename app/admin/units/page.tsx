@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/elements/Tooltip'
 
 export default async function UnitsPage() {
-	const units = await getUnits()
+	const { units } = await getUnits()
 
 	return (
 		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
@@ -35,7 +35,7 @@ export default async function UnitsPage() {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{units.map((unit: any) => (
+						{units?.map(unit => (
 							<TableRow key={unit.id}>
 								<TableCell className='font-medium'>
 									<Link href={`/admin/units/${unit.id}`} key={unit.id}>

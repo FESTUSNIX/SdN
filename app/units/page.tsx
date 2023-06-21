@@ -5,12 +5,12 @@ import { Button } from '@/app/components/elements/Button'
 import { getUnits } from '@/lib/prisma/getUnits'
 
 const UnitPage = async () => {
-	const units = await getUnits()
+	const { units } = await getUnits()
 
 	return (
 		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
 			<div className='flex flex-wrap gap-4 w-full'>
-				{units.map((unit: any) => (
+				{units?.map((unit: any) => (
 					<Link href={`/units/${unit.id}`} key={unit.id} className='grow'>
 						<Card className='h-full flex flex-col'>
 							<CardHeader>

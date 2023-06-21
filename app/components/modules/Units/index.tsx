@@ -7,12 +7,12 @@ import getBaseURL from '@/lib/utils/getBaseURL'
 import { getUnits } from '@/lib/prisma/getUnits'
 
 const Units = async () => {
-	const units = await getUnits()
+	const { units } = await getUnits()
 
 	return (
 		<section className='py-24 w-full'>
 			<div className='flex flex-col gap-4'>
-				{units.map((unit: any) => (
+				{units?.map((unit: any) => (
 					<Link href={`/units/${unit.id}`} key={unit.id} className='grow'>
 						<Card className='h-full flex flex-col'>
 							<CardHeader>
