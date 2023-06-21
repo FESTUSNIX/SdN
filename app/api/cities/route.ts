@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
 
 		return NextResponse.json(cities)
 	} catch (error) {
-		return NextResponse.json({ message: error })
+		console.log(error, 'ERROR_MESSAGES')
+		return new NextResponse('Error', { status: 500 })
 	}
 }
