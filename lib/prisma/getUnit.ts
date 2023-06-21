@@ -3,6 +3,7 @@ import getBaseURL from '../utils/getBaseURL'
 
 export async function getUnit(id: number) {
 	const res = await fetch(`${getBaseURL()}/api/getUnit?id=${id}`)
+	console.log(`GET_UNIT_SINGLE === ${getBaseURL()}/api/getUnit?id=${id}`)
 
 	if (!res.ok) {
 		console.log(res)
