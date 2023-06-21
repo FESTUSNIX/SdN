@@ -11,6 +11,8 @@ type Props = { params: { unitId: number } }
 export async function generateStaticParams() {
 	const { units } = await getUnits()
 
+	if (!units) return []
+
 	return units?.map((unit: any) => ({
 		unitId: unit.id.toString()
 	}))
