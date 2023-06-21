@@ -1,5 +1,9 @@
-const IS_SERVER = typeof window === 'undefined'
-export default function getBaseURL(path: string) {
-	const baseURL = IS_SERVER ? process.env.NEXT_PUBLIC_BASE_URL! : window.location.origin
-	return new URL(path, baseURL).toString()
+const getBaseURL = (path: string) => {
+	// if (process.env.NODE_ENV === 'development') {
+	// 	return `${process.env.NEXT_PUBLIC_BASE_URL}`
+	// }
+
+	// return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+	return `${process.env.NEXT_PUBLIC_BASE_URL}${path}`
 }
+export default getBaseURL
