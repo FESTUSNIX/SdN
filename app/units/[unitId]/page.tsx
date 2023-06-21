@@ -4,7 +4,6 @@ import Majors from './components/Majors'
 import { H1 } from '@/app/components/elements/Typography'
 import Image from 'next/image'
 import { urlFor } from '@/lib/supabase/getUrlFor'
-import { getBaseUrl } from '@/lib/utils/getBaseUrl'
 import { getUnits } from '@/lib/prisma/getUnits'
 import { getUnit } from '@/lib/prisma/getUnit'
 

@@ -1,6 +1,5 @@
-export const getBaseUrl = () => {
-	// if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') return 'https://sdn-theta.vercel.app'
-	// if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview') return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-	console.log('BASE_URL ===========', process.env.NEXT_PUBLIC_BASE_URL)
-	return process.env.NEXT_PUBLIC_BASE_URL ?? ''
+const IS_SERVER = typeof window === 'undefined'
+export default function getBaseURL(path: string) {
+	const baseURL = IS_SERVER ? process.env.NEXT_PUBLIC_BASE_URL! : window.location.origin
+	return new URL(path, baseURL).toString()
 }

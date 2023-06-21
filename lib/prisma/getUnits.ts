@@ -1,8 +1,8 @@
 import { Major, Unit } from '@prisma/client'
-import { getBaseUrl } from '../utils/getBaseUrl'
+import getBaseURL from '../utils/getBaseURL'
 
 export const getUnits = async () => {
-	const res = await fetch(`${getBaseUrl()}/api/getUnits`)
+	const res = await fetch(getBaseURL(`/api/getUnits`))
 
 	if (!res.ok) {
 		console.log(res)

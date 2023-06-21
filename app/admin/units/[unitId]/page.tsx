@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { getUnit } from '@/lib/prisma/getUnit'
 import { getUnits } from '@/lib/prisma/getUnits'
-import { getBaseUrl } from '@/lib/utils/getBaseUrl'
 
 type Props = { params: { unitId: number } }
 

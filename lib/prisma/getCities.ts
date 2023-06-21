@@ -1,13 +1,8 @@
 import { City, Major, Unit } from '@prisma/client'
-import { getBaseUrl } from '../utils/getBaseUrl'
+import getBaseURL from '../utils/getBaseURL'
 
 export const getCities = async () => {
-	const res = await fetch(`${getBaseUrl() ?? ''}/api/getCities`, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	})
+	const res = await fetch(getBaseURL(`/api/getCities`))
 
 	if (!res.ok) {
 		console.log(res)
