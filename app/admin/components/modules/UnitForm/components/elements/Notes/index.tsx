@@ -1,7 +1,7 @@
 import React from 'react'
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/elements/Form'
-import { form } from '@/app/admin/components/modules/UnitForm/FormDefinition'
-import { Textarea } from '@/app/components/elements/Textarea/textarea'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { form } from '@/lib/validators/unit'
+import { Textarea } from '@/app/components/ui/Textarea/textarea'
 
 type Props = {
 	form: form

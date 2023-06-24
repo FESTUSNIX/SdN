@@ -1,14 +1,7 @@
 import React from 'react'
-import {
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage
-} from '@/app/components/elements/Form'
-import { Input } from '@/app/components/elements/Input'
-import { form } from '@/app/admin/components/modules/UnitForm/FormDefinition'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { Input } from '@/app/components/ui/Input'
+import { form } from '@/lib/validators/unit'
 
 type Props = {
 	form: form

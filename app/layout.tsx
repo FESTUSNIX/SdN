@@ -1,7 +1,8 @@
 import { Toaster } from 'react-hot-toast'
 import Navbar from './components/modules/Navbar'
-import './globals.css'
+import './styles/globals.css'
 import { Inter } from 'next/font/google'
+import Providers from './components/elements/Providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,9 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
 			<body className={inter.className}>
-				<Toaster />
-				<Navbar />
-				{children}
+				<Providers>
+					<Navbar />
+					<main className='container max-w-7xl mx-auto h-full pt-12'>{children}</main>
+					<Toaster />
+				</Providers>
 			</body>
 		</html>
 	)

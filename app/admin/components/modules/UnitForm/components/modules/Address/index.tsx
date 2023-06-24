@@ -1,8 +1,8 @@
 import React from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/elements/Card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/Card'
 import Street from './components/elements/Street'
-import { form } from '@/app/admin/components/modules/UnitForm/FormDefinition'
 import PostalCode from './components/elements/PostalCode'
+import { form } from '@/lib/validators/unit'
 
 type Props = {
 	form: form

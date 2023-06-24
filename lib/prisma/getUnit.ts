@@ -1,5 +1,4 @@
 import { City, Major, Unit, Voivodeship } from '@prisma/client'
-import getBaseURL from '../utils/getBaseURL'
 import prisma from '@/prisma/client'
 
 export async function getUnit(id: number) {

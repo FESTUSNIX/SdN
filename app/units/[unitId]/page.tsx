@@ -1,7 +1,7 @@
 import { Major, Unit } from '@prisma/client'
 import React from 'react'
 import Majors from './components/Majors'
-import { H1 } from '@/app/components/elements/Typography'
+import { H1 } from '@/app/components/ui/Typography'
 import Image from 'next/image'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { getUnits } from '@/lib/prisma/getUnits'
@@ -23,7 +23,7 @@ export default async function UnitPage({ params }: Props) {
 	if (!unit) return null
 
 	return (
-		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
+		<div className='flex min-h-screen flex-col items-center wrapper pt-12'>
 			<H1 className='mb-24'>{unit.name}</H1>
 
 			{unit.logo && (
@@ -37,6 +37,6 @@ export default async function UnitPage({ params }: Props) {
 			<p>website - {unit.website}</p>
 
 			{unit.majors && <Majors majors={unit.majors} />}
-		</main>
+		</div>
 	)
 }

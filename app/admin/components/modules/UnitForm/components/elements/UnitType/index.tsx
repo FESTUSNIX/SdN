@@ -1,8 +1,8 @@
 import React from 'react'
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/elements/Form'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/elements/Select'
-import { Input } from '@/app/components/elements/Input'
-import { form } from '@/app/admin/components/modules/UnitForm/FormDefinition'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/Select'
+import { Input } from '@/app/components/ui/Input'
+import { form } from '@/lib/validators/unit'
 
 type Props = {
 	form: form
@@ -25,7 +25,7 @@ const UnitType = ({ form }: Props) => {
 							</FormControl>
 							<SelectContent>
 								<SelectItem value='uczelnia'>Uczelnia</SelectItem>
-								<SelectItem value='placówka doskonalenia nauczycieli'>Placówka doskonalenia nauczycieli</SelectItem>
+								<SelectItem value='pdn'>Placówka doskonalenia nauczycieli</SelectItem>
 								<SelectItem value='inna'>Inna</SelectItem>
 							</SelectContent>
 						</Select>

@@ -1,92 +1,116 @@
 'use client'
 
+import { Button } from '@/app/components/ui/Button'
+import { Form } from '@/app/components/ui/Form'
+import { ScrollArea } from '@/app/components/ui/ScrollArea'
+import { Separator } from '@/app/components/ui/Separator/separator'
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/app/components/ui/Sheet'
+import { H4, Muted } from '@/app/components/ui/Typography'
+import { supabase } from '@/lib/supabase/supabase'
+import { UnitPayload, UnitValidator } from '@/lib/validators/unit'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@/app/components/elements/Button'
-import { useForm, useFormState } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
+import axios, { AxiosError } from 'axios'
+import { Loader2 } from 'lucide-react'
 import { useEffect } from 'react'
-import Name from './components/elements/Name'
-import Logo from './components/elements/Logo'
+import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
+import { v4 as uuidv4 } from 'uuid'
+import City from './components/elements/City'
+import Email from './components/elements/Email'
 import IsPublic from './components/elements/IsPublic'
+import Logo from './components/elements/Logo'
 import NIP from './components/elements/NIP'
+import Name from './components/elements/Name'
+import Notes from './components/elements/Notes'
+import Regon from './components/elements/Regon'
 import UnitType from './components/elements/UnitType'
 import Website from './components/elements/Website'
 import Address from './components/modules/Address'
-import Regon from './components/elements/Regon'
-import { Form } from '@/app/components/elements/Form'
-import Notes from './components/elements/Notes'
-import { addUnit } from '@/lib/prisma/addUnit'
-import City from './components/elements/City'
-import { FormValues, defaultValues, formSchema } from './FormDefinition'
-import Email from './components/elements/Email'
-import { Separator } from '@/app/components/elements/Separator/separator'
-import { H4, Muted } from '@/app/components/elements/Typography'
-import { v4 as uuidv4 } from 'uuid'
-import { supabase } from '@/lib/supabase/supabase'
-import toast from 'react-hot-toast'
-import { ScrollArea } from '@/app/components/elements/ScrollArea'
-import { SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/app/components/elements/Sheet'
-import { Loader2 } from 'lucide-react'
-import { revalidateTag } from 'next/cache'
+import Status from './components/elements/Status'
 
-const UnitForm = () => {
-	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema),
-		defaultValues
+type Props = {
+	defaultValues?: UnitPayload
+}
+
+const UnitForm = ({ defaultValues }: Props) => {
+	const form = useForm<UnitPayload>({
+		resolver: zodResolver(UnitValidator),
+		defaultValues: defaultValues ?? {
+			name: '',
+			logo: undefined as any,
+			email: '',
+			isPublic: true,
+			nip: '',
+			regon: '',
+			unitType: 'uczelnia',
+			otherUnitType: '',
+			website: '',
+			street: '',
+			postalCode: '',
+			cityId: 0,
+			notes: '',
+			status: 'IN_PROGRESS'
+		}
 	})
 
-	const { isSubmitting } = useFormState({
-		control: form.control
-	})
-	const updateImageToSupabase = async (values: FormValues) => {
-		const filename = `${uuidv4()}-${values.logo.name}`
+	const uploadImageToSupabase = async (logo: File) => {
+		const filename = `${uuidv4()}-${logo.name}`
 
-		const { data, error } = await supabase.storage.from('unit_logos').upload(`${filename}`, values.logo, {
+		const { data, error } = await supabase.storage.from('unit_logos').upload(`${filename}`, logo, {
 			cacheControl: '36000',
 			upsert: false
 		})
 
 		if (error) throw new Error(error.message)
 
-		const filepath = data?.path
-
-		return filepath
+		return data?.path
 	}
 
-	async function onSubmit(values: FormValues) {
-		const submitToast = toast.loading('Adding...')
+	const { mutate: createUnit, isLoading } = useMutation({
+		mutationFn: async (values: UnitPayload) => {
+			toast.loading('Adding a unit...')
 
-		try {
-			const filepath = await updateImageToSupabase(values)
-			const newUnit = {
+			const filepath = await uploadImageToSupabase(values.logo)
+
+			const payload = {
 				name: values.name,
 				logo: filepath,
 				isPublic: values.isPublic,
 				email: values.email,
-				nip: values.nip ?? null,
+				nip: values.nip ?? undefined,
 				cityId: values.cityId,
-				regon: values.regon ?? null,
+				regon: values.regon ?? undefined,
 				unitType: values.unitType !== 'inna' ? values.unitType : values.otherUnitType!,
 				website: values.website,
-				notes: values.notes ?? null,
-				address: {
-					street: values.street,
-					postalCode: values.postalCode,
-					cityId: values.cityId
+				notes: values.notes ?? undefined,
+				street: values.street,
+				postalCode: values.postalCode,
+				status: values.status
+			}
+
+			const { data } = await axios.post('/api/unit', payload)
+
+			return data
+		},
+		onError: err => {
+			if (err instanceof AxiosError) {
+				if (err.response?.status === 409) {
+					return toast.error('Subreddit already exists')
+				}
+
+				if (err.response?.status === 422) {
+					return toast.error('Invalid subreddit name')
 				}
 			}
-			const res = await addUnit(newUnit)
-			const revalidate = await fetch('/api/revalidate?tag=units')
 
-			toast.success('Added a new Unit', {
-				id: submitToast
-			})
-			form.reset(defaultValues)
-		} catch (error: any) {
-			toast.error(error.message, {
-				id: submitToast
-			})
+			return toast.error('Something went wrong.')
+		},
+		onSuccess: data => {
+			toast.success('Added a new unit.')
+			form.reset()
 		}
-	}
+	})
 
 	useEffect(() => {
 		if (form.getValues().unitType === 'inna') {
@@ -98,65 +122,76 @@ const UnitForm = () => {
 	}, [form.getValues().unitType])
 
 	return (
-		<SheetContent position={'right'} size={'default'} className='p-0 max-w-xl w-screen flex flex-col gap-0'>
-			<SheetHeader className='px-6 py-4 border-b'>
-				<SheetTitle>Add new Unit</SheetTitle>
-			</SheetHeader>
+		<Sheet
+			onOpenChange={open => {
+				console.log(open)
+			}}>
+			<SheetTrigger asChild>
+				<Button>New Unit</Button>
+			</SheetTrigger>
 
-			<ScrollArea className='h-full'>
-				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className='py-4'>
-						<div className='px-6 space-y-8 '>
-							<Name form={form} />
+			<SheetContent side={'right'} className='p-0 max-w-xl w-screen flex flex-col gap-0 sm:min-w-[500px]'>
+				<SheetHeader className='px-6 py-4 border-b'>
+					<SheetTitle>Add new Unit</SheetTitle>
+				</SheetHeader>
 
-							<Email form={form} />
+				<ScrollArea className='h-full'>
+					<Form {...form}>
+						<form onSubmit={form.handleSubmit(e => createUnit(e))} className='py-4'>
+							<div className='px-6 space-y-8 '>
+								<Name form={form} />
 
-							<UnitType form={form} />
+								<Email form={form} />
 
-							<City form={form} />
+								<UnitType form={form} />
 
-							<Website form={form} />
+								<City form={form} />
 
-							<Logo form={form} />
+								<Website form={form} />
 
-							<IsPublic form={form} />
+								<Logo form={form} />
 
-							<Address form={form} />
-						</div>
+								<IsPublic form={form} />
 
-						<Separator className='my-12' />
+								<Address form={form} />
 
-						<div className='px-6 space-y-8'>
-							<div>
-								<H4>Optional</H4>
-								<Muted>These fields are optional and can be filled later</Muted>
+								<Status form={form} />
 							</div>
 
-							<NIP form={form} />
+							<Separator className='my-12' />
 
-							<Regon form={form} />
+							<div className='px-6 space-y-8'>
+								<div>
+									<H4>Optional</H4>
+									<Muted>These fields are optional and can be filled later</Muted>
+								</div>
 
-							<Notes form={form} />
-						</div>
-					</form>
-				</Form>
-			</ScrollArea>
+								<NIP form={form} />
 
-			<SheetFooter className='px-6 py-4 border-t gap-4 flex-row justify-end'>
-				<Button variant={'secondary'}>Cancel</Button>
+								<Regon form={form} />
 
-				{isSubmitting ? (
-					<Button type='submit' disabled>
-						<Loader2 className='mr-2 h-4 w-4 animate-spin' />
-						Adding...
-					</Button>
-				) : (
-					<Button type='submit' onClick={form.handleSubmit(onSubmit)}>
-						Add unit
-					</Button>
-				)}
-			</SheetFooter>
-		</SheetContent>
+								<Notes form={form} />
+							</div>
+						</form>
+					</Form>
+				</ScrollArea>
+
+				<SheetFooter className='px-6 py-4 border-t gap-4 flex-row justify-end'>
+					<Button variant={'secondary'}>Cancel</Button>
+
+					{isLoading ? (
+						<Button type='submit' disabled>
+							<Loader2 className='mr-2 h-4 w-4 animate-spin' />
+							Adding...
+						</Button>
+					) : (
+						<Button type='submit' onClick={form.handleSubmit(e => createUnit(e))}>
+							Add unit
+						</Button>
+					)}
+				</SheetFooter>
+			</SheetContent>
+		</Sheet>
 	)
 }
 

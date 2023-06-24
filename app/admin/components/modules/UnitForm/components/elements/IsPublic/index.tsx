@@ -1,7 +1,7 @@
-import { FormControl, FormField, FormItem, FormLabel } from '@/app/components/elements/Form'
-import { Switch } from '@/app/components/elements/Switch'
+import { FormControl, FormField, FormItem, FormLabel } from '@/app/components/ui/Form'
+import { Switch } from '@/app/components/ui/Switch'
 import React from 'react'
-import { form } from '@/app/admin/components/modules/UnitForm/FormDefinition'
+import { form } from '@/lib/validators/unit'
 
 type Props = {
 	form: form

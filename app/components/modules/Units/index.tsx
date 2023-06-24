@@ -1,9 +1,8 @@
 import React from 'react'
 import { Major, Unit } from '@prisma/client'
 import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/app/components/elements/Card'
-import { Button } from '../../elements/Button'
-import getBaseURL from '@/lib/utils/getBaseURL'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/app/components/ui/Card'
+import { Button } from '@/app/components/ui/Button'
 import { getUnits } from '@/lib/prisma/getUnits'
 
 const Units = async () => {

@@ -1,5 +1,4 @@
 import { Unit, UnitAddress } from '@prisma/client'
-import getBaseURL from '@/lib/utils/getBaseURL'
 
 export async function addUnit(
 	unitData: Omit<Unit, 'updatedAt' | 'id'> & { address: Omit<UnitAddress, 'id' | 'unitId'> }

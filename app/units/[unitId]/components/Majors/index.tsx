@@ -1,4 +1,4 @@
-import { H2 } from '@/app/components/elements/Typography'
+import { H2 } from '@/app/components/ui/Typography'
 import { Major } from '@prisma/client'
 import Link from 'next/link'
 import React from 'react'

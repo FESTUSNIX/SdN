@@ -1,5 +1,4 @@
-import { H1 } from '@/app/components/elements/Typography'
-import getBaseURL from '@/lib/utils/getBaseURL'
+import { H1 } from '@/app/components/ui/Typography'
 import { Major, Qualification } from '@prisma/client'
 import React from 'react'
 
@@ -22,7 +21,7 @@ const MajorPage = async ({ params }: Props) => {
 	const major = await getMajor(params.majorId)
 
 	return (
-		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
+		<div className='flex min-h-screen flex-col items-center wrapper pt-12'>
 			<H1 className={'mb-24'}>{major.name}</H1>
 
 			<div className='flex flex-col gap-8'>
@@ -59,7 +58,7 @@ const MajorPage = async ({ params }: Props) => {
 				<p>syllabus - {major.syllabus}</p>
 				<p>updatedAt - {JSON.stringify(major.updatedAt)}</p>
 			</div>
-		</main>
+		</div>
 	)
 }
 

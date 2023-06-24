@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Loader2 } from 'lucide-react'
 import { links } from './constants/links'
-import { Button } from '../../elements/Button'
+import { Button } from '@/app/components/ui/Button'
 
 const Navbar = () => {
 	return (

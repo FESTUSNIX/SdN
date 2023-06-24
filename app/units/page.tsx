@@ -1,14 +1,14 @@
 import Link from 'next/link'
 import React from 'react'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/app/components/elements/Card'
-import { Button } from '@/app/components/elements/Button'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/app/components/ui/Card'
+import { Button } from '@/app/components/ui/Button'
 import { getUnits } from '@/lib/prisma/getUnits'
 
 const UnitPage = async () => {
 	const { units } = await getUnits()
 
 	return (
-		<main className='flex min-h-screen flex-col items-center wrapper pt-12'>
+		<div className='flex min-h-screen flex-col items-center wrapper pt-12'>
 			<div className='flex flex-wrap gap-4 w-full'>
 				{units?.map((unit: any) => (
 					<Link href={`/units/${unit.id}`} key={unit.id} className='grow'>
@@ -29,7 +29,7 @@ const UnitPage = async () => {
 					</Link>
 				))}
 			</div>
-		</main>
+		</div>
 	)
 }
 
