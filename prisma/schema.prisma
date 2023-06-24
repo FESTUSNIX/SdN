@@ -23,35 +23,40 @@ model Unit {
   updatedAt DateTime?    @updatedAt
   majors    Major[]
   address   UnitAddress?
+  status    UnitStatus?
+
+  @@index([name])
 }
 
 model Major {
   id                    Int                  @id @default(autoincrement())
   name                  String
-  cost                  Int
   unitId                Int
+  majorLevel            MajorLevel           @default(PODYPLOMOWE)
+  cost                  Int?
   address               String?
-  isRegulated           Boolean              @default(true)
+  isRegulated           Boolean?             @default(true)
   certificates          String?
   completionConditions  String?
   daysOfWeek            DaysOfWeek[]
-  description           String
-  formOfStudy           String               @default("zaoczne")
-  numberOfSemesters     Int
-  organisator           String
+  description           String?
+  formOfStudy           String?              @default("zaoczne")
+  numberOfSemesters     Int?
+  organisator           String?
   recruitmentConditions String?
-  majorLevel            MajorLevel          @default(PODYPLOMOWE)  
   syllabus              String?
   updatedAt             DateTime             @default(now()) @updatedAt
-  canPayInInstallments  Boolean              @default(false)
-  durationInHours       Int
-  isOnline              Boolean              @default(false)
+  canPayInInstallments  Boolean?             @default(false)
+  durationInHours       Int?
+  isOnline              Boolean?             @default(false)
   onlineDuration        Int?
   endDate               DateTime?            @db.Date
   startDate             DateTime?            @db.Date
   contact               ContactPerson?
   unit                  Unit                 @relation(fields: [unitId], references: [id], onUpdate: NoAction)
   qualifications        MajorQualification[]
+
+  @@index([name])
 }
 
 model ContactPerson {
@@ -82,10 +87,10 @@ model MajorQualification {
 }
 
 model Qualification {
-  id     Int                  @id @default(autoincrement())
-  name   String               @unique
-  type   MajorType
-  majors MajorQualification[]
+  id       Int                  @id @default(autoincrement())
+  name     String               @unique
+  type     MajorType
+  majors   MajorQualification[]
   keywords String[]
 }
 
@@ -121,10 +126,14 @@ enum DaysOfWeek {
   SUNDAY
 }
 
-
 enum MajorLevel {
   PIERWSZEGO_STOPNIA
   DRUGIEGO_STOPNIA
   JEDNOLITE_MAGISTERSKIE
   PODYPLOMOWE
+}
+
+enum UnitStatus {
+  FINISHED
+  IN_PROGRESS
 }
