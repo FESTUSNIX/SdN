@@ -1,11 +1,15 @@
 import prisma from '@/prisma/client'
 import { z } from 'zod'
 
-export async function DELETE(req: Request) {
+export async function POST(req: Request) {
 	try {
 		const body = await req.json()
 
-		const id = z.number().parse(body)
+		const { id } = z
+			.object({
+				id: z.number()
+			})
+			.parse(body)
 
 		const unitToDelete = await prisma.unit.findFirst({
 			where: {
