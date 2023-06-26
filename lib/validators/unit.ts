@@ -29,6 +29,18 @@ export const UnitValidator = z.object({
 	status: z.enum(['FINISHED', 'IN_PROGRESS'])
 })
 
+export const UnitTableValidator = z.object({
+	id: z.number(),
+	name: z.string(),
+	email: z.string(),
+	unitType: z.string(),
+	website: z.string(),
+	status: z.enum(['FINISHED', 'IN_PROGRESS']),
+	city: z.object({
+		name: z.string()
+	})
+})
+
 export type UnitPayload = z.infer<typeof UnitValidator>
 
 export type form = UseFormReturn<UnitPayload, any, undefined>
