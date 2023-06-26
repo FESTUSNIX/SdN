@@ -1,8 +1,6 @@
-import React from 'react'
-import Link from 'next/link'
-import { Loader2 } from 'lucide-react'
-import { links } from './constants/links'
 import { Button } from '@/app/components/ui/Button'
+import Link from 'next/link'
+import { links } from './constants/links'
 
 const Navbar = () => {
 	return (
