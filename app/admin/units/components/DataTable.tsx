@@ -15,11 +15,29 @@ import {
 	useReactTable
 } from '@tanstack/react-table'
 
-import { Button } from '@/app/components/ui/Button'
+import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/ui/Table'
 import { cn } from '@/lib/utils/utils'
 import { useState } from 'react'
 import { DataTableToolbar } from './DataTableToolbar'
+import { Pagination } from './Pagination'
+import {
+	ContextMenu,
+	ContextMenuContent,
+	ContextMenuItem,
+	ContextMenuLabel,
+	ContextMenuSeparator,
+	ContextMenuTrigger
+} from '@/app/components/ui/ContextMenu'
+import RowActions from './RowActions'
+import { TableUnitData } from '../page'
+import { DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/app/components/ui/DropdownMenu'
+import Link from 'next/link'
+import { ExternalLink } from 'lucide-react'
+import EditRow from './RowActions/components/EditRow'
+import UpdateStatus from './RowActions/components/UpdateStatus'
+import DeleteRow from './RowActions/components/DeleteRow'
+import { UnitTableValidator } from '@/lib/validators/unit'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
@@ -30,7 +48,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 	const [rowSelection, setRowSelection] = useState({})
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-	const [sorting, setSorting] = useState<SortingState>([])
+	const [sorting, setSorting] = useState<SortingState>([
+		{
+			id: 'id',
+			desc: false
+		}
+	])
 
 	const table = useReactTable({
 		data,
@@ -55,54 +78,53 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 	})
 
 	return (
-		<div className='space-y-6'>
+		<div className='flex h-full w-full flex-1 flex-col'>
 			<DataTableToolbar table={table} />
 
-			<div className='rounded-md border overflow-hidden'>
-				<Table>
-					<TableHeader>
-						{table.getHeaderGroups().map(headerGroup => (
-							<TableRow key={headerGroup.id}>
-								{headerGroup.headers.map((header, index, headers) => {
-									return (
-										<TableHead key={header.id} className={cn(index === headers.length - 1 && 'p-0 w-0')}>
-											{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-										</TableHead>
-									)
-								})}
-							</TableRow>
-						))}
-					</TableHeader>
-					<TableBody>
-						{table.getRowModel().rows?.length ? (
-							table.getRowModel().rows.map(row => (
-								<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'} className='relative'>
-									{row.getVisibleCells().map((cell, index, cells) => (
-										<TableCell key={cell.id} className={cn('relative', index === cells.length - 1 && 'p-0 w-0')}>
-											{flexRender(cell.column.columnDef.cell, cell.getContext())}
-										</TableCell>
-									))}
+			<div className='wrapper relative mb-6 mt-4 h-full overflow-hidden rounded-md border'>
+				<ScrollArea className='relative h-[75vh] max-w-full md:h-full'>
+					<Table>
+						<TableHeader className='sticky top-0 z-10 border-b border-border bg-background'>
+							{table.getHeaderGroups().map(headerGroup => (
+								<TableRow key={headerGroup.id} className='w-full'>
+									{headerGroup.headers.map((header, index, headers) => {
+										return (
+											<TableHead key={header.id} className={cn(index === 0 && 'w-0 p-0')}>
+												{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+											</TableHead>
+										)
+									})}
 								</TableRow>
-							))
-						) : (
-							<TableRow>
-								<TableCell colSpan={columns.length} className='h-24 text-center'>
-									No results.
-								</TableCell>
-							</TableRow>
-						)}
-					</TableBody>
-				</Table>
+							))}
+						</TableHeader>
+						<TableBody>
+							{table.getRowModel().rows?.length ? (
+								table.getRowModel().rows.map(row => {
+									return (
+										<RowActions key={row.id} row={row}>
+											<TableRow data-state={row.getIsSelected() && 'selected'} className='relative'>
+												{row.getVisibleCells().map((cell, index, cells) => (
+													<TableCell key={cell.id} className={cn('relative', index === 0 && 'w-0 p-0')}>
+														{flexRender(cell.column.columnDef.cell, cell.getContext())}
+													</TableCell>
+												))}
+											</TableRow>
+										</RowActions>
+									)
+								})
+							) : (
+								<TableRow>
+									<TableCell colSpan={columns.length} className='h-24 text-center'>
+										No results.
+									</TableCell>
+								</TableRow>
+							)}
+						</TableBody>
+					</Table>
+				</ScrollArea>
 			</div>
 
-			<div className='flex items-center justify-end space-x-2 py-4'>
-				<Button variant='outline' size='sm' onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-					Previous
-				</Button>
-				<Button variant='outline' size='sm' onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-					Next
-				</Button>
-			</div>
+			<Pagination table={table} />
 		</div>
 	)
 }
