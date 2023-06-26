@@ -8,10 +8,8 @@ import { DataTableViewOptions } from './DataTableViewOptions'
 import { Button } from '@/app/components/ui/Button'
 import { Input } from '@/app/components/ui/Input'
 import { unitStatus, unitTypes } from '../constants/tableData'
-import { DataTableFacetedFilter } from './DataTableFacetedFilter'
-import UnitForm from '../../components/modules/UnitForm'
-import AddUnitForm from './AddUnitForm'
 import { useFormContext } from '../hooks/useFormContext'
+import { DataTableFacetedFilter } from './DataTableFacetedFilter'
 
 interface DataTableToolbarProps<TData> {
 	table: Table<TData>
@@ -22,8 +20,8 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
 	const { setOpenAdd } = useFormContext()
 
 	return (
-		<div className='flex md:items-center md:justify-between flex-wrap gap-y-2 flex-col md:flex-row'>
-			<div className='flex flex-1 items-center gap-2 flex-wrap'>
+		<div className='wrapper flex flex-col flex-wrap gap-y-2 bg-background pb-2 pt-6 md:flex-row md:items-center'>
+			<div className='flex flex-1 flex-wrap items-center gap-2'>
 				<Input
 					placeholder='Filter units...'
 					value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
@@ -43,11 +41,9 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
 						<X className='ml-2 h-4 w-4' />
 					</Button>
 				)}
-			</div>
 
-			<div className='flex items-center gap-2'>
 				<DataTableViewOptions table={table} />
-				<Button variant='default' size='sm' className='md:ml-auto h-8 flex' onClick={() => setOpenAdd(true)}>
+				<Button variant='default' size='sm' className='flex h-8' onClick={() => setOpenAdd(true)}>
 					<Plus className='mr-2 h-4 w-4' />
 					Add unit
 				</Button>
