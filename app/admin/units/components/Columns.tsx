@@ -9,14 +9,34 @@ import { unitTypes } from '../constants/tableData'
 import { TableUnitData } from '../page'
 import { DataTableColumnHeader } from './DataTableColumnHeader'
 import RowActions from './RowActions'
+import { MoreHorizontal, Pointer } from 'lucide-react'
 
 export const columns: ColumnDef<TableUnitData>[] = [
 	{
+		id: 'status',
+		accessorKey: 'status',
+		header: ' ',
+		cell: ({ row }) => {
+			const status = row.getValue('status')
+
+			return (
+				<span
+					className={cn(
+						'absolute left-0 top-0 h-full w-1',
+						status === 'FINISHED' ? 'bg-emerald-400/20' : 'bg-orange-400/20'
+					)}
+				/>
+			)
+		},
+		filterFn: (row, id, value) => {
+			return value.includes(row.getValue(id))
+		}
+	},
+	{
 		accessorKey: 'id',
 		header: ({ column }) => {
-			return <div>#</div>
+			return <DataTableColumnHeader column={column} title='#' />
 		},
-		enableSorting: false,
 		enableHiding: false
 	},
 	{
@@ -65,7 +85,7 @@ export const columns: ColumnDef<TableUnitData>[] = [
 				return null
 			}
 
-			return <div className='first-letter:uppercase max-w-[14ch] truncate'>{row.getValue('unitType')}</div>
+			return <div className='max-w-[14ch] truncate first-letter:uppercase'>{row.getValue('unitType')}</div>
 		},
 		enableSorting: false,
 		filterFn: (row, id, value) => {
@@ -85,7 +105,7 @@ export const columns: ColumnDef<TableUnitData>[] = [
 			return (
 				<TooltipProvider>
 					<Tooltip>
-						<div className='w-full flex justify-end'>
+						<div className='flex w-full justify-end'>
 							<TooltipTrigger>
 								{website ? (
 									<Button variant='secondary' asChild>
@@ -109,27 +129,24 @@ export const columns: ColumnDef<TableUnitData>[] = [
 	{
 		id: 'actions',
 		cell: ({ row }) => {
-			return <RowActions row={row} />
-		}
-	},
-	{
-		id: 'status',
-		accessorKey: 'status',
-		header: ' ',
-		cell: ({ row }) => {
-			const status = row.getValue('status')
-
 			return (
-				<span
-					className={cn(
-						'h-full absolute w-1 top-0 right-0',
-						status === 'FINISHED' ? 'bg-emerald-400/20' : 'bg-orange-400/20'
-					)}
-				/>
+				<TooltipProvider>
+					<Tooltip delayDuration={300}>
+						<div className='flex w-full justify-end'>
+							<TooltipTrigger asChild>
+								<Button variant='ghost' className='h-8 w-8 p-0'>
+									<span className='sr-only'>Open menu</span>
+									<MoreHorizontal className='h-4 w-4' />
+								</Button>
+							</TooltipTrigger>
+						</div>
+						<TooltipContent className='flex items-center'>
+							<Pointer className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
+							Right Click
+						</TooltipContent>
+					</Tooltip>
+				</TooltipProvider>
 			)
-		},
-		filterFn: (row, id, value) => {
-			return value.includes(row.getValue(id))
 		}
 	}
 ]
