@@ -1,26 +1,53 @@
-import { Major, Unit } from '@prisma/client'
-import React from 'react'
-import Majors from './components/Majors'
 import { H1 } from '@/app/components/ui/Typography'
-import Image from 'next/image'
 import { urlFor } from '@/lib/supabase/getUrlFor'
-import { getUnits } from '@/lib/prisma/getUnits'
-import { getUnit } from '@/lib/prisma/getUnit'
+import prisma from '@/prisma/client'
+import Image from 'next/image'
+import { notFound } from 'next/navigation'
+import Majors from './components/Majors'
 
-type Props = { params: { unitId: number } }
+type Props = { params: { unitId: string } }
 
 export async function generateStaticParams() {
-	const { units } = await getUnits()
+	const units = await prisma.unit.findMany({
+		select: {
+			id: true
+		}
+	})
 
-	return units?.map((unit: any) => ({
+	return units?.map(unit => ({
 		unitId: unit.id.toString()
 	}))
 }
 
 export default async function UnitPage({ params }: Props) {
-	const { unit } = await getUnit(params.unitId)
+	const unit = await prisma.unit.findFirst({
+		where: {
+			id: parseInt(params.unitId)
+		},
+		include: {
+			majors: {
+				select: {
+					id: true,
+					name: true,
+					unitId: true
+				}
+			},
+			city: {
+				select: {
+					name: true,
+					voivodeship: true
+				}
+			},
+			address: {
+				select: {
+					street: true,
+					postalCode: true
+				}
+			}
+		}
+	})
 
-	if (!unit) return null
+	if (!unit) return notFound()
 
 	return (
 		<div className='flex min-h-screen flex-col items-center wrapper pt-12'>
@@ -30,11 +57,21 @@ export default async function UnitPage({ params }: Props) {
 				<Image src={urlFor('unit_logos', unit.logo).publicUrl} alt={`Logo ${unit.name}`} width={100} height={100} />
 			)}
 
+			<p>id - {unit.id}</p>
+			<p>email - {unit.email}</p>
 			<p>isPublic - {unit.isPublic}</p>
+			<p>website - {unit.website}</p>
+			<p>unitType - {unit.unitType}</p>
+			<p>city - {unit.city.name}</p>
+			<p>voivodeship - {unit.city.voivodeship.name}</p>
+			<p>logo - {unit.logo}</p>
 			<p>NIP - {unit.nip}</p>
 			<p>Regon - {unit.regon}</p>
-			<p>unitType - {unit.unitType}</p>
-			<p>website - {unit.website}</p>
+			<p>updatedAt - {JSON.stringify(new Date(unit.updatedAt ?? ''))}</p>
+			<p>street - {unit.address?.street}</p>
+			<p>postalCode - {unit.address?.postalCode}</p>
+			<p>status - {unit.status}</p>
+			<p>notes - {unit.notes}</p>
 
 			{unit.majors && <Majors majors={unit.majors} />}
 		</div>

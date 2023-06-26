@@ -1,24 +1,22 @@
 import { H1 } from '@/app/components/ui/Typography'
-import { Major, Qualification } from '@prisma/client'
-import React from 'react'
+import prisma from '@/prisma/client'
+import { notFound } from 'next/navigation'
 
 type Props = { params: { majorId: number } }
 
-const getMajor = async (id: number) => {
-	const res = await fetch(`${getBaseURL()}/api/getMajor?id=${id}`)
-
-	if (!res.ok) {
-		console.log(res)
-		throw new Error('Failed to fetch')
-	}
-
-	const major: Major & { qualifications: Qualification[] } = await res.json()
-
-	return major
-}
-
 const MajorPage = async ({ params }: Props) => {
-	const major = await getMajor(params.majorId)
+	const major = await prisma.major.findFirst({
+		where: { id: params.majorId },
+		include: {
+			qualifications: {
+				select: {
+					qualification: true
+				}
+			}
+		}
+	})
+
+	if (!major) return notFound()
 
 	return (
 		<div className='flex min-h-screen flex-col items-center wrapper pt-12'>
@@ -48,7 +46,7 @@ const MajorPage = async ({ params }: Props) => {
 				<p>organisator - {major.organisator}</p>
 				<ul className='list-disc'>
 					<p>qualifications:</p>
-					{major.qualifications.map(qualification => (
+					{major.qualifications.map(({ qualification }) => (
 						<li key={qualification.id}>
 							{qualification.name} ({qualification.type})
 						</li>
