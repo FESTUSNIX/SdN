@@ -16,7 +16,7 @@ const Street = ({ form }: Props) => {
 				<FormItem>
 					<FormLabel>Street</FormLabel>
 					<FormControl>
-						<Input placeholder='Street 12' {...field} />
+						<Input placeholder='Street 123' {...field} />
 					</FormControl>
 					<FormMessage />
 				</FormItem>

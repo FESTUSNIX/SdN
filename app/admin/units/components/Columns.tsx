@@ -1,23 +1,14 @@
 'use client'
 
 import { Button } from '@/app/components/ui/Button'
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger
-} from '@/app/components/ui/DropdownMenu'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
-import { UnitStatus } from '@prisma/client'
+import { cn } from '@/lib/utils/utils'
 import { ColumnDef } from '@tanstack/react-table'
-import { MoreHorizontal, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { unitTypes } from '../constants/tableData'
 import { TableUnitData } from '../page'
 import { DataTableColumnHeader } from './DataTableColumnHeader'
-import { cn } from '@/lib/utils/utils'
+import RowActions from './RowActions'
 
 export const columns: ColumnDef<TableUnitData>[] = [
 	{
@@ -118,32 +109,7 @@ export const columns: ColumnDef<TableUnitData>[] = [
 	{
 		id: 'actions',
 		cell: ({ row }) => {
-			const unit = row.original
-
-			return (
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button variant='ghost' className='h-8 w-8 p-0'>
-							<span className='sr-only'>Open menu</span>
-							<MoreHorizontal className='h-4 w-4' />
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align='end'>
-						<DropdownMenuLabel>Actions</DropdownMenuLabel>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem>
-							<Link href={`/units/${unit.id}`} className='w-full'>
-								Open unit page
-							</Link>
-						</DropdownMenuItem>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem>
-							<Trash className='mr-2 h-4 w-4' />
-							<span>Delete unit</span>
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
-			)
+			return <RowActions row={row} />
 		}
 	},
 	{

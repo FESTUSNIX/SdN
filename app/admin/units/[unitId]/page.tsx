@@ -1,9 +1,7 @@
-import React, { Suspense } from 'react'
 import { H1 } from '@/app/components/ui/Typography'
-import Image from 'next/image'
 import { urlFor } from '@/lib/supabase/getUrlFor'
-import { getUnit } from '@/lib/prisma/getUnit'
 import prisma from '@/prisma/client'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
 type Props = { params: { unitId: string } }

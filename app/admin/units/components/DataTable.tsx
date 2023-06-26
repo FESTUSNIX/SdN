@@ -17,10 +17,9 @@ import {
 
 import { Button } from '@/app/components/ui/Button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/ui/Table'
+import { cn } from '@/lib/utils/utils'
 import { useState } from 'react'
 import { DataTableToolbar } from './DataTableToolbar'
-import { cn } from '@/lib/utils/utils'
-import { TableUnitData } from '../page'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
