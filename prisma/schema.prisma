@@ -23,7 +23,7 @@ model Unit {
   updatedAt DateTime?    @updatedAt
   majors    Major[]
   address   UnitAddress?
-  status    UnitStatus?
+  status    UnitStatus
 
   @@index([name])
 }
