@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body className={inter.className}>
 				<Providers>
 					<Navbar />
-					<main className='container max-w-7xl mx-auto h-full pt-12'>{children}</main>
+					{children}
 					<Toaster />
 				</Providers>
 			</body>
