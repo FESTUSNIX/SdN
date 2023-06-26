@@ -1,15 +1,11 @@
-import { H1 } from '@/app/components/ui/Typography'
 import prisma from '@/prisma/client'
-import UnitForm from '../components/modules/UnitForm'
+import { UnitStatus } from '@prisma/client'
+import { Metadata } from 'next'
+import AddUnitForm from './components/AddUnitForm'
 import { columns } from './components/Columns'
 import { DataTable } from './components/DataTable'
-import { UnitStatus } from '@prisma/client'
-import { FormContextProvider } from './context/FormContext'
-import AddUnitForm from './components/AddUnitForm'
 import EditUnitForm from './components/EditUnitForm'
-import { z } from 'zod'
-import { Metadata } from 'next'
-
+import { FormContextProvider } from './context/FormContext'
 export type TableUnitData = {
 	id: number
 	name: string
@@ -24,8 +20,7 @@ export type TableUnitData = {
 
 export const metadata: Metadata = {
 	title: 'SdN | Manage units',
-	description: 'Admin panel - units',
-
+	description: 'Admin panel - units'
 }
 
 export default async function UnitsPage() {
