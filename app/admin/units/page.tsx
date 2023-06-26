@@ -7,6 +7,8 @@ import { UnitStatus } from '@prisma/client'
 import { FormContextProvider } from './context/FormContext'
 import AddUnitForm from './components/AddUnitForm'
 import EditUnitForm from './components/EditUnitForm'
+import { z } from 'zod'
+import { Metadata } from 'next'
 
 export type TableUnitData = {
 	id: number
@@ -14,10 +16,16 @@ export type TableUnitData = {
 	email: string
 	unitType: string
 	website: string
-	status: UnitStatus | null
+	status: UnitStatus
 	city: {
 		name: string
 	}
+}
+
+export const metadata: Metadata = {
+	title: 'SdN | Manage units',
+	description: 'Admin panel - units',
+
 }
 
 export default async function UnitsPage() {
@@ -34,22 +42,17 @@ export default async function UnitsPage() {
 					name: true
 				}
 			}
-		},
-		take: 25
+		}
 	})
 
 	return (
-		<div className='flex min-h-screen flex-col items-center wrapper pt-12'>
-			<H1 className='mb-24'>Units panel</H1>
+		<div className='flex flex-col items-center md:h-[calc(100vh-73px)]'>
+			<FormContextProvider>
+				<DataTable columns={columns} data={units} />
 
-			<section className='w-full mb-12'>
-				<FormContextProvider>
-					<DataTable columns={columns} data={units} />
-
-					<EditUnitForm />
-					<AddUnitForm />
-				</FormContextProvider>
-			</section>
+				<EditUnitForm />
+				<AddUnitForm />
+			</FormContextProvider>
 		</div>
 	)
 }
