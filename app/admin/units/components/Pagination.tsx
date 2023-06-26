@@ -9,7 +9,7 @@ interface DataTablePaginationProps<TData> {
 
 export function Pagination<TData>({ table }: DataTablePaginationProps<TData>) {
 	return (
-		<div className='bottom-0 left-0 w-full border-t border-border bg-background py-4'>
+		<div className='bottom-0 left-0 mt-auto w-full border-t border-border bg-background py-4'>
 			<div className='wrapper flex flex-col justify-between gap-y-4 md:flex-row md:items-center'>
 				<div className='hidden flex-1 text-sm text-muted-foreground md:block'>
 					{table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s)
