@@ -43,7 +43,7 @@ export default async function UnitsPage() {
 	})
 
 	return (
-		<div className='flex flex-col items-center md:h-[calc(100vh-73px)]'>
+		<div className='flex flex-col items-center md:h-screen'>
 			<FormContextProvider>
 				<DataTable columns={columns} data={units} />
 

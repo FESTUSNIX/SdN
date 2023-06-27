@@ -1,9 +1,6 @@
 import { UseFormReturn } from 'react-hook-form'
 import { z } from 'zod'
 
-const MAX_FILE_SIZE = 6291456
-const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
-
 export const UnitValidator = z.object({
 	id: z.number().optional(),
 	name: z.string().min(2, {

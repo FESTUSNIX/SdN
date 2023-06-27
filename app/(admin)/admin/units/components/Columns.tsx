@@ -47,18 +47,7 @@ export const columns: ColumnDef<TableUnitData>[] = [
 		cell: ({ row }) => {
 			const name: string = row.getValue('name')
 
-			return (
-				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger>
-							<div className='max-w-xs truncate font-medium'>{name}</div>
-						</TooltipTrigger>
-						<TooltipContent>
-							<p>{name}</p>
-						</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
-			)
+			return <div className='font-medium'>{name}</div>
 		}
 	},
 	{
