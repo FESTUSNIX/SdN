@@ -21,23 +21,7 @@ import { cn } from '@/lib/utils/utils'
 import { useState } from 'react'
 import { DataTableToolbar } from './DataTableToolbar'
 import { Pagination } from './Pagination'
-import {
-	ContextMenu,
-	ContextMenuContent,
-	ContextMenuItem,
-	ContextMenuLabel,
-	ContextMenuSeparator,
-	ContextMenuTrigger
-} from '@/app/components/ui/ContextMenu'
 import RowActions from './RowActions'
-import { TableUnitData } from '../page'
-import { DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/app/components/ui/DropdownMenu'
-import Link from 'next/link'
-import { ExternalLink } from 'lucide-react'
-import EditRow from './RowActions/components/EditRow'
-import UpdateStatus from './RowActions/components/UpdateStatus'
-import DeleteRow from './RowActions/components/DeleteRow'
-import { UnitTableValidator } from '@/lib/validators/unit'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
