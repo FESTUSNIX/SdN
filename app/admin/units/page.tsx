@@ -23,6 +23,8 @@ export const metadata: Metadata = {
 	description: 'Admin panel - units'
 }
 
+export const revalidate = 0
+
 export default async function UnitsPage() {
 	const units = await prisma.unit.findMany({
 		select: {
