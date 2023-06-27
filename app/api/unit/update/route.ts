@@ -42,7 +42,7 @@ export async function PATCH(req: Request) {
 				status: status,
 				name: name,
 				// logo: logo,
-				phone: phone,
+				phone: phone ?? '',
 				email: email,
 				cityId: cityId,
 				isPublic: isPublic,
