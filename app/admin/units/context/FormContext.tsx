@@ -21,6 +21,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
 		name: '',
 		logo: undefined as any,
 		email: '',
+		phone: '',
 		isPublic: true,
 		nip: '',
 		regon: '',

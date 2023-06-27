@@ -11,6 +11,7 @@ export const UnitValidator = z.object({
 	}),
 	logo: z.any().optional(),
 	email: z.string(),
+	phone: z.string().optional(),
 	isPublic: z.boolean().default(true),
 	nip: z.string().optional(),
 	regon: z.string().optional(),

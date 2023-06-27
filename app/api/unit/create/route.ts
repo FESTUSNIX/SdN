@@ -23,6 +23,7 @@ export async function POST(req: Request) {
 				name: data.name,
 				logo: data.logo,
 				email: data.email,
+				phone: data.phone,
 				cityId: data.cityId,
 				isPublic: data.isPublic,
 				unitType: data.unitType,

@@ -36,6 +36,7 @@ const EditUnitForm = (props: Props) => {
 				logo: values.logo,
 				isPublic: values.isPublic,
 				email: values.email,
+				phone: values.phone,
 				nip: values.nip ?? '',
 				cityId: values.cityId,
 				regon: values.regon ?? '',

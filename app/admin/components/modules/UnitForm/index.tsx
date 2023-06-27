@@ -21,6 +21,7 @@ import Status from './components/elements/Status'
 import UnitType from './components/elements/UnitType'
 import Website from './components/elements/Website'
 import Address from './components/modules/Address'
+import Phone from './components/elements/Phone'
 
 type Props = {
 	form: form
@@ -49,15 +50,15 @@ const UnitForm = ({
 			onOpenChange={open => {
 				setOpen(open)
 			}}>
-			<SheetContent side={'right'} className='p-0 max-w-xl w-screen flex flex-col gap-0 sm:min-w-[500px]'>
-				<SheetHeader className='px-6 py-4 border-b'>
+			<SheetContent side={'right'} className='flex w-screen max-w-xl flex-col gap-0 p-0 sm:min-w-[500px]'>
+				<SheetHeader className='border-b px-6 py-4'>
 					<SheetTitle>{title}</SheetTitle>
 				</SheetHeader>
 
 				<ScrollArea className='h-full'>
 					<Form {...form}>
 						<form onSubmit={form.handleSubmit(e => onSubmit(e))} className='py-4'>
-							<div className='px-6 space-y-8 '>
+							<div className='space-y-8 px-6 '>
 								<Name form={form} />
 
 								<Email form={form} />
@@ -77,11 +78,13 @@ const UnitForm = ({
 
 							<Separator className='my-12' />
 
-							<div className='px-6 space-y-8'>
+							<div className='space-y-8 px-6'>
 								<div>
 									<H4>Optional</H4>
 									<Muted>These fields are optional and can be filled later</Muted>
 								</div>
+								<Phone form={form} />
+
 								<Address form={form} />
 
 								<NIP form={form} />
@@ -94,7 +97,7 @@ const UnitForm = ({
 					</Form>
 				</ScrollArea>
 
-				<SheetFooter className='px-6 py-4 border-t gap-4 flex-row justify-end'>
+				<SheetFooter className='flex-row justify-end gap-4 border-t px-6 py-4'>
 					<Button variant={'secondary'} onClick={() => setOpen(false)}>
 						Cancel
 					</Button>
