@@ -42,8 +42,6 @@ export async function POST(req: Request) {
 			}
 		})
 
-		const revalidate = await fetch('/api/revalidate?path=/admin/units')
-
 		return new Response(unit.name)
 	} catch (error) {
 		if (error instanceof z.ZodError) {

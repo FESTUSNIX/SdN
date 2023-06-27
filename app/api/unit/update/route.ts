@@ -68,8 +68,6 @@ export async function PATCH(req: Request) {
 			}
 		})
 
-		const revalidate = await fetch('/api/revalidate?path=/admin/units')
-
 		return new Response('OK')
 	} catch (error) {
 		if (error instanceof z.ZodError) {
