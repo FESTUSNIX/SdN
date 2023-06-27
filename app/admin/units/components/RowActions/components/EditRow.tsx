@@ -43,7 +43,7 @@ const EditRow = ({ rowData }: Props) => {
 				name: data.name,
 				logo: undefined as any,
 				email: data.email,
-				phone: data.phone,
+				phone: data.phone ?? '',
 				isPublic: data.isPublic,
 				nip: data.nip ?? '',
 				regon: data.regon ?? '',

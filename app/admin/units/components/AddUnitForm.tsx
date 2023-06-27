@@ -60,7 +60,7 @@ const AddUnitForm = (props: Props) => {
 				logo: filepath,
 				isPublic: values.isPublic,
 				email: values.email,
-				phone: values.phone,
+				phone: values.phone ?? '',
 				nip: values.nip,
 				cityId: values.cityId,
 				regon: values.regon,

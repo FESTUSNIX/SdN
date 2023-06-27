@@ -36,7 +36,7 @@ const EditUnitForm = (props: Props) => {
 				logo: values.logo,
 				isPublic: values.isPublic,
 				email: values.email,
-				phone: values.phone,
+				phone: values.phone ?? '',
 				nip: values.nip ?? '',
 				cityId: values.cityId,
 				regon: values.regon ?? '',
@@ -74,7 +74,6 @@ const EditUnitForm = (props: Props) => {
 			form.reset()
 
 			setOpenEdit(false)
-			router.refresh()
 		}
 	})
 
