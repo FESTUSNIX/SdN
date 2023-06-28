@@ -1,0 +1,38 @@
+import React from 'react'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
+import Link from 'next/link'
+import { cn } from '@/lib/utils/utils'
+import { buttonVariants } from '@/app/components/ui/Button'
+
+type Props = {
+	href: string
+	children: React.ReactNode
+	tooltipText: string
+}
+
+const NavLink = ({ children, tooltipText, href }: Props) => {
+	return (
+		<TooltipProvider>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<Link
+						href={href}
+						className={cn(
+							'group',
+							buttonVariants({
+								variant: 'ghost',
+								size: 'icon'
+							})
+						)}>
+						{children}
+					</Link>
+				</TooltipTrigger>
+				<TooltipContent side='right' align='center'>
+					<p>{tooltipText}</p>
+				</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
+	)
+}
+
+export default NavLink

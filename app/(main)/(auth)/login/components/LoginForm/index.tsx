@@ -5,11 +5,16 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/app/components/ui/Input'
 import { LoginPayload, LoginValidator } from '@/lib/validators/login'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { signIn } from 'next-auth/react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
 
 type Props = {}
 
 const LoginForm = () => {
+	const [isLoading, setIsLoading] = useState(false)
+
 	const form = useForm<LoginPayload>({
 		resolver: zodResolver(LoginValidator),
 		defaultValues: {
@@ -18,12 +23,21 @@ const LoginForm = () => {
 		}
 	})
 
-	function onSubmit(data: LoginPayload) {
-		console.log(data)
+	const onSubmit = async (data: LoginPayload) => {
+		setIsLoading(true)
+		try {
+			const { email, password } = data
 
-		// toast({
-		// 	title: 'You submitted the following values:',
-		// })
+			await signIn('credentials', {
+				email: email,
+				password: password,
+				callbackUrl: '/admin'
+			})
+		} catch (error) {
+			toast('There was an error while logging in. Please try again.')
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	return (
@@ -57,7 +71,9 @@ const LoginForm = () => {
 					)}
 				/>
 
-				<Button type='submit'>Sign In</Button>
+				<Button type='submit' isLoading={isLoading}>
+					Log In
+				</Button>
 			</form>
 		</Form>
 	)

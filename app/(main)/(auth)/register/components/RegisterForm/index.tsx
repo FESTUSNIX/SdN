@@ -3,7 +3,7 @@
 import { Button } from '@/app/components/ui/Button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
 import { Input } from '@/app/components/ui/Input'
-import { LoginPayload, LoginValidator } from '@/lib/validators/login'
+import { RegisterPayload, RegisterValidator } from '@/lib/validators/register'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
@@ -16,19 +16,21 @@ import { User } from '@prisma/client'
 type Props = {}
 
 const RegisterForm = () => {
-	const form = useForm<LoginPayload>({
-		resolver: zodResolver(LoginValidator),
+	const form = useForm<RegisterPayload>({
+		resolver: zodResolver(RegisterValidator),
 		defaultValues: {
+			name: '',
 			email: '',
 			password: ''
 		}
 	})
 
 	const { mutate: register, isLoading } = useMutation({
-		mutationFn: async (values: LoginPayload) => {
+		mutationFn: async (values: RegisterPayload) => {
 			toast.loading('Creating an account...')
 
-			const payload: LoginPayload = {
+			const payload: RegisterPayload = {
+				name: values.name,
 				email: values.email,
 				password: values.password
 			}
@@ -59,7 +61,7 @@ const RegisterForm = () => {
 			signIn('credentials', {
 				email: data.email,
 				password: form.getValues('password'),
-				callbackUrl: '/admin'
+				callbackUrl: '/'
 			})
 
 			form.reset()
@@ -69,6 +71,20 @@ const RegisterForm = () => {
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(e => register(e))} className='space-y-6'>
+				<FormField
+					control={form.control}
+					name='name'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Name</FormLabel>
+							<FormControl>
+								<Input placeholder='John Doe' {...field} />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
 				<FormField
 					control={form.control}
 					name='email'

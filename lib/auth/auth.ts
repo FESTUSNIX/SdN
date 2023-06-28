@@ -38,23 +38,41 @@ export const authOptions: NextAuthOptions = {
 	],
 	callbacks: {
 		async session({ token, session }) {
-			session.user.id = token.id
+			if (token) {
+				session.user.id = token.id
+				session.user.name = token.name
+				session.user.email = token.email
+				session.user.image = token.picture
+				session.user.role = token.role
+			}
 
 			return session
 		},
 		async jwt({ token, user, account }) {
-			if (account) {
-				token.accessToken = account.access_token
+			const dbUser = await prisma.user.findFirst({
+				where: {
+					email: token.email ?? undefined
+				}
+			})
+
+			if (!dbUser) {
 				token.id = user.id
+				return token
 			}
 
-			return token
+			return {
+				id: dbUser.id,
+				name: dbUser.name,
+				email: dbUser.email,
+				role: dbUser.role,
+				picture: dbUser.image
+			}
 		}
 	},
 	pages: {
 		signIn: '/login'
 	},
-	secret: process.env.JWT_SECRET
+	secret: process.env.NEXTAUTH_SECRET
 }
 
 export const getAuthSession = () => getServerSession(authOptions)
