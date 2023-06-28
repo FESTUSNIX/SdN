@@ -92,7 +92,7 @@ const RegisterForm = () => {
 						<FormItem>
 							<FormLabel>Email</FormLabel>
 							<FormControl>
-								<Input placeholder='ładny@pies.pl' {...field} />
+								<Input placeholder='ładny@piesek.pl' {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
