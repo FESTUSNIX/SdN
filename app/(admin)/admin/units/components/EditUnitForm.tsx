@@ -4,7 +4,6 @@ import { UnitPayload, UnitValidator } from '@/lib/validators/unit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
-import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -15,7 +14,6 @@ type Props = {}
 
 const EditUnitForm = (props: Props) => {
 	const { openEdit, setOpenEdit, editDefaultValues } = useFormContext()
-	const router = useRouter()
 
 	const form = useForm<UnitPayload>({
 		resolver: zodResolver(UnitValidator),
@@ -48,7 +46,7 @@ const EditUnitForm = (props: Props) => {
 				status: values.status
 			}
 
-			const { data } = await axios.patch('/api/unit/update', payload)
+			const { data } = await axios.patch('/api/unit', payload)
 
 			return data
 		},

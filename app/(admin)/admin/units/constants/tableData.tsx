@@ -13,7 +13,7 @@ export const unitTypes = [
 	}
 ]
 
-export const unitStatus = [
+export const completionStatus = [
 	{
 		value: 'FINISHED',
 		label: 'Finished'

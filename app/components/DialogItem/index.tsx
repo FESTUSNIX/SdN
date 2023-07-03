@@ -1,21 +1,20 @@
-import { ContextMenu, ContextMenuItem } from '@/app/components/ui/ContextMenu'
+import { ContextMenuItem } from '@/app/components/ui/ContextMenu'
 import { Dialog, DialogContent, DialogTrigger } from '@/app/components/ui/Dialog'
-import { forwardRef } from 'react'
-import { DialogProps } from '@radix-ui/react-dialog'
-import React from 'react'
+import React, { forwardRef } from 'react'
 
 type Props = {
 	triggerChildren: React.ReactNode
 	children: React.ReactNode
 	onSelect?: (event: Event) => void
 	onOpenChange?: (open: boolean) => void
+	open?: boolean
 	dialogClassName?: string
 }
 
 export const DialogItem = forwardRef<HTMLDivElement, Props>((props, forwardedRef) => {
-	const { dialogClassName, triggerChildren, children, onSelect, onOpenChange, ...itemProps } = props
+	const { dialogClassName, triggerChildren, children, onSelect, onOpenChange, open, ...itemProps } = props
 	return (
-		<Dialog onOpenChange={onOpenChange}>
+		<Dialog onOpenChange={onOpenChange} open={open}>
 			<DialogTrigger asChild>
 				<ContextMenuItem
 					{...itemProps}

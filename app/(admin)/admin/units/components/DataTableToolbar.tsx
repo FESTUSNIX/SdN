@@ -3,11 +3,11 @@
 import { Table } from '@tanstack/react-table'
 import { Plus, X } from 'lucide-react'
 
-import { DataTableViewOptions } from './DataTableViewOptions'
+import { ViewOptions } from '@/app/components/Table/ColumnToggle'
 
 import { Button } from '@/app/components/ui/Button'
 import { Input } from '@/app/components/ui/Input'
-import { unitStatus, unitTypes } from '../constants/tableData'
+import { completionStatus, unitTypes } from '../constants/tableData'
 import { useFormContext } from '../hooks/useFormContext'
 import { DataTableFacetedFilter } from './DataTableFacetedFilter'
 
@@ -32,7 +32,7 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
 					<DataTableFacetedFilter column={table.getColumn('unitType')} title='Type' options={unitTypes} />
 				)}
 				{table.getColumn('status') && (
-					<DataTableFacetedFilter column={table.getColumn('status')} title='Status' options={unitStatus} />
+					<DataTableFacetedFilter column={table.getColumn('status')} title='Status' options={completionStatus} />
 				)}
 
 				{isFiltered && (
@@ -42,7 +42,7 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
 					</Button>
 				)}
 
-				<DataTableViewOptions table={table} />
+				<ViewOptions table={table} />
 				<Button variant='default' size='sm' className='flex h-8' onClick={() => setOpenAdd(true)}>
 					<Plus className='mr-2 h-4 w-4' />
 					Add unit

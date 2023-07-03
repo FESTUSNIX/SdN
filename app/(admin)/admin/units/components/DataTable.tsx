@@ -20,7 +20,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { cn } from '@/lib/utils/utils'
 import { useState } from 'react'
 import { DataTableToolbar } from './DataTableToolbar'
-import { Pagination } from './Pagination'
+import { Pagination } from '@/app/components/Table/Pagination'
 import RowActions from './RowActions'
 
 interface DataTableProps<TData, TValue> {

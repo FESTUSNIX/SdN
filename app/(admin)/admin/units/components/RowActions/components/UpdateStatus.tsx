@@ -14,8 +14,8 @@ import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-import { UnitStatus } from '@prisma/client'
-import { unitStatus } from '../../../constants/tableData'
+import { Status } from '@prisma/client'
+import { completionStatus } from '../../../constants/tableData'
 
 type Props = {
 	rowData: TableUnitData
@@ -25,7 +25,7 @@ const UpdateStatus = ({ rowData }: Props) => {
 	const router = useRouter()
 
 	const { mutate: updateStatus } = useMutation({
-		mutationFn: async (status: UnitStatus) => {
+		mutationFn: async (status: Status) => {
 			const payload = {
 				id: rowData.id,
 				status
@@ -62,7 +62,7 @@ const UpdateStatus = ({ rowData }: Props) => {
 					onValueChange={value => {
 						updateStatus(value as 'FINISHED' | 'IN_PROGRESS')
 					}}>
-					{unitStatus.map(status => (
+					{completionStatus.map(status => (
 						<ContextMenuRadioItem key={status.value} value={status.value}>
 							{status.label}
 						</ContextMenuRadioItem>

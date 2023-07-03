@@ -77,50 +77,43 @@ model Unit {
   updatedAt DateTime?    @updatedAt
   majors    Major[]
   address   UnitAddress?
-  status    UnitStatus
+  status    Status       @default(IN_PROGRESS)
 
   @@index([name])
 }
 
 model Major {
-  id                    Int                  @id @default(autoincrement())
+  id                    Int             @id @default(autoincrement())
   name                  String
   unitId                Int
-  majorLevel            MajorLevel           @default(PODYPLOMOWE)
+  majorLevel            MajorLevel      @default(PODYPLOMOWE)
   cost                  Int?
   address               String?
-  isRegulated           Boolean?             @default(true)
+  isRegulated           Boolean         @default(true)
   certificates          String?
   completionConditions  String?
   daysOfWeek            DaysOfWeek[]
   description           String?
-  formOfStudy           String?              @default("zaoczne")
+  formOfStudy           String?         @default("zaoczne")
   numberOfSemesters     Int?
   organisator           String?
   recruitmentConditions String?
   syllabus              String?
-  updatedAt             DateTime             @default(now()) @updatedAt
-  canPayInInstallments  Boolean?             @default(false)
+  updatedAt             DateTime        @default(now()) @updatedAt
+  canPayInInstallments  Boolean         @default(false)
   durationInHours       Int?
-  isOnline              Boolean?             @default(false)
+  isOnline              Boolean         @default(false)
   onlineDuration        Int?
-  endDate               DateTime?            @db.Date
-  startDate             DateTime?            @db.Date
-  contact               ContactPerson?
-  unit                  Unit                 @relation(fields: [unitId], references: [id], onUpdate: NoAction)
-  qualifications        MajorQualification[]
+  endDate               DateTime?       @db.Date
+  startDate             DateTime?       @db.Date
+  contact               String?
+  unit                  Unit            @relation(fields: [unitId], references: [id], onUpdate: NoAction)
+  qualifications        Qualification[]
+  status                Status          @default(IN_PROGRESS)
 
   @@index([name])
 }
 
-model ContactPerson {
-  id      Int    @id @default(autoincrement())
-  name    String
-  email   String
-  phone   String
-  majorId Int    @unique
-  major   Major  @relation(fields: [majorId], references: [id])
-}
 
 model UnitAddress {
   id         Int     @id @default(autoincrement())
@@ -132,19 +125,12 @@ model UnitAddress {
   unit       Unit    @relation(fields: [unitId], references: [id], onDelete: Cascade)
 }
 
-model MajorQualification {
-  id              Int           @id @default(autoincrement())
-  majorId         Int
-  qualificationId Int
-  major           Major         @relation(fields: [majorId], references: [id])
-  qualification   Qualification @relation(fields: [qualificationId], references: [id])
-}
 
 model Qualification {
-  id       Int                  @id @default(autoincrement())
-  name     String               @unique
-  type     MajorType
-  majors   MajorQualification[]
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  type     String   @default("OGÓLNE")
+  majors   Major[]
   keywords String[]
 }
 
@@ -161,13 +147,6 @@ model City {
   voivodeship   Voivodeship   @relation(fields: [voivodeshipId], references: [id])
   unitAddress   UnitAddress[]
   units         Unit[]
-}
-
-enum MajorType {
-  OGOLNE
-  ZAWODOWE
-  SPECJALISTYCZNE
-  INNE
 }
 
 enum DaysOfWeek {
@@ -187,7 +166,7 @@ enum MajorLevel {
   PODYPLOMOWE
 }
 
-enum UnitStatus {
+enum Status {
   FINISHED
   IN_PROGRESS
 }

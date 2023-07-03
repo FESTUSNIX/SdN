@@ -7,8 +7,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import Link from 'next/link'
 import { unitTypes } from '../constants/tableData'
 import { TableUnitData } from '../page'
-import { DataTableColumnHeader } from './DataTableColumnHeader'
-import RowActions from './RowActions'
+import { ColumnHeader } from '@/app/components/Table/ColumnHeader'
 import { MoreHorizontal, Pointer } from 'lucide-react'
 
 export const columns: ColumnDef<TableUnitData>[] = [
@@ -35,32 +34,36 @@ export const columns: ColumnDef<TableUnitData>[] = [
 	{
 		accessorKey: 'id',
 		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title='#' />
+			return <ColumnHeader column={column} title='#' />
 		},
 		enableHiding: false
 	},
 	{
 		accessorKey: 'name',
 		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title='Name' />
+			return <ColumnHeader column={column} title='Name' />
 		},
 		cell: ({ row }) => {
 			const name: string = row.getValue('name')
 
-			return <div className='font-medium'>{name}</div>
+			return (
+				<Link href={`/admin/units/${row.getValue('id')}`} className='font-medium'>
+					{name}
+				</Link>
+			)
 		}
 	},
 	{
 		accessorKey: 'email',
-		header: ({ column }) => <DataTableColumnHeader column={column} title='Email' />
+		header: ({ column }) => <ColumnHeader column={column} title='Email' />
 	},
 	{
 		accessorKey: 'city.name',
-		header: ({ column }) => <DataTableColumnHeader column={column} title='City' />
+		header: ({ column }) => <ColumnHeader column={column} title='City' />
 	},
 	{
 		accessorKey: 'unitType',
-		header: ({ column }) => <DataTableColumnHeader column={column} title='Type' />,
+		header: ({ column }) => <ColumnHeader column={column} title='Type' />,
 		cell: ({ row }) => {
 			const type = unitTypes.find(type => {
 				if (type.value === 'inna' && !['uczelnia', 'pdn'].includes(row.getValue('unitType'))) {

@@ -72,7 +72,7 @@ const AddUnitForm = (props: Props) => {
 				status: values.status
 			}
 
-			const { data } = await axios.post('/api/unit/create', payload)
+			const { data } = await axios.post('/api/unit', payload)
 
 			return data
 		},
