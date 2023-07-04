@@ -8,18 +8,14 @@ const MajorPage = async ({ params }: Props) => {
 	const major = await prisma.major.findFirst({
 		where: { id: params.majorId },
 		include: {
-			qualifications: {
-				select: {
-					qualification: true
-				}
-			}
+			qualifications: true
 		}
 	})
 
 	if (!major) return notFound()
 
 	return (
-		<div className='flex min-h-screen flex-col items-center wrapper pt-12'>
+		<div className='wrapper flex min-h-screen flex-col items-center pt-12'>
 			<H1 className={'mb-24'}>{major.name}</H1>
 
 			<div className='flex flex-col gap-8'>
@@ -46,7 +42,7 @@ const MajorPage = async ({ params }: Props) => {
 				<p>organisator - {major.organisator}</p>
 				<ul className='list-disc'>
 					<p>qualifications:</p>
-					{major.qualifications.map(({ qualification }) => (
+					{major.qualifications.map(qualification => (
 						<li key={qualification.id}>
 							{qualification.name} ({qualification.type})
 						</li>
