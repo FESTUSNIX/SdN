@@ -1,16 +1,15 @@
 'use client'
 
-import { Table } from '@tanstack/react-table'
-import { Plus, X } from 'lucide-react'
+import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
 import { ViewOptions } from '@/app/components/Table/ColumnToggle'
 import { Button } from '@/app/components/ui/Button'
 import { Input } from '@/app/components/ui/Input'
-import { useFormContext } from '../../../../../hooks/useFormContext'
-import { FacetedFilter } from './FacetedFilter'
-import { completionStatus } from '../../../../../constants/tableData'
 import { useQuery } from '@tanstack/react-query'
+import { Table } from '@tanstack/react-table'
 import axios from 'axios'
-import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
+import { Plus, X } from 'lucide-react'
+import { completionStatus } from '../../../../../constants/tableData'
+import { FacetedFilter } from './FacetedFilter'
 
 interface DataTableToolbarProps<TData> {
 	table: Table<TData>
@@ -68,6 +67,7 @@ export function Toolbar<TData>({ table }: DataTableToolbarProps<TData>) {
 					size='sm'
 					className='flex h-8'
 					onClick={() => {
+						// @ts-ignore
 						openSheet('ADD_MAJOR')
 					}}>
 					<Plus className='mr-2 h-4 w-4' />

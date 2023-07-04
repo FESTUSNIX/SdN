@@ -15,11 +15,11 @@ import {
 	useReactTable
 } from '@tanstack/react-table'
 
+import { Pagination } from '@/app/components/Table/Pagination'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/ui/Table'
 import { cn } from '@/lib/utils/utils'
 import { useState } from 'react'
-import { Pagination } from '@/app/components/Table/Pagination'
 import RowActions from './RowActions'
 import { Toolbar } from './Toolbar'
 
