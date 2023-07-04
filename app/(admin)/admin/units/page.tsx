@@ -1,10 +1,10 @@
 import prisma from '@/prisma/client'
-import { UnitStatus } from '@prisma/client'
+import { Status } from '@prisma/client'
 import { Metadata } from 'next'
-import AddUnitForm from './components/AddUnitForm'
-import { columns } from './components/Columns'
-import { DataTable } from './components/DataTable'
-import EditUnitForm from './components/EditUnitForm'
+import AddUnitForm from './components/AddUnit'
+import { columns } from './components/UnitsTable/Columns'
+import { DataTable } from './components/UnitsTable/DataTable'
+import EditUnitForm from './components/EditUnit'
 import { FormContextProvider } from './context/FormContext'
 export type TableUnitData = {
 	id: number
@@ -12,7 +12,7 @@ export type TableUnitData = {
 	email: string
 	unitType: string
 	website: string
-	status: UnitStatus
+	status: Status
 	city: {
 		name: string
 	}
@@ -44,12 +44,7 @@ export default async function UnitsPage() {
 
 	return (
 		<div className='flex flex-col items-center md:h-screen'>
-			<FormContextProvider>
-				<DataTable columns={columns} data={units} />
-
-				<EditUnitForm />
-				<AddUnitForm />
-			</FormContextProvider>
+			<DataTable columns={columns} data={units} />
 		</div>
 	)
 }

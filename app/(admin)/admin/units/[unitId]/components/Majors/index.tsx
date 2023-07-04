@@ -1,6 +1,6 @@
 import prisma from '@/prisma/client'
-import { columns } from './components/Columns'
-import { MajorsTable } from './components/MajorsTable'
+import { columns } from './components/MajorsTable/Columns'
+import { MajorsTable } from './components/MajorsTable/MajorsTable'
 
 type Props = {
 	unitId: number

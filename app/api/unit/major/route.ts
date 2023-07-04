@@ -25,6 +25,69 @@ export async function GET(req: Request) {
 	}
 }
 
+export async function POST(req: Request) {
+	try {
+		const body = await req.json()
+
+		const data = MajorValidator.parse(body)
+
+		const majorExists = await prisma.major.findFirst({
+			where: {
+				name: data.name
+			}
+		})
+
+		if (majorExists) {
+			return new Response('Major already exists', { status: 409 })
+		}
+
+		const qualificationsWithIdOnly = data.qualifications.map(qualification => {
+			return {
+				id: qualification.id
+			}
+		})
+
+		const major = await prisma.major.create({
+			data: {
+				status: data.status,
+				name: data.name,
+				address: data.address,
+				contact: data.contact,
+				cost: data.cost,
+				durationInHours: data.durationInHours,
+				endDate: data.endDate,
+				formOfStudy: data.formOfStudy,
+				isOnline: !!data.isOnline,
+				majorLevel: data.majorLevel,
+				numberOfSemesters: data.numberOfSemesters,
+				onlineDuration: data.onlineDuration,
+				organisator: data.organisator,
+				recruitmentConditions: data.recruitmentConditions,
+				startDate: data.startDate,
+				syllabus: data.syllabus,
+				unitId: data.unitId,
+				isRegulated: !!data.isRegulated,
+				canPayInInstallments: !!data.canPayInInstallments,
+				certificates: data.certificates,
+				completionConditions: data.completionConditions,
+				daysOfWeek: data.daysOfWeek,
+				description: data.description,
+				qualifications: {
+					connect: qualificationsWithIdOnly
+				}
+			}
+		})
+
+		return new Response(major.name)
+	} catch (error) {
+		if (error instanceof z.ZodError) {
+			return new Response('Invalid POST request data passed', { status: 422 })
+		}
+
+		return new Response('Could not create a new major', { status: 500 })
+	}
+}
+
 export async function DELETE(req: Request) {
 	try {
 		const { searchParams } = new URL(req.url)
@@ -98,7 +161,7 @@ export async function PATCH(req: Request) {
 			return new Response('Could not find major to update', { status: 404 })
 		}
 
-		const qualificationsConnect = qualifications.map(qualification => {
+		const qualificationsWithIdOnly = qualifications.map(qualification => {
 			return {
 				id: qualification.id
 			}
@@ -144,7 +207,7 @@ export async function PATCH(req: Request) {
 				daysOfWeek: daysOfWeek,
 				description: description,
 				qualifications: {
-					connect: qualificationsConnect
+					connect: qualificationsWithIdOnly
 				}
 			}
 		})

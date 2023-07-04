@@ -1,10 +1,9 @@
-import { NextAuthOptions, getServerSession } from 'next-auth'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import CredentialsProvider from 'next-auth/providers/credentials'
 import prisma from '@/prisma/client'
-import { nanoid } from 'nanoid'
-import { LoginValidator } from '../validators/login'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import bcrypt from 'bcryptjs'
+import { NextAuthOptions, getServerSession } from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import { LoginValidator } from '../validators/login'
 
 export const authOptions: NextAuthOptions = {
 	adapter: PrismaAdapter(prisma),

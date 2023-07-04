@@ -41,4 +41,4 @@ export const UnitTableValidator = z.object({
 
 export type UnitPayload = z.infer<typeof UnitValidator>
 
-export type form = UseFormReturn<UnitPayload, any, undefined>
+export type UnitFormType = UseFormReturn<UnitPayload, any, undefined>

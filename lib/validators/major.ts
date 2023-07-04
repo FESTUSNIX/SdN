@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { UseFormReturn } from 'react-hook-form'
 
 export const MajorValidator = z.object({
 	id: z.number(),
@@ -35,3 +36,5 @@ export const MajorValidator = z.object({
 })
 
 export type MajorPayload = z.infer<typeof MajorValidator>
+
+export type MajorFormType = UseFormReturn<MajorPayload, any, undefined>
