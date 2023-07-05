@@ -53,7 +53,7 @@ export const columns: ColumnDef<TableUnitData>[] = [
 			const name: string = row.getValue('name')
 
 			return (
-				<Link href={`/admin/units/${row.getValue('id')}`} className='font-medium'>
+				<Link target='_blank' href={`/admin/units/${row.getValue('id')}`} className='font-medium'>
 					{name}
 				</Link>
 			)

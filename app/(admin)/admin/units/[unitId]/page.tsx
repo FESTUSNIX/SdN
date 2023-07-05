@@ -41,6 +41,7 @@ const AdminUnitPage = async ({ params: { unitId } }: Props) => {
 			</h1>
 
 			<Link
+				target='_blank'
 				href={unit.website}
 				className={cn(
 					buttonVariants({
