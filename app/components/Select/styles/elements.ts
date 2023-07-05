@@ -13,7 +13,8 @@ export const menuStyles = 'mt-2 border border-border bg-background p-1 backdrop-
 export const groupHeadingStyles = 'ml-3 mt-2 mb-1 text-neutral-500 text-sm'
 export const optionStyles = {
 	base: 'py-1.5 hover:cursor-pointer pr-2 pl-8 rounded-sm text-sm text-foreground',
-	focus: 'bg-accent text-accent-foreground'
+	focus: 'bg-accent text-accent-foreground',
+	selected: ''
 }
 export const noOptionsMessageStyles = 'text-neutral-500 p-2 bg-gray-50 border border-dashed border-border rounded-sm'
 
