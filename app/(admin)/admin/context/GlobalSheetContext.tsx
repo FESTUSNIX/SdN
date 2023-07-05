@@ -3,6 +3,7 @@ import GlobalSheet from '../components/GlobalSheet'
 import AddUnit from '../units/components/AddUnit'
 import EditUnit from '../units/components/EditUnit'
 import AddMajor from '../units/[unitId]/components/Majors/components/AddMajor'
+import EditMajor from '../units/[unitId]/components/Majors/components/EditMajor'
 
 type SheetState = {
 	content: JSX.Element | null
@@ -40,7 +41,7 @@ const sheetReducer = (state: any, action: { type: SHEET_TYPES; defaultValues?: a
 			}
 		case 'EDIT_MAJOR':
 			return {
-				content: <EditUnit />,
+				content: <EditMajor />,
 				show: true,
 				defaultValues: action.defaultValues
 			}
