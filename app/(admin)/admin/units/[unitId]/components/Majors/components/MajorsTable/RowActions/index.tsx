@@ -8,12 +8,11 @@ import {
 	ContextMenuSeparator,
 	ContextMenuTrigger
 } from '@/app/components/ui/ContextMenu'
-import { MajorValidator } from '@/lib/validators/major'
+import { MajorValidatorWithFullQualifications } from '@/lib/validators/major'
 import { Row } from '@tanstack/react-table'
 import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
-
 import EditRow from './components/EditRow'
 import UpdateStatus from './components/UpdateStatus'
 import DeleteRow from '@/app/(admin)/admin/components/DeleteRow'
@@ -25,7 +24,7 @@ type Props<TData> = {
 }
 
 export function RowActions<TData>({ unitId, row, children }: Props<TData>) {
-	const rowData = MajorValidator.parse(row.original)
+	const rowData = MajorValidatorWithFullQualifications.parse(row.original)
 
 	return (
 		<ContextMenu>

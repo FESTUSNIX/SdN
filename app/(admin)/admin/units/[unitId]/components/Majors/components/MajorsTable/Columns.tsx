@@ -4,12 +4,12 @@ import { ColumnHeader } from '@/app/components/Table/ColumnHeader'
 import { Button } from '@/app/components/ui/Button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
 import { cn } from '@/lib/utils/utils'
-import { MajorPayload } from '@/lib/validators/major'
+import { MajorPayloadWithFullQualifications } from '@/lib/validators/major'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal, Pointer } from 'lucide-react'
 import Link from 'next/link'
 
-export const columns: ColumnDef<MajorPayload>[] = [
+export const columns: ColumnDef<MajorPayloadWithFullQualifications>[] = [
 	{
 		id: 'status',
 		accessorKey: 'status',
