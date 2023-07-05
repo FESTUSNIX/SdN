@@ -23,7 +23,7 @@ const Majors = async ({ unitId }: Props) => {
 	})
 
 	return (
-		<div>
+		<div className='mt-12'>
 			<MajorsTable data={majors} columns={columns} unitId={unitId} />
 		</div>
 	)
