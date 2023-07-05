@@ -35,7 +35,7 @@ export function MajorsTable<TData, TValue>({ unitId, columns, data }: DataTableP
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 	const [sorting, setSorting] = useState<SortingState>([
 		{
-			id: 'id',
+			id: 'name',
 			desc: false
 		}
 	])
