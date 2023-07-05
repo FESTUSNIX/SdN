@@ -3,14 +3,14 @@
 import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
 import { useFormContext } from '@/app/(admin)/admin/units/hooks/useFormContext'
 import { ContextMenuItem } from '@/app/components/ui/ContextMenu'
-import { MajorPayload, MajorValidator } from '@/lib/validators/major'
+import { MajorPayload, MajorPayloadWithFullQualifications, MajorValidator } from '@/lib/validators/major'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { Pencil } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 
 type Props = {
-	rowData: MajorPayload
+	rowData: MajorPayloadWithFullQualifications
 }
 
 const EditRow = ({ rowData }: Props) => {
@@ -18,7 +18,7 @@ const EditRow = ({ rowData }: Props) => {
 
 	const { mutate: deleteRow } = useMutation({
 		mutationFn: async () => {
-			const query = `/api/unit?id=${rowData.id}`
+			const query = `/api/unit/major?id=${rowData.id}`
 
 			const { data } = await axios.get(query)
 
@@ -37,9 +37,10 @@ const EditRow = ({ rowData }: Props) => {
 
 			return toast.error('Something went wrong.')
 		},
-		onSuccess: data => {
+		onSuccess: (data: MajorPayloadWithFullQualifications) => {
+			const qualificationsWithIdOnly = data.qualifications.map(qualification => qualification.id)
+
 			const {
-				id,
 				address,
 				canPayInInstallments,
 				certificates,
@@ -64,7 +65,7 @@ const EditRow = ({ rowData }: Props) => {
 				syllabus,
 				unitId,
 				isRegulated
-			} = MajorValidator.parse(data)
+			} = MajorValidator.parse({ ...data, qualifications: qualificationsWithIdOnly })
 
 			const values: MajorPayload = {
 				id: data.id,

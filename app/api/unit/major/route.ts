@@ -10,6 +10,9 @@ export async function GET(req: Request) {
 		const major = await prisma.major.findFirst({
 			where: {
 				id: id
+			},
+			include: {
+				qualifications: true
 			}
 		})
 
@@ -41,9 +44,9 @@ export async function POST(req: Request) {
 			return new Response('Major already exists', { status: 409 })
 		}
 
-		const qualificationsWithIdOnly = data.qualifications.map(qualification => {
+		const qualificationsConnect = data.qualifications.map(qualification => {
 			return {
-				id: qualification.id
+				id: qualification
 			}
 		})
 
@@ -73,7 +76,7 @@ export async function POST(req: Request) {
 				daysOfWeek: data.daysOfWeek,
 				description: data.description,
 				qualifications: {
-					connect: qualificationsWithIdOnly
+					connect: qualificationsConnect
 				}
 			}
 		})
@@ -161,9 +164,9 @@ export async function PATCH(req: Request) {
 			return new Response('Could not find major to update', { status: 404 })
 		}
 
-		const qualificationsWithIdOnly = qualifications.map(qualification => {
+		const qualificationsConnect = qualifications.map(qualification => {
 			return {
-				id: qualification.id
+				id: qualification
 			}
 		})
 
@@ -207,7 +210,7 @@ export async function PATCH(req: Request) {
 				daysOfWeek: daysOfWeek,
 				description: description,
 				qualifications: {
-					connect: qualificationsWithIdOnly
+					connect: qualificationsConnect
 				}
 			}
 		})
@@ -218,6 +221,6 @@ export async function PATCH(req: Request) {
 			return new Response('Invalid PATCH request data passed', { status: 422 })
 		}
 
-		return new Response('Could not update this unit, please try again.', { status: 500 })
+		return new Response('Could not update this major, please try again.', { status: 500 })
 	}
 }
