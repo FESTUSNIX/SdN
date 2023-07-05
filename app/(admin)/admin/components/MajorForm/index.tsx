@@ -5,6 +5,10 @@ import { Separator } from '@/app/components/ui/Separator/separator'
 import { H4, Muted } from '@/app/components/ui/Typography'
 import { SubmitHandler } from 'react-hook-form'
 import { MajorPayload, MajorFormType } from '@/lib/validators/major'
+import Name from './components/Name'
+import MajorLevel from './components/MajorLevel'
+import Qualifications from './components/Qualifications'
+import Status from './components/Status'
 
 type Props = {
 	form: MajorFormType
@@ -15,11 +19,15 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(e => onSubmit(e))} className='py-4'>
-				<div className='space-y-8 px-6 '></div>
+				<div className='space-y-8 px-6'>
+					<Name form={form} />
 
-				{/* NAME */}
-				{/* MAJOR LEVEL */}
-				{/* QUALIFICATIONS */}
+					<MajorLevel form={form} />
+
+					<Qualifications form={form} />
+
+					<Status form={form} />
+				</div>
 
 				<Separator className='my-12' />
 
@@ -48,7 +56,6 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 					{/* START DATE */}
 					{/* END DATE */}
 					{/* CONTACT */}
-					{/* STATUS */}
 				</div>
 			</form>
 		</Form>
