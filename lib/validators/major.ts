@@ -4,7 +4,7 @@ import { UseFormReturn } from 'react-hook-form'
 export const MajorValidator = z.object({
 	id: z.number(),
 	unitId: z.number(),
-	name: z.string(),
+	name: z.string().nonempty(),
 	majorLevel: z.enum(['PIERWSZEGO_STOPNIA', 'DRUGIEGO_STOPNIA', 'JEDNOLITE_MAGISTERSKIE', 'PODYPLOMOWE']),
 	cost: z.number().nullable(),
 	address: z.string().nullable(),
@@ -26,6 +26,16 @@ export const MajorValidator = z.object({
 	startDate: z.coerce.date().nullable(),
 	contact: z.string().nullable(),
 	status: z.enum(['IN_PROGRESS', 'FINISHED']),
+	qualifications: z.number().array().min(1, {
+		message: 'You must select at least one qualification'
+	})
+})
+
+export type MajorPayload = z.infer<typeof MajorValidator>
+
+export type MajorFormType = UseFormReturn<MajorPayload, any, undefined>
+
+export const MajorValidatorWithFullQualifications = MajorValidator.extend({
 	qualifications: z
 		.object({
 			id: z.number(),
@@ -35,6 +45,4 @@ export const MajorValidator = z.object({
 		.array()
 })
 
-export type MajorPayload = z.infer<typeof MajorValidator>
-
-export type MajorFormType = UseFormReturn<MajorPayload, any, undefined>
+export type MajorPayloadWithFullQualifications = z.infer<typeof MajorValidatorWithFullQualifications>
