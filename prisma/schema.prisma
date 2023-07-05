@@ -169,4 +169,5 @@ enum MajorLevel {
 enum Status {
   FINISHED
   IN_PROGRESS
+  TO_CHECK
 }

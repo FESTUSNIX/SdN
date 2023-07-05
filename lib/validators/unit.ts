@@ -24,7 +24,7 @@ export const UnitValidator = z.object({
 			message: 'Please select a city'
 		}),
 	notes: z.string().optional(),
-	status: z.enum(['FINISHED', 'IN_PROGRESS'])
+	status: z.enum(['FINISHED', 'IN_PROGRESS', 'TO_CHECK'])
 })
 
 export const UnitTableValidator = z.object({
@@ -33,7 +33,7 @@ export const UnitTableValidator = z.object({
 	email: z.string(),
 	unitType: z.string(),
 	website: z.string(),
-	status: z.enum(['FINISHED', 'IN_PROGRESS']),
+	status: z.enum(['FINISHED', 'IN_PROGRESS', 'TO_CHECK']),
 	city: z.object({
 		name: z.string()
 	})

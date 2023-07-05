@@ -23,6 +23,7 @@ const Status = ({ form }: Props) => {
 						<SelectContent>
 							<SelectItem value='FINISHED'>Finished</SelectItem>
 							<SelectItem value='IN_PROGRESS'>In Progress</SelectItem>
+							<SelectItem value='TO_CHECK'>To Check</SelectItem>
 						</SelectContent>
 					</Select>
 					<FormMessage />

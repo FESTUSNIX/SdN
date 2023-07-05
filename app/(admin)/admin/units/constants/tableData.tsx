@@ -21,5 +21,9 @@ export const completionStatus = [
 	{
 		value: 'IN_PROGRESS',
 		label: 'In Progress'
+	},
+	{
+		value: 'TO_CHECK',
+		label: 'To Check'
 	}
 ]

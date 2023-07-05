@@ -59,7 +59,7 @@ const UpdateStatus = ({ rowData }: Props) => {
 				<ContextMenuRadioGroup
 					value={rowData.status}
 					onValueChange={value => {
-						updateStatus(value as 'FINISHED' | 'IN_PROGRESS')
+						updateStatus(value as 'FINISHED' | 'IN_PROGRESS' | 'TO_CHECK')
 					}}>
 					{completionStatus.map(status => (
 						<ContextMenuRadioItem key={status.value} value={status.value}>

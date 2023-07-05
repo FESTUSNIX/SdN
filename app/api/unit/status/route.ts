@@ -8,7 +8,7 @@ export async function PATCH(req: Request) {
 		const { id, status } = z
 			.object({
 				id: z.number(),
-				status: z.enum(['FINISHED', 'IN_PROGRESS'])
+				status: z.enum(['FINISHED', 'IN_PROGRESS', 'TO_CHECK'])
 			})
 			.parse(body)
 

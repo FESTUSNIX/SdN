@@ -21,8 +21,14 @@ export const columns: ColumnDef<TableUnitData>[] = [
 			return (
 				<span
 					className={cn(
-						'absolute left-0 top-0 h-full w-1',
-						status === 'FINISHED' ? 'bg-emerald-400/20' : 'bg-orange-400/20'
+						'absolute left-0 top-0 h-full w-1.5',
+						status === 'FINISHED'
+							? 'bg-emerald-400/20'
+							: status === 'IN_PROGRESS'
+							? 'bg-orange-400/20'
+							: status === 'TO_CHECK'
+							? 'bg-purple-400/20'
+							: ''
 					)}
 				/>
 			)

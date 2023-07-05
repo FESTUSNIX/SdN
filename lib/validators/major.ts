@@ -25,7 +25,7 @@ export const MajorValidator = z.object({
 	endDate: z.coerce.date().nullable(),
 	startDate: z.coerce.date().nullable(),
 	contact: z.string().nullable(),
-	status: z.enum(['IN_PROGRESS', 'FINISHED']),
+	status: z.enum(['IN_PROGRESS', 'FINISHED', 'TO_CHECK']),
 	qualifications: z.number().array().min(1, {
 		message: 'You must select at least one qualification'
 	})
