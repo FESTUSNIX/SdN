@@ -60,7 +60,9 @@ const DeleteRow = ({ apiQuery }: Props) => {
 					</DialogDescription>
 				</DialogHeader>
 				<DialogFooter>
-					<Button variant={'secondary'}>Cancel</Button>
+					<Button variant={'secondary'} onClick={() => setOpenDialog(false)}>
+						Cancel
+					</Button>
 					<Button
 						variant={'destructive'}
 						onClick={() => {
