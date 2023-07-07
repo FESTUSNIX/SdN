@@ -13,9 +13,10 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import UnitForm from '../../components/UnitForm'
 import { useGlobalSheetContext } from '../../context/GlobalSheetContext'
+import { useFormChanges } from '../hooks/useFormChanges'
 
 const EditUnit = () => {
-	const { closeSheet, sheetState } = useGlobalSheetContext()
+	const { closeSheet, sheetState, setRequireConfirmation } = useGlobalSheetContext()
 	const { defaultValues } = sheetState
 
 	const form = useForm<UnitPayload>({
@@ -26,6 +27,8 @@ const EditUnit = () => {
 	useEffect(() => {
 		form.reset(defaultValues)
 	}, [defaultValues])
+
+	useFormChanges(form.formState)
 
 	const { mutate: updateUnit, isLoading } = useMutation({
 		mutationFn: async (values: UnitPayload) => {

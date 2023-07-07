@@ -48,7 +48,6 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
 					size='sm'
 					className='flex h-8'
 					onClick={() => {
-						// @ts-ignore Doesn't go away after fixing it
 						openSheet('ADD_UNIT')
 					}}>
 					<Plus className='mr-2 h-4 w-4' />

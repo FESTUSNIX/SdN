@@ -67,7 +67,6 @@ export function Toolbar<TData>({ table }: DataTableToolbarProps<TData>) {
 					size='sm'
 					className='flex h-8'
 					onClick={() => {
-						// @ts-ignore
 						openSheet('ADD_MAJOR')
 					}}>
 					<Plus className='mr-2 h-4 w-4' />

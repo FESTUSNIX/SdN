@@ -1,5 +1,6 @@
 'use client'
 
+import { useFormChanges } from '@/app/(admin)/admin/units/hooks/useFormChanges'
 import { Button } from '@/app/components/ui/Button'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/Sheet'
@@ -37,6 +38,8 @@ const AddUnit = () => {
 			status: 'IN_PROGRESS'
 		}
 	})
+
+	useFormChanges(form.formState)
 
 	const uploadImageToSupabase = async (logo: File) => {
 		const filename = `${uuidv4()}-${logo.name}`

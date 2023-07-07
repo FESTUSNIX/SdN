@@ -1,13 +1,18 @@
-import React from 'react'
-import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/Sheet'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
-import { Button } from '@/app/components/ui/Button'
-import { Loader2 } from 'lucide-react'
+import { Sheet, SheetContent } from '@/app/components/ui/Sheet'
 import { useGlobalSheetContext } from '../../context/GlobalSheetContext'
+import { useEffect } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 const GlobalSheet = () => {
 	const { sheetState, closeSheet } = useGlobalSheetContext()
 	const { show, content } = sheetState
+
+	const pathname = usePathname()
+	const searchParams = useSearchParams()
+
+	useEffect(() => {
+		closeSheet()
+	}, [pathname, searchParams])
 
 	return (
 		<Sheet

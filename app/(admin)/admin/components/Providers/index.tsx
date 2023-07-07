@@ -3,7 +3,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SessionProvider } from 'next-auth/react'
 import { useState } from 'react'
+import { GlobalModalProvider } from '../../context/GlobalModalContext'
 import { GlobalSheetProvider } from '../../context/GlobalSheetContext'
+import GlobalDialog from '../GlobalDialog'
+import GlobalSheet from '../GlobalSheet'
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
 	const [client] = useState(new QueryClient())
@@ -11,7 +14,13 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<QueryClientProvider client={client}>
 			<SessionProvider>
-				<GlobalSheetProvider>{children}</GlobalSheetProvider>
+				<GlobalModalProvider>
+					<GlobalSheetProvider>
+						{children}
+						<GlobalDialog />
+						<GlobalSheet />
+					</GlobalSheetProvider>
+				</GlobalModalProvider>
 			</SessionProvider>
 		</QueryClientProvider>
 	)

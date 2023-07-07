@@ -13,6 +13,7 @@ import { Loader2 } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { useFormChanges } from '../../../../hooks/useFormChanges'
 
 const EditMajor = () => {
 	const { closeSheet, sheetState } = useGlobalSheetContext()
@@ -24,6 +25,8 @@ const EditMajor = () => {
 		resolver: zodResolver(MajorValidator),
 		defaultValues: defaultValues
 	})
+
+	useFormChanges(form.formState)
 
 	const { mutate: updateMajor, isLoading } = useMutation({
 		mutationFn: async (values: MajorPayload) => {
