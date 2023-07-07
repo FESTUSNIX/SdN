@@ -1,11 +1,9 @@
 import prisma from '@/prisma/client'
 import { Status } from '@prisma/client'
 import { Metadata } from 'next'
-import AddUnitForm from './components/AddUnit'
 import { columns } from './components/UnitsTable/Columns'
 import { DataTable } from './components/UnitsTable/DataTable'
-import EditUnitForm from './components/EditUnit'
-import { FormContextProvider } from './context/FormContext'
+
 export type TableUnitData = {
 	id: number
 	name: string
@@ -15,6 +13,9 @@ export type TableUnitData = {
 	status: Status
 	city: {
 		name: string
+	}
+	_count: {
+		majors: number
 	}
 }
 
@@ -37,6 +38,11 @@ export default async function UnitsPage() {
 			city: {
 				select: {
 					name: true
+				}
+			},
+			_count: {
+				select: {
+					majors: true
 				}
 			}
 		}

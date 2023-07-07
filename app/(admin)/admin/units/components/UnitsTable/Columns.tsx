@@ -83,7 +83,7 @@ export const columns: ColumnDef<TableUnitData>[] = [
 				return null
 			}
 
-			return <div className='max-w-[14ch] truncate first-letter:uppercase'>{row.getValue('unitType')}</div>
+			return <div className='first-letter:uppercase'>{row.getValue('unitType')}</div>
 		},
 		enableSorting: false,
 		filterFn: (row, id, value) => {
@@ -92,6 +92,15 @@ export const columns: ColumnDef<TableUnitData>[] = [
 			}
 
 			return value.includes(row.getValue(id))
+		}
+	},
+	{
+		accessorKey: '_count.majors',
+		header: ({ column }) => <ColumnHeader column={column} title='Majors' />,
+		cell: ({ row }) => {
+			const majorsCount: string = row.getValue('_count_majors')
+
+			return <div className='text-center'>{majorsCount}</div>
 		}
 	},
 	{
