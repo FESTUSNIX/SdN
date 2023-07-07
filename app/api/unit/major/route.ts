@@ -36,12 +36,13 @@ export async function POST(req: Request) {
 
 		const majorExists = await prisma.major.findFirst({
 			where: {
+				id: data.id,
 				name: data.name
 			}
 		})
 
 		if (majorExists) {
-			return new Response('Major already exists', { status: 409 })
+			return new Response('Major already exists on this Unit', { status: 409 })
 		}
 
 		const qualificationsConnect = data.qualifications.map(qualification => {
