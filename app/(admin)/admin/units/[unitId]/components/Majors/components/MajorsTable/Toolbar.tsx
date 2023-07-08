@@ -7,15 +7,17 @@ import { Input } from '@/app/components/ui/Input'
 import { useQuery } from '@tanstack/react-query'
 import { Table } from '@tanstack/react-table'
 import axios from 'axios'
-import { Plus, X } from 'lucide-react'
+import { Plus, RefreshCw, X } from 'lucide-react'
 import { completionStatus } from '../../../../../constants/tableData'
 import { FacetedFilter } from './FacetedFilter'
+import { useRouter } from 'next/navigation'
 
 interface DataTableToolbarProps<TData> {
 	table: Table<TData>
+	disableAdd?: boolean
 }
 
-export function Toolbar<TData>({ table }: DataTableToolbarProps<TData>) {
+export function Toolbar<TData>({ table, disableAdd = false }: DataTableToolbarProps<TData>) {
 	const { openSheet } = useGlobalSheetContext()
 
 	const isFiltered = table.getPreFilteredRowModel().rows.length > table.getFilteredRowModel().rows.length
@@ -35,7 +37,7 @@ export function Toolbar<TData>({ table }: DataTableToolbarProps<TData>) {
 	}))
 
 	return (
-		<div className='flex flex-col flex-wrap gap-y-2 bg-background pb-2 pt-6 md:flex-row md:items-center'>
+		<div className='wrapper flex flex-col flex-wrap gap-y-2 bg-background pb-2 pt-6 md:flex-row md:items-center'>
 			<div className='flex flex-1 flex-wrap items-center gap-2'>
 				<Input
 					placeholder='Filter majors...'
@@ -62,16 +64,18 @@ export function Toolbar<TData>({ table }: DataTableToolbarProps<TData>) {
 				)}
 
 				<ViewOptions table={table} />
-				<Button
-					variant='default'
-					size='sm'
-					className='flex h-8'
-					onClick={() => {
-						openSheet('ADD_MAJOR')
-					}}>
-					<Plus className='mr-2 h-4 w-4' />
-					Add major
-				</Button>
+				{!disableAdd && (
+					<Button
+						variant='default'
+						size='sm'
+						className='flex h-8'
+						onClick={() => {
+							openSheet('ADD_MAJOR')
+						}}>
+						<Plus className='mr-2 h-4 w-4' />
+						Add major
+					</Button>
+				)}
 			</div>
 		</div>
 	)

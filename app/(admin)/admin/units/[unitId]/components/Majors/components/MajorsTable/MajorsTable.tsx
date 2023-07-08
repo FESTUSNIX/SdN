@@ -24,12 +24,12 @@ import RowActions from './RowActions'
 import { Toolbar } from './Toolbar'
 
 interface DataTableProps<TData, TValue> {
-	unitId: number
 	columns: ColumnDef<TData, TValue>[]
 	data: TData[]
+	disableAdd?: boolean
 }
 
-export function MajorsTable<TData, TValue>({ unitId, columns, data }: DataTableProps<TData, TValue>) {
+export function MajorsTable<TData, TValue>({ columns, data, disableAdd = false }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = useState({})
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -64,9 +64,9 @@ export function MajorsTable<TData, TValue>({ unitId, columns, data }: DataTableP
 
 	return (
 		<div className='flex h-full w-full flex-1 flex-col'>
-			<Toolbar table={table} />
+			<Toolbar table={table} disableAdd={disableAdd} />
 
-			<div className='relative mb-6 mt-4 h-max overflow-hidden rounded-md border'>
+			<div className='wrapper relative mb-6 mt-4 h-max overflow-hidden rounded-md border'>
 				<ScrollArea className='relative h-[75vh] max-w-full md:h-full'>
 					<Table>
 						<TableHeader className='sticky top-0 z-10 border-b border-border bg-background'>
@@ -86,7 +86,7 @@ export function MajorsTable<TData, TValue>({ unitId, columns, data }: DataTableP
 							{table.getRowModel().rows?.length ? (
 								table.getRowModel().rows.map(row => {
 									return (
-										<RowActions key={row.id} row={row} unitId={unitId}>
+										<RowActions key={row.id} row={row}>
 											<TableRow data-state={row.getIsSelected() && 'selected'} className='relative'>
 												{row.getVisibleCells().map((cell, index, cells) => (
 													<TableCell key={cell.id} className={cn('relative', index === 0 && 'w-0 p-0')}>
