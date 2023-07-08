@@ -10,15 +10,15 @@ import { Pencil } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 
 type Props = {
-	rowData: MajorPayloadWithFullQualifications
+	majorId: number
 }
 
-const EditRow = ({ rowData }: Props) => {
+const EditRow = ({ majorId }: Props) => {
 	const { openSheet } = useGlobalSheetContext()
 
 	const { mutate: deleteRow } = useMutation({
 		mutationFn: async () => {
-			const query = `/api/unit/major?id=${rowData.id}`
+			const query = `/api/unit/major?id=${majorId}`
 
 			const { data } = await axios.get(query)
 

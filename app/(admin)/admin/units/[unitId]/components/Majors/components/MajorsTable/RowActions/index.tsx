@@ -1,5 +1,6 @@
 'use client'
 
+import DeleteRow from '@/app/(admin)/admin/components/DeleteRow'
 import {
 	ContextMenu,
 	ContextMenuContent,
@@ -8,23 +9,21 @@ import {
 	ContextMenuSeparator,
 	ContextMenuTrigger
 } from '@/app/components/ui/ContextMenu'
-import { MajorValidatorWithFullQualifications } from '@/lib/validators/major'
+import { MajorTableValidator } from '@/lib/validators/major'
 import { Row } from '@tanstack/react-table'
 import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import EditRow from './components/EditRow'
 import UpdateStatus from './components/UpdateStatus'
-import DeleteRow from '@/app/(admin)/admin/components/DeleteRow'
 
 type Props<TData> = {
-	unitId: number
 	row: Row<TData>
 	children: React.ReactNode
 }
 
-export function RowActions<TData>({ unitId, row, children }: Props<TData>) {
-	const rowData = MajorValidatorWithFullQualifications.parse(row.original)
+export function RowActions<TData>({ row, children }: Props<TData>) {
+	const rowData = MajorTableValidator.parse(row.original)
 
 	return (
 		<ContextMenu>
@@ -33,17 +32,25 @@ export function RowActions<TData>({ unitId, row, children }: Props<TData>) {
 				<ContextMenuLabel>Actions</ContextMenuLabel>
 				<ContextMenuSeparator />
 				<ContextMenuItem asChild>
-					<Link href={`admin/units/${unitId}/major/${rowData.id}`} className='flex w-full items-center' target='_blank'>
+					<Link
+						href={`admin/units/${rowData.unitId}/majors/${rowData.id}`}
+						className='flex w-full items-center'
+						target='_blank'>
 						<ExternalLink className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
 						Open page
 					</Link>
 				</ContextMenuItem>
 
-				<EditRow rowData={rowData} />
+				<EditRow majorId={rowData.id} />
 
 				<ContextMenuSeparator />
 
-				<UpdateStatus rowData={rowData} />
+				<UpdateStatus
+					rowData={{
+						id: rowData.id,
+						status: rowData.status
+					}}
+				/>
 
 				<ContextMenuSeparator />
 

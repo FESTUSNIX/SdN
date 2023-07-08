@@ -12,12 +12,12 @@ import axios, { AxiosError } from 'axios'
 import { Tags } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
-import { MajorPayload, MajorPayloadWithFullQualifications } from '@/lib/validators/major'
+import { MajorPayload, MajorTablePayload } from '@/lib/validators/major'
 import { Status } from '@prisma/client'
 import { completionStatus } from '@/app/(admin)/admin/units/constants/tableData'
 
 type Props = {
-	rowData: MajorPayloadWithFullQualifications
+	rowData: Pick<MajorTablePayload, 'id' | 'status'>
 }
 
 const UpdateStatus = ({ rowData }: Props) => {

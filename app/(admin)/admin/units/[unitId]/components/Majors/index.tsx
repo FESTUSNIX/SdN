@@ -11,20 +11,25 @@ const Majors = async ({ unitId }: Props) => {
 		where: {
 			unitId
 		},
-		include: {
+		select: {
+			id: true,
+			name: true,
+			majorLevel: true,
+			status: true,
 			qualifications: {
 				select: {
 					id: true,
 					name: true,
 					type: true
 				}
-			}
+			},
+			unitId: true
 		}
 	})
 
 	return (
 		<div className='mt-12'>
-			<MajorsTable data={majors} columns={columns} unitId={unitId} />
+			<MajorsTable data={majors} columns={columns} />
 		</div>
 	)
 }

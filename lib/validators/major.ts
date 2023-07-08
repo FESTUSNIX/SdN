@@ -46,3 +46,14 @@ export const MajorValidatorWithFullQualifications = MajorValidator.extend({
 })
 
 export type MajorPayloadWithFullQualifications = z.infer<typeof MajorValidatorWithFullQualifications>
+
+export const MajorTableValidator = MajorValidatorWithFullQualifications.pick({
+	id: true,
+	name: true,
+	majorLevel: true,
+	status: true,
+	qualifications: true,
+	unitId: true
+})
+
+export type MajorTablePayload = z.infer<typeof MajorTableValidator>
