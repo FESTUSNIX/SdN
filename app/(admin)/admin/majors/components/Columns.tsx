@@ -50,11 +50,11 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 			return <ColumnHeader column={column} title='Name' />
 		},
 		cell: ({ row }) => {
-			const name: string = row.getValue('name')
+			const rowData = row.original
 
 			return (
-				<Link target='_blank' href={`/admin/units/${row.getValue('id')}`} className='font-medium'>
-					{name}
+				<Link target='_blank' href={`/admin/units/${rowData.unitId}/majors/${rowData.id}`} className='font-medium'>
+					{rowData.name}
 				</Link>
 			)
 		}
