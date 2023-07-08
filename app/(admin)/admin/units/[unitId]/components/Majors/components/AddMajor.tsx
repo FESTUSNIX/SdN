@@ -18,7 +18,7 @@ import { useFormChanges } from '../../../../hooks/useFormChanges'
 const AddMajor = () => {
 	const { closeSheet } = useGlobalSheetContext()
 	const { unitId } = useParams()
-	
+
 	const form = useForm<MajorPayload>({
 		resolver: zodResolver(MajorValidator),
 		defaultValues: {
@@ -109,7 +109,7 @@ const AddMajor = () => {
 			toast.success('Added a new major.')
 			form.reset()
 
-			closeSheet()
+			closeSheet(false, true)
 		}
 	})
 

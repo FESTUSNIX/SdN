@@ -98,7 +98,8 @@ const AddUnit = () => {
 			toast.dismiss()
 			toast.success('Added a new unit.')
 			form.reset()
-			closeSheet()
+
+			closeSheet(false, true)
 		}
 	})
 

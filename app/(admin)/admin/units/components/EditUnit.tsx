@@ -77,7 +77,7 @@ const EditUnit = () => {
 
 			form.reset()
 
-			closeSheet()
+			closeSheet(false, true)
 		}
 	})
 

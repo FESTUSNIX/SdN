@@ -85,7 +85,7 @@ const EditMajor = () => {
 			toast.success('Updated major.')
 			form.reset()
 
-			closeSheet()
+			closeSheet(false, true)
 		}
 	})
 
