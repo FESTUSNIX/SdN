@@ -1,7 +1,7 @@
 'use client'
 
 import { Table } from '@tanstack/react-table'
-import { Plus, X } from 'lucide-react'
+import { Plus, RefreshCw, X } from 'lucide-react'
 
 import { ViewOptions } from '@/app/components/Table/ColumnToggle'
 
@@ -10,6 +10,7 @@ import { Input } from '@/app/components/ui/Input'
 import { useGlobalSheetContext } from '../../../context/GlobalSheetContext'
 import { completionStatus, unitTypes } from '../../constants/tableData'
 import { DataTableFacetedFilter } from './DataTableFacetedFilter'
+import { useRouter } from 'next/navigation'
 
 interface DataTableToolbarProps<TData> {
 	table: Table<TData>
@@ -19,9 +20,16 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
 	const isFiltered = table.getPreFilteredRowModel().rows.length > table.getFilteredRowModel().rows.length
 	const { openSheet } = useGlobalSheetContext()
 
+	const router = useRouter()
+
 	return (
 		<div className='wrapper flex flex-col flex-wrap gap-y-2 bg-background pb-2 pt-6 md:flex-row md:items-center'>
 			<div className='flex flex-1 flex-wrap items-center gap-2'>
+				<Button variant='outline' onClick={() => router.refresh()} className='h-8 px-2 lg:px-3'>
+					<RefreshCw className='mr-2 h-4 w-4' />
+					Refresh
+				</Button>
+
 				<Input
 					placeholder='Filter units...'
 					value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
