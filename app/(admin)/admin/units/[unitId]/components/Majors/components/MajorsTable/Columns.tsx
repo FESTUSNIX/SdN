@@ -68,6 +68,11 @@ export const columns: ColumnDef<
 		id: 'qualifications',
 		accessorKey: 'qualifications.name',
 		header: () => <div className='text-right'>Qualifications</div>,
+		filterFn: (row, id, value: number[]) => {
+			const qualifications = row.original.qualifications.map(q => q.id)
+
+			return value.some(r => qualifications.includes(r))
+		},
 		cell: ({ row }) => {
 			const qualifications = row.original.qualifications
 
