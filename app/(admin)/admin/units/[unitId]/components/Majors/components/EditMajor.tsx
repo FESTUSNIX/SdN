@@ -14,6 +14,7 @@ import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useFormChanges } from '../../../../hooks/useFormChanges'
+import { format } from 'date-fns'
 
 const EditMajor = () => {
 	const { closeSheet, sheetState } = useGlobalSheetContext()
@@ -31,7 +32,7 @@ const EditMajor = () => {
 	const { mutate: updateMajor, isLoading } = useMutation({
 		mutationFn: async (values: MajorPayload) => {
 			toast.loading('Editing a major...')
-			console.log(values)
+
 			const payload: MajorPayload = {
 				id: values.id,
 				unitId: parseInt(unitId),
@@ -46,8 +47,8 @@ const EditMajor = () => {
 				daysOfWeek: values.daysOfWeek,
 				description: values.description,
 				durationInHours: values.durationInHours,
-				endDate: values.endDate,
-				startDate: values.startDate,
+				endDate: values.endDate ? new Date(format(values.endDate, 'yyyy-MM-dd')) : null,
+				startDate: values.startDate ? new Date(format(values.startDate, 'yyyy-MM-dd')) : null,
 				formOfStudy: values.formOfStudy,
 				isOnline: values.isOnline,
 				numberOfSemesters: values.numberOfSemesters,

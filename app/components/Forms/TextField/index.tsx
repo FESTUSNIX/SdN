@@ -1,0 +1,49 @@
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { Input } from '@/app/components/ui/Input'
+import { Control } from 'react-hook-form'
+import { Textarea } from '../../ui/Textarea/textarea'
+
+type Props = {
+	formControl: Control<any>
+	accessorKey: string
+	label?: string
+	placeholder?: string
+	type?: string
+	nullable?: boolean
+	textarea?: boolean
+}
+
+export const TextField = ({
+	formControl,
+	label,
+	accessorKey,
+	placeholder,
+	type = 'text',
+	nullable = false,
+	textarea
+}: Props) => {
+	return (
+		<FormField
+			control={formControl}
+			name={accessorKey}
+			render={({ field }) => (
+				<FormItem>
+					{label && <FormLabel>{label}</FormLabel>}
+					<FormControl>
+						{textarea ? (
+							<Textarea {...field} placeholder={placeholder} value={nullable ? field.value ?? '' : field.value} />
+						) : (
+							<Input
+								{...field}
+								type={type}
+								placeholder={placeholder}
+								value={nullable ? field.value ?? '' : field.value}
+							/>
+						)}
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			)}
+		/>
+	)
+}

@@ -14,6 +14,7 @@ import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useFormChanges } from '../../../../hooks/useFormChanges'
+import { format } from 'date-fns'
 
 const AddMajor = () => {
 	const { closeSheet } = useGlobalSheetContext()
@@ -70,8 +71,8 @@ const AddMajor = () => {
 				daysOfWeek: values.daysOfWeek,
 				description: values.description,
 				durationInHours: values.durationInHours,
-				endDate: values.endDate,
-				startDate: values.startDate,
+				endDate: values.endDate ? new Date(format(values.endDate, 'yyyy-MM-dd')) : null,
+				startDate: values.startDate ? new Date(format(values.startDate, 'yyyy-MM-dd')) : null,
 				formOfStudy: values.formOfStudy,
 				isOnline: values.isOnline,
 				numberOfSemesters: values.numberOfSemesters,
@@ -85,7 +86,6 @@ const AddMajor = () => {
 			}
 
 			const { data } = await axios.post('/api/unit/major', payload)
-
 			return data
 		},
 		onError: err => {

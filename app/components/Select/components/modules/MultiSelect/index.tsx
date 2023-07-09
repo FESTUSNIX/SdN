@@ -6,7 +6,7 @@ import { selectInlineStyles } from '@/app/components/Select/styles/inline'
 import Select from 'react-select'
 
 type Option = {
-	value: number
+	value: number | string
 	label: string
 }
 
