@@ -16,7 +16,8 @@ const Qualifications = ({ form }: Props) => {
 			const { data } = await axios.get<Qualification[]>('/api/qualifications')
 
 			return data
-		}
+		},
+		cacheTime: 0
 	})
 
 	const qualificationsOptions = qualifications?.map(qualification => ({
