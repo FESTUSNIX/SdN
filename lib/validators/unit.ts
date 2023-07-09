@@ -36,6 +36,9 @@ export const UnitTableValidator = z.object({
 	status: z.enum(['FINISHED', 'IN_PROGRESS', 'TO_CHECK']),
 	city: z.object({
 		name: z.string()
+	}),
+	_count: z.object({
+		majors: z.number()
 	})
 })
 
