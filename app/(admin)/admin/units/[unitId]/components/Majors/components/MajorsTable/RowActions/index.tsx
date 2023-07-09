@@ -33,7 +33,7 @@ export function RowActions<TData>({ row, children }: Props<TData>) {
 				<ContextMenuSeparator />
 				<ContextMenuItem asChild>
 					<Link
-						href={`admin/units/${rowData.unitId}/majors/${rowData.id}`}
+						href={`/admin/units/${rowData.unitId}/majors/${rowData.id}`}
 						className='flex w-full items-center'
 						target='_blank'>
 						<ExternalLink className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
