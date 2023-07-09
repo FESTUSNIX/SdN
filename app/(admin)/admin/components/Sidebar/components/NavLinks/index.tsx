@@ -1,7 +1,7 @@
 'use client'
 
 import { Separator } from '@/app/components/ui/Separator/separator'
-import { GraduationCap, Home, LayoutDashboard, School2 } from 'lucide-react'
+import { GraduationCap, LayoutDashboard, School2, ScrollText } from 'lucide-react'
 import NavLink from '../NavLink'
 
 export const NavLinks = () => {
@@ -16,6 +16,9 @@ export const NavLinks = () => {
 			</NavLink>
 			<NavLink tooltipText='Majors' href='/admin/majors'>
 				<GraduationCap className='h-5 w-5 text-muted-foreground duration-300 group-hover:text-neutral-200' />
+			</NavLink>
+			<NavLink tooltipText='Qualifications' href='/admin/qualifications'>
+				<ScrollText className='h-5 w-5 text-muted-foreground duration-300 group-hover:text-neutral-200' />
 			</NavLink>
 		</div>
 	)
