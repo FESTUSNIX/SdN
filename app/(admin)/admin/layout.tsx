@@ -4,11 +4,15 @@ import { Inter } from 'next/font/google'
 import Providers from './components/Providers'
 import Sidebar from './components/Sidebar'
 import { cn } from '@/lib/utils/utils'
+import { Metadata } from 'next'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
-	title: 'SdN | Admin Panel'
+export const metadata: Metadata = {
+	title: {
+		template: '%s | SdN Admin',
+		default: 'Manage'
+	}
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -14,11 +14,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const unit = await prisma.unit.findFirst({
 		where: {
 			id: parseInt(id)
+		},
+		select: {
+			name: true
 		}
 	})
 
 	return {
-		title: `${unit?.name} | SdN`
+		title: `${unit?.name ?? 'Unit'}`
 	}
 }
 

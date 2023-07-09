@@ -4,6 +4,10 @@ import { getAuthSession } from '@/lib/auth/auth'
 import Image from 'next/image'
 import Link from 'next/link'
 
+export const metadata = {
+	title: 'Dashboard'
+}
+
 export default async function AdminPage() {
 	const session = await getAuthSession()
 

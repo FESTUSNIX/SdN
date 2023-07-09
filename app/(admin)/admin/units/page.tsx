@@ -20,8 +20,7 @@ export type TableUnitData = {
 }
 
 export const metadata: Metadata = {
-	title: 'SdN | Manage units',
-	description: 'Admin panel - units'
+	title: 'Manage units',
 }
 
 export const revalidate = 0

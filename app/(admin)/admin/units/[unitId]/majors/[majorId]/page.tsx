@@ -14,6 +14,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const major = await prisma.major.findFirst({
 		where: {
 			id: parseInt(id)
+		},
+		select: {
+			name: true
 		}
 	})
 
