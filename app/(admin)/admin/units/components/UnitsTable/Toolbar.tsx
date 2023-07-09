@@ -9,8 +9,8 @@ import { Button } from '@/app/components/ui/Button'
 import { Input } from '@/app/components/ui/Input'
 import { useGlobalSheetContext } from '../../../context/GlobalSheetContext'
 import { completionStatus, unitTypes } from '../../constants/tableData'
-import { DataTableFacetedFilter } from './DataTableFacetedFilter'
 import { useRouter } from 'next/navigation'
+import { FacetedFilter } from '@/app/components/Table/FacetedFilter'
 
 interface DataTableToolbarProps<TData> {
 	table: Table<TData>
@@ -37,10 +37,10 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
 					className='h-8 w-[150px] lg:w-[250px]'
 				/>
 				{table.getColumn('unitType') && (
-					<DataTableFacetedFilter column={table.getColumn('unitType')} title='Type' options={unitTypes} />
+					<FacetedFilter column={table.getColumn('unitType')} title='Type' options={unitTypes} />
 				)}
 				{table.getColumn('status') && (
-					<DataTableFacetedFilter column={table.getColumn('status')} title='Status' options={completionStatus} />
+					<FacetedFilter column={table.getColumn('status')} title='Status' options={completionStatus} />
 				)}
 
 				{isFiltered && (

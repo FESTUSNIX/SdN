@@ -9,8 +9,8 @@ import { Table } from '@tanstack/react-table'
 import axios from 'axios'
 import { Plus, RefreshCw, X } from 'lucide-react'
 import { completionStatus } from '../../../../../constants/tableData'
-import { FacetedFilter } from './FacetedFilter'
 import { useRouter } from 'next/navigation'
+import { FacetedFilter } from '@/app/components/Table/FacetedFilter'
 
 interface DataTableToolbarProps<TData> {
 	table: Table<TData>
