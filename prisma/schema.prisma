@@ -114,7 +114,6 @@ model Major {
   @@index([name])
 }
 
-
 model UnitAddress {
   id         Int     @id @default(autoincrement())
   street     String?
@@ -125,11 +124,10 @@ model UnitAddress {
   unit       Unit    @relation(fields: [unitId], references: [id], onDelete: Cascade)
 }
 
-
 model Qualification {
-  id       Int      @id @default(autoincrement())
-  name     String   @unique
-  type     String   @default("OGÓLNE")
+  id       Int               @id @default(autoincrement())
+  name     String            @unique
+  type     QualificationType @default(OGOLNE)
   majors   Major[]
   keywords String[]
 }
@@ -170,4 +168,11 @@ enum Status {
   FINISHED
   IN_PROGRESS
   TO_CHECK
+}
+
+enum QualificationType {
+  OGOLNE
+  SPECJALISTYCZNE
+  ZAWODOWE
+  INNE
 }
