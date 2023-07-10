@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { UseFormReturn } from 'react-hook-form'
 
 export const QualificationValidator = z.object({
 	id: z.number(),
@@ -8,3 +9,5 @@ export const QualificationValidator = z.object({
 })
 
 export type QualificationPayload = z.infer<typeof QualificationValidator>
+
+export type QualificationFormType = UseFormReturn<QualificationPayload, any, undefined>

@@ -11,7 +11,7 @@ type SheetState = {
 	defaultValues?: any
 }
 
-export type SHEET_TYPES = 'ADD_UNIT' | 'EDIT_UNIT' | 'ADD_MAJOR' | 'EDIT_MAJOR' | 'CLOSE'
+export type SHEET_TYPES = 'ADD_UNIT' | 'EDIT_UNIT' | 'ADD_MAJOR' | 'EDIT_MAJOR' | 'ADD_QUALIFICATION' | 'CLOSE'
 
 const defaultState = {
 	content: null,
@@ -42,6 +42,12 @@ const sheetReducer = (state: any, action: { type: SHEET_TYPES; defaultValues?: a
 		case 'EDIT_MAJOR':
 			return {
 				content: <EditMajor />,
+				show: true,
+				defaultValues: action.defaultValues
+			}
+		case 'ADD_QUALIFICATION':
+			return {
+				content: <AddQualification />,
 				show: true,
 				defaultValues: action.defaultValues
 			}

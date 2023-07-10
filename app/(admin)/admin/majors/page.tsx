@@ -4,8 +4,7 @@ import { MajorsTable } from '../units/[unitId]/components/Majors/components/Majo
 import { columns } from './components/Columns'
 
 export const metadata: Metadata = {
-	title: 'Manage majors | SdN',
-	description: 'Admin panel - majors'
+	title: 'Manage Majors',
 }
 
 export const revalidate = 0

@@ -1,7 +1,7 @@
 import prisma from '@/prisma/client'
 import { Metadata } from 'next'
-import { columns } from './QualificationsTable/Columns'
-import { QualificationsTable } from './QualificationsTable/QualificationsTable'
+import { columns } from './components/QualificationsTable/Columns'
+import { QualificationsTable } from './components/QualificationsTable/QualificationsTable'
 
 export const metadata: Metadata = {
 	title: 'Manage qualifications | SdN',
