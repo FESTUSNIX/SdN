@@ -5,6 +5,7 @@ import AddUnit from '../units/components/AddUnit'
 import EditUnit from '../units/components/EditUnit'
 import { useGlobalModalContext } from './GlobalModalContext'
 import AddQualification from '../qualifications/components/AddQualification'
+import EditQualification from '../qualifications/components/EditQualification'
 
 type SheetState = {
 	content: JSX.Element | null
@@ -12,7 +13,14 @@ type SheetState = {
 	defaultValues?: any
 }
 
-export type SHEET_TYPES = 'ADD_UNIT' | 'EDIT_UNIT' | 'ADD_MAJOR' | 'EDIT_MAJOR' | 'ADD_QUALIFICATION' | 'CLOSE'
+export type SHEET_TYPES =
+	| 'ADD_UNIT'
+	| 'EDIT_UNIT'
+	| 'ADD_MAJOR'
+	| 'EDIT_MAJOR'
+	| 'ADD_QUALIFICATION'
+	| 'EDIT_QUALIFICATION'
+	| 'CLOSE'
 
 const defaultState = {
 	content: null,
@@ -49,6 +57,12 @@ const sheetReducer = (state: any, action: { type: SHEET_TYPES; defaultValues?: a
 		case 'ADD_QUALIFICATION':
 			return {
 				content: <AddQualification />,
+				show: true,
+				defaultValues: action.defaultValues
+			}
+		case 'EDIT_QUALIFICATION':
+			return {
+				content: <EditQualification />,
 				show: true,
 				defaultValues: action.defaultValues
 			}

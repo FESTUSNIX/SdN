@@ -28,7 +28,7 @@ export function RowActions<TData>({ row, children }: Props<TData>) {
 				<ContextMenuLabel>Actions</ContextMenuLabel>
 				<ContextMenuSeparator />
 
-				<EditRow majorId={rowData.id} />
+				<EditRow rowData={rowData} />
 
 				<ContextMenuSeparator />
 

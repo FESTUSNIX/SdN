@@ -14,46 +14,41 @@ import toast from 'react-hot-toast'
 import QualificationForm from '../../components/QualificationForm'
 import { useFormChanges } from '../../units/hooks/useFormChanges'
 
-const AddQualification = () => {
-	const { closeSheet } = useGlobalSheetContext()
+const EditQualification = () => {
+	const { closeSheet, sheetState } = useGlobalSheetContext()
+	const { defaultValues } = sheetState
 
 	const form = useForm<QualificationPayload & { keywordInput: string }>({
 		resolver: zodResolver(QualificationValidator),
-		defaultValues: {
-			id: 0,
-			name: '',
-			type: 'OGOLNE',
-			keywords: [],
-			keywordInput: ''
-		}
+		defaultValues: defaultValues
 	})
 
 	useFormChanges(form.formState)
 
-	const { mutate: createQualification, isLoading } = useMutation({
+	const { mutate: editQualification, isLoading } = useMutation({
 		mutationFn: async (values: QualificationPayload) => {
-			toast.loading('Adding a qualification...')
+			toast.loading('Editing a qualification...')
 
 			const payload: QualificationPayload = {
-				id: 0,
+				id: values.id,
 				name: values.name,
 				type: values.type,
 				keywords: values.keywords
 			}
 
-			const { data } = await axios.post('/api/qualifications', payload)
+			const { data } = await axios.patch('/api/qualifications', payload)
 			return data
 		},
 		onError: err => {
 			toast.dismiss()
 
 			if (err instanceof AxiosError) {
-				if (err.response?.status === 409) {
-					return toast.error('Qualification already exists')
+				if (err.response?.status === 404) {
+					return toast.error('Could not find qualification to edit.')
 				}
 
 				if (err.response?.status === 422) {
-					return toast.error('Invalid qualification data')
+					return toast.error('Invalid qualification data.')
 				}
 			}
 
@@ -62,7 +57,7 @@ const AddQualification = () => {
 		onSuccess: data => {
 			toast.dismiss()
 
-			toast.success('Added a new qualification.')
+			toast.success('Updated qualification.')
 			form.reset()
 
 			closeSheet(false, true)
@@ -72,11 +67,11 @@ const AddQualification = () => {
 	return (
 		<>
 			<SheetHeader className='border-b px-6 py-4'>
-				<SheetTitle>Add Qualification</SheetTitle>
+				<SheetTitle>Edit Qualification</SheetTitle>
 			</SheetHeader>
 
 			<ScrollArea className='h-full'>
-				<QualificationForm form={form} onSubmit={e => createQualification(e)} />
+				<QualificationForm form={form} onSubmit={e => editQualification(e)} />
 			</ScrollArea>
 
 			<SheetFooter className='flex-row justify-end gap-4 border-t px-6 py-4'>
@@ -87,11 +82,11 @@ const AddQualification = () => {
 				{isLoading ? (
 					<Button type='submit' disabled>
 						<Loader2 className='mr-2 h-4 w-4 animate-spin' />
-						Creating qualification
+						Editing qualification
 					</Button>
 				) : (
-					<Button type='submit' onClick={form.handleSubmit(e => createQualification(e))}>
-						Create qualification
+					<Button type='submit' onClick={form.handleSubmit(e => editQualification(e))}>
+						Edit qualification
 					</Button>
 				)}
 			</SheetFooter>
@@ -99,4 +94,4 @@ const AddQualification = () => {
 	)
 }
 
-export default AddQualification
+export default EditQualification

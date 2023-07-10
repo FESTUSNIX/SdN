@@ -32,7 +32,7 @@ const QualificationForm = ({ form, onSubmit }: Props) => {
 						<Muted>These fields are optional and can be filled later</Muted>
 					</div>
 
-					<Keywords formControl={form.control} />
+					<Keywords form={form} />
 				</div>
 			</form>
 		</Form>

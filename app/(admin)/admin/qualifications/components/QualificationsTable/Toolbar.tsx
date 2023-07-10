@@ -63,8 +63,7 @@ export function Toolbar<TData>({ table, disableAdd = false }: DataTableToolbarPr
 						size='sm'
 						className='flex h-8'
 						onClick={() => {
-							// Open ADD_QUALIFICATION sheet
-							// openSheet('ADD_QUALIFICATION')
+							openSheet('ADD_QUALIFICATION')
 						}}>
 						<Plus className='mr-2 h-4 w-4' />
 						Add qualification
