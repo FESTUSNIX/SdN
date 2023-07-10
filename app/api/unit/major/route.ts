@@ -36,7 +36,7 @@ export async function POST(req: Request) {
 
 		const majorExists = await prisma.major.findFirst({
 			where: {
-				id: data.id,
+				unitId: data.unitId,
 				name: data.name
 			}
 		})
