@@ -4,6 +4,7 @@ import EditMajor from '../units/[unitId]/components/Majors/components/EditMajor'
 import AddUnit from '../units/components/AddUnit'
 import EditUnit from '../units/components/EditUnit'
 import { useGlobalModalContext } from './GlobalModalContext'
+import AddQualification from '../qualifications/components/AddQualification'
 
 type SheetState = {
 	content: JSX.Element | null
@@ -52,7 +53,7 @@ const sheetReducer = (state: any, action: { type: SHEET_TYPES; defaultValues?: a
 				defaultValues: action.defaultValues
 			}
 		case 'CLOSE':
-			return defaultState 
+			return defaultState
 	}
 }
 
