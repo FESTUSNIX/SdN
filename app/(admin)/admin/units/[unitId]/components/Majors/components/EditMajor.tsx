@@ -9,18 +9,15 @@ import { MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
+import { format } from 'date-fns'
 import { Loader2 } from 'lucide-react'
-import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useFormChanges } from '../../../../hooks/useFormChanges'
-import { format } from 'date-fns'
 
 const EditMajor = () => {
 	const { closeSheet, sheetState } = useGlobalSheetContext()
 	const { defaultValues } = sheetState
-
-	const { unitId } = useParams()
 
 	const form = useForm<MajorPayload>({
 		resolver: zodResolver(MajorValidator),
@@ -35,7 +32,7 @@ const EditMajor = () => {
 
 			const payload: MajorPayload = {
 				id: values.id,
-				unitId: parseInt(unitId),
+				unitId: values.unitId,
 				name: values.name,
 				majorLevel: values.majorLevel,
 				address: values.address,
