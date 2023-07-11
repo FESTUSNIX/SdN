@@ -65,7 +65,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		<div className='flex h-full w-full flex-1 flex-col'>
 			<DataTableToolbar table={table} />
 
-			<div className='wrapper relative mb-6 mt-4 h-max overflow-hidden rounded-md border'>
+			<div className='wrapper relative mb-20 mt-4 h-max overflow-hidden rounded-md border'>
 				<ScrollArea className='relative h-[75vh] max-w-full md:h-full'>
 					<Table>
 						<TableHeader className='sticky top-0 z-10 border-b border-border bg-background'>

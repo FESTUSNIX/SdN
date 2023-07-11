@@ -1,25 +1,21 @@
 'use client'
 
 import { Separator } from '@/app/components/ui/Separator/separator'
-import { GraduationCap, LayoutDashboard, School2, ScrollText } from 'lucide-react'
+import React from 'react'
+import { links } from '../../constants/links'
 import NavLink from '../NavLink'
 
 export const NavLinks = () => {
 	return (
-		<div className='mt-12 flex flex-col gap-y-2'>
-			<NavLink tooltipText='Dashboard' href='/admin'>
-				<LayoutDashboard className='h-5 w-5 text-muted-foreground duration-300 group-hover:text-neutral-200' />
-			</NavLink>
-			<Separator />
-			<NavLink tooltipText='Units' href='/admin/units'>
-				<School2 className='h-5 w-5 text-muted-foreground duration-300 group-hover:text-neutral-200' />
-			</NavLink>
-			<NavLink tooltipText='Majors' href='/admin/majors'>
-				<GraduationCap className='h-5 w-5 text-muted-foreground duration-300 group-hover:text-neutral-200' />
-			</NavLink>
-			<NavLink tooltipText='Qualifications' href='/admin/qualifications'>
-				<ScrollText className='h-5 w-5 text-muted-foreground duration-300 group-hover:text-neutral-200' />
-			</NavLink>
+		<div className='hidden flex-col gap-2 md:mt-12 md:flex'>
+			{links.map((link, index) => (
+				<React.Fragment key={index}>
+					<NavLink tooltipText={link.title} href={link.link}>
+						<link.icon className='h-5 w-5 text-muted-foreground duration-300 group-hover:text-neutral-200' />
+					</NavLink>
+					{link.separate && <Separator className='hidden md:block' />}
+				</React.Fragment>
+			))}
 		</div>
 	)
 }

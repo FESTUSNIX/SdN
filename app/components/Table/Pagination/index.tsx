@@ -2,14 +2,20 @@ import { Table } from '@tanstack/react-table'
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/Select'
 import { Button } from '@/app/components/ui/Button'
+import { cn } from '@/lib/utils/utils'
 
 interface DataTablePaginationProps<TData> {
 	table: Table<TData>
+	fixed?: boolean
 }
 
-export function Pagination<TData>({ table }: DataTablePaginationProps<TData>) {
+export function Pagination<TData>({ table, fixed = true }: DataTablePaginationProps<TData>) {
 	return (
-		<div className='bottom-0 left-0 mt-auto w-full border-t border-border bg-background py-4'>
+		<div
+			className={cn(
+				'bottom-0 left-0 mt-auto w-full border-t border-border bg-background py-4',
+				fixed && 'max-md:fixed'
+			)}>
 			<div className='wrapper flex flex-col justify-between gap-y-4 md:flex-row md:items-center'>
 				<div className='hidden flex-1 text-sm text-muted-foreground md:block'>
 					{table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s)

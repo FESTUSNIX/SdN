@@ -17,12 +17,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang='en'>
-			<body className={cn(inter.className, 'overflow-hidden')}>
+		<html lang='en' suppressHydrationWarning>
+			<body className={cn(inter.className, 'md:overflow-hidden')}>
 				<Providers>
-					<div className='flex'>
+					<div className='flex flex-col-reverse md:flex-row'>
 						<Sidebar />
-						<div className='h-screen max-h-screen w-full flex-1 overflow-y-auto'>{children}</div>
+						<div className='w-full flex-1 overflow-y-auto max-md:mt-20 md:h-screen md:max-h-screen'>{children}</div>
 					</div>
 					<Toaster />
 				</Providers>

@@ -12,7 +12,7 @@ import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import QualificationForm from '../../components/QualificationForm'
-import { useFormChanges } from '../../units/hooks/useFormChanges'
+import { useFormChanges } from '../../hooks/useFormChanges'
 
 const AddQualification = () => {
 	const { closeSheet } = useGlobalSheetContext()

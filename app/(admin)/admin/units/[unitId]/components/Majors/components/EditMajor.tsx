@@ -13,7 +13,7 @@ import { format } from 'date-fns'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useFormChanges } from '../../../../hooks/useFormChanges'
+import { useFormChanges } from '../../../../../hooks/useFormChanges'
 
 const EditMajor = () => {
 	const { closeSheet, sheetState } = useGlobalSheetContext()

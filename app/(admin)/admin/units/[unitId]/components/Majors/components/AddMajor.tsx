@@ -13,7 +13,7 @@ import { Loader2 } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useFormChanges } from '../../../../hooks/useFormChanges'
+import { useFormChanges } from '../../../../../hooks/useFormChanges'
 import { format } from 'date-fns'
 
 const AddMajor = () => {
