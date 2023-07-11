@@ -19,8 +19,8 @@
 		--border: 0 0% 89.8%;
 		--input: 0 0% 89.8%;
 
-		--primary: 0 0% 9%;
-		--primary-foreground: 0 0% 98%;
+		--primary: 222 60% 50%;
+		--primary-foreground: 222 100% 97.5%;
 
 		--secondary: 0 0% 96.1%;
 		--secondary-foreground: 0 0% 9%;
@@ -73,7 +73,7 @@
 		@apply border-border;
 	}
 	html {
-		@apply min-h-full;
+		@apply h-full;
 	}
 	body {
 		@apply min-h-full bg-background text-foreground;
