@@ -2,6 +2,7 @@ import { getAuthSession } from '@/lib/auth/auth'
 import Link from 'next/link'
 import NavLinks from './components/NavLinks'
 import UserAccountNav from './components/UserAccountNav'
+import ThemeSwitch from '../ThemeSwitch'
 
 const Sidebar = async () => {
 	const session = await getAuthSession()
@@ -14,14 +15,17 @@ const Sidebar = async () => {
 
 			<NavLinks />
 
-			<UserAccountNav
-				triggerClassName='mt-auto'
-				user={{
-					email: session?.user.email,
-					name: session?.user.name,
-					image: session?.user.image
-				}}
-			/>
+			<div className='mt-auto flex flex-col items-center gap-8'>
+				<ThemeSwitch variant={'ghost'} />
+
+				<UserAccountNav
+					user={{
+						email: session?.user.email,
+						name: session?.user.name,
+						image: session?.user.image
+					}}
+				/>
+			</div>
 		</nav>
 	)
 }

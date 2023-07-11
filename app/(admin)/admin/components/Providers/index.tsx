@@ -7,22 +7,25 @@ import { GlobalModalProvider } from '../../context/GlobalModalContext'
 import { GlobalSheetProvider } from '../../context/GlobalSheetContext'
 import GlobalDialog from '../GlobalDialog'
 import GlobalSheet from '../GlobalSheet'
+import { ThemeProvider } from 'next-themes'
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
 	const [client] = useState(new QueryClient())
 
 	return (
-		<QueryClientProvider client={client}>
-			<SessionProvider>
-				<GlobalModalProvider>
-					<GlobalSheetProvider>
-						{children}
-						<GlobalDialog />
-						<GlobalSheet />
-					</GlobalSheetProvider>
-				</GlobalModalProvider>
-			</SessionProvider>
-		</QueryClientProvider>
+		<ThemeProvider attribute='class'>
+			<QueryClientProvider client={client}>
+				<SessionProvider>
+					<GlobalModalProvider>
+						<GlobalSheetProvider>
+							{children}
+							<GlobalDialog />
+							<GlobalSheet />
+						</GlobalSheetProvider>
+					</GlobalModalProvider>
+				</SessionProvider>
+			</QueryClientProvider>
+		</ThemeProvider>
 	)
 }
 
