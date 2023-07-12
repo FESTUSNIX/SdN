@@ -66,7 +66,7 @@ export function MajorsTable<TData, TValue>({ columns, data, disableAdd = false }
 		<div className='flex h-full w-full flex-1 flex-col'>
 			<Toolbar table={table} disableAdd={disableAdd} />
 
-			<div className='wrapper relative mb-20 mt-4 h-max overflow-hidden rounded-md border'>
+			<div className='wrapper relative mt-4 h-max overflow-hidden rounded-md border max-md:mb-20 md:mb-4'>
 				<ScrollArea className='relative h-[75vh] max-w-full md:h-full'>
 					<Table>
 						<TableHeader className='sticky top-0 z-10 border-b border-border bg-background'>
