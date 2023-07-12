@@ -52,7 +52,7 @@ export async function POST(req: Request) {
 		const unit = await prisma.unit.create({
 			data: {
 				name: data.name,
-				logo: data.logo,
+				logo: null,
 				email: data.email,
 				phone: data.phone ?? '',
 				cityId: data.cityId,
@@ -73,7 +73,16 @@ export async function POST(req: Request) {
 			}
 		})
 
-		return new Response(unit.name)
+		await prisma.unit.update({
+			where: {
+				id: unit.id
+			},
+			data: {
+				logo: `${unit.id}/unit-logo`
+			}
+		})
+
+		return new Response(unit.id.toString())
 	} catch (error) {
 		if (error instanceof z.ZodError) {
 			return new Response('Invalid POST request data passed', { status: 422 })
@@ -153,7 +162,7 @@ export async function PATCH(req: Request) {
 			data: {
 				status: status,
 				name: name,
-				// logo: logo,
+				logo: logo,
 				phone: phone ?? '',
 				email: email,
 				cityId: cityId,

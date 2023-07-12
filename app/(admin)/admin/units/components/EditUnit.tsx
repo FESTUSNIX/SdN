@@ -3,6 +3,8 @@
 import { Button } from '@/app/components/ui/Button'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/Sheet'
+import { deleteFilesFromSupabase } from '@/lib/supabase/deleteFiles'
+import { uploadFileToSupabase } from '@/lib/supabase/uploadImage'
 import { UnitPayload, UnitValidator } from '@/lib/validators/unit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -16,7 +18,7 @@ import { useGlobalSheetContext } from '../../context/GlobalSheetContext'
 import { useFormChanges } from '../../hooks/useFormChanges'
 
 const EditUnit = () => {
-	const { closeSheet, sheetState, setRequireConfirmation } = useGlobalSheetContext()
+	const { closeSheet, sheetState } = useGlobalSheetContext()
 	const { defaultValues } = sheetState
 
 	const form = useForm<UnitPayload>({
@@ -30,14 +32,35 @@ const EditUnit = () => {
 
 	useFormChanges(form.formState)
 
+	const handleImageUpdate = async (values: UnitPayload) => {
+		let filepath = defaultValues.logo
+
+		if (defaultValues.logo !== null && values.logo !== defaultValues.logo) {
+			await deleteFilesFromSupabase('unit_logos', [`${values.id}/unit-logo`])
+			filepath = null
+		}
+
+		if (values.logo !== null && values.logo !== defaultValues.logo) {
+			filepath = await uploadFileToSupabase(
+				'unit_logos',
+				values.logo,
+				`${values.id}/unit-logo?t=${new Date().toString()}`
+			)
+		}
+
+		return filepath
+	}
+
 	const { mutate: updateUnit, isLoading } = useMutation({
 		mutationFn: async (values: UnitPayload) => {
 			toast.loading('Updating unit...')
 
+			let filepath: string | null = await handleImageUpdate(values)
+
 			const payload: UnitPayload = {
 				id: defaultValues.id,
 				name: values.name,
-				logo: values.logo,
+				logo: filepath,
 				isPublic: values.isPublic,
 				email: values.email,
 				phone: values.phone ?? '',

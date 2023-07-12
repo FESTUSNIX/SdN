@@ -12,9 +12,9 @@ import axios, { AxiosError } from 'axios'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { v4 as uuidv4 } from 'uuid'
 import UnitForm from '../../components/UnitForm'
 import { useGlobalSheetContext } from '../../context/GlobalSheetContext'
+import { uploadFileToSupabase } from '@/lib/supabase/uploadImage'
 
 const AddUnit = () => {
 	const { closeSheet } = useGlobalSheetContext()
@@ -41,28 +41,13 @@ const AddUnit = () => {
 
 	useFormChanges(form.formState)
 
-	const uploadImageToSupabase = async (logo: File) => {
-		const filename = `${uuidv4()}-${logo.name}`
-
-		const { data, error } = await supabase.storage.from('unit_logos').upload(`${filename}`, logo, {
-			cacheControl: '36000',
-			upsert: false
-		})
-
-		if (error) throw new Error(error.message)
-
-		return data?.path
-	}
-
 	const { mutate: createUnit, isLoading } = useMutation({
 		mutationFn: async (values: UnitPayload) => {
 			toast.loading('Adding a unit...')
 
-			const filepath = await uploadImageToSupabase(values.logo)
-
 			const payload = {
 				name: values.name,
-				logo: filepath,
+				logo: values.logo,
 				isPublic: values.isPublic,
 				email: values.email,
 				phone: values.phone ?? '',
@@ -82,9 +67,11 @@ const AddUnit = () => {
 			return data
 		},
 		onError: err => {
+			toast.dismiss()
+
 			if (err instanceof AxiosError) {
 				if (err.response?.status === 409) {
-					return toast.error('Unit already exists')
+					return toast.error('Unit with that name already exists')
 				}
 
 				if (err.response?.status === 422) {
@@ -94,7 +81,9 @@ const AddUnit = () => {
 
 			return toast.error('Something went wrong.')
 		},
-		onSuccess: data => {
+		onSuccess: async (data, variables) => {
+			await uploadFileToSupabase('unit_logos', variables.logo, `${data}/unit-logo`)
+
 			toast.dismiss()
 			toast.success('Added a new unit.')
 			form.reset()

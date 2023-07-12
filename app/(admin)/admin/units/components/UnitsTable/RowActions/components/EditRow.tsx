@@ -41,7 +41,7 @@ const EditRow = ({ rowData }: Props) => {
 			const values: UnitPayload = {
 				id: data.id,
 				name: data.name,
-				logo: undefined as any,
+				logo: data.logo,
 				email: data.email,
 				phone: data.phone ?? '',
 				isPublic: data.isPublic,
