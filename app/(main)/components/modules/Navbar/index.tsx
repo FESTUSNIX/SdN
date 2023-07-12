@@ -4,22 +4,22 @@ import { links } from './constants/links'
 
 const Navbar = () => {
 	return (
-		<nav className='bg-background px-12 py-4 border-b border-border sticky top-0 left-0 w-full z-50'>
+		<nav className='sticky left-0 top-0 z-50 w-full border-b border-border bg-background px-12 py-4'>
 			<div className='wrapper flex items-center justify-between'>
 				<div className='text-xl font-black text-accent-foreground'>
 					<Link href={'/'}>SdN</Link>
 				</div>
 
-				<ul className='flex gap-8 items-center'>
+				<ul className='flex items-center gap-8'>
 					{links.map(link => (
-						<li key={link.path} className='py-2 text-foreground hover:text-foreground/70 cursor-pointer duration-300'>
+						<li key={link.path} className='cursor-pointer py-2 text-foreground duration-300 hover:text-foreground/70'>
 							<Link href={link.path}>{link.label}</Link>
 						</li>
 					))}
 
 					<li>
 						<Button asChild>
-							<Link href={'/search'}>Find your major</Link>
+							<Link href={'/search'}>Znajdź studia dla siebie</Link>
 						</Button>
 					</li>
 				</ul>
