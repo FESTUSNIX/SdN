@@ -81,7 +81,12 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 				</ul>
 			)
 		},
-		enableSorting: false
+		enableSorting: false,
+		filterFn: (row, id, value: number[]) => {
+			const qualifications = row.original.qualifications.map(q => q.id)
+
+			return value.some(r => qualifications.includes(r))
+		}
 	},
 	{
 		accessorKey: 'unitId',
