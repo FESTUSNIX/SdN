@@ -35,6 +35,7 @@ const ThemeSwitch = (buttonProps: Props) => {
 					) : (
 						<Sun className='h-5 w-5 text-muted-foreground' />
 					)}
+					<span className='sr-only'>Switch Theme</span>
 				</Button>
 			</DropdownMenuTrigger>
 

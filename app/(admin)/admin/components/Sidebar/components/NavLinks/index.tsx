@@ -10,8 +10,9 @@ export const NavLinks = () => {
 		<div className='hidden flex-col gap-2 md:mt-12 md:flex'>
 			{links.map((link, index) => (
 				<React.Fragment key={index}>
-					<NavLink tooltipText={link.title} href={link.link}>
+					<NavLink tooltipText={link.title} href={link.link} >
 						<link.icon className='h-5 w-5 text-muted-foreground duration-300 group-hover:text-neutral-200' />
+						<span className='sr-only'>{link.title}</span>
 					</NavLink>
 					{link.separate && <Separator className='hidden md:block' />}
 				</React.Fragment>

@@ -23,7 +23,8 @@ const NavLink = ({ children, tooltipText, href }: Props) => {
 								variant: 'ghost',
 								size: 'icon'
 							})
-						)}>
+						)}
+						aria-label={tooltipText}>
 						{children}
 					</Link>
 				</TooltipTrigger>
