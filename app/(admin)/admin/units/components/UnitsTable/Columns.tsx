@@ -7,7 +7,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import Link from 'next/link'
 import { unitTypes } from '../../constants/tableData'
 import { TableUnitData } from '../../page'
-import { ColumnHeader } from '@/app/components/Table/ColumnHeader'
+import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
 import { MoreHorizontal, Pointer } from 'lucide-react'
 
 export const columns: ColumnDef<TableUnitData>[] = [
@@ -34,7 +34,7 @@ export const columns: ColumnDef<TableUnitData>[] = [
 			)
 		},
 		filterFn: (row, id, value) => {
-			return value.includes(row.getValue(id))
+			return value instanceof Array && value.includes(row.getValue(id))
 		}
 	},
 	{
@@ -42,7 +42,8 @@ export const columns: ColumnDef<TableUnitData>[] = [
 		header: ({ column }) => {
 			return <ColumnHeader column={column} title='#' />
 		},
-		enableHiding: false
+		enableHiding: false,
+		size: 20
 	},
 	{
 		accessorKey: 'name',
@@ -57,7 +58,8 @@ export const columns: ColumnDef<TableUnitData>[] = [
 					{name}
 				</Link>
 			)
-		}
+		},
+		size: 350
 	},
 	{
 		accessorKey: 'email',
@@ -154,6 +156,7 @@ export const columns: ColumnDef<TableUnitData>[] = [
 					</Tooltip>
 				</TooltipProvider>
 			)
-		}
+		},
+		size: 0
 	}
 ]

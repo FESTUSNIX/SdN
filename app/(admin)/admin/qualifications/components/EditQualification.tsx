@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import QualificationForm from '../../components/QualificationForm'
 import { useFormChanges } from '../../hooks/useFormChanges'
+import { usePathname } from 'next/navigation'
 
 const EditQualification = () => {
 	const { closeSheet, sheetState } = useGlobalSheetContext()
@@ -24,6 +25,7 @@ const EditQualification = () => {
 	})
 
 	useFormChanges(form.formState)
+	const pathname = usePathname()
 
 	const { mutate: editQualification, isLoading } = useMutation({
 		mutationFn: async (values: QualificationPayload) => {
@@ -54,7 +56,12 @@ const EditQualification = () => {
 
 			return toast.error('Something went wrong.')
 		},
-		onSuccess: data => {
+		onSuccess: async data => {
+			console.log(pathname)
+			const revalidated = await fetch(`/api/revalidate?path=${pathname}`)
+			const xd = await revalidated.json()
+			console.log(xd)
+
 			toast.dismiss()
 
 			toast.success('Updated qualification.')

@@ -1,6 +1,6 @@
 'use client'
 
-import { ColumnHeader } from '@/app/components/Table/ColumnHeader'
+import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
 import { Button } from '@/app/components/ui/Button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
 import { cn } from '@/lib/utils/utils'
@@ -43,7 +43,8 @@ export const columns: ColumnDef<
 		header: ({ column }) => {
 			return <ColumnHeader column={column} title='#' />
 		},
-		enableHiding: false
+		enableHiding: false,
+		size: 20
 	},
 	{
 		accessorKey: 'name',
@@ -58,16 +59,13 @@ export const columns: ColumnDef<
 					{rowData.name}
 				</Link>
 			)
-		}
-	},
-	{
-		accessorKey: 'majorLevel',
-		header: ({ column }) => <ColumnHeader column={column} title='Level' />
+		},
+		size: 300
 	},
 	{
 		id: 'qualifications',
 		accessorKey: 'qualifications.name',
-		header: () => <div className='text-right'>Qualifications</div>,
+		header: () => <div className=''>Qualifications</div>,
 		filterFn: (row, id, value: number[]) => {
 			const qualifications = row.original.qualifications.map(q => q.id)
 
@@ -77,7 +75,7 @@ export const columns: ColumnDef<
 			const qualifications = row.original.qualifications
 
 			return (
-				<ul className='flex justify-end'>
+				<ul className='flex'>
 					{qualifications?.map((q, index) => (
 						<li key={q.id} className='first-letter:uppercase'>
 							{q.name}
@@ -87,6 +85,10 @@ export const columns: ColumnDef<
 				</ul>
 			)
 		}
+	},
+	{
+		accessorKey: 'majorLevel',
+		header: ({ column }) => <ColumnHeader column={column} title='Level' />
 	},
 	{
 		id: 'actions',
@@ -109,6 +111,7 @@ export const columns: ColumnDef<
 					</Tooltip>
 				</TooltipProvider>
 			)
-		}
+		},
+		size: 0
 	}
 ]

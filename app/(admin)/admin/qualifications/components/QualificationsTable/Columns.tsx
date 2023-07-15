@@ -1,6 +1,6 @@
 'use client'
 
-import { ColumnHeader } from '@/app/components/Table/ColumnHeader'
+import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
 import { Button } from '@/app/components/ui/Button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
 import { QualificationPayload } from '@/lib/validators/qualification'
@@ -13,7 +13,8 @@ export const columns: ColumnDef<QualificationPayload>[] = [
 		header: ({ column }) => {
 			return <ColumnHeader column={column} title='#' />
 		},
-		enableHiding: false
+		enableHiding: false,
+		size: 20
 	},
 	{
 		accessorKey: 'name',
@@ -25,7 +26,7 @@ export const columns: ColumnDef<QualificationPayload>[] = [
 		accessorKey: 'type',
 		header: ({ column }) => <ColumnHeader column={column} title='Type' />,
 		filterFn: (row, id, value) => {
-			return value.includes(row.getValue(id))
+			return value instanceof Array && value.includes(row.getValue(id))
 		}
 	},
 	{
@@ -69,6 +70,7 @@ export const columns: ColumnDef<QualificationPayload>[] = [
 					</Tooltip>
 				</TooltipProvider>
 			)
-		}
+		},
+		size: 0
 	}
 ]

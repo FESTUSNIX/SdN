@@ -6,7 +6,12 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Majors from './components/Majors'
 
-type Props = { params: { unitId: string } }
+type Props = {
+	params: { unitId: string }
+	searchParams: {
+		[key: string]: string | string[] | undefined
+	}
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const id = params.unitId
@@ -25,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	}
 }
 
-const AdminUnitPage = async ({ params: { unitId } }: Props) => {
+const AdminUnitPage = async ({ params: { unitId }, searchParams }: Props) => {
 	const unit = await prisma.unit.findFirst({
 		where: {
 			id: parseInt(unitId)
@@ -72,7 +77,7 @@ const AdminUnitPage = async ({ params: { unitId } }: Props) => {
 				</Link>
 			</div>
 
-			<Majors unitId={unit.id} />
+			<Majors unitId={unit.id} searchParams={searchParams} />
 		</div>
 	)
 }

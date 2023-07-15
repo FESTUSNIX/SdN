@@ -1,5 +1,16 @@
 'use client'
 
+// Thanks to sadmann7 for server side table
+// https://github.com/sadmann7/shadcn-table-v2/
+
+import { SHEET_TYPES } from '@/app/(admin)/admin/context/GlobalSheetContext'
+import { FilterOption } from '@/app/components/DataTable/FacetedFilter'
+import { Pagination } from '@/app/components/DataTable/Pagination'
+import { Toolbar } from '@/app/components/DataTable/Toolbar'
+import { ScrollArea } from '@/app/components/ui/ScrollArea'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/ui/Table'
+import { useDebounce } from '@/app/hooks/useDebounce'
+import { cn } from '@/lib/utils/utils'
 import {
 	flexRender,
 	getCoreRowModel,
@@ -12,18 +23,13 @@ import {
 	type ColumnDef,
 	type ColumnFiltersState,
 	type PaginationState,
+	type Row,
 	type SortingState,
 	type VisibilityState
 } from '@tanstack/react-table'
-import { FilterOption } from '@/app/components/DataTable/FacetedFilter'
-import { Pagination } from '@/app/components/DataTable/Pagination'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/ui/Table'
-import { useDebounce } from '@/app/hooks/useDebounce'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import RowActions from './RowActions'
-import { Toolbar } from '@/app/components/DataTable/Toolbar'
+import { ComponentType, ReactElement, useCallback, useEffect, useMemo, useState } from 'react'
+import { ConditionalWrapper } from '../ConditionalWrapper'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
@@ -38,14 +44,25 @@ interface DataTableProps<TData, TValue> {
 		id: keyof TData
 		title: string
 	}[]
+	RowActions?: ComponentType<{
+		row: Row<TData>
+		children: ReactElement
+	}>
+	sheetType?: SHEET_TYPES
+	buttonText?: string
+	fixedPagination?: boolean
 }
 
-export function QualificationsTable<TData, TValue>({
+export function DataTable<TData, TValue>({
 	columns,
 	data,
 	filterableColumns = [],
 	searchableColumns = [],
-	pageCount
+	pageCount,
+	RowActions,
+	sheetType,
+	buttonText,
+	fixedPagination = true
 }: DataTableProps<TData, TValue>) {
 	const router = useRouter()
 	const pathname = usePathname()
@@ -53,7 +70,7 @@ export function QualificationsTable<TData, TValue>({
 
 	// Search params
 	const page = searchParams?.get('page') ?? '1'
-	const per_page = searchParams?.get('per_page') ?? '10'
+	const per_page = searchParams?.get('per_page') ?? '25'
 	const sort = searchParams?.get('sort')
 	const [column, order] = sort?.split('.') ?? []
 
@@ -227,7 +244,9 @@ export function QualificationsTable<TData, TValue>({
 		getFacetedUniqueValues: getFacetedUniqueValues(),
 		manualPagination: true,
 		manualSorting: true,
-		manualFiltering: true
+		manualFiltering: true,
+		enableColumnResizing: true,
+		columnResizeMode: 'onChange'
 	})
 
 	return (
@@ -236,8 +255,8 @@ export function QualificationsTable<TData, TValue>({
 				table={table}
 				filterableColumns={filterableColumns}
 				searchableColumns={searchableColumns}
-				sheetType='ADD_QUALIFICATION'
-				buttonText='Add Qualification'
+				sheetType={sheetType}
+				buttonText={buttonText}
 			/>
 
 			<div className='wrapper relative mt-4 h-max overflow-hidden rounded-md border max-md:mb-20 md:mb-4'>
@@ -245,11 +264,25 @@ export function QualificationsTable<TData, TValue>({
 					<Table>
 						<TableHeader className='sticky top-0 z-10 border-b border-border bg-background'>
 							{table.getHeaderGroups().map(headerGroup => (
-								<TableRow key={headerGroup.id} className='w-full'>
+								<TableRow key={headerGroup.id} className='w-full bg-background'>
 									{headerGroup.headers.map((header, index, headers) => {
 										return (
-											<TableHead key={header.id}>
+											<TableHead
+												key={header.id}
+												style={{ width: header.getSize() }}
+												className={cn(
+													'relative border-r first:border-l-0 last:border-r-0',
+													['status'].includes(header.column.id) && '!w-0 !border-none !px-0'
+												)}>
 												{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+												{header.column.getCanResize() && (
+													<div
+														onMouseDown={header.getResizeHandler()}
+														onTouchStart={header.getResizeHandler()}
+														className={`absolute right-0 top-0 h-full w-1 cursor-col-resize touch-none select-none bg-border opacity-0 duration-300 ${
+															header.column.getIsResizing() ? 'bg-primary opacity-100' : ''
+														}`}></div>
+												)}
 											</TableHead>
 										)
 									})}
@@ -260,15 +293,24 @@ export function QualificationsTable<TData, TValue>({
 							{table.getRowModel().rows?.length ? (
 								table.getRowModel().rows.map(row => {
 									return (
-										<RowActions key={row.id} row={row}>
+										<ConditionalWrapper
+											key={row.id}
+											condition={!!RowActions}
+											wrapper={children => RowActions && <RowActions row={row}>{children}</RowActions>}>
 											<TableRow data-state={row.getIsSelected() && 'selected'} className='relative'>
 												{row.getVisibleCells().map((cell, index, cells) => (
-													<TableCell key={cell.id}>
+													<TableCell
+														key={cell.id}
+														style={{ width: cell.column.getSize() }}
+														className={cn(
+															'border-r px-4 py-1 first:border-l-0 last:border-r-0',
+															['status'].includes(cell.column.id) && '!w-0 !border-none !px-0'
+														)}>
 														{flexRender(cell.column.columnDef.cell, cell.getContext())}
 													</TableCell>
 												))}
 											</TableRow>
-										</RowActions>
+										</ConditionalWrapper>
 									)
 								})
 							) : (
@@ -283,7 +325,7 @@ export function QualificationsTable<TData, TValue>({
 				</ScrollArea>
 			</div>
 
-			<Pagination table={table} />
+			<Pagination table={table} fixed={fixedPagination} />
 		</div>
 	)
 }

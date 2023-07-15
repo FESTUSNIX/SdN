@@ -1,6 +1,6 @@
 'use client'
 
-import { ColumnHeader } from '@/app/components/Table/ColumnHeader'
+import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
 import { Button } from '@/app/components/ui/Button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
 import { cn } from '@/lib/utils/utils'
@@ -35,14 +35,17 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 		},
 		filterFn: (row, id, value) => {
 			return value.includes(row.getValue(id))
-		}
+		},
+		enableResizing: false,
+		size: 0
 	},
 	{
 		accessorKey: 'id',
 		header: ({ column }) => {
 			return <ColumnHeader column={column} title='#' />
 		},
-		enableHiding: false
+		enableHiding: false,
+		size: 20
 	},
 	{
 		accessorKey: 'name',
@@ -57,7 +60,8 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 					{rowData.name}
 				</Link>
 			)
-		}
+		},
+		size: 250
 	},
 	{
 		accessorKey: 'majorLevel',
@@ -105,7 +109,7 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 			return (
 				<TooltipProvider>
 					<Tooltip delayDuration={300}>
-						<div className='flex w-full justify-end'>
+						<div className='flex  justify-end'>
 							<TooltipTrigger asChild>
 								<Button variant='ghost' className='h-8 w-8 p-0'>
 									<span className='sr-only'>Open menu</span>
@@ -120,6 +124,7 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 					</Tooltip>
 				</TooltipProvider>
 			)
-		}
+		},
+		size: 0
 	}
 ]

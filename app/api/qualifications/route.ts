@@ -1,5 +1,7 @@
 import { QualificationValidator } from '@/lib/validators/qualification'
 import prisma from '@/prisma/client'
+import { revalidatePath } from 'next/cache'
+import { NextRequest } from 'next/server'
 import { z } from 'zod'
 
 export async function GET(req: Request) {
@@ -16,7 +18,7 @@ export async function GET(req: Request) {
 	}
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
 	try {
 		const body = await req.json()
 
@@ -40,6 +42,9 @@ export async function POST(req: Request) {
 			}
 		})
 
+		const path = req.nextUrl.searchParams.get('path') || '/'
+		revalidatePath(path)
+
 		return new Response(qualification.name)
 	} catch (error) {
 		if (error instanceof z.ZodError) {
@@ -50,7 +55,7 @@ export async function POST(req: Request) {
 	}
 }
 
-export async function PATCH(req: Request) {
+export async function PATCH(req: NextRequest) {
 	try {
 		const body = await req.json()
 
@@ -76,6 +81,9 @@ export async function PATCH(req: Request) {
 				keywords: keywords
 			}
 		})
+
+		const path = req.nextUrl.searchParams.get('path') || '/'
+		revalidatePath(path)
 
 		return new Response('OK')
 	} catch (error) {

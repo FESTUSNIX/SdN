@@ -59,7 +59,9 @@ const AddQualification = () => {
 
 			return toast.error('Something went wrong.')
 		},
-		onSuccess: data => {
+		onSuccess: async data => {
+			await fetch('/api/revalidate?path=/admin/qualifications')
+
 			toast.dismiss()
 
 			toast.success('Added a new qualification.')
