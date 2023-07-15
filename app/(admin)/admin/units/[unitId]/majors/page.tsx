@@ -1,11 +1,14 @@
 import prisma from '@/prisma/client'
 import React from 'react'
-import { MajorsTable } from '../components/Majors/components/MajorsTable/MajorsTable'
 import { columns } from '../components/Majors/components/MajorsTable/Columns'
 import { Metadata } from 'next'
+import Majors from '../components/Majors'
 
 type Props = {
 	params: { unitId: string }
+	searchParams: {
+		[key: string]: string | string[] | undefined
+	}
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -25,30 +28,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	}
 }
 
-const MajorsPage = async ({ params: { unitId } }: Props) => {
-	const majors = await prisma.major.findMany({
-		where: {
-			unitId: parseInt(unitId)
-		},
-		select: {
-			id: true,
-			name: true,
-			majorLevel: true,
-			status: true,
-			qualifications: {
-				select: {
-					id: true,
-					name: true,
-					type: true
-				}
-			},
-			unitId: true
-		}
-	})
-
+const MajorsPage = async ({ params: { unitId }, searchParams }: Props) => {
 	return (
-		<div className='mt-12'>
-			<MajorsTable data={majors} columns={columns} />
+		<div className='flex flex-col items-center md:h-screen'>
+			<Majors unitId={parseInt(unitId)} searchParams={searchParams} />
 		</div>
 	)
 }

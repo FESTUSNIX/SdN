@@ -100,34 +100,32 @@ const Majors = async ({ unitId, searchParams }: Props) => {
 	}))
 
 	return (
-		<div className='mt-12'>
-			<DataTable
-				columns={columns}
-				data={majors}
-				pageCount={pageCount}
-				filterableColumns={[
-					{
-						id: 'qualifications',
-						title: 'Qualifications',
-						options: qualificationsOptionsFormated
-					},
-					{
-						id: 'status',
-						title: 'Status',
-						options: completionStatus
-					}
-				]}
-				searchableColumns={[
-					{
-						id: 'name',
-						title: 'Name'
-					}
-				]}
-				RowActions={RowActions}
-				buttonText='Add Major'
-				sheetType='ADD_MAJOR'
-			/>
-		</div>
+		<DataTable
+			columns={columns}
+			data={majors}
+			pageCount={pageCount}
+			filterableColumns={[
+				{
+					id: 'qualifications',
+					title: 'Qualifications',
+					options: qualificationsOptionsFormated
+				},
+				{
+					id: 'status',
+					title: 'Status',
+					options: completionStatus
+				}
+			]}
+			searchableColumns={[
+				{
+					id: 'name',
+					title: 'Name'
+				}
+			]}
+			RowActions={RowActions}
+			buttonText='Add Major'
+			sheetType='ADD_MAJOR'
+		/>
 	)
 }
 
