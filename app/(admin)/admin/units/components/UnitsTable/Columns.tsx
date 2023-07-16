@@ -102,7 +102,7 @@ export const columns: ColumnDef<TableUnitData>[] = [
 		cell: ({ row }) => {
 			const majorsCount: string = row.getValue('_count_majors')
 
-			return <div className='text-center'>{majorsCount}</div>
+			return <div className=''>{majorsCount}</div>
 		}
 	},
 	{
