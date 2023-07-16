@@ -57,11 +57,6 @@ const EditQualification = () => {
 			return toast.error('Something went wrong.')
 		},
 		onSuccess: async data => {
-			console.log(pathname)
-			const revalidated = await fetch(`/api/revalidate?path=${pathname}`)
-			const xd = await revalidated.json()
-			console.log(xd)
-
 			toast.dismiss()
 
 			toast.success('Updated qualification.')
