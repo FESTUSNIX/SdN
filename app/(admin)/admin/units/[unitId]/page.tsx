@@ -8,9 +8,6 @@ import Majors from './components/Majors'
 
 type Props = {
 	params: { unitId: string }
-	searchParams: {
-		[key: string]: string | string[] | undefined
-	}
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -30,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	}
 }
 
-const AdminUnitPage = async ({ params: { unitId }, searchParams }: Props) => {
+const AdminUnitPage = async ({ params: { unitId } }: Props) => {
 	const unit = await prisma.unit.findFirst({
 		where: {
 			id: parseInt(unitId)
@@ -77,7 +74,7 @@ const AdminUnitPage = async ({ params: { unitId }, searchParams }: Props) => {
 				</Link>
 			</div>
 
-			<Majors unitId={unit.id} searchParams={searchParams} />
+			<Majors unitId={unit.id} />
 		</div>
 	)
 }
