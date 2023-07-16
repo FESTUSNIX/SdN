@@ -69,7 +69,7 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 	},
 	{
 		id: 'qualifications',
-		accessorKey: 'qualifications.name',
+		accessorKey: 'qualifications_name',
 		header: ({ column }) => <ColumnHeader column={column} title='Qualifications' />,
 		cell: ({ row }) => {
 			const qualifications = row.original.qualifications

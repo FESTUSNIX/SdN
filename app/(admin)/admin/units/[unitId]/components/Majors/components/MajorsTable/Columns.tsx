@@ -64,7 +64,7 @@ export const columns: ColumnDef<
 	},
 	{
 		id: 'qualifications',
-		accessorKey: 'qualifications.name',
+		accessorKey: 'qualifications_name',
 		header: () => <div className=''>Qualifications</div>,
 		filterFn: (row, id, value: number[]) => {
 			const qualifications = row.original.qualifications.map(q => q.id)
