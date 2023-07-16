@@ -6,9 +6,6 @@ import Majors from '../components/Majors'
 
 type Props = {
 	params: { unitId: string }
-	searchParams: {
-		[key: string]: string | string[] | undefined
-	}
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -28,10 +25,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	}
 }
 
-const MajorsPage = async ({ params: { unitId }, searchParams }: Props) => {
+const MajorsPage = async ({ params: { unitId } }: Props) => {
 	return (
 		<div className='flex flex-col items-center md:h-screen'>
-			<Majors unitId={parseInt(unitId)} searchParams={searchParams} />
+			<Majors unitId={parseInt(unitId)} />
 		</div>
 	)
 }
