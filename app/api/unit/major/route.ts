@@ -34,17 +34,17 @@ export async function POST(req: Request) {
 
 		const data = MajorValidator.parse(body)
 
-		const majorExists = await prisma.major.findFirst({
-			where: {
-				unitId: data.unitId,
-				name: data.name,
-				majorLevel: data.majorLevel
-			}
-		})
+		// const majorExists = await prisma.major.findFirst({
+		// 	where: {
+		// 		unitId: data.unitId,
+		// 		name: data.name,
+		// 		majorLevel: data.majorLevel
+		// 	}
+		// })
 
-		if (majorExists) {
-			return new Response('Major already exists on this Unit', { status: 409 })
-		}
+		// if (majorExists) {
+		// 	return new Response('Major already exists on this Unit', { status: 409 })
+		// }
 
 		const qualificationsConnect = data.qualifications.map(qualification => {
 			return {
