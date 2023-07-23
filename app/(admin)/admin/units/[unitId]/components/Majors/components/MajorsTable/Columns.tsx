@@ -55,7 +55,7 @@ export const columns: ColumnDef<
 			const rowData = row.original
 
 			return (
-				<Link target='_blank' href={`/admin/units/${rowData.unitId}/majors/${rowData.id}`} className='font-medium'>
+				<Link target='_black' href={`/admin/units/${rowData.unitId}/majors/${rowData.id}`} className='font-medium'>
 					{rowData.name}
 				</Link>
 			)

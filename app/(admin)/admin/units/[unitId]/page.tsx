@@ -4,6 +4,7 @@ import prisma from '@/prisma/client'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import PreviousPageButton from '../../components/PreviousPageButton'
 import Majors from './components/Majors'
 
 type Props = {
@@ -56,6 +57,8 @@ const AdminUnitPage = async ({ params: { unitId } }: Props) => {
 	return (
 		<div className='flex min-h-screen flex-col pt-12'>
 			<div className='wrapper'>
+				<PreviousPageButton />
+
 				<h1 className='scroll-m-20 text-2xl font-extrabold tracking-tight sm:text-3xl md:text-4xl'>
 					<span>#{unit.id} </span>
 					{unit.name}

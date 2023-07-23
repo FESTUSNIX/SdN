@@ -1,3 +1,4 @@
+import PreviousPageButton from '@/app/(admin)/admin/components/PreviousPageButton'
 import { buttonVariants } from '@/app/components/ui/Button'
 import { H3 } from '@/app/components/ui/Typography'
 import { cn } from '@/lib/utils/utils'
@@ -51,6 +52,8 @@ const MajorPage = async ({ params: { unitId, majorId } }: Props) => {
 	return (
 		<div className='flex min-h-screen flex-col pt-12'>
 			<div className='wrapper'>
+				<PreviousPageButton />
+
 				<h1 className='scroll-m-20 text-2xl font-extrabold tracking-tight sm:text-3xl md:text-4xl'>
 					<span>#{major.id} </span>
 					{major.name}
