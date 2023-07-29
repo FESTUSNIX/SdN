@@ -2,8 +2,9 @@ import { Toaster } from 'react-hot-toast'
 import '../styles/globals.css'
 import { Inter } from 'next/font/google'
 import Providers from '@/app/components/Providers'
-import Navbar from './components/modules/Navbar'
+import Navbar from './components/Navbar'
 import { cn } from '@/lib/utils/utils'
+import Footer from './components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,11 +15,12 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang='en' className='light' style={{ colorScheme: 'light' }}>
+		<html lang='en'>
 			<body className={cn(inter.className, 'flex h-full flex-col')}>
 				<Providers>
-					{/* <Navbar /> */}
+					<Navbar />
 					{children}
+					<Footer />
 					<Toaster />
 				</Providers>
 			</body>

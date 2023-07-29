@@ -6,7 +6,7 @@ const Navbar = () => {
 	return (
 		<nav className='sticky left-0 top-0 z-50 w-full border-b border-border bg-background px-12 py-4'>
 			<div className='wrapper flex items-center justify-between'>
-				<div className='text-xl font-black text-accent-foreground'>
+				<div className='text-xl font-bold text-accent-foreground'>
 					<Link href={'/'}>SdN</Link>
 				</div>
 
@@ -19,7 +19,7 @@ const Navbar = () => {
 
 					<li>
 						<Button asChild>
-							<Link href={'/search'}>Znajdź studia dla siebie</Link>
+							<Link href={'/about'}>Dowiedz się więcej</Link>
 						</Button>
 					</li>
 				</ul>
