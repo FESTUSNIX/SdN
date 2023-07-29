@@ -29,11 +29,14 @@ const ThemeSwitch = (buttonProps: Props) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button {...buttonProps}>
+				<Button
+					{...buttonProps}
+					className='rounded-full duration-300 hover:border-muted-foreground'
+					variant={'outline'}>
 					{resolvedTheme === 'dark' ? (
-						<Moon className='h-5 w-5 text-muted-foreground' />
+						<Moon className='h-5 w-5 text-foreground' />
 					) : (
-						<Sun className='h-5 w-5 text-muted-foreground' />
+						<Sun className='h-5 w-5 text-foreground' />
 					)}
 					<span className='sr-only'>Switch Theme</span>
 				</Button>
