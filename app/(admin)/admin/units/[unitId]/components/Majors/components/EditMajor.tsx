@@ -19,7 +19,7 @@ const EditMajor = () => {
 	const { closeSheet, sheetState } = useGlobalSheetContext()
 	const { defaultValues } = sheetState
 
-	const form = useForm<Omit<MajorPayload, 'unitSlug'>>({
+	const form = useForm<MajorPayload>({
 		resolver: zodResolver(MajorValidator.omit({ unitSlug: true })),
 		defaultValues: defaultValues
 	})

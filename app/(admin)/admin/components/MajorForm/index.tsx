@@ -7,15 +7,15 @@ import { Separator } from '@/app/components/ui/Separator/separator'
 import { H4, Muted } from '@/app/components/ui/Typography'
 import { MajorFormType, MajorPayload } from '@/lib/validators/major'
 import { SubmitHandler } from 'react-hook-form'
+import { DatePicker } from './components/DatePicker'
+import DaysOfWeek from './components/DaysOfWeek'
 import MajorLevel from './components/MajorLevel'
 import Qualifications from './components/Qualifications'
 import Status from './components/Status'
-import DaysOfWeek from './components/DaysOfWeek'
-import { DatePicker } from './components/DatePicker'
 
 type Props = {
 	form: MajorFormType
-	onSubmit: SubmitHandler<Omit<MajorPayload, 'unitSlug'>>
+	onSubmit: SubmitHandler<MajorPayload>
 }
 
 const MajorForm = ({ form, onSubmit }: Props) => {
