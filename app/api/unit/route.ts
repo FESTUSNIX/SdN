@@ -73,14 +73,16 @@ export async function POST(req: Request) {
 			}
 		})
 
-		await prisma.unit.update({
-			where: {
-				id: unit.id
-			},
-			data: {
-				logo: `${unit.id}/unit-logo`
-			}
-		})
+		if (data.logo) {
+			await prisma.unit.update({
+				where: {
+					id: unit.id
+				},
+				data: {
+					logo: `${unit.id}/unit-logo`
+				}
+			})
+		}
 
 		return new Response(unit.id.toString())
 	} catch (error) {
