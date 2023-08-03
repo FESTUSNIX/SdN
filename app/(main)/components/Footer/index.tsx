@@ -15,8 +15,8 @@ const Footer = () => {
 	return (
 		<footer className='mt-12 border-t pt-12'>
 			<div className='wrapper'>
-				<div className='flex flex-col flex-wrap gap-x-8 gap-y-12 md:flex-row md:gap-y-16 lg:gap-x-16 xl:gap-x-32'>
-					<div className='order-1 mr-auto flex flex-col gap-8 2xl:mr-0'>
+				<div className='flex flex-wrap gap-x-16 gap-y-16'>
+					<div className='mr-auto flex flex-col gap-8'>
 						<div>
 							<div className='text-4xl font-black'>SdN</div>
 						</div>
@@ -37,33 +37,21 @@ const Footer = () => {
 						</div>
 					</div>
 
-					<div className='order-3 flex flex-col gap-6 md:w-full md:flex-row md:gap-16 lg:order-2 lg:w-auto'>
+					<div className='flex flex-col gap-6 md:w-full md:flex-row md:gap-16 lg:w-auto'>
 						{linkGroups.map(group => (
 							<div key={group.title}>
-								<h5 className='mb-2 text-base font-semibold'>{group.title}</h5>
-								<ul className='flex flex-row flex-wrap gap-x-4 gap-y-1 md:flex-col md:gap-1'>
+								<h5 className='mb-4 text-sm font-semibold'>{group.title}</h5>
+								<ul className='flex flex-row flex-wrap gap-x-4 gap-y-1 md:flex-col md:gap-2'>
 									{group.links.map(link => (
 										<li key={link.link}>
 											<Link href={link.link} className={cn('w-max text-muted-foreground hover:underline')}>
-												{link.label}
+												<Muted>{link.label}</Muted>
 											</Link>
 										</li>
 									))}
 								</ul>
 							</div>
 						))}
-					</div>
-
-					<div className='order-2 max-w-full space-y-8 lg:order-3'>
-						<div>
-							<h5 className='text-base font-semibold'>Newsletter</h5>
-							<Muted className='break-words'>Zapisz się do newslettera aby być na bieżąco</Muted>
-
-							<div className='mt-4 flex flex-row flex-wrap gap-2'>
-								<Input type='email' placeholder='Wprowadź swój adres email' className='w-80 max-w-full grow' />
-								<Button className='shrink-0 grow'>Subskrybuj</Button>
-							</div>
-						</div>
 					</div>
 				</div>
 
