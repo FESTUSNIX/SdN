@@ -8,6 +8,7 @@ import { completionStatus, unitTypes } from './constants/tableData'
 
 export type TableUnitData = {
 	id: number
+	slug: string
 	name: string
 	email: string
 	unitType: string
@@ -29,6 +30,7 @@ export default async function UnitsPage() {
 	const units = await prisma.unit.findMany({
 		select: {
 			id: true,
+			slug: true,
 			name: true,
 			email: true,
 			unitType: true,

@@ -15,7 +15,7 @@ import { DatePicker } from './components/DatePicker'
 
 type Props = {
 	form: MajorFormType
-	onSubmit: SubmitHandler<MajorPayload>
+	onSubmit: SubmitHandler<Omit<MajorPayload, 'unitSlug'>>
 }
 
 const MajorForm = ({ form, onSubmit }: Props) => {

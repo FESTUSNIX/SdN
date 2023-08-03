@@ -82,7 +82,10 @@ const AddUnit = () => {
 			return toast.error('Something went wrong.')
 		},
 		onSuccess: async (data, variables) => {
-			await uploadFileToSupabase('unit_logos', variables.logo, `${data}/unit-logo`)
+			if(variables.logo) {
+
+				await uploadFileToSupabase('unit_logos', variables.logo, `${data}/unit-logo`)
+			}
 
 			toast.dismiss()
 			toast.success('Added a new unit.')

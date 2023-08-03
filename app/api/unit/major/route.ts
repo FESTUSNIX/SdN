@@ -71,6 +71,7 @@ export async function POST(req: Request) {
 				startDate: data.startDate,
 				syllabus: data.syllabus,
 				unitId: data.unitId,
+				unitSlug: data.unitSlug,
 				isRegulated: !!data.isRegulated,
 				canPayInInstallments: !!data.canPayInInstallments,
 				certificates: data.certificates,
@@ -154,7 +155,7 @@ export async function PATCH(req: Request) {
 			syllabus,
 			unitId,
 			isRegulated
-		} = MajorValidator.parse(body)
+		} = MajorValidator.omit({ unitSlug: true }).parse(body)
 
 		const majorToUpdate = await prisma.major.findFirst({
 			where: {

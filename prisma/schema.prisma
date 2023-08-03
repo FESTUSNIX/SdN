@@ -63,6 +63,7 @@ model VerificationToken {
 
 model Unit {
   id        Int          @id @default(autoincrement())
+  slug      String       @unique @default(cuid())
   name      String
   email     String
   phone     String?
@@ -80,13 +81,15 @@ model Unit {
   address   UnitAddress?
   status    Status       @default(IN_PROGRESS)
 
-  @@index([name])
+  @@unique([id, slug])
+  @@index([name, slug])
 }
 
 model Major {
   id                    Int             @id @default(autoincrement())
   name                  String
   unitId                Int
+  unitSlug              String
   majorLevel            MajorLevel      @default(PODYPLOMOWE)
   cost                  Int?
   address               String?
@@ -108,7 +111,7 @@ model Major {
   endDate               DateTime?       @db.Date
   startDate             DateTime?       @db.Date
   contact               String?
-  unit                  Unit            @relation(fields: [unitId], references: [id], onUpdate: NoAction)
+  unit                  Unit            @relation(fields: [unitId], references: [id])
   qualifications        Qualification[]
   status                Status          @default(IN_PROGRESS)
 

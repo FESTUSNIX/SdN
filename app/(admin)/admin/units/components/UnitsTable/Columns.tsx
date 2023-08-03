@@ -136,6 +136,12 @@ export const columns: ColumnDef<TableUnitData>[] = [
 		}
 	},
 	{
+		accessorKey: 'slug',
+		header: ({ column }) => {
+			return <ColumnHeader column={column} title='Slug' />
+		}
+	},
+	{
 		id: 'actions',
 		cell: ({ row }) => {
 			return (

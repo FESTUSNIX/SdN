@@ -66,7 +66,7 @@ const EditRow = ({ majorId }: Props) => {
 				isRegulated
 			} = MajorValidator.parse({ ...data, qualifications: qualificationsWithIdOnly })
 
-			const values: MajorPayload = {
+			const values: Omit<MajorPayload, 'unitSlug'> = {
 				id: data.id,
 				name: name,
 				address: address,

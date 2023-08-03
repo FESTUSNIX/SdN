@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 export const UnitValidator = z.object({
 	id: z.number().optional(),
+	slug: z.string().optional(),
 	name: z.string().min(2, {
 		message: 'Username must be at least 2 characters.'
 	}),
@@ -29,6 +30,7 @@ export const UnitValidator = z.object({
 
 export const UnitTableValidator = z.object({
 	id: z.number(),
+	slug: z.string(),
 	name: z.string(),
 	email: z.string(),
 	unitType: z.string(),

@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useFormChanges } from '../../../../../hooks/useFormChanges'
 import { format } from 'date-fns'
+import { createId } from '@paralleldrive/cuid2'
 
 const AddMajor = () => {
 	const { closeSheet } = useGlobalSheetContext()
@@ -60,6 +61,7 @@ const AddMajor = () => {
 			const payload: MajorPayload = {
 				id: 0,
 				unitId: parseInt(unitId),
+				unitSlug: createId(),
 				name: values.name,
 				majorLevel: values.majorLevel,
 				address: values.address,
