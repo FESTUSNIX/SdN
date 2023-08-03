@@ -2,11 +2,11 @@ import { H1 } from '@/app/components/ui/Typography'
 import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation'
 
-type Props = { params: { majorId: number } }
+type Props = { params: { majorId: string } }
 
 const MajorPage = async ({ params }: Props) => {
 	const major = await prisma.major.findFirst({
-		where: { id: params.majorId },
+		where: { id: parseInt(params.majorId) },
 		include: {
 			qualifications: true
 		}
@@ -15,10 +15,13 @@ const MajorPage = async ({ params }: Props) => {
 	if (!major) return notFound()
 
 	return (
-		<div className='wrapper flex min-h-screen flex-col items-center pt-12'>
-			<H1 className={'mb-24'}>{major.name}</H1>
+		<div className='wrapper flex flex-col items-center pt-12'>
+			<H1 className={'mb-24'}>
+				#{major.id} {major.name}
+			</H1>
 
 			<div className='flex flex-col gap-8'>
+				<p>unit slug - {major.unitSlug}</p>
 				<p>cost - {major.cost}</p>
 				<p>duration - {major.durationInHours} hours</p>
 				<p>numberOfSemesters - {major.numberOfSemesters}</p>

@@ -1,5 +1,6 @@
 'use client'
 
+import DeleteRow from '@/app/(admin)/admin/components/DeleteRow'
 import {
 	ContextMenu,
 	ContextMenuContent,
@@ -15,7 +16,6 @@ import Link from 'next/link'
 import React from 'react'
 import EditRow from './components/EditRow'
 import UpdateStatus from './components/UpdateStatus'
-import DeleteRow from '@/app/(admin)/admin/components/DeleteRow'
 
 type Props<TData> = {
 	row: Row<TData>
@@ -35,6 +35,12 @@ export function RowActions<TData>({ row, children }: Props<TData>) {
 					<Link href={`/admin/units/${rowData.id}`} className='flex w-full items-center' target='_blank'>
 						<ExternalLink className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
 						Open page
+					</Link>
+				</ContextMenuItem>
+				<ContextMenuItem>
+					<Link href={`/units/${rowData.slug}`} className='flex w-full items-center' target='_blank'>
+						<ExternalLink className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
+						Open preview page
 					</Link>
 				</ContextMenuItem>
 

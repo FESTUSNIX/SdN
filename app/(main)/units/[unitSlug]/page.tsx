@@ -5,31 +5,31 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import Majors from './components/Majors'
 
-type Props = { params: { unitId: string } }
+type Props = { params: { unitSlug: string } }
 
 export async function generateStaticParams() {
 	const units = await prisma.unit.findMany({
 		select: {
-			id: true
+			slug: true
 		}
 	})
 
 	return units?.map(unit => ({
-		unitId: unit.id.toString()
+		unitSlug: unit.slug
 	}))
 }
 
 export default async function UnitPage({ params }: Props) {
 	const unit = await prisma.unit.findFirst({
 		where: {
-			id: parseInt(params.unitId)
+			slug: params.unitSlug
 		},
 		include: {
 			majors: {
 				select: {
 					id: true,
 					name: true,
-					unitId: true
+					unitSlug: true
 				}
 			},
 			city: {
@@ -50,7 +50,7 @@ export default async function UnitPage({ params }: Props) {
 	if (!unit) return notFound()
 
 	return (
-		<div className='flex min-h-screen flex-col items-center wrapper pt-12'>
+		<div className='wrapper flex flex-col items-center pt-12'>
 			<H1 className='mb-24'>{unit.name}</H1>
 
 			{unit.logo && (
