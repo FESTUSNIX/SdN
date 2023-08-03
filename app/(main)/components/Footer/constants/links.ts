@@ -1,4 +1,4 @@
-export const links: { title: string; links: { label: string; link: string }[] }[] = [
+export const links: { title: string; links: { label: string; link: string; external?: boolean }[] }[] = [
 	{
 		title: 'Serwis',
 		links: [
@@ -21,19 +21,23 @@ export const links: { title: string; links: { label: string; link: string }[] }[
 		links: [
 			{
 				label: 'Instagram',
-				link: '/'
+				link: '/',
+				external: true
 			},
 			{
 				label: 'Facebook',
-				link: '/'
+				link: '/',
+				external: true
 			},
 			{
 				label: 'Twitter',
-				link: '/'
+				link: '/',
+				external: true
 			},
 			{
 				label: 'LinkedIn',
-				link: '/'
+				link: '/',
+				external: true
 			}
 		]
 	},

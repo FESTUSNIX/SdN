@@ -44,7 +44,10 @@ const Footer = () => {
 								<ul className='flex flex-row flex-wrap gap-x-4 gap-y-1 md:flex-col md:gap-2'>
 									{group.links.map(link => (
 										<li key={link.link}>
-											<Link href={link.link} className={cn('w-max text-muted-foreground hover:underline')}>
+											<Link
+												href={link.link}
+												target={link.external ? '_blank' : undefined}
+												className={cn('w-max text-muted-foreground hover:underline')}>
 												<Muted>{link.label}</Muted>
 											</Link>
 										</li>
