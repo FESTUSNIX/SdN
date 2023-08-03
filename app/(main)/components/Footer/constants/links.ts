@@ -1,4 +1,4 @@
-export const links = [
+export const links: { title: string; links: { label: string; link: string }[] }[] = [
 	{
 		title: 'Serwis',
 		links: [
@@ -17,6 +17,27 @@ export const links = [
 		]
 	},
 	{
+		title: 'Social Media',
+		links: [
+			{
+				label: 'Instagram',
+				link: '/'
+			},
+			{
+				label: 'Facebook',
+				link: '/'
+			},
+			{
+				label: 'Twitter',
+				link: '/'
+			},
+			{
+				label: 'LinkedIn',
+				link: '/'
+			}
+		]
+	},
+	{
 		title: 'Prywatność',
 		links: [
 			{
@@ -24,16 +45,8 @@ export const links = [
 				link: '/privacy-policy'
 			},
 			{
-				label: 'Zasady użytkowania',
-				link: '/terms-of-service'
-			},
-			{
 				label: 'Ustawienia ciasteczek',
 				link: '/cookie-settings'
-			},
-			{
-				label: 'Polityka ciasteczek',
-				link: '/cookies'
 			}
 		]
 	}
