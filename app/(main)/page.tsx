@@ -1,21 +1,19 @@
-import { Input } from '../components/ui/Input'
-import { Button } from '../components/ui/Button'
+import EmailForm from './components/EmailForm'
 
 export default function Home() {
 	return (
 		<main className='grow'>
-			<header className='flex h-full flex-col items-center justify-center py-24'>
-				<div className='wrapper flex flex-col items-center text-center'>
-					<h2 className='text-2xl font-bold sm:text-3xl md:text-4xl xl:text-5xl'>Studia dla Nauczycieli</h2>
-					<h1 className='text-5xl font-black sm:text-6xl md:text-7xl xl:text-8xl'>Niedługo startujemy!</h1>
-				</div>
+			<header className='wrapper flex h-full flex-col items-center justify-center py-24'>
+				<div className='flex flex-col items-center text-center'>
+					<h1 className='max-w-3xl text-center text-4xl font-black uppercase sm:text-6xl md:text-7xl xl:text-8xl [@media(min-width:350px)]:max-sm:text-5xl'>
+						niedługo startujemy
+					</h1>
+					<h2 className='mb-12 mt-6 max-w-xl text-lg text-muted-foreground md:mb-16 md:mt-8 md:text-2xl'>
+						Znalezienie idealnych studiów - jeszcze prostsze, jeszcze skuteczniejsze, już niebawem!
+					</h2>
 
-				<div className='mt-24 flex w-full max-w-md flex-col items-center text-center'>
-					<h3 className='mb-4'>Podaj swój adres email aby dowiedzieć się o starcie platformy jako pierwszy.</h3>
-
-					<div className='wrapper flex flex-col gap-2 sm:flex-row sm:items-center'>
-						<Input type='email' placeholder='Wprowadź swój adres email' className='' />
-						<Button className='shrink-0 grow'>Powiadom mnie</Button>
+					<div className='w-full max-w-full sm:max-w-lg  lg:max-w-xl'>
+						<EmailForm />
 					</div>
 				</div>
 			</header>
