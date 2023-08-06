@@ -2,8 +2,8 @@ import Providers from '@/app/components/Providers'
 import { cn } from '@/lib/utils/utils'
 import { Outfit } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
-import Footer from './components/Footer'
 import Navbar from './components/Navbar'
+import SimplifiedFooter from './components/SimplifiedFooter'
 import './styles/globals.css'
 
 const outfit = Outfit({ subsets: ['latin-ext'] })
@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<Providers>
 					<Navbar />
 					{children}
-					<Footer />
+					<SimplifiedFooter />
 					<Toaster />
 				</Providers>
 			</body>

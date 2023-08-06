@@ -1,12 +1,10 @@
+import ThemeSwitch from '@/app/(admin)/admin/components/ThemeSwitch'
 import IconBadge from '@/app/components/IconBadge'
-import { Button } from '@/app/components/ui/Button'
-import { Input } from '@/app/components/ui/Input'
 import { Muted } from '@/app/components/ui/Typography'
 import { cn } from '@/lib/utils/utils'
 import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from 'lucide-react'
 import Link from 'next/link'
 import { links as linkGroups } from './constants/links'
-import ThemeSwitch from '@/app/(admin)/admin/components/ThemeSwitch'
 
 const Footer = () => {
 	const date = new Date()
