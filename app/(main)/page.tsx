@@ -9,7 +9,7 @@ export default function Home() {
 						niedługo startujemy
 					</h1>
 					<h2 className='mb-12 mt-6 max-w-xl text-lg text-muted-foreground md:mb-16 md:mt-8 md:text-2xl'>
-						Znalezienie idealnych studiów - jeszcze prostsze, jeszcze skuteczniejsze, już niebawem!
+						Znajdowanie idealnych studiów - jeszcze prostsze, jeszcze skuteczniejsze, już niebawem!
 					</h2>
 
 					<div className='w-full max-w-full sm:max-w-lg  lg:max-w-xl'>
