@@ -16,7 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang='en' suppressHydrationWarning>
-			<body className={cn(outfit.className, 'flex h-full flex-col')}>
+			<body className={cn(outfit.className, 'flex flex-col')}>
 				<Providers>
 					<Navbar />
 					{children}
