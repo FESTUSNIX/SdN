@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils/utils'
 import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from 'lucide-react'
 import Link from 'next/link'
 import { links as linkGroups } from './constants/links'
+import { socialMedia } from '../../constants/socialMedia'
 
 const Footer = () => {
 	const date = new Date()
@@ -64,10 +65,10 @@ const Footer = () => {
 					</div>
 					<div className='flex flex-wrap items-center justify-center gap-4'>
 						<ThemeSwitch />
-						<IconBadge href='' name='Twitter' Icon={Twitter} />
-						<IconBadge href='' name='Facebook' Icon={Facebook} />
-						<IconBadge href='' name='Instagram' Icon={Instagram} />
-						<IconBadge href='' name='Linkedin' Icon={Linkedin} />
+						<IconBadge href={socialMedia.twitter} name='Twitter' Icon={Twitter} />
+						<IconBadge href={socialMedia.facebook} name='Facebook' Icon={Facebook} />
+						<IconBadge href={socialMedia.instagram} name='Instagram' Icon={Instagram} />
+						<IconBadge href={socialMedia.linkedIn} name='Linkedin' Icon={Linkedin} />
 					</div>
 				</div>
 			</div>

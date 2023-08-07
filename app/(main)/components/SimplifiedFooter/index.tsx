@@ -2,6 +2,7 @@ import ThemeSwitch from '@/app/(admin)/admin/components/ThemeSwitch'
 import IconBadge from '@/app/components/IconBadge'
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
 import Link from 'next/link'
+import { socialMedia } from '../../constants/socialMedia'
 
 const links = [
 	{
@@ -19,8 +20,8 @@ const SimplifiedFooter = () => {
 	const year = date.getFullYear()
 
 	return (
-		<footer className='wrapper mt-8 flex flex-col items-center gap-y-6 py-6'>
-			<div className='flex w-full flex-col-reverse items-center justify-between gap-y-6 lg:flex-row'>
+		<footer className='wrapper mt-auto flex flex-col items-center gap-y-6 py-6'>
+			<div className='mt-12 flex w-full flex-col-reverse items-center justify-between gap-y-6 lg:flex-row'>
 				<div>
 					<ul className='flex items-center gap-6'>
 						{links.map(link => (
@@ -34,10 +35,10 @@ const SimplifiedFooter = () => {
 				</div>
 				<div className='flex flex-wrap items-center justify-center gap-4'>
 					<ThemeSwitch />
-					<IconBadge href='' name='Twitter' Icon={Twitter} />
-					<IconBadge href='' name='Facebook' Icon={Facebook} />
-					<IconBadge href='' name='Instagram' Icon={Instagram} />
-					<IconBadge href='' name='Linkedin' Icon={Linkedin} />
+					<IconBadge href={socialMedia.twitter} name='Twitter' Icon={Twitter} />
+					<IconBadge href={socialMedia.facebook} name='Facebook' Icon={Facebook} />
+					<IconBadge href={socialMedia.instagram} name='Instagram' Icon={Instagram} />
+					<IconBadge href={socialMedia.linkedIn} name='Linkedin' Icon={Linkedin} />
 				</div>
 			</div>
 			<div>
