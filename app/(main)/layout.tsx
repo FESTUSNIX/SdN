@@ -19,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body className={cn(outfit.className, 'flex flex-col')}>
 				<Providers>
 					<Navbar />
+					<div className='pointer-events-none h-20 select-none md:h-[72px]'></div>
 					{children}
 					<SimplifiedFooter />
 					<Toaster />
