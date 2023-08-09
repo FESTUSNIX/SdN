@@ -5,7 +5,7 @@ import ContactInfo from './components/ContactInfo'
 
 const ContactPage = () => {
 	return (
-		<main className='wrapper mt-24 flex grow flex-col justify-between gap-x-24 md:flex-row'>
+		<main className='wrapper mt-24 flex grow flex-col justify-between gap-x-24 lg:flex-row'>
 			<section className='flex flex-col'>
 				<div className='mb-12'>
 					<H1 className='mb-2'>Porozmawiajmy</H1>
@@ -16,7 +16,7 @@ const ContactPage = () => {
 				</div>
 				<ContactInfo />
 			</section>
-			<section className='rounded-2xlp shrink-0 basis-2/5 p-6 shadow-lg dark:border md:min-w-[420px] md:p-12'>
+			<section className='shrink-0 basis-2/5 rounded-xl p-6 shadow-lg dark:border md:min-w-[420px] md:p-12'>
 				<ContactForm />
 			</section>
 		</main>
