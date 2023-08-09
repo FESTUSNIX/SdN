@@ -16,7 +16,7 @@ const ContactPage = () => {
 				</div>
 				<ContactInfo />
 			</section>
-			<section className='min-w-[420px] shrink-0 basis-2/5 rounded-2xl p-12 shadow-lg dark:border'>
+			<section className='rounded-2xlp shrink-0 basis-2/5 p-6 shadow-lg dark:border md:min-w-[420px] md:p-12'>
 				<ContactForm />
 			</section>
 		</main>

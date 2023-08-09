@@ -1,22 +1,14 @@
 'use client'
 
+import { Button } from '@/app/components/ui/Button'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { Input } from '@/app/components/ui/Input'
+import { Textarea } from '@/app/components/ui/Textarea/textarea'
+import { H4 } from '@/app/components/ui/Typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage
-} from '@/app/components/ui/Form'
-import { Input } from '@/app/components/ui/Input'
-import { Button } from '@/app/components/ui/Button'
-import { Textarea } from '@/app/components/ui/Textarea/textarea'
 import { toast } from 'react-hot-toast'
-import { H3, H4 } from '@/app/components/ui/Typography'
+import { z } from 'zod'
 
 const formSchema = z.object({
 	name: z.string().min(2, { message: 'Nazwa musi zawierać conajmniej 2 znaki' }),
@@ -49,7 +41,7 @@ const ContactForm = () => {
 			</div>
 		)
 
-		form.reset( )
+		form.reset()
 	}
 
 	return (

@@ -40,7 +40,7 @@ const ContactInfo = (props: Props) => {
 				</CardContent>
 			</Card>
 
-			<div className='mt-auto'>
+			<div className='mb-12 mt-8 md:mb-0 md:mt-auto'>
 				<div className='flex flex-wrap items-center gap-4'>
 					<IconBadge href={socialMedia.twitter} name='Twitter' Icon={Twitter} />
 					<IconBadge href={socialMedia.facebook} name='Facebook' Icon={Facebook} />
