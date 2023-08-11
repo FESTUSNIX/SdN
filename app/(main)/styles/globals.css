@@ -73,7 +73,7 @@
 		@apply border-border;
 	}
 	html {
-		@apply h-full;
+		@apply h-full scroll-smooth;
 	}
 	body {
 		@apply min-h-full bg-background text-foreground;
@@ -101,7 +101,7 @@
 
 	@screen 2xl {
 		.wrapper {
-			max-width: 1400px;
+			max-width: 1100px;
 		}
 	}
 }
