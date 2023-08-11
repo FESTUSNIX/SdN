@@ -1,9 +1,8 @@
-import { H1 } from '@/app/components/ui/Typography'
-import { urlFor } from '@/lib/supabase/getUrlFor'
 import prisma from '@/prisma/client'
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import Majors from './components/Majors'
+import Address from './components/Address'
+import Details from './components/Details'
+import Header from './components/Header'
 
 type Props = { params: { unitSlug: string } }
 
@@ -35,7 +34,11 @@ export default async function UnitPage({ params }: Props) {
 			city: {
 				select: {
 					name: true,
-					voivodeship: true
+					voivodeship: {
+						select: {
+							name: true
+						}
+					}
 				}
 			},
 			address: {
@@ -49,31 +52,55 @@ export default async function UnitPage({ params }: Props) {
 
 	if (!unit) return notFound()
 
+	const {
+		name,
+		logo,
+		unitType,
+		city: {
+			name: city,
+			voivodeship: { name: voivodeship }
+		},
+		website,
+		isPublic,
+		email,
+		phone,
+		nip,
+		regon,
+		address,
+		updatedAt
+	} = unit
+
 	return (
-		<div className='wrapper flex flex-col items-center pt-12'>
-			<H1 className='mb-24'>{unit.name}</H1>
+		<main className='wrapper'>
+			<Header
+				city={city}
+				voivodeship={voivodeship}
+				isPublic={isPublic}
+				logo={logo}
+				name={name}
+				unitType={unitType}
+				website={website}
+				updatedAt={updatedAt}
+			/>
 
-			{unit.logo && (
-				<Image src={urlFor('unit_logos', unit.logo).publicUrl} alt={`Logo ${unit.name}`} width={100} height={100} />
-			)}
+			<Details
+				email={email}
+				website={website}
+				isPublic={isPublic}
+				phone={phone}
+				unitType={unitType}
+				nip={nip}
+				regon={regon}
+			/>
 
-			<p>id - {unit.id}</p>
-			<p>email - {unit.email}</p>
-			<p>isPublic - {unit.isPublic}</p>
-			<p>website - {unit.website}</p>
-			<p>unitType - {unit.unitType}</p>
-			<p>city - {unit.city.name}</p>
-			<p>voivodeship - {unit.city.voivodeship.name}</p>
-			<p>logo - {unit.logo}</p>
-			<p>NIP - {unit.nip}</p>
-			<p>Regon - {unit.regon}</p>
-			<p>updatedAt - {JSON.stringify(new Date(unit.updatedAt ?? ''))}</p>
-			<p>street - {unit.address?.street}</p>
-			<p>postalCode - {unit.address?.postalCode}</p>
-			<p>status - {unit.status}</p>
-			<p>notes - {unit.notes}</p>
+			<Address
+				city={city}
+				voivodeship={voivodeship}
+				postalCode={address?.postalCode ?? null}
+				street={address?.street ?? null}
+			/>
 
-			{unit.majors && <Majors majors={unit.majors} />}
-		</div>
+			{/* {unit.majors && <Majors majors={unit.majors} />} */}
+		</main>
 	)
 }
