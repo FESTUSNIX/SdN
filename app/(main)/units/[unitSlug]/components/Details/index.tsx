@@ -10,7 +10,7 @@ const Details = ({ email, isPublic, nip, phone, regon, unitType, website }: Prop
 			<H2 className='mb-4' size='sm'>
 				Detale
 			</H2>
-			<div className='grid grid-cols-2 gap-x-4 gap-y-6'>
+			<div className='grid grid-cols-1 gap-x-4 gap-y-6 md:grid-cols-2'>
 				{[
 					{
 						title: 'Email',

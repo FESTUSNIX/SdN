@@ -1,28 +1,46 @@
+import MajorCard from '@/app/(main)/components/MajorCard'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/app/components/ui/Card'
 import { H2 } from '@/app/components/ui/Typography'
+import prisma from '@/prisma/client'
 import Link from 'next/link'
 import React from 'react'
 
 type Props = {
-	majors: {
-		id: number
-		name: string
-		unitSlug: string
-	}[]
+	unitSlug: string
 }
 
-const Majors = ({ majors }: Props) => {
-	return (
-		<section className='w-full'>
-			<H2 className='mb-2'>Kierunki</H2>
+const Majors = async ({ unitSlug }: Props) => {
+	const majors = await prisma.major.findMany({
+		where: {
+			unitSlug
+		},
+		select: {
+			id: true,
+			name: true,
+			formOfStudy: true,
+			isOnline: true,
+			majorLevel: true,
+			startDate: true,
+			unitSlug: true,
+			qualifications: {
+				select: {
+					name: true
+				}
+			}
+		}
+	})
 
-			<div className='flex flex-wrap gap-4'>
+	if (!majors) return <p>Nie znaleziono żadnych kierunków</p>
+
+	return (
+		<section className='py-6'>
+			<H2 className='mb-2' size='sm'>
+				Kierunki
+			</H2>
+
+			<div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
 				{majors.map(major => (
-					<Link
-						href={`/units/${major.unitSlug}/major/${major.id}`}
-						key={major.id}
-						className='flex w-full items-center justify-between rounded-md border border-border bg-background p-8'>
-						<h3 className='text-lg'>{major.name}</h3>
-					</Link>
+					<MajorCard key={major.id} {...major} />
 				))}
 			</div>
 		</section>

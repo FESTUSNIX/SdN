@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Address from './components/Address'
 import Details from './components/Details'
 import Header from './components/Header'
+import Majors from './components/Majors'
 
 type Props = { params: { unitSlug: string } }
 
@@ -24,11 +25,9 @@ export default async function UnitPage({ params }: Props) {
 			slug: params.unitSlug
 		},
 		include: {
-			majors: {
+			_count: {
 				select: {
-					id: true,
-					name: true,
-					unitSlug: true
+					majors: true
 				}
 			},
 			city: {
@@ -67,7 +66,8 @@ export default async function UnitPage({ params }: Props) {
 		nip,
 		regon,
 		address,
-		updatedAt
+		updatedAt,
+		_count: { majors: majorsCount }
 	} = unit
 
 	return (
@@ -100,7 +100,7 @@ export default async function UnitPage({ params }: Props) {
 				street={address?.street ?? null}
 			/>
 
-			{/* {unit.majors && <Majors majors={unit.majors} />} */}
+			<Majors unitSlug={params.unitSlug} />
 		</main>
 	)
 }
