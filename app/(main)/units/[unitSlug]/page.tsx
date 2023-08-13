@@ -19,6 +19,8 @@ export async function generateStaticParams() {
 	}))
 }
 
+const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY!
+
 export default async function UnitPage({ params }: Props) {
 	const unit = await prisma.unit.findFirst({
 		where: {
@@ -94,6 +96,7 @@ export default async function UnitPage({ params }: Props) {
 			/>
 
 			<Address
+				GOOGLE_MAPS_API_KEY={GOOGLE_MAPS_API_KEY}
 				city={city}
 				voivodeship={voivodeship}
 				postalCode={address?.postalCode ?? null}

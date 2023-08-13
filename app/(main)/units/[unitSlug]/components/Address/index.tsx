@@ -12,6 +12,7 @@ type Props = {
 	postalCode: string | null
 	city: string
 	voivodeship: string
+	GOOGLE_MAPS_API_KEY: string
 }
 
 const Marker = ({ lat, lng, children }: { lat: number; lng: number; children?: React.ReactNode }) => (
@@ -20,13 +21,13 @@ const Marker = ({ lat, lng, children }: { lat: number; lng: number; children?: R
 	</div>
 )
 
-const Address = ({ city, postalCode, street, voivodeship }: Props) => {
+const Address = ({ city, postalCode, street, voivodeship, GOOGLE_MAPS_API_KEY }: Props) => {
 	const address = `${street}, ${postalCode}, ${city}, ${voivodeship}`
 
 	const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 })
 
 	useEffect(() => {
-		Geocode.setApiKey('AIzaSyCY1dA6XiSmdIVZEMn9lxaLhDa9f-KYQfU')
+		Geocode.setApiKey(GOOGLE_MAPS_API_KEY)
 
 		Geocode.setLanguage('pl')
 		Geocode.setRegion('pl')
@@ -41,7 +42,7 @@ const Address = ({ city, postalCode, street, voivodeship }: Props) => {
 				console.error(error)
 			}
 		)
-	}, [address])
+	}, [address, GOOGLE_MAPS_API_KEY])
 
 	const defaultProps = {
 		center: {

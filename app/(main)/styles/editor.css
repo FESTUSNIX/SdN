@@ -1,0 +1,118 @@
+.custom-editor .ce-popover {
+	@apply shadow-sm dark:shadow-none;
+	--color-background-icon-active: theme('colors.primary.DEFAULT');
+	--color-border: theme('colors.border');
+	--color-background: theme('colors.popover.DEFAULT');
+	--color-text-primary: theme('colors.popover.foreground');
+	--color-text-secondary: theme('colors.muted.foreground');
+	--color-border-icon: theme('colors.border');
+	--color-border-icon-disabled: theme('colors.muted.DEFAULT');
+	--color-text-icon-active: theme('colors.primary.foreground');
+	--color-background-item-focus: theme('colors.secondary.DEFAULT');
+	--color-shadow-item-focus: theme('colors.border');
+	--color-background-item-hover: theme('colors.secondary.DEFAULT');
+	--color-background-item-confirm: theme('colors.destructive.DEFAULT');
+	--color-background-item-confirm-hover: theme('colors.destructive.DEFAULT');
+}
+
+.custom-editor .ce-block--selected .ce-block__content,
+.custom-editor .ce-inline-toolbar,
+.custom-editor .codex-editor--narrow .ce-toolbox,
+.custom-editor .ce-conversion-toolbar,
+.custom-editor .ce-settings,
+.custom-editor .ce-settings__button,
+.custom-editor .ce-toolbar__settings-btn,
+.custom-editor .cdx-button,
+.custom-editor .ce-popover,
+.custom-editor .ce-toolbar__plus:hover {
+	@apply border-border bg-popover text-inherit;
+}
+
+.custom-editor .ce-inline-tool,
+.custom-editor .ce-conversion-toolbar__label,
+.custom-editor .ce-toolbox__button,
+.custom-editor .cdx-settings-button {
+	@apply text-inherit;
+}
+
+.custom-editor .cdx-settings-button:hover,
+.custom-editor .ce-settings__button:hover,
+.custom-editor .ce-toolbox__button--active,
+.custom-editor .ce-toolbox__button:hover,
+.custom-editor .cdx-button:hover,
+.custom-editor .ce-inline-toolbar__dropdown:hover,
+.custom-editor .ce-inline-tool:hover,
+.custom-editor .ce-popover__item:hover,
+.custom-editor .ce-conversion-tool:hover,
+.custom-editor .ce-toolbar__settings-btn:hover {
+	@apply bg-accent text-accent-foreground;
+}
+
+/* Popover item */
+.custom-editor .ce-popover-item__icon {
+	@apply bg-transparent shadow-none;
+}
+.custom-editor .ce-popover-item:hover:not(.ce-popover-item--no-hover) {
+	@apply !bg-secondary;
+}
+
+/* Paragraph */
+.custom-editor .ce-paragraph[data-placeholder]:empty::before {
+	@apply text-muted-foreground;
+}
+
+/* Conversion tool */
+.custom-editor .ce-conversion-tool--focused {
+	@apply !bg-secondary shadow-none;
+}
+.custom-editor .ce-conversion-tool__icon {
+	@apply bg-transparent;
+}
+
+/* Search field */
+.custom-editor .cdx-search-field {
+	@apply border-border bg-input text-inherit;
+}
+.custom-editor .cdx-search-field__input {
+	@apply placeholder:text-muted-foreground;
+}
+.custom-editor .cdx-search-field__icon svg {
+	@apply text-muted-foreground;
+}
+
+/* Idk */
+.custom-editor .ce-popover__item-icon,
+.custom-editor .ce-conversion-tool__icon {
+	@apply bg-muted shadow-none;
+}
+
+.custom-editor ::selection {
+	@apply bg-accent;
+}
+
+.custom-editor .cdx-notify--error {
+	@apply !bg-destructive;
+}
+
+.custom-editor .cdx-notify__cross::after,
+.custom-editor .cdx-notify__cross::before {
+	@apply bg-background;
+}
+
+.custom-editor .codex-editor__redactor {
+	@apply !pb-0;
+}
+
+.custom-editor .ce-toolbar__plus {
+	@apply text-muted-foreground;
+}
+
+/* Tooltips */
+
+.ct:before {
+	@apply !rounded-[inherit] !border !border-border !bg-popover !text-popover-foreground;
+}
+
+.ct:after {
+	@apply !bg-transparent;
+}
