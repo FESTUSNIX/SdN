@@ -116,3 +116,7 @@
 .ct:after {
 	@apply !bg-transparent;
 }
+
+.ct__content {
+	@apply !text-popover-foreground;
+}

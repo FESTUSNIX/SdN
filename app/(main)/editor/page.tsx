@@ -12,7 +12,11 @@ const EditorPage = () => {
 
 			<div className='my-12'></div>
 
-			<EditorOutput />
+			<section className='prose max-w-full rounded-md border p-4 dark:prose-invert'>
+				{EditorOutput && <EditorOutput />}
+			</section>
+
+			<div className='pb-24'></div>
 		</main>
 	)
 }

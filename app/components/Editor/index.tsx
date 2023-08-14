@@ -18,8 +18,6 @@ type Props = {
 }
 
 const Editor = ({ majorId, type }: Props) => {
-	const [defaultContent, setDefaultContent] = useState(null)
-
 	const ref = useRef<EditorJS>()
 	const [isMounted, setIsMounted] = useState(false)
 
@@ -31,7 +29,7 @@ const Editor = ({ majorId, type }: Props) => {
 		defaultValues: {
 			majorId,
 			type: type,
-			content: defaultContent || null
+			content: null
 		}
 	})
 
@@ -49,6 +47,7 @@ const Editor = ({ majorId, type }: Props) => {
 		if (!lcs) {
 			parsedContent = []
 		} else {
+			// console.log(lcs)
 			parsedContent = JSON.parse(lcs)
 		}
 
@@ -63,7 +62,10 @@ const Editor = ({ majorId, type }: Props) => {
 				data: { blocks: parsedContent.blocks },
 				tools: {
 					header: {
-						class: Header as unknown as ToolConstructable
+						class: Header as unknown as ToolConstructable,
+						config: {
+							levels: [3, 4]
+						}
 					},
 					linkTool: {
 						class: LinkTool,

@@ -4,51 +4,48 @@
 
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { CustomListRenderer } from './components/NestedList'
+import { CustomLinkToolRenderer } from './components/LinkTool'
+import { CustomTableRenderer } from './components/Table'
 
 const Output = dynamic(async () => (await import('editorjs-react-renderer')).default, {
 	ssr: false
 })
 
-type Props = {
-	content?: any
-}
-
-const style = {
-	paragraph: {
-		fontSize: '0.875rem',
-		lineHeight: '1.25rem'
-	}
-}
-
 const renderers = {
-	image: CustomImageRenderer,
-	code: CustomCodeRenderer
+	linktool: CustomLinkToolRenderer,
+	list: CustomListRenderer,
+	table: CustomTableRenderer
 }
 
-const EditorOutput = ({}: Props) => {
+const EditorOutput = () => {
 	const [content, setContent] = useState(null)
 
 	useEffect(() => {
 		const lcs = localStorage.getItem('editorContent')
 
-		if (!lcs) return
+		let parsedContent = null
 
-		const parsedContent = JSON.parse(lcs)
-
+		if (lcs || typeof lcs === 'string') {
+			parsedContent = JSON.parse(lcs)
+		}
+		console.log(parsedContent)
 		setContent(parsedContent)
 	}, [])
 
 	if (!content) return <div>Loading...</div>
 
-	return <Output className='text-sm' style={style} data={content} renderers={renderers} />
-}
-
-function CustomCodeRenderer({ data }: any) {
 	return (
-		<pre className='rounded-md bg-gray-800 p-4'>
-			<code className='text-sm text-gray-100'>{data.code}</code>
-		</pre>
+		<Output
+			data={content}
+			renderers={renderers}
+			config={{
+				linkTool: {
+					disableDefaultStyle: true
+				}
+			}}
+		/>
 	)
 }
 
