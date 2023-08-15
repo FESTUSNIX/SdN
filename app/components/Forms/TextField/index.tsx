@@ -1,4 +1,4 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
 import { Input } from '@/app/components/ui/Input'
 import { Control } from 'react-hook-form'
 import { Textarea } from '../../ui/Textarea/textarea'
@@ -8,6 +8,7 @@ type Props = {
 	accessorKey: string
 	label?: string
 	placeholder?: string
+	description?: string
 	type?: string
 	nullable?: boolean
 	textarea?: boolean
@@ -18,6 +19,7 @@ export const TextField = ({
 	label,
 	accessorKey,
 	placeholder,
+	description,
 	type = 'text',
 	nullable = false,
 	textarea
@@ -41,6 +43,7 @@ export const TextField = ({
 							/>
 						)}
 					</FormControl>
+					{description && <FormDescription>{description}</FormDescription>}
 					<FormMessage />
 				</FormItem>
 			)}

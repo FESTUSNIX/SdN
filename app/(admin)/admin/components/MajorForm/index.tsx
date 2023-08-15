@@ -12,6 +12,7 @@ import DaysOfWeek from './components/DaysOfWeek'
 import MajorLevel from './components/MajorLevel'
 import Qualifications from './components/Qualifications'
 import Status from './components/Status'
+import { EditorField } from '@/app/components/Forms/EditorField'
 
 type Props = {
 	form: MajorFormType
@@ -92,12 +93,12 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 					<DaysOfWeek formControl={form.control} />
 
 					{/* DESCRIPTION */}
-					<TextField
+					<EditorField
 						formControl={form.control}
 						accessorKey='description'
 						label='Description'
-						placeholder='Aa...'
-						textarea
+						placeholder='Start writing here'
+						modalTitle='Add major description'
 					/>
 
 					{/* FORM OF STUDY */}
@@ -125,7 +126,14 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 					/>
 
 					{/* SYLLABUS */}
-					<TextField formControl={form.control} accessorKey='syllabus' label='Syllabus' placeholder='Aa...' textarea />
+					<TextField
+						description='Program nauki'
+						formControl={form.control}
+						accessorKey='syllabus'
+						label='Syllabus'
+						placeholder='Aa...'
+						textarea
+					/>
 
 					{/* START DATE */}
 					<DatePicker formControl={form.control} accessorKey='startDate' label='Start date' />

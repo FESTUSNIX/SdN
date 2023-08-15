@@ -211,7 +211,7 @@ export async function PATCH(req: Request) {
 				certificates: certificates,
 				completionConditions: completionConditions,
 				daysOfWeek: daysOfWeek,
-				description: description,
+				description: JSON.stringify(description),
 				qualifications: {
 					connect: qualificationsConnect
 				}

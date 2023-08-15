@@ -1,5 +1,5 @@
-import { z } from 'zod'
 import { UseFormReturn } from 'react-hook-form'
+import { z } from 'zod'
 
 export const MajorValidator = z.object({
 	id: z.number(),
@@ -13,7 +13,7 @@ export const MajorValidator = z.object({
 	certificates: z.string().optional(),
 	completionConditions: z.string().optional(),
 	daysOfWeek: z.enum(['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']).array(),
-	description: z.string().optional(),
+	description: z.any().optional(),
 	formOfStudy: z.string().optional(),
 	numberOfSemesters: z.coerce.number().nullable(),
 	organisator: z.string().optional(),
