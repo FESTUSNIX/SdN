@@ -24,10 +24,6 @@ const Editor = forwardRef(({ open, field, placeholder = 'Zacznij pisać tekst tu
 		const Table = (await import('@editorjs/table')).default
 		const NestedList = (await import('@editorjs/nested-list')).default
 
-		// const lcs = localStorage.getItem('editorContent')
-
-		// const parsedContent = lcs ? JSON.parse(lcs) : []
-		console.log(field)
 		if (!editorRef.current && open) {
 			const editor = new EditorJS({
 				holder: 'editor',
@@ -86,9 +82,16 @@ const Editor = forwardRef(({ open, field, placeholder = 'Zacznij pisać tekst tu
 		field.onChange(editorOutput?.blocks)
 	}
 
+	const currentValue = async () => {
+		return await editorRef.current?.save()
+	}
+
 	useImperativeHandle(ref, () => ({
 		onEditorSubmit() {
 			onSubmit()
+		},
+		getCurrentValue() {
+			return currentValue()
 		}
 	}))
 

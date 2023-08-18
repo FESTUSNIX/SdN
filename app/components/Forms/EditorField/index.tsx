@@ -10,11 +10,13 @@ import {
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
 import { cn } from '@/lib/utils/utils'
 import { useRef, useState } from 'react'
-import { Control } from 'react-hook-form'
+import { Control, ControllerRenderProps } from 'react-hook-form'
 import Editor from '../../Editor'
+import EditorOutput from '../../EditorOutput'
 import { Button } from '../../ui/Button'
 import { ScrollArea } from '../../ui/ScrollArea'
-import { Textarea } from '../../ui/Textarea/textarea'
+import { Muted } from '../../ui/Typography'
+import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 
 type Props = {
 	formControl: Control<any>
@@ -36,8 +38,27 @@ export const EditorField = ({
 	modalTitle = 'Add rich text'
 }: Props) => {
 	const [isOpen, setIsOpen] = useState(false)
-
 	const childRef = useRef()
+	const { openModal } = useGlobalModalContext()
+
+	const handleUnsavedChanges = async (field: ControllerRenderProps<any, string>, open: boolean) => {
+		if (open) return setIsOpen(open)
+
+		const currentValue = await (childRef?.current as any).getCurrentValue()
+
+		if (JSON.stringify(currentValue.blocks) !== JSON.stringify(field.value) && currentValue.blocks.length) {
+			return openModal('CUSTOM', {
+				title: 'Confirm to close',
+				description: 'There are unsaved changes. Are you sure you want to close the panel? Your changes will be lost.',
+				onConfirm: () => {
+					setIsOpen(false)
+				},
+				confirmButtonVariant: 'destructive'
+			})
+		}
+
+		setIsOpen(open)
+	}
 
 	return (
 		<FormField
@@ -47,10 +68,22 @@ export const EditorField = ({
 				<FormItem>
 					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
-						<Dialog open={isOpen} onOpenChange={setIsOpen}>
+						<Dialog
+							open={isOpen}
+							onOpenChange={open => {
+								handleUnsavedChanges(field, open)
+							}}>
 							<DialogTrigger asChild>
 								<div>
-									<Textarea placeholder={'Click here for full editor'} />
+									<div className='flex max-h-72 min-h-[80px] w-full cursor-text overflow-y-auto rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'>
+										{field.value && field.value?.length ? (
+											<div className='pointer-events-none origin-top-left scale-75 select-none'>
+												<EditorOutput content={field.value} />
+											</div>
+										) : (
+											<Muted className='pointer-events-none select-none'>{placeholder}</Muted>
+										)}
+									</div>
 									{description && <FormDescription>{description}</FormDescription>}
 								</div>
 							</DialogTrigger>

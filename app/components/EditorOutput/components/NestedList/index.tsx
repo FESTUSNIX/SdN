@@ -45,7 +45,7 @@ const NestedListItem = ({
 
 	return (
 		<li
-			before-dynamic-value={style === 'ordered' && prevIndexes}
+			before-dynamic-value={style === 'ordered' ? prevIndexes : ''}
 			className={cn(
 				'my-0.5',
 				style === 'ordered' && `before:mr-1.5 before:content-[attr(before-dynamic-value)]`,
