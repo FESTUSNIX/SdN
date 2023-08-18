@@ -7,7 +7,7 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from '@/app/components/ui/Dialog'
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
 import { cn } from '@/lib/utils/utils'
 import { useRef, useState } from 'react'
 import { Control } from 'react-hook-form'
@@ -21,6 +21,7 @@ type Props = {
 	accessorKey: string
 	label?: string
 	placeholder?: string
+	description?: string
 	modalTitle?: string
 	modalDescription?: string
 }
@@ -30,6 +31,7 @@ export const EditorField = ({
 	label,
 	accessorKey,
 	placeholder,
+	description,
 	modalDescription,
 	modalTitle = 'Add rich text'
 }: Props) => {
@@ -47,7 +49,10 @@ export const EditorField = ({
 					<FormControl>
 						<Dialog open={isOpen} onOpenChange={setIsOpen}>
 							<DialogTrigger asChild>
-								<Textarea placeholder={'Click here for full editor'} />
+								<div>
+									<Textarea placeholder={'Click here for full editor'} />
+									{description && <FormDescription>{description}</FormDescription>}
+								</div>
 							</DialogTrigger>
 							<DialogContent className='flex h-full flex-col gap-0 p-0 sm:max-h-[calc(100vh-8rem)] md:!max-w-[700px] lg:!max-w-[900px] '>
 								<DialogHeader className={cn('border-b p-6', modalDescription ? 'pb-2' : 'pb-4')}>
