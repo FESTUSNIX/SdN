@@ -32,19 +32,19 @@ export async function POST(req: Request) {
 	try {
 		const body = await req.json()
 
-		const data = MajorValidator.omit({ id: true, unitSlug: true }).parse(body)
+		const data = MajorValidator.omit({ id: true }).parse(body)
 
+		// const majorExists = await prisma.major.findFirst({
+		// 	where: {
+		// 		unitId: data.unitId,
+		// 		name: data.name,
+		// 		majorLevel: data.majorLevel
+		// 	}
+		// })
 
-		const unitSlug = await prisma.unit.findFirst({
-			where: {
-				id: data.unitId
-			},
-			select: {
-				slug: true
-			}
-		})
-
-		if (!unitSlug) return new Response('Unit not found', { status: 404 })
+		// if (majorExists) {
+		// 	return new Response('Major already exists on this Unit', { status: 409 })
+		// }
 
 		const qualificationsConnect = data.qualifications.map(qualification => {
 			return {
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
 		const major = await prisma.major.create({
 			data: {
 				unitId: data.unitId,
-				unitSlug: unitSlug.slug,
+				unitSlug: data.unitSlug,
 				status: data.status,
 				name: data.name,
 				address: data.address,

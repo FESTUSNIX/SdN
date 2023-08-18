@@ -27,12 +27,11 @@ const EditMajor = () => {
 	useFormChanges(form.formState)
 
 	const { mutate: updateMajor, isLoading } = useMutation({
-		mutationFn: async (values: Omit<MajorPayload, 'unitSlug'>) => {
+		mutationFn: async (values: MajorPayload) => {
 			toast.loading('Editing a major...')
 
-			const payload: Omit<MajorPayload, 'unitSlug'> = {
+			const payload: Omit<MajorPayload, 'unitSlug' | 'unitId'> = {
 				id: values.id,
-				unitId: values.unitId,
 				name: values.name,
 				majorLevel: values.majorLevel,
 				address: values.address,
@@ -108,7 +107,7 @@ const EditMajor = () => {
 						Editing major
 					</Button>
 				) : (
-					<Button type='submit' onClick={form.handleSubmit(e => updateMajor(e))}>
+					<Button type='submit' form='major-form'>
 						Edit major
 					</Button>
 				)}

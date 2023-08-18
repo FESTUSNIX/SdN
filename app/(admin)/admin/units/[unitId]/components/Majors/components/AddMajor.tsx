@@ -9,22 +9,20 @@ import { MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
+import { format } from 'date-fns'
 import { Loader2 } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useFormChanges } from '../../../../../hooks/useFormChanges'
-import { format } from 'date-fns'
-import { createId } from '@paralleldrive/cuid2'
 
 const AddMajor = () => {
 	const { closeSheet } = useGlobalSheetContext()
 	const { unitId } = useParams()
 
 	const form = useForm<MajorPayload>({
-		resolver: zodResolver(MajorValidator),
+		resolver: zodResolver(MajorValidator.omit({ unitSlug: true, id: true })),
 		defaultValues: {
-			id: 0,
 			unitId: parseInt(unitId),
 			name: '',
 			majorLevel: 'PODYPLOMOWE',
@@ -55,13 +53,11 @@ const AddMajor = () => {
 	useFormChanges(form.formState)
 
 	const { mutate: createMajor, isLoading } = useMutation({
-		mutationFn: async (values: MajorPayload) => {
+		mutationFn: async (values: Omit<MajorPayload, 'unitSlug'>) => {
 			toast.loading('Adding a major...')
 
-			const payload: MajorPayload = {
-				id: 0,
+			const payload: Omit<MajorPayload, 'id' | 'unitSlug'> = {
 				unitId: parseInt(unitId),
-				unitSlug: createId(),
 				name: values.name,
 				majorLevel: values.majorLevel,
 				address: values.address,
@@ -131,12 +127,12 @@ const AddMajor = () => {
 				</Button>
 
 				{isLoading ? (
-					<Button type='submit' disabled>
+					<Button disabled>
 						<Loader2 className='mr-2 h-4 w-4 animate-spin' />
 						Adding major
 					</Button>
 				) : (
-					<Button type='submit' onClick={form.handleSubmit(e => createMajor(e))}>
+					<Button type='submit' form='major-form'>
 						Add major
 					</Button>
 				)}

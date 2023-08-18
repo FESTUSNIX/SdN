@@ -64,8 +64,6 @@ export default async function MajorsPage() {
 					}
 				]}
 				RowActions={RowActions}
-				buttonText='Add Major'
-				sheetType='ADD_MAJOR'
 			/>
 		</div>
 	)
