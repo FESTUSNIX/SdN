@@ -15,10 +15,24 @@ import {
 import { Button } from '@/app/components/ui/Button'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const EditorPage = () => {
 	const [open, setOpen] = useState(false)
+
+	const [content, setContent] = useState(null)
+
+	useEffect(() => {
+		const lcs = localStorage.getItem('editorContent')
+
+		let parsedContent = null
+
+		if (lcs || typeof lcs === 'string') {
+			parsedContent = JSON.parse(lcs)
+		}
+		console.log(parsedContent)
+		setContent(parsedContent)
+	}, [])
 
 	return (
 		<main className='wrapper mt-12'>
@@ -51,7 +65,7 @@ const EditorPage = () => {
 			</Dialog>
 
 			<section className='prose max-w-full rounded-md border p-4 dark:prose-invert'>
-				{EditorOutput && <EditorOutput />}
+				{EditorOutput && <EditorOutput content={content} />}
 			</section>
 		</main>
 	)

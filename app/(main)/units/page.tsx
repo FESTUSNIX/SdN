@@ -1,7 +1,7 @@
 import prisma from '@/prisma/client'
 import Link from 'next/link'
 
-const UnitPage = async () => {
+const UnitsPage = async () => {
 	const units = await prisma.unit.findMany({
 		select: {
 			id: true,
@@ -35,4 +35,4 @@ const UnitPage = async () => {
 	)
 }
 
-export default UnitPage
+export default UnitsPage

@@ -19,22 +19,15 @@ const renderers = {
 	table: CustomTableRenderer
 }
 
-const EditorOutput = () => {
-	const [content, setContent] = useState(null)
+type OutputProps = {
+	content: any
+}
 
-	useEffect(() => {
-		const lcs = localStorage.getItem('editorContent')
+const EditorOutput = ({ content }: OutputProps) => {
+	console.log(content)
+	// if (content || typeof content === 'string') content = JSON.parse(content)
 
-		let parsedContent = null
-
-		if (lcs || typeof lcs === 'string') {
-			parsedContent = JSON.parse(lcs)
-		}
-		console.log(parsedContent)
-		setContent(parsedContent)
-	}, [])
-
-	if (!content) return <div>Loading...</div>
+	if (!content) return <div>Could not find content</div>
 
 	return (
 		<Output

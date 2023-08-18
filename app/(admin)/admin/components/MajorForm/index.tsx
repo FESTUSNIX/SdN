@@ -1,18 +1,20 @@
 'use client'
 
+import { EditorField } from '@/app/components/Forms/EditorField'
 import { SwitchField } from '@/app/components/Forms/SwitchField'
 import { TextField } from '@/app/components/Forms/TextField'
-import { Form } from '@/app/components/ui/Form'
+import { Form, FormLabel } from '@/app/components/ui/Form'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H4, Muted } from '@/app/components/ui/Typography'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/app/components/ui/ui/collapsible'
 import { MajorFormType, MajorPayload } from '@/lib/validators/major'
+import { ChevronsUpDown } from 'lucide-react'
 import { SubmitHandler } from 'react-hook-form'
 import { DatePicker } from './components/DatePicker'
 import DaysOfWeek from './components/DaysOfWeek'
 import MajorLevel from './components/MajorLevel'
 import Qualifications from './components/Qualifications'
 import Status from './components/Status'
-import { EditorField } from '@/app/components/Forms/EditorField'
 
 type Props = {
 	form: MajorFormType
@@ -20,10 +22,25 @@ type Props = {
 }
 
 const MajorForm = ({ form, onSubmit }: Props) => {
+	const unitId = form.getValues().unitId
+
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(e => onSubmit(e))} className='py-4'>
+			<form onSubmit={form.handleSubmit(e => onSubmit(e))} id='major-form' className='py-4'>
 				<div className='space-y-8 px-6'>
+					<Collapsible>
+						<CollapsibleTrigger asChild>
+							<FormLabel className='flex cursor-pointer items-center justify-between'>
+								<span className='sr-only'>Toggle</span>
+								<span>Unit data</span>
+								<ChevronsUpDown className='h-4 w-4' />
+							</FormLabel>
+						</CollapsibleTrigger>
+						<CollapsibleContent>
+							<Muted>ID: {unitId}</Muted>
+						</CollapsibleContent>
+					</Collapsible>
+
 					<TextField formControl={form.control} accessorKey='name' label='Name' placeholder='Aa...' />
 
 					<MajorLevel form={form} />
@@ -81,12 +98,12 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 					<TextField formControl={form.control} accessorKey='certificates' label='Certificates' placeholder='Aa...' />
 
 					{/* COMPLETION CONDITIONS */}
-					<TextField
+					<EditorField
 						formControl={form.control}
 						accessorKey='completionConditions'
 						label='Completion conditions'
-						placeholder='Aa...'
-						textarea
+						placeholder='Start writing here'
+						modalTitle='Add completion conditions'
 					/>
 
 					{/* DAYS OF WEEK */}
@@ -117,22 +134,22 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 					<TextField formControl={form.control} accessorKey='organisator' label='Organisator' placeholder='Aa...' />
 
 					{/* RECRUITMENT CONDITIONS */}
-					<TextField
+					<EditorField
 						formControl={form.control}
 						accessorKey='recruitmentConditions'
 						label='Recruitment conditions'
-						placeholder='Aa...'
-						textarea
+						placeholder='Start writing here'
+						modalTitle='Add recruitment conditions'
 					/>
 
 					{/* SYLLABUS */}
-					<TextField
-						description='Program nauki'
+					<EditorField
 						formControl={form.control}
 						accessorKey='syllabus'
 						label='Syllabus'
-						placeholder='Aa...'
-						textarea
+						placeholder='Start writing here'
+						modalTitle='Add syllabus'
+						description='Program nauki'
 					/>
 
 					{/* START DATE */}
