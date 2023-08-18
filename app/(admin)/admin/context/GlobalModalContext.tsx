@@ -5,8 +5,10 @@ type ModalContent = {
 	title: string
 	description: string
 	content?: JSX.Element | null
-	confirmButtonText: string
+	confirmButtonText?: string
+	confirmButtonVariant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
 	cancelButtonText?: string
+	cancelButtonVariant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
 	onConfirm: () => void
 	onCancel?: () => void
 }
@@ -25,14 +27,19 @@ const defaultState = {
 	modalContent: null
 }
 
-const modalReducer = (state: any, action: { type: MODAL_TYPES; modalContent?: ModalContent }) => {
+const modalReducer = (
+	state: any,
+	action: { type: MODAL_TYPES; modalContent?: ModalContent; component?: JSX.Element }
+) => {
 	const modalContent = action.modalContent
 		? {
 				title: action.modalContent?.title,
 				description: action.modalContent?.description,
 				content: action.modalContent?.content ?? null,
-				confirmButtonText: action.modalContent?.confirmButtonText,
+				confirmButtonText: action.modalContent?.confirmButtonText ?? 'Confirm',
+				confirmButtonVariant: action.modalContent?.confirmButtonVariant ?? 'destructive',
 				cancelButtonText: action.modalContent?.cancelButtonText ?? 'Cancel',
+				cancelButtonVariant: action.modalContent?.cancelButtonVariant ?? 'outline',
 				onConfirm: action.modalContent?.onConfirm,
 				onCancel: action.modalContent?.onCancel
 		  }
@@ -42,7 +49,7 @@ const modalReducer = (state: any, action: { type: MODAL_TYPES; modalContent?: Mo
 		case 'CUSTOM':
 			return {
 				modalContent,
-				component: null,
+				component: action.component ?? null,
 				show: true
 			}
 		case 'CONFIRM_SHEET_CLOSE':

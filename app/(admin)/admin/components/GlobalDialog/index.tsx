@@ -44,7 +44,7 @@ const GlobalDialog = () => {
 
 						<DialogFooter>
 							<Button
-								variant={'outline'}
+								variant={modalContent.cancelButtonVariant}
 								onClick={() => {
 									modalContent.onCancel && modalContent.onCancel()
 									closeModal()
@@ -52,6 +52,7 @@ const GlobalDialog = () => {
 								{modalContent.cancelButtonText}
 							</Button>
 							<Button
+								variant={modalContent.confirmButtonVariant}
 								onClick={() => {
 									modalContent.onConfirm()
 									closeModal()
