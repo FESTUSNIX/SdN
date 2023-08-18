@@ -95,14 +95,14 @@ model Major {
   address               String?
   isRegulated           Boolean         @default(true)
   certificates          String?
-  completionConditions  String?
+  completionConditions  Json?
   daysOfWeek            DaysOfWeek[]
-  description           String?
+  description           Json?
   formOfStudy           String?         @default("zaoczne")
   numberOfSemesters     Int?
   organisator           String?
-  recruitmentConditions String?
-  syllabus              String?
+  recruitmentConditions Json?
+  syllabus              Json?
   updatedAt             DateTime        @default(now()) @updatedAt
   canPayInInstallments  Boolean         @default(false)
   durationInHours       Int?

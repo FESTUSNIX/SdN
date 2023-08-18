@@ -1,7 +1,6 @@
 import EditorOutput from '@/app/components/EditorOutput'
 import { H1, H3 } from '@/app/components/ui/Typography'
 import prisma from '@/prisma/client'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } }) => {
@@ -199,25 +198,33 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 				<H3 size='sm' className='mb-0'>
 					completionConditions
 				</H3>
-				<EditorOutput content={completionConditions} />
+				<div className='prose rounded-md border p-4'>
+					<EditorOutput content={completionConditions} />
+				</div>
 			</div>
 			<div className='mb-2'>
 				<H3 size='sm' className='mb-0'>
 					recruitmentConditions
 				</H3>
-				<EditorOutput content={recruitmentConditions} />
+				<div className='prose rounded-md border p-4'>
+					<EditorOutput content={recruitmentConditions} />
+				</div>
 			</div>
 			<div className='mb-2'>
 				<H3 size='sm' className='mb-0'>
 					description
 				</H3>
-				<EditorOutput content={description} />
+				<div className='prose rounded-md border p-4'>
+					<EditorOutput content={description} />
+				</div>
 			</div>
 			<div className='mb-2'>
 				<H3 size='sm' className='mb-0'>
 					syllabus
 				</H3>
-				<EditorOutput content={syllabus} />
+				<div className='prose rounded-md border p-4'>
+					<EditorOutput content={syllabus} />
+				</div>
 			</div>
 		</div>
 	)

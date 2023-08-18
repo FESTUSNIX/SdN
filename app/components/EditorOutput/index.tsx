@@ -24,14 +24,11 @@ type OutputProps = {
 }
 
 const EditorOutput = ({ content }: OutputProps) => {
-	console.log(content)
-	// if (content || typeof content === 'string') content = JSON.parse(content)
-
 	if (!content) return <div>Could not find content</div>
 
 	return (
 		<Output
-			data={content}
+			data={{ blocks: content }}
 			renderers={renderers}
 			config={{
 				linkTool: {

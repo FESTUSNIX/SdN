@@ -29,8 +29,8 @@ const AddMajor = () => {
 			address: '',
 			canPayInInstallments: false,
 			certificates: '',
-			completionConditions: '',
-			description: '',
+			completionConditions: [],
+			description: [],
 			contact: '',
 			cost: null,
 			daysOfWeek: [],
@@ -44,9 +44,9 @@ const AddMajor = () => {
 			onlineDuration: null,
 			organisator: '',
 			qualifications: [],
-			recruitmentConditions: '',
+			recruitmentConditions: [],
 			status: 'IN_PROGRESS',
-			syllabus: ''
+			syllabus: []
 		}
 	})
 

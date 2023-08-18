@@ -32,12 +32,36 @@ export async function POST(req: Request) {
 	try {
 		const body = await req.json()
 
-		const data = MajorValidator.omit({ id: true, unitSlug: true }).parse(body)
-
+		const {
+			cost,
+			daysOfWeek,
+			durationInHours,
+			endDate,
+			majorLevel,
+			name,
+			numberOfSemesters,
+			onlineDuration,
+			qualifications,
+			startDate,
+			status,
+			unitId,
+			address,
+			canPayInInstallments,
+			certificates,
+			completionConditions,
+			contact,
+			description,
+			formOfStudy,
+			isOnline,
+			isRegulated,
+			organisator,
+			recruitmentConditions,
+			syllabus
+		} = MajorValidator.omit({ id: true, unitSlug: true }).parse(body)
 
 		const unitSlug = await prisma.unit.findFirst({
 			where: {
-				id: data.unitId
+				id: unitId
 			},
 			select: {
 				slug: true
@@ -46,7 +70,7 @@ export async function POST(req: Request) {
 
 		if (!unitSlug) return new Response('Unit not found', { status: 404 })
 
-		const qualificationsConnect = data.qualifications.map(qualification => {
+		const qualificationsConnect = qualifications.map(qualification => {
 			return {
 				id: qualification
 			}
@@ -54,30 +78,30 @@ export async function POST(req: Request) {
 
 		const major = await prisma.major.create({
 			data: {
-				unitId: data.unitId,
+				unitId: unitId,
 				unitSlug: unitSlug.slug,
-				status: data.status,
-				name: data.name,
-				address: data.address,
-				contact: data.contact,
-				cost: data.cost,
-				durationInHours: data.durationInHours,
-				endDate: data.endDate,
-				formOfStudy: data.formOfStudy,
-				isOnline: !!data.isOnline,
-				majorLevel: data.majorLevel,
-				numberOfSemesters: data.numberOfSemesters,
-				onlineDuration: data.onlineDuration,
-				organisator: data.organisator,
-				recruitmentConditions: data.recruitmentConditions,
-				startDate: data.startDate,
-				syllabus: data.syllabus,
-				isRegulated: !!data.isRegulated,
-				canPayInInstallments: !!data.canPayInInstallments,
-				certificates: data.certificates,
-				completionConditions: data.completionConditions,
-				daysOfWeek: data.daysOfWeek,
-				description: data.description,
+				status: status,
+				name: name,
+				address: address,
+				contact: contact,
+				cost: cost,
+				durationInHours: durationInHours,
+				endDate: endDate,
+				formOfStudy: formOfStudy,
+				isOnline: !!isOnline,
+				majorLevel: majorLevel,
+				numberOfSemesters: numberOfSemesters,
+				onlineDuration: onlineDuration,
+				organisator: organisator,
+				recruitmentConditions: recruitmentConditions,
+				startDate: startDate,
+				syllabus: syllabus,
+				isRegulated: !!isRegulated,
+				canPayInInstallments: !!canPayInInstallments,
+				certificates: certificates,
+				completionConditions: completionConditions,
+				daysOfWeek: daysOfWeek,
+				description: description,
 				qualifications: {
 					connect: qualificationsConnect
 				}
@@ -202,15 +226,15 @@ export async function PATCH(req: Request) {
 				numberOfSemesters: numberOfSemesters,
 				onlineDuration: onlineDuration,
 				organisator: organisator,
-				recruitmentConditions: JSON.stringify(recruitmentConditions),
+				recruitmentConditions: recruitmentConditions,
 				startDate: startDate,
-				syllabus: JSON.stringify(syllabus),
+				syllabus: syllabus,
 				isRegulated: isRegulated,
 				canPayInInstallments: !!canPayInInstallments,
 				certificates: certificates,
-				completionConditions: JSON.stringify(completionConditions),
+				completionConditions: completionConditions,
 				daysOfWeek: daysOfWeek,
-				description: JSON.stringify(description),
+				description: description,
 				qualifications: {
 					connect: qualificationsConnect
 				}
