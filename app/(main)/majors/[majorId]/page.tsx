@@ -1,7 +1,13 @@
 import EditorOutput from '@/app/components/EditorOutput'
-import { H1, H3 } from '@/app/components/ui/Typography'
+import { Badge } from '@/app/components/ui/Badge'
+import { H1, H2, H3, Muted } from '@/app/components/ui/Typography'
+import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
 import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation'
+import SideBar from './components/SideBar'
+import { cn } from '@/lib/utils/utils'
+import { Duration } from './components/Duration'
+import UnitCard from './components/UnitCard'
 
 const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } }) => {
 	const major = await prisma.major.findFirst({
@@ -45,188 +51,83 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 		recruitmentConditions,
 		startDate,
 		status,
-		syllabus
+		syllabus,
+		unitId
 	} = major
 
-	console.log(major)
+	const sectionStyles = 'border-b py-6'
+
 	return (
-		<div className='wrapper min-h-screen pt-12 dark:prose-invert'>
-			<H1 size='sm' className='mb-12'>
-				{name}
-			</H1>
+		<main className='wrapper min-h-screen'>
+			<header className='border-b pb-6 pt-12'>
+				<H1 size='sm' className=''>
+					{name}
+				</H1>
 
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					id:&nbsp;
-				</H3>
-				<p>{id}</p>
-			</div>
-
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					qualifications:&nbsp;
-				</H3>
-				{qualifications && (
-					<p>
-						{qualifications?.map(q => (
-							<span key={q.name}>
-								{q.name} ({q.type}),
-							</span>
-						))}
-					</p>
-				)}
-			</div>
-
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					address:&nbsp;
-				</H3>
-				<p>{address}</p>
-			</div>
-
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					canPayInInstallments:&nbsp;
-				</H3>
-				<p>{JSON.stringify(canPayInInstallments)}</p>
-			</div>
-
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					certificates:&nbsp;
-				</H3>
-				<p>{certificates}</p>
-			</div>
-
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					contact:&nbsp;
-				</H3>
-				<p>{contact}</p>
-			</div>
-
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					cost:&nbsp;
-				</H3>
-				<p>{cost}</p>
-			</div>
-
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					daysOfWeek:&nbsp;
-				</H3>
-				{daysOfWeek && (
-					<p>
-						{daysOfWeek?.map(item => (
-							<span key={item}>{item}, </span>
-						))}
-					</p>
-				)}
-			</div>
-
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					durationInHours:&nbsp;
-				</H3>
-				<p>{durationInHours}</p>
-			</div>
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					formOfStudy:&nbsp;
-				</H3>
-				<p>{formOfStudy}</p>
-			</div>
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					isOnline:&nbsp;
-				</H3>
-				<p>{JSON.stringify(isOnline)}</p>
-			</div>
-
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					isRegulated:&nbsp;
-				</H3>
-				<p>{JSON.stringify(isRegulated)}</p>
-			</div>
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					majorLevel:&nbsp;
-				</H3>
-				<p>{majorLevel}</p>
-			</div>
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					numberOfSemesters:&nbsp;
-				</H3>
-				<p>{numberOfSemesters}</p>
-			</div>
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					onlineDuration:&nbsp;
-				</H3>
-				<p>{onlineDuration}</p>
-			</div>
-
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					endDate:&nbsp;
-				</H3>
-				<p>{endDate?.toLocaleDateString()}</p>
-			</div>
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					startDate:&nbsp;
-				</H3>
-				<p>{startDate?.toLocaleDateString()}</p>
-			</div>
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					status:&nbsp;
-				</H3>
-				<p>{status}</p>
-			</div>
-			<div className='mb-2 flex items-center'>
-				<H3 size='sm' className='mb-0'>
-					organisator:&nbsp;
-				</H3>
-				<p>{organisator}</p>
-			</div>
-
-			<div className='mb-2'>
-				<H3 size='sm' className='mb-0'>
-					completionConditions
-				</H3>
-				<div className='prose rounded-md border p-4'>
-					<EditorOutput content={completionConditions} />
+				<div className='items-centr mb-6 mt-4 flex gap-2'>
+					<Badge variant={'secondary'}>{majorLevelEnum[majorLevel]}</Badge>
+					{formOfStudy && <Badge variant={'secondary'}>{formOfStudy}</Badge>}
+					<Badge variant={'secondary'}>{isOnline ? 'Online' : 'Stacjonarne'}</Badge>
 				</div>
-			</div>
-			<div className='mb-2'>
-				<H3 size='sm' className='mb-0'>
-					recruitmentConditions
-				</H3>
-				<div className='prose rounded-md border p-4'>
-					<EditorOutput content={recruitmentConditions} />
-				</div>
-			</div>
-			<div className='mb-2'>
-				<H3 size='sm' className='mb-0'>
-					description
-				</H3>
-				<div className='prose rounded-md border p-4'>
+
+				<div className=''>
 					<EditorOutput content={description} />
 				</div>
-			</div>
-			<div className='mb-2'>
-				<H3 size='sm' className='mb-0'>
-					syllabus
-				</H3>
-				<div className='prose rounded-md border p-4'>
-					<EditorOutput content={syllabus} />
+			</header>
+
+			<div className='flex'>
+				<div className='grow'>
+					<section className={cn(sectionStyles, 'pt-12')}>
+						<H2 size='sm'>Jakie kwalifikacje uzyskasz:</H2>
+
+						<div className='tw-prose'>
+							<ul className='flex flex-col'>
+								{qualifications?.map(q => (
+									<li key={q.name}>{q.name}</li>
+								))}
+							</ul>
+						</div>
+					</section>
+
+					{recruitmentConditions && (
+						<section className={sectionStyles}>
+							<H2 size='sm'>Warunki rekrutacji</H2>
+							<EditorOutput content={recruitmentConditions} />
+						</section>
+					)}
+
+					{completionConditions && (
+						<section className={sectionStyles}>
+							<H2 size='sm'>Warunki ukończenia</H2>
+							<EditorOutput content={completionConditions} />
+						</section>
+					)}
+
+					{syllabus && (
+						<section className={sectionStyles}>
+							<H2 size='sm'>Program studiów</H2>
+							<EditorOutput content={syllabus} />
+						</section>
+					)}
+
+					<section className={cn(sectionStyles, 'border-none')}>
+						<H2 size='sm'>Czas trwania</H2>
+						<Muted className='mb-6'>
+							{startDate?.toLocaleDateString()} - {endDate?.toLocaleDateString()}
+						</Muted>
+						<Duration startDate={startDate} endDate={endDate} />
+					</section>
 				</div>
+
+				<SideBar major={major} />
 			</div>
-		</div>
+
+			<section className={cn(sectionStyles, 'border-b-none border-t')}>
+				<H2 size='sm'>Organizowane przez</H2>
+
+				<UnitCard unitId={unitId} />
+			</section>
+		</main>
 	)
 }
 
