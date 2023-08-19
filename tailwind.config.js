@@ -11,6 +11,29 @@ module.exports = {
 			}
 		},
 		extend: {
+			spacing: {
+				navOffset: 'var(--nav-offset,_80px)'
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						ul: {
+							marginTop: 0,
+							marginBottom: 0,
+							listStyleType: 'none',
+							'> li': {
+								marginTop: '0.125rem',
+								marginBottom: '0.125rem',
+								'&::before': {
+									content: "'•'",
+									marginRight: '0.375rem',
+									color: 'inherit'
+								}
+							}
+						}
+					}
+				}
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
