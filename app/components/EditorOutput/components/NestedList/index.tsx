@@ -21,10 +21,8 @@ export const ListWrapper = ({
 	children: any
 	className?: string
 }): JSX.Element => {
-	if (style === 'unordered')
-		return <ul className={cn('prose my-0 list-none dark:prose-invert', className)}>{children}</ul>
-	if (style === 'ordered')
-		return <ol className={cn('prose my-0 list-none dark:prose-invert', className)}>{children}</ol>
+	if (style === 'unordered') return <ul className={cn('tw-prose my-0 list-none', className)}>{children}</ul>
+	if (style === 'ordered') return <ol className={cn('tw-prose my-0 list-none', className)}>{children}</ol>
 
 	return children
 }

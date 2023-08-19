@@ -99,7 +99,7 @@ const Editor = forwardRef(({ open, field, placeholder = 'Zacznij pisać tekst tu
 
 	return (
 		<form id='editor-form' onSubmit={onSubmit}>
-			<div className='custom-editor prose min-w-full p-4 text-foreground dark:prose-invert'>
+			<div className='custom-editor tw-prose min-w-full p-4 text-foreground'>
 				<div id='editor' className='min-h-[500px]' />
 			</div>
 		</form>

@@ -64,7 +64,7 @@ const EditorPage = () => {
 				</DialogContent>
 			</Dialog>
 
-			<section className='prose max-w-full rounded-md border p-4 dark:prose-invert'>
+			<section className='tw-prose max-w-full rounded-md border p-4'>
 				{EditorOutput && <EditorOutput content={content} />}
 			</section>
 		</main>

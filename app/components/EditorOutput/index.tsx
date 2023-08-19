@@ -25,15 +25,17 @@ const EditorOutput = ({ content }: OutputProps) => {
 	if (!content) return <div>Could not find content</div>
 
 	return (
-		<Output
-			data={{ blocks: content }}
-			renderers={renderers}
-			config={{
-				linkTool: {
-					disableDefaultStyle: true
-				}
-			}}
-		/>
+		<div className='tw-prose'>
+			<Output
+				data={{ blocks: content }}
+				renderers={renderers}
+				config={{
+					linkTool: {
+						disableDefaultStyle: true
+					}
+				}}
+			/>
+		</div>
 	)
 }
 

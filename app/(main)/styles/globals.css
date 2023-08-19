@@ -34,6 +34,14 @@
 		--ring: 0 0% 63.9%;
 
 		--radius: 0.5rem;
+
+		--nav-offset: 80px;
+	}
+
+	@screen md {
+		:root {
+			--nav-offset: 72px;
+		}
 	}
 
 	.dark {
@@ -103,5 +111,11 @@
 		.wrapper {
 			max-width: 1100px;
 		}
+	}
+}
+
+@layer utilities {
+	.tw-prose {
+		@apply prose dark:prose-invert;
 	}
 }
