@@ -1,7 +1,8 @@
+import { BrandLogo } from '@/app/components/BrandLogo'
 import Link from 'next/link'
-import { links } from './constants/links'
 import { DynamicBorder } from './components/DynamicBorder'
 import { MobileMenu } from './components/MobileMenu'
+import { links } from './constants/links'
 
 const Navbar = () => {
 	return (
@@ -10,7 +11,9 @@ const Navbar = () => {
 
 			<div className='wrapper flex items-center justify-between'>
 				<div className='z-50 text-2xl font-bold text-accent-foreground'>
-					<Link href={'/'}>SdN</Link>
+					<Link href={'/'}>
+						<BrandLogo type='banner' />
+					</Link>
 				</div>
 
 				<MobileMenu />
