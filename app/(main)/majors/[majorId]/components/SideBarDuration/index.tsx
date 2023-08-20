@@ -27,7 +27,10 @@ const SideBarDuration = ({ startDate, endDate }: Props) => {
 				<Button
 					id='date'
 					variant={'outline'}
-					className={cn('w-[300px] max-w-full justify-start text-left font-normal', !date && 'text-muted-foreground')}>
+					className={cn(
+						'w-full max-w-full justify-start text-left font-normal lg:w-[300px]',
+						!date && 'text-muted-foreground'
+					)}>
 					<CalendarIcon className='mr-2 h-4 w-4' />
 					{date?.from &&
 						(date.to ? (

@@ -8,6 +8,8 @@ import SideBar from './components/SideBar'
 import { cn } from '@/lib/utils/utils'
 import { Duration } from './components/Duration'
 import UnitCard from './components/UnitCard'
+import { Suspense } from 'react'
+import { DaysOfWeek } from '@prisma/client'
 
 const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } }) => {
 	const major = await prisma.major.findFirst({
@@ -55,7 +57,7 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 		unitId
 	} = major
 
-	const sectionStyles = 'border-b py-6'
+	const sectionStyles = 'border-b py-8'
 
 	return (
 		<main className='wrapper min-h-screen'>
@@ -75,7 +77,7 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 				</div>
 			</header>
 
-			<div className='flex'>
+			<div className='flex flex-col-reverse md:flex-row'>
 				<div className='grow'>
 					<section className={cn(sectionStyles, 'pt-12')}>
 						<H2 size='sm'>Jakie kwalifikacje uzyskasz:</H2>
@@ -116,6 +118,32 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 							{startDate?.toLocaleDateString()} - {endDate?.toLocaleDateString()}
 						</Muted>
 						<Duration startDate={startDate} endDate={endDate} />
+
+						<div className='mt-8 flex items-center gap-1 rounded-md border p-1'>
+							{(
+								[
+									{ label: 'Pon', value: 'MONDAY' },
+									{ label: 'Wto', value: 'TUESDAY' },
+									{ label: 'Śro', value: 'WEDNESDAY' },
+									{ label: 'Czw', value: 'THURSDAY' },
+									{ label: 'Pią', value: 'FRIDAY' },
+									{ label: 'Sob', value: 'SATURDAY' },
+									{ label: 'Nie', value: 'SUNDAY' }
+								] as {
+									label: string
+									value: DaysOfWeek
+								}[]
+							).map(day => (
+								<div
+									key={day.value}
+									className={cn(
+										'flex flex-grow items-center justify-center rounded-md py-2',
+										daysOfWeek.includes(day.value) && 'bg-primary text-primary-foreground'
+									)}>
+									{day.label}
+								</div>
+							))}
+						</div>
 					</section>
 				</div>
 
@@ -125,7 +153,9 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 			<section className={cn(sectionStyles, 'border-b-none border-t')}>
 				<H2 size='sm'>Organizowane przez</H2>
 
-				<UnitCard unitId={unitId} />
+				<Suspense fallback={<div>Loading...</div>}>
+					<UnitCard unitId={unitId} />
+				</Suspense>
 			</section>
 		</main>
 	)

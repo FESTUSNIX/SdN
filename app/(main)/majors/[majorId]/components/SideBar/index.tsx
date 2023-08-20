@@ -24,8 +24,8 @@ const SideBar = ({ major }: Props) => {
 	} = major
 
 	return (
-		<div className='relative ml-24 min-h-full'>
-			<aside className='sticky top-navOffset pt-12'>
+		<div className='relative min-h-full md:ml-12 lg:ml-24'>
+			<aside className='sticky top-navOffset pb-8 pt-12'>
 				<Card className='flex flex-col gap-4 p-4'>
 					{(startDate || endDate || numberOfSemesters || durationInHours || onlineDuration) && (
 						<div>
