@@ -137,7 +137,7 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 								<div
 									key={day.value}
 									className={cn(
-										'flex flex-grow items-center justify-center rounded-md py-2',
+										'flex flex-grow items-center justify-center rounded-md py-2 text-sm',
 										daysOfWeek.includes(day.value) && 'bg-primary text-primary-foreground'
 									)}>
 									{day.label}
