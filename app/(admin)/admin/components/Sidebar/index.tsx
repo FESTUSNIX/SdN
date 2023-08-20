@@ -4,6 +4,7 @@ import ThemeSwitch from '../ThemeSwitch'
 import NavLinks from './components/NavLinks'
 import NavMenu from './components/NavMenu'
 import UserAccountNav from './components/UserAccountNav'
+import Party from '../Party'
 
 const Sidebar = async () => {
 	const session = await getAuthSession()
@@ -18,6 +19,8 @@ const Sidebar = async () => {
 			<NavMenu />
 
 			<div className='ml-auto flex items-center gap-2 md:mt-auto md:flex-col md:gap-8'>
+				<Party />
+
 				<ThemeSwitch variant={'ghost'} />
 
 				<UserAccountNav
