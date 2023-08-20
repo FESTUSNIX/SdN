@@ -32,14 +32,17 @@ const SideBarDuration = ({ startDate, endDate }: Props) => {
 						!date && 'text-muted-foreground'
 					)}>
 					<CalendarIcon className='mr-2 h-4 w-4' />
-					{date?.from &&
-						(date.to ? (
+					{date?.from ? (
+						date.to ? (
 							<>
 								{format(date.from, 'LLL dd, y', { locale: pl })} - {format(date.to, 'LLL dd, y', { locale: pl })}
 							</>
 						) : (
 							format(date.from, 'LLL dd, y', { locale: pl })
-						))}
+						)
+					) : (
+						'Brak danych'
+					)}
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent className='!z-40 w-auto p-0' align='end'>

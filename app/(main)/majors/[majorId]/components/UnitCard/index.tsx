@@ -1,7 +1,8 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/app/components/ui/Card'
+import { Card, CardFooter, CardHeader } from '@/app/components/ui/Card'
 import { H3 } from '@/app/components/ui/Typography'
+import { placeholderImage } from '@/lib/utils/placeholderImage'
 import prisma from '@/prisma/client'
-import { ArrowRight, Globe, Globe2, Mail, Phone } from 'lucide-react'
+import { ArrowRight, Globe, Mail, Phone } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -27,46 +28,44 @@ const UnitCard = async ({ unitId }: Props) => {
 	if (!unit) return <div>Nie można znaleźć jednostki</div>
 
 	const { name, email, slug, logo, phone, website } = unit
-
 	return (
 		<Card>
 			<CardHeader>
 				<div className='flex'>
-					{logo && (
+					<div>
 						<Image
-							src={logo}
+							src={logo || placeholderImage}
 							alt={`Logo ${name}`}
 							width={100}
 							height={100}
-							className='mr-6 aspect-square rounded-md '
+							className='mr-6 aspect-square w-16 rounded-md object-cover'
 						/>
-					)}
-					<H3>{name}</H3>
+					</div>
+					<div className='flex flex-col'>
+						<H3 className='mb-4'>{name}</H3>
+						<div className='flex flex-col gap-2'>
+							{phone && (
+								<div className='flex items-center gap-2'>
+									<Phone className='h-4 w-4' />
+									<span>{phone}</span>
+								</div>
+							)}
+							{email && (
+								<div className='flex items-center gap-2'>
+									<Mail className='h-4 w-4' />
+									<span>{email}</span>
+								</div>
+							)}
+							{website && (
+								<div className='flex items-center gap-2'>
+									<Globe className='h-4 w-4' />
+									<span>{website}</span>
+								</div>
+							)}
+						</div>
+					</div>
 				</div>
-				<CardDescription></CardDescription>
 			</CardHeader>
-			<CardContent>
-				<div className='flex flex-col gap-2'>
-					{phone && (
-						<div className='flex items-center gap-2'>
-							<Phone className='h-4 w-4' />
-							<span>{phone}</span>
-						</div>
-					)}
-					{email && (
-						<div className='flex items-center gap-2'>
-							<Mail className='h-4 w-4' />
-							<span>{email}</span>
-						</div>
-					)}
-					{website && (
-						<div className='flex items-center gap-2'>
-							<Globe className='h-4 w-4' />
-							<span>{website}</span>
-						</div>
-					)}
-				</div>
-			</CardContent>
 			<CardFooter className='justify-end'>
 				<Link href={`/units/${slug}`} className='flex items-center hover:underline'>
 					Zobacz więcej <ArrowRight className='ml-2 h-4 w-4' />

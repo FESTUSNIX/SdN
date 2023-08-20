@@ -2,14 +2,14 @@ import EditorOutput from '@/app/components/EditorOutput'
 import { Badge } from '@/app/components/ui/Badge'
 import { H1, H2, H3, Muted } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
+import { cn } from '@/lib/utils/utils'
 import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation'
-import SideBar from './components/SideBar'
-import { cn } from '@/lib/utils/utils'
-import { Duration } from './components/Duration'
-import UnitCard from './components/UnitCard'
 import { Suspense } from 'react'
-import { DaysOfWeek } from '@prisma/client'
+import ActiveDays from './components/ActiveDays'
+import { Duration } from './components/Duration'
+import SideBar from './components/SideBar'
+import UnitCard from './components/UnitCard'
 
 const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } }) => {
 	const major = await prisma.major.findFirst({
@@ -32,27 +32,16 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 	const {
 		name,
 		qualifications,
-		address,
-		canPayInInstallments,
 		certificates,
 		completionConditions,
-		contact,
-		cost,
 		daysOfWeek,
 		description,
-		durationInHours,
 		endDate,
 		formOfStudy,
-		id,
 		isOnline,
-		isRegulated,
 		majorLevel,
-		numberOfSemesters,
-		onlineDuration,
-		organisator,
 		recruitmentConditions,
 		startDate,
-		status,
 		syllabus,
 		unitId
 	} = major
@@ -72,15 +61,13 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 					<Badge variant={'secondary'}>{isOnline ? 'Online' : 'Stacjonarne'}</Badge>
 				</div>
 
-				<div className=''>
-					<EditorOutput content={description} />
-				</div>
+				{description && <EditorOutput content={description} />}
 			</header>
 
 			<div className='flex flex-col-reverse md:flex-row'>
 				<div className='grow'>
 					<section className={cn(sectionStyles, 'pt-12')}>
-						<H2 size='sm'>Jakie kwalifikacje uzyskasz:</H2>
+						<H2 size='sm'>Jakie kwalifikacje uzyskasz</H2>
 
 						<div className='tw-prose'>
 							<ul className='flex flex-col'>
@@ -90,6 +77,14 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 							</ul>
 						</div>
 					</section>
+
+					{certificates && (
+						<section className={cn(sectionStyles, 'pt-12')}>
+							<H2 size='sm'>Zapewnione certyfikaty</H2>
+
+							<p>{certificates}</p>
+						</section>
+					)}
 
 					{recruitmentConditions && (
 						<section className={sectionStyles}>
@@ -114,36 +109,15 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 
 					<section className={cn(sectionStyles, 'border-none')}>
 						<H2 size='sm'>Czas trwania</H2>
-						<Muted className='mb-6'>
-							{startDate?.toLocaleDateString()} - {endDate?.toLocaleDateString()}
-						</Muted>
+						<Muted>Brak danych.</Muted>
+						{startDate && endDate && (
+							<Muted className='mb-6'>
+								{startDate?.toLocaleDateString()} - {endDate?.toLocaleDateString()}
+							</Muted>
+						)}
 						<Duration startDate={startDate} endDate={endDate} />
 
-						<div className='mt-8 flex items-center gap-1 rounded-md border p-1'>
-							{(
-								[
-									{ label: 'Pon', value: 'MONDAY' },
-									{ label: 'Wto', value: 'TUESDAY' },
-									{ label: 'Śro', value: 'WEDNESDAY' },
-									{ label: 'Czw', value: 'THURSDAY' },
-									{ label: 'Pią', value: 'FRIDAY' },
-									{ label: 'Sob', value: 'SATURDAY' },
-									{ label: 'Nie', value: 'SUNDAY' }
-								] as {
-									label: string
-									value: DaysOfWeek
-								}[]
-							).map(day => (
-								<div
-									key={day.value}
-									className={cn(
-										'flex flex-grow items-center justify-center rounded-md py-2 text-sm',
-										daysOfWeek.includes(day.value) && 'bg-primary text-primary-foreground'
-									)}>
-									{day.label}
-								</div>
-							))}
-						</div>
+						{daysOfWeek.length !== 0 && <ActiveDays daysOfWeek={daysOfWeek} />}
 					</section>
 				</div>
 
@@ -151,7 +125,9 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 			</div>
 
 			<section className={cn(sectionStyles, 'border-b-none border-t')}>
-				<H2 size='sm'>Organizowane przez</H2>
+				<H2 size='sm' className='mb-4'>
+					Organizowane przez
+				</H2>
 
 				<Suspense fallback={<div>Loading...</div>}>
 					<UnitCard unitId={unitId} />
