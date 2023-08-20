@@ -2,6 +2,7 @@ import { Button } from '@/app/components/ui/Button'
 import { H1, H2 } from '@/app/components/ui/Typography'
 import { getAuthSession } from '@/lib/auth/auth'
 import Link from 'next/link'
+import Confetti from './components/Confetti'
 
 export const metadata = {
 	title: 'Dashboard'
@@ -20,6 +21,10 @@ export default async function AdminPage() {
 					<Link href={'/admin/units'}>Manage units</Link>
 				</Button>
 			</section>
+
+			<div className='py-6'>
+				<Confetti />
+			</div>
 		</div>
 	)
 }
