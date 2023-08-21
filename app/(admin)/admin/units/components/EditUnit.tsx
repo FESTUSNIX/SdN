@@ -75,7 +75,7 @@ const EditUnit = () => {
 				status: values.status
 			}
 
-			const { data } = await axios.patch('/api/unit', payload)
+			const { data } = await axios.patch(`/api/units/${defaultValues.id}`, payload)
 
 			return data
 		},

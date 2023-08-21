@@ -57,7 +57,7 @@ const EditMajor = () => {
 				isRegulated: values.isRegulated
 			}
 
-			const { data } = await axios.patch('/api/unit/major', payload)
+			const { data } = await axios.patch(`/api/majors/${values.id}`, payload)
 
 			return data
 		},

@@ -83,7 +83,7 @@ const AddMajor = () => {
 				isRegulated: values.isRegulated
 			}
 
-			const { data } = await axios.post('/api/unit/major', payload)
+			const { data } = await axios.post('/api/majors', payload)
 			return data
 		},
 		onError: err => {

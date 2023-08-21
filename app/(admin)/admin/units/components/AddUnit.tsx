@@ -62,7 +62,7 @@ const AddUnit = () => {
 				status: values.status
 			}
 
-			const { data } = await axios.post('/api/unit', payload)
+			const { data } = await axios.post('/api/units', payload)
 
 			return data
 		},
@@ -82,8 +82,7 @@ const AddUnit = () => {
 			return toast.error('Something went wrong.')
 		},
 		onSuccess: async (data, variables) => {
-			if(variables.logo) {
-
+			if (variables.logo) {
 				await uploadFileToSupabase('unit_logos', variables.logo, `${data}/unit-logo`)
 			}
 

@@ -18,7 +18,7 @@ const EditRow = ({ rowData }: Props) => {
 
 	const { mutate: deleteRow } = useMutation({
 		mutationFn: async () => {
-			const query = `/api/unit?id=${rowData.id}`
+			const query = `/api/units/${rowData.id}`
 
 			const { data } = await axios.get(query)
 

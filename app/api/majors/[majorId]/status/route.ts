@@ -1,18 +1,18 @@
 import prisma from '@/prisma/client'
 import { z } from 'zod'
 
-export async function PATCH(req: Request) {
+export async function PATCH(req: Request, { params }: { params: { majorId: string } }) {
 	try {
 		const body = await req.json()
+		const id = parseInt(params.majorId)
 
-		const { id, status } = z
+		const { status } = z
 			.object({
-				id: z.number(),
 				status: z.enum(['FINISHED', 'IN_PROGRESS', 'TO_CHECK'])
 			})
 			.parse(body)
 
-		const updateStatus = await prisma.unit.update({
+		const updateStatus = await prisma.major.update({
 			where: {
 				id: id
 			},

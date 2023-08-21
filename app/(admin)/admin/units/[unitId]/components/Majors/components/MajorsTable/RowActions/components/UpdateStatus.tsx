@@ -26,11 +26,10 @@ const UpdateStatus = ({ rowData }: Props) => {
 	const { mutate: updateStatus } = useMutation({
 		mutationFn: async (status: Status) => {
 			const payload = {
-				id: rowData.id,
 				status
 			}
 
-			const { data } = await axios.patch('/api/unit/major/status', payload)
+			const { data } = await axios.patch(`/api/majors/${rowData.id}/status`, payload)
 
 			return data
 		},

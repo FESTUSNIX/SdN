@@ -54,7 +54,7 @@ export function RowActions<TData>({ row, children }: Props<TData>) {
 
 				<ContextMenuSeparator />
 
-				<DeleteRow apiQuery={`/api/unit/major?id=${rowData.id}`} />
+				<DeleteRow apiQuery={`/api/majors/${rowData.id}`} />
 			</ContextMenuContent>
 		</ContextMenu>
 	)

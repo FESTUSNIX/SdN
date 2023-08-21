@@ -1,13 +1,13 @@
 import prisma from '@/prisma/client'
 import { z } from 'zod'
 
-export async function PATCH(req: Request) {
+export async function PATCH(req: Request, { params }: { params: { id: string } }) {
 	try {
 		const body = await req.json()
+		const id = parseInt(params.id)
 
-		const { id, status } = z
+		const { status } = z
 			.object({
-				id: z.number(),
 				status: z.enum(['FINISHED', 'IN_PROGRESS', 'TO_CHECK'])
 			})
 			.parse(body)

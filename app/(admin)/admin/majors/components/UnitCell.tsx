@@ -14,7 +14,7 @@ type Props = {
 type CoreUnit = Pick<Unit, 'id' | 'name' | 'website' | 'unitType'>
 
 const fetchUnit = async (unitId: number) => {
-	const { data } = await axios.get(`/api/unit/coreData?id=${unitId}`)
+	const { data } = await axios.get(`/api/units/${unitId}/coreData`)
 
 	return data
 }
