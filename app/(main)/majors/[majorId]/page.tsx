@@ -61,7 +61,9 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 					<Badge variant={'secondary'}>{isOnline ? 'Online' : 'Stacjonarne'}</Badge>
 				</div>
 
-				{description && <EditorOutput content={description} />}
+				{description && Array.isArray(description) && description.length !== 0 && (
+					<EditorOutput content={description} />
+				)}
 			</header>
 
 			<div className='flex flex-col-reverse md:flex-row'>
@@ -86,21 +88,21 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 						</section>
 					)}
 
-					{recruitmentConditions && (
+					{recruitmentConditions && Array.isArray(recruitmentConditions) && recruitmentConditions.length !== 0 && (
 						<section className={sectionStyles}>
 							<H2 size='sm'>Warunki rekrutacji</H2>
 							<EditorOutput content={recruitmentConditions} />
 						</section>
 					)}
 
-					{completionConditions && (
+					{completionConditions && Array.isArray(completionConditions) && completionConditions.length !== 0 && (
 						<section className={sectionStyles}>
 							<H2 size='sm'>Warunki ukończenia</H2>
 							<EditorOutput content={completionConditions} />
 						</section>
 					)}
 
-					{syllabus && (
+					{syllabus && Array.isArray(syllabus) && syllabus.length !== 0 && (
 						<section className={sectionStyles}>
 							<H2 size='sm'>Program studiów</H2>
 							<EditorOutput content={syllabus} />

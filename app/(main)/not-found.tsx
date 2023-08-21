@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils/utils'
 
 export default function NotFound() {
 	return (
-		<div className='wrapper my-12 flex flex-col items-center md:my-24'>
+		<div className='wrapper my-12 flex grow flex-col items-center justify-center md:my-24'>
 			<h1 className='mb-4 text-8xl font-black md:text-9xl'>404</h1>
 			<h2 className='text-center text-5xl font-bold md:text-6xl'>Strona nie odnaleziona</h2>
 			<p className='mt-2 text-center text-xl'>Nie udało się znaleźć żądanego zasobu</p>

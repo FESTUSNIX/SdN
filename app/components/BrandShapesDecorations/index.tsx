@@ -12,11 +12,11 @@ export const DecorationShape = ({ type, className, size }: Props) => {
 		<div
 			data-size={`${size}`}
 			className={cn(
-				'absolute -z-10 aspect-square bg-muted/60',
-				type === 'square' && '-rotate-[22.5deg] skew-x-[25deg] rounded-lg',
+				'pointer-events-none absolute -z-10 aspect-square select-none bg-muted/50',
+				type === 'square' && 'skew-x-[30deg] rounded-lg',
 				type === 'circle' && 'rounded-full',
-				type === 'triangle' && 'bg-transparent fill-muted/60',
-				type === 'half-circle' && 'bg-transparent stroke-muted/60',
+				type === 'triangle' && 'bg-transparent fill-muted/50',
+				type === 'half-circle' && 'bg-transparent stroke-muted/50',
 				className
 			)}
 			style={{

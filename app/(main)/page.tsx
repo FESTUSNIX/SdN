@@ -1,9 +1,11 @@
+import { BrandLogo } from '../components/BrandLogo'
+import { DecorationShape } from '../components/BrandShapesDecorations'
 import EmailForm from './components/EmailForm'
 
 export default function Home() {
 	return (
-		<main className='grow'>
-			<header className='wrapper flex h-full flex-col items-center justify-center py-24'>
+		<main className='relative flex grow flex-col'>
+			<header className='wrapper relative flex h-full grow flex-col items-center justify-center py-24'>
 				<div className='flex flex-col items-center text-center'>
 					<h1 className='max-w-3xl text-center text-4xl font-black uppercase sm:text-6xl md:text-7xl xl:text-8xl [@media(min-width:350px)]:max-sm:text-5xl'>
 						niedługo startujemy
@@ -16,7 +18,25 @@ export default function Home() {
 						<EmailForm />
 					</div>
 				</div>
+
+				<BrandLogo className='absolute -z-10 h-full opacity-[0.03]' />
 			</header>
+
+			<DecorationShape
+				size={200}
+				type='triangle'
+				className='absolute left-12 top-1/4 origin-center animate-spin-decoration-shape'
+			/>
+			<DecorationShape
+				size={140}
+				type='square'
+				className='absolute right-0 top-0 origin-center animate-spin-decoration-shape'
+			/>
+			<DecorationShape
+				size={160}
+				type='circle'
+				className='absolute -right-12 bottom-0 origin-center animate-spin-decoration-shape'
+			/>
 		</main>
 	)
 }
