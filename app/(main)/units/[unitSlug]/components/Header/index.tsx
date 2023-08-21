@@ -22,7 +22,7 @@ const Header = ({ isPublic, logo, name, unitType, website, city, voivodeship }: 
 					alt={`Logo ${name}`}
 					width={400}
 					height={400}
-					className='aspect-square h-full w-full max-w-[280px] object-cover'
+					className='aspect-square h-full w-full max-w-[220px] object-cover'
 				/>
 			</div>
 
