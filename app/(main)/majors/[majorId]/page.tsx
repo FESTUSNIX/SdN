@@ -10,7 +10,6 @@ import ActiveDays from './components/ActiveDays'
 import { Duration } from './components/Duration'
 import SideBar from './components/SideBar'
 import UnitCard from './components/UnitCard'
-import { DecorationShape } from '@/app/components/BrandShapesDecorations'
 
 const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } }) => {
 	const major = await prisma.major.findFirst({
@@ -52,8 +51,6 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 	return (
 		<main className='wrapper min-h-screen'>
 			<header className='relative border-b pb-6 pt-12'>
-				<DecorationShape type='triangle' size={400} className='-right-48 top-1/3 rotate-6' />
-				<DecorationShape type='circle' size={260} className='-left-24 top-0' />
 				<H1 size='sm' className=''>
 					{name}
 				</H1>
@@ -112,17 +109,16 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 
 					<section className={cn(sectionStyles, 'relative border-none')}>
 						<H2 size='sm'>Czas trwania</H2>
-						<Muted>Brak danych.</Muted>
-						{startDate && endDate && (
+						{startDate && endDate ? (
 							<Muted className='mb-6'>
 								{startDate?.toLocaleDateString()} - {endDate?.toLocaleDateString()}
 							</Muted>
+						) : (
+							<Muted>Brak danych.</Muted>
 						)}
 						<Duration startDate={startDate} endDate={endDate} />
 
 						{daysOfWeek.length !== 0 && <ActiveDays daysOfWeek={daysOfWeek} />}
-
-						<DecorationShape type='square' size={320} className='bottom-0 left-3/4' />
 					</section>
 				</div>
 

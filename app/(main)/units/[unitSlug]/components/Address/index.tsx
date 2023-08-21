@@ -52,7 +52,7 @@ const Address = ({ city, postalCode, street, voivodeship, GOOGLE_MAPS_API_KEY }:
 		zoom: 11
 	}
 	return (
-		<section className='scroll-m-16 border-b py-6' id='addressSection'>
+		<section className='scroll-m-16 border-b py-6' id='address'>
 			<H2 size='sm'>Nasza siedziba</H2>
 
 			<H3 size='sm' className='mb-4 mt-4'>

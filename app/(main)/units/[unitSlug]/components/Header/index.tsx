@@ -20,9 +20,9 @@ const Header = ({ isPublic, logo, name, unitType, website, city, voivodeship }: 
 				<Image
 					src={logo ? urlFor('unit_logos', logo).publicUrl : placeholderImage}
 					alt={`Logo ${name}`}
-					width={400}
-					height={400}
-					className='aspect-square h-full w-full max-w-[220px] object-cover'
+					width={300}
+					height={300}
+					className='aspect-square h-full w-full max-w-[200px] object-cover'
 				/>
 			</div>
 
@@ -45,7 +45,7 @@ const Header = ({ isPublic, logo, name, unitType, website, city, voivodeship }: 
 						</span>
 						<span>{website}</span>
 					</Link>
-					<a href={'#addressSection'} className='my-2 block w-max text-sm underline'>
+					<a href={'#address'} className='my-2 block w-max text-sm underline'>
 						<span aria-hidden={true}>
 							<MapPin className='mr-2 inline h-4 w-4 text-muted-foreground' />
 						</span>
