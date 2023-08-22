@@ -1,3 +1,4 @@
+import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 import {
 	Dialog,
 	DialogContent,
@@ -11,12 +12,11 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessa
 import { cn } from '@/lib/utils/utils'
 import { useRef, useState } from 'react'
 import { Control, ControllerRenderProps } from 'react-hook-form'
-import Editor from '../../Editor'
+import Editor from '../../../(admin)/admin/components/MajorEditor'
 import EditorOutput from '../../EditorOutput'
 import { Button } from '../../ui/Button'
 import { ScrollArea } from '../../ui/ScrollArea'
 import { Muted } from '../../ui/Typography'
-import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 
 type Props = {
 	formControl: Control<any>

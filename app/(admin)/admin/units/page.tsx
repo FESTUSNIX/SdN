@@ -50,7 +50,7 @@ export default async function UnitsPage() {
 	})
 
 	return (
-		<div className='flex flex-col items-center md:h-screen'>
+		<div className='flex w-full flex-col items-center md:h-screen'>
 			<ClientSideDataTable
 				columns={columns}
 				data={units}

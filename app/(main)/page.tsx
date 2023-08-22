@@ -1,6 +1,13 @@
+import { Metadata } from 'next'
 import { BrandLogo } from '../components/BrandLogo'
 import { DecorationShape } from '../components/BrandShapesDecorations'
 import EmailForm from './components/EmailForm'
+
+export const metadata: Metadata = {
+	title: {
+		absolute: 'Studia dla Nauczycieli'
+	}
+}
 
 export default function Home() {
 	return (

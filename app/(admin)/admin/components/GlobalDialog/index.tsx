@@ -24,6 +24,8 @@ const GlobalDialog = () => {
 		closeModal()
 	}, [pathname, searchParams])
 
+	if (component) return component
+
 	return (
 		<Dialog
 			open={show}
@@ -31,8 +33,6 @@ const GlobalDialog = () => {
 				if (!open) closeModal()
 			}}>
 			<DialogContent className='sm:max-w-[425px]'>
-				{component && component}
-
 				{modalContent && (
 					<>
 						<DialogHeader>

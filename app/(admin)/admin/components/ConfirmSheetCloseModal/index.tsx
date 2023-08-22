@@ -1,16 +1,23 @@
 'use client'
 
 import { Button } from '@/app/components/ui/Button'
-import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/app/components/ui/Dialog'
+import { Dialog, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/app/components/ui/Dialog'
 import { useGlobalModalContext } from '../../context/GlobalModalContext'
 import { useGlobalSheetContext } from '../../context/GlobalSheetContext'
 
 const ConfirmSheetCloseModal = () => {
-	const { closeModal } = useGlobalModalContext()
+	const {
+		closeModal,
+		modalState: { show }
+	} = useGlobalModalContext()
 	const { closeSheet } = useGlobalSheetContext()
 
 	return (
-		<>
+		<Dialog
+			open={show}
+			onOpenChange={open => {
+				if (!open) closeModal()
+			}}>
 			<DialogHeader>
 				<DialogTitle>Confirm to close</DialogTitle>
 				<DialogDescription>
@@ -35,7 +42,7 @@ const ConfirmSheetCloseModal = () => {
 					Confirm
 				</Button>
 			</DialogFooter>
-		</>
+		</Dialog>
 	)
 }
 

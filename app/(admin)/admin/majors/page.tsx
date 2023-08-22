@@ -2,10 +2,9 @@ import prisma from '@/prisma/client'
 import { Metadata } from 'next'
 
 import { ClientSideDataTable } from '@/app/components/DataTable'
-import { MajorPayloadWithFullQualifications } from '@/lib/validators/major'
+import RowActions from '../units/[unitId]/components/Majors/components/MajorsTable/RowActions'
 import { completionStatus } from '../units/constants/tableData'
 import { columns } from './components/Columns'
-import RowActions from '../units/[unitId]/components/Majors/components/MajorsTable/RowActions'
 
 export const metadata: Metadata = {
 	title: 'Manage Majors'
@@ -41,7 +40,7 @@ export default async function MajorsPage() {
 	}))
 
 	return (
-		<div className='flex flex-col items-center md:h-screen'>
+		<main className='flex w-full flex-col items-center md:h-screen'>
 			<ClientSideDataTable
 				columns={columns}
 				data={majors}
@@ -65,6 +64,6 @@ export default async function MajorsPage() {
 				]}
 				RowActions={RowActions}
 			/>
-		</div>
+		</main>
 	)
 }

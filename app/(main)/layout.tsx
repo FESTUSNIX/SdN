@@ -9,8 +9,10 @@ import './styles/globals.css'
 const outfit = Outfit({ subsets: ['latin-ext'] })
 
 export const metadata = {
-	title: 'Studia dla Nauczycieli',
-	description: 'Wyszukiwarka studiów dla nauczycieli'
+	title: {
+		template: '%s | Studia dla Nauczycieli',
+		default: 'Studia dla Nauczycieli'
+	}
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

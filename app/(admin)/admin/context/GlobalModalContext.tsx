@@ -37,7 +37,7 @@ const modalReducer = (
 				description: action.modalContent?.description,
 				content: action.modalContent?.content ?? null,
 				confirmButtonText: action.modalContent?.confirmButtonText ?? 'Confirm',
-				confirmButtonVariant: action.modalContent?.confirmButtonVariant ?? 'destructive',
+				confirmButtonVariant: action.modalContent?.confirmButtonVariant ?? 'default',
 				cancelButtonText: action.modalContent?.cancelButtonText ?? 'Cancel',
 				cancelButtonVariant: action.modalContent?.cancelButtonVariant ?? 'outline',
 				onConfirm: action.modalContent?.onConfirm,
@@ -64,7 +64,7 @@ const modalReducer = (
 }
 
 type GlobalModalContext = {
-	openModal: (sheetType: MODAL_TYPES, modalContent?: ModalContent) => void
+	openModal: (sheetType: MODAL_TYPES, modalContent?: ModalContent, component?: JSX.Element) => void
 	closeModal: () => void
 	modalState: ModalState
 }
@@ -80,10 +80,11 @@ const GlobalModalContext = createContext(initialState)
 export const GlobalModalProvider = ({ children }: { children: React.ReactNode }) => {
 	const [modalState, modalDispatch] = useReducer(modalReducer, defaultState)
 
-	const openModal = (type: MODAL_TYPES, modalContent?: ModalContent) => {
+	const openModal = (type: MODAL_TYPES, modalContent?: ModalContent, component?: JSX.Element) => {
 		modalDispatch({
 			type,
-			modalContent
+			modalContent,
+			component
 		})
 	}
 

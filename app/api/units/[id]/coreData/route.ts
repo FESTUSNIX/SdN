@@ -1,10 +1,9 @@
 import prisma from '@/prisma/client'
 import { z } from 'zod'
 
-export async function GET(req: Request) {
+export async function GET(req: Request, { params }: { params: { id: string } }) {
 	try {
-		const { searchParams } = new URL(req.url)
-		const id = z.coerce.number().parse(searchParams.get('id'))
+		const id = parseInt(params.id)
 
 		const unit = await prisma.unit.findFirst({
 			where: {

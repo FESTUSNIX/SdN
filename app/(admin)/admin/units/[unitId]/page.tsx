@@ -6,6 +6,9 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import PreviousPageButton from '../../components/PreviousPageButton'
 import Majors from './components/Majors'
+import Emails from './components/Emails'
+import { ScrollArea } from '@/app/components/ui/ScrollArea'
+import AdminWrapper from '../../components/AdminWrapper'
 
 type Props = {
 	params: { unitId: string }
@@ -55,8 +58,8 @@ const AdminUnitPage = async ({ params: { unitId } }: Props) => {
 	if (!unit) return notFound()
 
 	return (
-		<div className='flex min-h-screen flex-col pt-12'>
-			<div className='wrapper'>
+		<main className='flex flex-1 overflow-x-hidden'>
+			<AdminWrapper className='wrapper'>
 				<PreviousPageButton />
 
 				<h1 className='scroll-m-20 text-2xl font-extrabold tracking-tight sm:text-3xl md:text-4xl'>
@@ -75,10 +78,12 @@ const AdminUnitPage = async ({ params: { unitId } }: Props) => {
 					)}>
 					{unit.website}
 				</Link>
-			</div>
 
-			<Majors unitId={unit.id} />
-		</div>
+				<Majors unitId={unit.id} />
+			</AdminWrapper>
+
+			<Emails />
+		</main>
 	)
 }
 

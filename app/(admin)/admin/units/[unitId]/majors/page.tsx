@@ -1,6 +1,4 @@
 import prisma from '@/prisma/client'
-import React from 'react'
-import { columns } from '../components/Majors/components/MajorsTable/Columns'
 import { Metadata } from 'next'
 import Majors from '../components/Majors'
 
@@ -27,9 +25,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const MajorsPage = async ({ params: { unitId } }: Props) => {
 	return (
-		<div className='flex flex-col items-center md:h-screen'>
+		<main className='flex flex-col md:h-screen'>
 			<Majors unitId={parseInt(unitId)} />
-		</div>
+		</main>
 	)
 }
 

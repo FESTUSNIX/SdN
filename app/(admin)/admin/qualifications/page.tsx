@@ -14,7 +14,7 @@ export default async function QualificationsPage() {
 	const qualifications = await prisma.qualification.findMany()
 
 	return (
-		<div className='flex flex-col items-center md:h-screen'>
+		<main className='flex w-full flex-col items-center md:h-screen'>
 			<ClientSideDataTable
 				columns={columns}
 				data={qualifications}
@@ -35,6 +35,6 @@ export default async function QualificationsPage() {
 				buttonText='Add Qualification'
 				sheetType='ADD_QUALIFICATION'
 			/>
-		</div>
+		</main>
 	)
 }
