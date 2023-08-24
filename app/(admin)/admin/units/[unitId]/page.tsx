@@ -59,9 +59,7 @@ const AdminUnitPage = async ({ params: { unitId } }: Props) => {
 	return (
 		<main className='flex flex-1 overflow-x-hidden'>
 			<AdminWrapper className='wrapper'>
-				<PreviousPageButton />
-
-				<h1 className='scroll-m-20 text-2xl font-extrabold tracking-tight sm:text-3xl md:text-4xl'>
+				<h1 className='mt-6 scroll-m-20 text-2xl font-extrabold tracking-tight sm:text-3xl md:text-4xl'>
 					<span>#{unit.id} </span>
 					{unit.name}
 				</h1>
