@@ -7,7 +7,7 @@ type Props = {
 }
 
 const AdminWrapper = ({ children, className }: Props) => {
-	return <ScrollArea className={cn('max-h-screen w-full flex-1 px-6', className)}>{children}</ScrollArea>
+	return <ScrollArea className={cn('max-h-screen w-full flex-1 md:px-6', className)}>{children}</ScrollArea>
 }
 
 export default AdminWrapper
