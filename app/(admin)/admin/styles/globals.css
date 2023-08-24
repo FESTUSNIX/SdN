@@ -150,3 +150,9 @@
 		}
 	}
 }
+
+@layer utilities {
+	.tw-prose {
+		@apply prose dark:prose-invert;
+	}
+}
