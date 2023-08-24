@@ -12,12 +12,13 @@ import { Prisma } from '@prisma/client'
 import { Pencil } from 'lucide-react'
 import DeleteEmail from '../DeleteEmail'
 import { toast } from 'react-hot-toast'
+import { format } from 'date-fns'
 
 type Props = {
 	emailId: number
 	title: string
 	content: Prisma.JsonValue
-	sentAt: Date | null
+	sentAt: Date
 	sentTo: string[]
 	user: {
 		name: string | null
@@ -55,7 +56,7 @@ const ViewEmail = ({ content, sentAt, title, user, sentTo, emailId }: Props) => 
 
 					<H3>{title}</H3>
 
-					<div className='mt-2 flex items-center gap-2'>
+					<div className='mt-4 flex items-center gap-2'>
 						<H4 size='sm' className='leading-tight'>
 							Sent to:
 						</H4>
@@ -67,6 +68,12 @@ const ViewEmail = ({ content, sentAt, title, user, sentTo, emailId }: Props) => 
 								</span>
 							))}
 						</Muted>
+					</div>
+					<div className='mt-2 flex items-center gap-2'>
+						<H4 size='sm' className='leading-tight'>
+							Sent at:
+						</H4>
+						<Muted className='leading-tight'>{format(sentAt, 'dd/MM/yyyy, HH:mm')}</Muted>
 					</div>
 				</div>
 

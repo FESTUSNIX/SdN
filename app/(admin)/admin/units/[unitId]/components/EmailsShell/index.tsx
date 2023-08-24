@@ -24,6 +24,9 @@ const EmailsShell = async ({ unitId }: Props) => {
 					email: true
 				}
 			}
+		},
+		orderBy: {
+			sentAt: 'desc'
 		}
 	})
 

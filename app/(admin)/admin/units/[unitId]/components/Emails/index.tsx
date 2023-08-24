@@ -9,6 +9,7 @@ import { H3, Muted } from '@/app/components/ui/Typography'
 import useResponsive from '@/app/hooks/useResponsive'
 import { cn } from '@/lib/utils/utils'
 import { Prisma } from '@prisma/client'
+import { formatDistance } from 'date-fns'
 import { Mail, ScrollText, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Resizable } from 'react-resizable'
@@ -21,7 +22,7 @@ type Props = {
 		id: number
 		title: string
 		content: Prisma.JsonValue
-		sentAt: Date | null
+		sentAt: Date
 		sentTo: string[]
 		user: {
 			name: string | null
@@ -119,7 +120,7 @@ const Emails = ({ unitId, emails }: Props) => {
 											<H3 size='sm' className='truncate leading-tight'>
 												{title}
 											</H3>
-											<Muted className='text-xs'>{sentAt?.toLocaleDateString()}</Muted>
+											<Muted className='text-xs'>{formatDistance(sentAt, new Date())}</Muted>
 										</div>
 										<Muted className='truncate'>by {user.name}</Muted>
 									</div>
