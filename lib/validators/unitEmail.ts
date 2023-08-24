@@ -1,10 +1,12 @@
 import { z } from 'zod'
 
 export const UnitEmailValidator = z.object({
-	title: z.string(),
+	title: z.string().nonempty(),
 	content: z.any(),
 	sentBy: z.string(),
-	sentAt: z.coerce.date().nullable()
+	sentTo: z.string().array(),
+	sentAt: z.coerce.date(),
+	unitId: z.number()
 })
 
 export type UnitEmailPayload = z.infer<typeof UnitEmailValidator>

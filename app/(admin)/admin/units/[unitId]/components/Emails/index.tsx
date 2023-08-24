@@ -5,18 +5,34 @@ import UserAvatar from '@/app/components/UserAvatar'
 import { Button } from '@/app/components/ui/Button'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { H3, Muted } from '@/app/components/ui/Typography'
-import { ChevronRightIcon, Mail } from 'lucide-react'
+import { ChevronRightIcon, Mail, Pen, ScrollText } from 'lucide-react'
 import { useState } from 'react'
 import { Resizable } from 'react-resizable'
-import EmailForm from '../EmailForm'
+import AddEmail from '../AddEmail'
+import { Prisma } from '@prisma/client'
+import EditorOutput from '@/app/components/EditorOutput'
+import ViewEmail from '../ViewEmail'
 
-type Props = {}
+type Props = {
+	unitId: number
+	emails: {
+		id: number
+		title: string
+		content: Prisma.JsonValue
+		sentAt: Date | null
+		sentTo: string[]
+		user: {
+			name: string | null
+			image: string | null
+			email: string
+		}
+	}[]
+}
 
-const Emails = (props: Props) => {
+const Emails = ({ unitId, emails }: Props) => {
 	const { openModal } = useGlobalModalContext()
 
 	const [open, setOpen] = useState(true)
-
 	const [size, setSize] = useState({
 		width: 384,
 		height: 0
@@ -51,43 +67,49 @@ const Emails = (props: Props) => {
 
 				<ScrollArea className='max'>
 					<div className='grid gap-2 px-4 py-6'>
-						{[
-							{
-								title: 'Email title',
-								createdBy: 'Mateusz Hada',
-								createdAt: new Date(),
-								content:
-									'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi beatae, repellendus iste, quos fugiat dolor laudantium expedita necessitatibus, et delectus facilis distinctio quia. Possimus aperiam et eos, error adipisci ab officia aut expedita inventore repellat recusandae delectus laudantium minus similique doloremque obcaecati neque nostrum asperiores incidunt vitae modi minima. Architecto?'
-							}
-						].map(({ content, createdAt, createdBy, title }, i) => (
+						{emails.map(({ title, content, id, sentAt, user, sentTo }) => (
 							<button
-								key={i}
+								key={id}
 								onClick={() => {
-									openModal('CUSTOM', undefined, <EmailForm />)
+									openModal(
+										'CUSTOM',
+										undefined,
+										<ViewEmail
+											emailId={id}
+											content={content}
+											sentAt={sentAt}
+											title={title}
+											user={user}
+											sentTo={sentTo}
+										/>
+									)
 								}}
-								className='grid grid-cols-[40px_1fr] grid-rows-[auto_auto] gap-x-4 gap-y-2 overflow-hidden rounded-lg border p-4'>
+								className='flex gap-x-4 gap-y-2 overflow-hidden rounded-lg border p-4'>
 								<UserAvatar
-									user={{ name: createdBy, image: null }}
+									user={{ name: user.name, image: user.image }}
 									className='col-start-1 col-end-2 row-start-1 row-end-2'
 								/>
-								<div className='flex flex-col items-start'>
+								<div className='flex grow flex-col items-start'>
 									<div className='flex w-full items-center justify-between gap-2'>
 										<H3 size='sm' className='truncate leading-tight'>
 											{title}
 										</H3>
-										<Muted className='text-xs'>{createdAt.toLocaleDateString()}</Muted>
+										<Muted className='text-xs'>{sentAt?.toLocaleDateString()}</Muted>
 									</div>
-									<Muted className='truncate'>by {createdBy}</Muted>
+									<Muted className='truncate'>by {user.name}</Muted>
 								</div>
-
-								<Muted className='col-start-2 col-end-3 row-start-2 row-end-3 truncate'>{content}</Muted>
 							</button>
 						))}
 					</div>
 				</ScrollArea>
 
 				<div className='mt-auto flex items-center gap-2 border-t px-6 py-6'>
-					<Button className='grow' onClick={() => {}}>
+					<Button
+						className='grow'
+						onClick={() => {
+							openModal('CUSTOM', undefined, <AddEmail unitId={unitId} />)
+						}}>
+						<ScrollText className='mr-2 h-4 w-4' />
 						Add new
 					</Button>
 				</div>

@@ -4,11 +4,10 @@ import prisma from '@/prisma/client'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import PreviousPageButton from '../../components/PreviousPageButton'
-import Majors from './components/Majors'
-import Emails from './components/Emails'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import AdminWrapper from '../../components/AdminWrapper'
+import PreviousPageButton from '../../components/PreviousPageButton'
+import EmailsShell from './components/EmailsShell'
+import Majors from './components/Majors'
 
 type Props = {
 	params: { unitId: string }
@@ -82,7 +81,7 @@ const AdminUnitPage = async ({ params: { unitId } }: Props) => {
 				<Majors unitId={unit.id} />
 			</AdminWrapper>
 
-			<Emails />
+			<EmailsShell unitId={unit.id} />
 		</main>
 	)
 }

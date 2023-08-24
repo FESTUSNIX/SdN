@@ -41,16 +41,16 @@ enum UserRole {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String?
-  email         String    @unique
+  email         String      @unique
   emailVerified DateTime?
   password      String
   image         String?
-  role          UserRole  @default(USER)
-
-  accounts Account[]
-  sessions Session[]
+  role          UserRole    @default(USER)
+  accounts      Account[]
+  sessions      Session[]
+  emails        UnitEmail[]
 }
 
 model VerificationToken {
@@ -80,6 +80,7 @@ model Unit {
   majors    Major[]
   address   UnitAddress?
   status    Status       @default(IN_PROGRESS)
+  emails    UnitEmail[]
 
   @@unique([id, slug])
   @@index([name, slug])
@@ -126,6 +127,18 @@ model UnitAddress {
   unitId     Int     @unique
   city       City    @relation(fields: [cityId], references: [id])
   unit       Unit    @relation(fields: [unitId], references: [id], onDelete: Cascade)
+}
+
+model UnitEmail {
+  id      Int      @id @default(autoincrement())
+  title   String
+  content Json
+  sentAt  DateTime
+  sentBy  String
+  sentTo  String[]
+  user    User     @relation(fields: [sentBy], references: [id])
+  unitId  Int
+  unit    Unit     @relation(fields: [unitId], references: [id], onDelete: Cascade)
 }
 
 model Qualification {

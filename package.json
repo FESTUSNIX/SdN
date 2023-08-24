@@ -20,7 +20,7 @@
     "@hookform/resolvers": "^3.1.1",
     "@next-auth/prisma-adapter": "^1.0.7",
     "@paralleldrive/cuid2": "^2.2.1",
-    "@prisma/client": "^5.0.0",
+    "@prisma/client": "^5.2.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-collapsible": "^1.0.3",
@@ -52,6 +52,7 @@
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
+    "dompurify": "^3.0.5",
     "dotenv-expand": "^10.0.0",
     "editorjs-react-renderer": "^3.5.1",
     "eslint": "8.42.0",
@@ -86,6 +87,7 @@
   "devDependencies": {
     "@editorjs/raw": "^2.4.0",
     "@types/bcryptjs": "^2.4.2",
+    "@types/dompurify": "^3.0.2",
     "@types/editorjs__header": "^2.6.0",
     "@types/google-map-react": "^2.1.7",
     "@types/node": "^20.3.1",
@@ -96,7 +98,7 @@
     "encoding": "^0.1.13",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "prisma": "^5.0.0",
+    "prisma": "^5.2.0",
     "ts-node": "^10.9.1"
   }
 }

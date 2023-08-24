@@ -1,5 +1,8 @@
 'use client'
 
+// Thanks to Josh from https://www.youtube.com/@joshtriedcoding, make sure to subscribe
+
+import '@/app/(main)/styles/editor.css'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import type EditorJS from '@editorjs/editorjs'
 import { ToolConstructable } from '@editorjs/editorjs'
@@ -12,7 +15,7 @@ type Props = {
 	open: boolean
 }
 
-const EmailEditor = forwardRef(({ open, field, placeholder = 'Zacznij pisać tekst tutaj' }: Props, ref) => {
+const EmailEditor = ({ open, field, placeholder = 'Zacznij pisać tekst tutaj' }: Props) => {
 	const editorRef = useRef<EditorJS>()
 
 	const initializeEditor = useCallback(async () => {
@@ -45,6 +48,11 @@ const EmailEditor = forwardRef(({ open, field, placeholder = 'Zacznij pisać tek
 						}
 					},
 					raw: RawTool
+				},
+				onChange: async () => {
+					const content = await editor.saver.save()
+
+					field.onChange(content.blocks)
 				}
 			})
 		}
@@ -67,25 +75,6 @@ const EmailEditor = forwardRef(({ open, field, placeholder = 'Zacznij pisać tek
 		}
 	}, [open, initializeEditor])
 
-	const onSubmit = async () => {
-		const editorOutput = await editorRef.current?.save()
-
-		field.onChange(editorOutput?.blocks)
-	}
-
-	const currentValue = async () => {
-		return await editorRef.current?.save()
-	}
-
-	useImperativeHandle(ref, () => ({
-		onEditorSubmit() {
-			onSubmit()
-		},
-		getCurrentValue() {
-			return currentValue()
-		}
-	}))
-
 	if (!open) return null
 
 	return (
@@ -95,8 +84,6 @@ const EmailEditor = forwardRef(({ open, field, placeholder = 'Zacznij pisać tek
 			</ScrollArea>
 		</div>
 	)
-})
-
-EmailEditor.displayName = 'EmailEditor'
+}
 
 export default EmailEditor
