@@ -1,6 +1,6 @@
 import EditorOutput from '@/app/components/EditorOutput'
 import { Badge } from '@/app/components/ui/Badge'
-import { H1, H2, H3, Muted } from '@/app/components/ui/Typography'
+import { H1, H2, Muted } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
 import { cn } from '@/lib/utils/utils'
 import prisma from '@/prisma/client'
@@ -10,6 +10,8 @@ import ActiveDays from './components/ActiveDays'
 import { Duration } from './components/Duration'
 import SideBar from './components/SideBar'
 import UnitCard from './components/UnitCard'
+import Image from 'next/image'
+import { urlFor } from '@/lib/supabase/getUrlFor'
 
 const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } }) => {
 	const major = await prisma.major.findFirst({
@@ -21,7 +23,8 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 				select: {
 					name: true,
 					type: true,
-					keywords: true
+					keywords: true,
+					slug: true
 				}
 			}
 		}
@@ -47,26 +50,41 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 	} = major
 
 	const sectionStyles = 'border-b py-8'
-
 	return (
-		<main className='wrapper min-h-screen'>
-			<header className='relative border-b pb-6 pt-12'>
-				<H1 size='sm' className=''>
-					{name}
-				</H1>
-
-				<div className='items-centr mb-6 mt-4 flex gap-2'>
-					<Badge variant={'secondary'}>{majorLevelEnum[majorLevel]}</Badge>
-					{formOfStudy && <Badge variant={'secondary'}>{formOfStudy}</Badge>}
-					<Badge variant={'secondary'}>{isOnline ? 'Online' : 'Stacjonarne'}</Badge>
+		<main className='min-h-screen'>
+			<header className='relative border-b pb-6'>
+				<div className='pointer-events-none relative -z-10 mb-8 h-[35vh] max-h-[500px] min-h-[260px] w-screen overflow-hidden border-b [clip-path:inset(0)] xl:h-[40vh]'>
+					<div className='fixed h-[35vh] max-h-[500px] min-h-[260px] w-screen xl:h-[40vh]'>
+						<Image
+							src={urlFor('qualification_images', `${qualifications[0].slug}.jpg`).publicUrl}
+							alt={`Zdjęcie kwalifikacji ${qualifications[0].name}`}
+							fill
+							sizes='100vw'
+							priority
+							className='inset-0 h-full w-full select-none object-cover object-center'
+						/>
+					</div>
+					<div className='absolute inset-0 bg-black/50'></div>
 				</div>
 
-				{description && Array.isArray(description) && description.length !== 0 && (
-					<EditorOutput content={description} />
-				)}
+				<div className='wrapper'>
+					<H1 size='sm' className=''>
+						{name}
+					</H1>
+
+					<div className='items-centr mb-6 mt-4 flex gap-2'>
+						<Badge variant={'secondary'}>{majorLevelEnum[majorLevel]}</Badge>
+						{formOfStudy && <Badge variant={'secondary'}>{formOfStudy}</Badge>}
+						<Badge variant={'secondary'}>{isOnline ? 'Online' : 'Stacjonarne'}</Badge>
+					</div>
+
+					{description && Array.isArray(description) && description.length !== 0 && (
+						<EditorOutput content={description} />
+					)}
+				</div>
 			</header>
 
-			<div className='flex flex-col-reverse md:flex-row'>
+			<div className='wrapper flex flex-col-reverse md:flex-row'>
 				<div className='grow'>
 					<section className={cn(sectionStyles, 'pt-12')}>
 						<H2 size='sm'>Jakie kwalifikacje uzyskasz</H2>
@@ -127,7 +145,7 @@ const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } 
 				<SideBar major={major} />
 			</div>
 
-			<section className={cn(sectionStyles, 'border-b-none border-t')}>
+			<section className={cn(sectionStyles, 'border-b-none wrapper border-t')}>
 				<H2 size='sm' className='mb-4'>
 					Organizowane przez
 				</H2>
