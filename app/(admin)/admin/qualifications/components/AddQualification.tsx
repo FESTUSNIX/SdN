@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import QualificationForm from '../../components/QualificationForm'
 import { useFormChanges } from '../../hooks/useFormChanges'
+import slugify from 'react-slugify'
 
 const AddQualification = () => {
 	const { closeSheet } = useGlobalSheetContext()
@@ -34,11 +35,14 @@ const AddQualification = () => {
 		mutationFn: async (values: QualificationPayload) => {
 			toast.loading('Adding a qualification...')
 
-			const payload: QualificationPayload = {
+			const slug = slugify(values.name, { delimiter: '_' })
+
+			const payload: QualificationPayload & { slug: string } = {
 				id: 0,
 				name: values.name,
 				type: values.type,
-				keywords: values.keywords
+				keywords: values.keywords,
+				slug: slug
 			}
 
 			const { data } = await axios.post('/api/qualifications', payload)

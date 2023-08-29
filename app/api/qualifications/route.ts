@@ -22,11 +22,11 @@ export async function POST(req: NextRequest) {
 	try {
 		const body = await req.json()
 
-		const data = QualificationValidator.parse(body)
+		const { name, type, keywords, slug } = QualificationValidator.extend({ slug: z.string() }).parse(body)
 
 		const qualificationExists = !!(await prisma.qualification.findFirst({
 			where: {
-				name: data.name
+				name: name
 			}
 		}))
 
@@ -36,14 +36,12 @@ export async function POST(req: NextRequest) {
 
 		const qualification = await prisma.qualification.create({
 			data: {
-				name: data.name,
-				type: data.type,
-				keywords: data.keywords
+				name,
+				type,
+				keywords,
+				slug
 			}
 		})
-
-		const path = req.nextUrl.searchParams.get('path') || '/'
-		revalidatePath(path)
 
 		return new Response(qualification.name)
 	} catch (error) {

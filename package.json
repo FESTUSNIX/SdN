@@ -77,6 +77,7 @@
     "react-resizable": "^3.0.5",
     "react-responsive": "^9.0.2",
     "react-select": "^5.7.3",
+    "react-slugify": "^3.0.2",
     "tailwind-merge": "^1.13.2",
     "tailwindcss": "3.3.2",
     "tailwindcss-animate": "^1.0.6",

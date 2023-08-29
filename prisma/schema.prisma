@@ -143,6 +143,7 @@ model UnitEmail {
 
 model Qualification {
   id       Int               @id @default(autoincrement())
+  slug     String            @unique
   name     String            @unique
   type     QualificationType @default(OGOLNE)
   majors   Major[]
