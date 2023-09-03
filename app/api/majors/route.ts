@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 	try {
 		const body = await req.json()
 
-		const data = MajorValidator.omit({ id: true }).parse(body)
+		const data = MajorValidator.omit({ id: true, unitSlug: true }).parse(body)
 
 		const qualificationsConnect = data.qualifications.map(qualification => {
 			return {
@@ -37,10 +37,21 @@ export async function POST(req: Request) {
 			}
 		})
 
+		const unit = await prisma.unit.findUnique({
+			where: {
+				id: data.unitId
+			},
+			select: {
+				slug: true
+			}
+		})
+
+		if (!unit) return new Response('Unit not found', { status: 404 })
+
 		const major = await prisma.major.create({
 			data: {
 				unitId: data.unitId,
-				unitSlug: data.unitSlug,
+				unitSlug: unit.slug,
 				status: data.status,
 				name: data.name,
 				address: data.address,

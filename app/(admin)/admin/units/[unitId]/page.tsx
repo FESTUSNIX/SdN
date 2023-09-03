@@ -5,7 +5,6 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import AdminWrapper from '../../components/AdminWrapper'
-import PreviousPageButton from '../../components/PreviousPageButton'
 import EmailsShell from './components/EmailsShell'
 import Majors from './components/Majors'
 

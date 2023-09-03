@@ -20,14 +20,14 @@ const EditMajor = () => {
 	const { defaultValues } = sheetState
 
 	const form = useForm<MajorPayload>({
-		resolver: zodResolver(MajorValidator.omit({ unitSlug: true })),
+		resolver: zodResolver(MajorValidator.omit({ unitSlug: true, unitId: true })),
 		defaultValues: defaultValues
 	})
 
 	useFormChanges(form.formState)
 
 	const { mutate: updateMajor, isLoading } = useMutation({
-		mutationFn: async (values: MajorPayload) => {
+		mutationFn: async (values: Omit<MajorPayload, 'unitSlug' | 'unitId'>) => {
 			toast.loading('Editing a major...')
 
 			const payload: Omit<MajorPayload, 'unitSlug' | 'unitId'> = {
