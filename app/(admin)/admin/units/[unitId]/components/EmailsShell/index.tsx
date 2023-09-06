@@ -7,7 +7,7 @@ type Props = {
 }
 
 const EmailsShell = async ({ unitId }: Props) => {
-	const emails = await prisma.unitEmail.findMany({
+	const emailsData = prisma.unitEmail.findMany({
 		where: {
 			unitId: unitId
 		},
@@ -30,9 +30,17 @@ const EmailsShell = async ({ unitId }: Props) => {
 		}
 	})
 
+	const majorsData = prisma.major.findMany({
+		where: {
+			unitId: unitId
+		}
+	})
+
+	const [emails, majors] = await Promise.all([emailsData, majorsData])
+
 	return (
 		<div>
-			<Emails unitId={unitId} emails={emails} />
+			<Emails unitId={unitId} emails={emails} majors={majors} />
 		</div>
 	)
 }
