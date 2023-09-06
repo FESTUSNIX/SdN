@@ -18,7 +18,9 @@ import { useFormChanges } from '../../../../../hooks/useFormChanges'
 
 const AddMajor = () => {
 	const { closeSheet } = useGlobalSheetContext()
-	const { unitId } = useParams()
+	const { unitId: unitIdParam } = useParams()
+
+	const unitId = typeof unitIdParam === 'string' ? unitIdParam : unitIdParam[0]
 
 	const form = useForm<MajorPayload>({
 		resolver: zodResolver(MajorValidator.omit({ unitSlug: true, id: true })),
