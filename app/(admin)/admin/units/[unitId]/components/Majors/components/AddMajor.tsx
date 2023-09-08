@@ -18,12 +18,14 @@ import { useFormChanges } from '../../../../../hooks/useFormChanges'
 
 const AddMajor = () => {
 	const { closeSheet } = useGlobalSheetContext()
-	const { unitId } = useParams()
+	const { unitId: unitIdParam } = useParams()
+
+	const unitId = typeof unitIdParam === 'string' ? parseInt(unitIdParam) : parseInt(unitIdParam[0])
 
 	const form = useForm<MajorPayload>({
 		resolver: zodResolver(MajorValidator.omit({ unitSlug: true, id: true })),
 		defaultValues: {
-			unitId: parseInt(unitId),
+			unitId: unitId,
 			name: '',
 			majorLevel: 'PODYPLOMOWE',
 			address: '',
@@ -57,7 +59,7 @@ const AddMajor = () => {
 			toast.loading('Adding a major...')
 
 			const payload: Omit<MajorPayload, 'id' | 'unitSlug'> = {
-				unitId: parseInt(unitId),
+				unitId: unitId,
 				name: values.name,
 				majorLevel: values.majorLevel,
 				address: values.address,
