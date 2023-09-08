@@ -133,15 +133,15 @@ export async function PATCH(req: Request, { params }: { params: { majorId: strin
 				numberOfSemesters: numberOfSemesters,
 				onlineDuration: onlineDuration,
 				organisator: organisator,
-				recruitmentConditions: JSON.stringify(recruitmentConditions),
+				recruitmentConditions: recruitmentConditions || [],
 				startDate: startDate,
-				syllabus: JSON.stringify(syllabus),
+				syllabus: syllabus || [],
 				isRegulated: isRegulated,
 				canPayInInstallments: !!canPayInInstallments,
 				certificates: certificates,
-				completionConditions: JSON.stringify(completionConditions),
+				completionConditions: completionConditions || [],
 				daysOfWeek: daysOfWeek,
-				description: JSON.stringify(description),
+				description: description || [],
 				qualifications: {
 					connect: qualificationsConnect
 				}
