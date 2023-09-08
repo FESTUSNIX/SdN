@@ -46,7 +46,11 @@ export const EditorField = ({
 
 		const currentValue = await (childRef?.current as any).getCurrentValue()
 
-		if (JSON.stringify(currentValue.blocks) !== JSON.stringify(field.value) && currentValue.blocks.length) {
+		if (
+			currentValue?.blocks &&
+			currentValue.blocks.length &&
+			JSON.stringify(currentValue?.blocks) !== JSON.stringify(field.value) 
+		) {
 			return openModal('CUSTOM', {
 				title: 'Confirm to close',
 				description: 'There are unsaved changes. Are you sure you want to close the panel? Your changes will be lost.',
