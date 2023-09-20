@@ -16,7 +16,15 @@ export default async function EmailPage() {
 		}
 	})
 
-	const emailHtml = render(<FirstUnitEmail majors={majors} />)
+	const unit = await prisma.unit.findFirst({
+		where: {
+			id: 93
+		}
+	})
+
+	if (!majors || !unit) return null
+
+	const emailHtml = render(<FirstUnitEmail majors={majors} unit={unit} />)
 
 	return (
 		<div className='w-full'>
