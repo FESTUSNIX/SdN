@@ -1,17 +1,16 @@
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
+import FirstUnitEmail from '@/app/(admin)/admin/email/components/FirstUnitEmail'
 import { Button } from '@/app/components/ui/Button'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/app/components/ui/Dialog'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { UnitEmailPayload, UnitEmailValidator } from '@/lib/validators/unitEmail'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Major, Qualification, Unit } from '@prisma/client'
+import { render } from '@react-email/render'
 import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import AddEmailSubmit from '../AddEmailSubmit'
 import EmailForm from '../EmailForm'
-import FirstUnitEmail from '@/app/(admin)/admin/email/components/FirstUnitEmail'
-import { render } from '@react-email/render'
 
 type Props = {
 	unitId: number

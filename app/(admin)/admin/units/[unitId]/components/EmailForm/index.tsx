@@ -1,8 +1,8 @@
 import { TextField } from '@/app/components/Forms/TextField'
 import { Form } from '@/app/components/ui/Form'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/Tabs/tabs'
 import { UnitEmailPayload } from '@/lib/validators/unitEmail'
 import { UseFormReturn } from 'react-hook-form'
+import PreviewTabs from '../PreviewTabs'
 import SendTo from './components/SendTo'
 
 type Props = {
@@ -20,19 +20,7 @@ const EmailForm = ({ form, emailHtml, emailPlainText }: Props) => {
 
 					<SendTo formControl={form.control} />
 
-					<Tabs defaultValue='html' className='w-full'>
-						<TabsList>
-							<TabsTrigger value='html'>HTML</TabsTrigger>
-							<TabsTrigger value='text'>Plain text</TabsTrigger>
-						</TabsList>
-
-						<TabsContent value='html'>
-							<iframe srcDoc={emailHtml} className='h-full min-h-[600px] w-full rounded-md border' />
-						</TabsContent>
-						<TabsContent value='text'>
-							<div className='whitespace-pre-line rounded-md border p-4'>{emailPlainText}</div>
-						</TabsContent>
-					</Tabs>
+					<PreviewTabs emailHtml={emailHtml} emailPlainText={emailPlainText} />
 				</div>
 			</form>
 		</Form>

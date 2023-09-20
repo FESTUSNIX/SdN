@@ -4,14 +4,15 @@ import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalCo
 import UserAvatar from '@/app/components/UserAvatar'
 import { Button } from '@/app/components/ui/Button'
 import { Dialog, DialogContent, DialogFooter } from '@/app/components/ui/Dialog'
+import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { Separator } from '@/app/components/ui/Separator/separator'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/Tabs/tabs'
 import { H3, H4, Muted } from '@/app/components/ui/Typography'
 import { EmailData } from '@/types/unitEmail'
 import { format } from 'date-fns'
 import { Pencil } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import DeleteEmail from '../DeleteEmail'
+import PreviewTabs from '../PreviewTabs'
 
 type Props = EmailData
 
@@ -28,7 +29,7 @@ const ViewEmail = ({ content, sentAt, title, user, sentTo, id }: Props) => {
 				if (!open) closeModal()
 			}}>
 			<DialogContent className='flex h-full flex-col overflow-hidden sm:max-h-[calc(100vh-8rem)] md:!max-w-2xl'>
-				<div>
+				<ScrollArea className='w-full'>
 					<div className='mb-8 flex items-center gap-x-4'>
 						<UserAvatar
 							user={{ name: user?.name, image: user?.image }}
@@ -63,45 +64,33 @@ const ViewEmail = ({ content, sentAt, title, user, sentTo, id }: Props) => {
 						</H4>
 						<Muted className='leading-tight'>{format(sentAt, 'dd/MM/yyyy, HH:mm')}</Muted>
 					</div>
-				</div>
 
-				<Separator />
+					<Separator className='my-4' />
 
-				<div className='mx-auto h-full w-full max-w-xl overflow-hidden'>
-					<Tabs defaultValue='html' className='flex h-full w-full flex-col overflow-y-auto'>
-						<TabsList className='w-max'>
-							<TabsTrigger value='html'>HTML</TabsTrigger>
-							<TabsTrigger value='text'>Plain text</TabsTrigger>
-						</TabsList>
-
-						<TabsContent value='html' className='flex h-full grow flex-col'>
-							<iframe srcDoc={content?.html} className='h-full w-full grow rounded-md border' />
-						</TabsContent>
-						<TabsContent value='text' className='flex grow flex-col'>
-							<div className='grow whitespace-pre-line rounded-md border p-4'>{content?.text}</div>
-						</TabsContent>
-					</Tabs>
-				</div>
-
-				<DialogFooter>
-					<div className='flex flex-wrap items-center gap-2'>
-						{[
-							{
-								label: 'Edit',
-								Icon: Pencil,
-								onClick: () => {
-									toast('Coming soon :)')
-								}
-							}
-						].map(({ Icon, label, onClick }) => (
-							<Button disabled key={label} variant={'outline'} size={'sm'} onClick={onClick} className='rounded-full'>
-								<Icon className='mr-2 h-4 w-4 text-muted-foreground' /> {label}
-							</Button>
-						))}
-
-						<DeleteEmail emailId={id} />
+					<div className='h-full min-w-full max-w-full overflow-hidden'>
+						<PreviewTabs emailHtml={content?.html} emailPlainText={content?.text} />
 					</div>
-				</DialogFooter>
+
+					<DialogFooter className='mt-4'>
+						<div className='flex flex-wrap items-center gap-2'>
+							{[
+								{
+									label: 'Edit',
+									Icon: Pencil,
+									onClick: () => {
+										toast('Coming soon :)')
+									}
+								}
+							].map(({ Icon, label, onClick }) => (
+								<Button disabled key={label} variant={'outline'} size={'sm'} onClick={onClick} className='rounded-full'>
+									<Icon className='mr-2 h-4 w-4 text-muted-foreground' /> {label}
+								</Button>
+							))}
+
+							<DeleteEmail emailId={id} />
+						</div>
+					</DialogFooter>
+				</ScrollArea>
 			</DialogContent>
 		</Dialog>
 	)
