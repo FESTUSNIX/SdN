@@ -1,4 +1,4 @@
-import { Major, Qualification } from '@prisma/client'
+import { Major, Qualification, Unit } from '@prisma/client'
 import {
 	Body,
 	Container,
@@ -17,9 +17,10 @@ import * as React from 'react'
 
 type Props = {
 	majors: (Major & { qualifications: Pick<Qualification, 'name'>[] })[]
+	unit: Unit
 }
 
-export const FirstUnitEmail = ({ majors }: Props) => {
+export const FirstUnitEmail = ({ majors, unit }: Props) => {
 	return (
 		<Tailwind config={tailwindConfig}>
 			<Html>
@@ -91,13 +92,12 @@ export const FirstUnitEmail = ({ majors }: Props) => {
 								<h2 style={{ ...h2, margin: '16px 0' }}>Unit data</h2>
 
 								<ul className='list-disc'>
-									{['name', 'email', 'phone', 'isPublic', 'website', 'unitType', 'logo', 'nip', 'regon'].map(
-										(key, i) => (
-											<li key={i}>
-												<span>{key}</span>
-											</li>
-										)
-									)}
+									{Object.entries(unit).map(([key, value]) => (
+										<li key={key}>
+											<span>{key}: </span>
+											<span>{value?.toString()}</span>
+										</li>
+									))}
 								</ul>
 
 								<Text>

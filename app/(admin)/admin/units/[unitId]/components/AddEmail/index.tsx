@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { UnitEmailPayload, UnitEmailValidator } from '@/lib/validators/unitEmail'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Major, Qualification } from '@prisma/client'
+import { Major, Qualification, Unit } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -16,20 +16,19 @@ import { render } from '@react-email/render'
 type Props = {
 	unitId: number
 	majors: (Major & { qualifications: Pick<Qualification, 'name'>[] })[]
+	unit: Unit
 }
 
-const AddEmail = ({ unitId, majors }: Props) => {
+const AddEmail = ({ unitId, majors, unit }: Props) => {
 	const { data: session } = useSession()
 
 	const { closeModal, modalState } = useGlobalModalContext()
 	const { show } = modalState
 
-	const emailHtml = render(<FirstUnitEmail majors={majors} />)
-	const emailPlainText = render(<FirstUnitEmail majors={majors} />, {
+	const emailHtml = render(<FirstUnitEmail majors={majors} unit={unit} />)
+	const emailPlainText = render(<FirstUnitEmail majors={majors} unit={unit} />, {
 		plainText: true
 	})
-
-	console.log(emailPlainText)
 
 	const form = useForm<UnitEmailPayload>({
 		resolver: zodResolver(UnitEmailValidator.omit({ unitId: true })),

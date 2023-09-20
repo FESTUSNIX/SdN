@@ -4,7 +4,7 @@ import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalCo
 import { Button } from '@/app/components/ui/Button'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { cn } from '@/lib/utils/utils'
-import { Major, Prisma, Qualification } from '@prisma/client'
+import { Major, Prisma, Qualification, Unit } from '@prisma/client'
 import { Mail, ScrollText, X } from 'lucide-react'
 import { useState } from 'react'
 import AddEmail from '../AddEmail'
@@ -25,9 +25,10 @@ type Props = {
 		}
 	}[]
 	majors: (Major & { qualifications: Pick<Qualification, 'name'>[] })[]
+	unit: Unit
 }
 
-const Emails = ({ unitId, emails, majors }: Props) => {
+const Emails = ({ unitId, emails, majors, unit }: Props) => {
 	const { openModal } = useGlobalModalContext()
 	const [open, setOpen] = useState(false)
 
@@ -73,7 +74,7 @@ const Emails = ({ unitId, emails, majors }: Props) => {
 					<Button
 						className='grow'
 						onClick={() => {
-							openModal('CUSTOM', undefined, <AddEmail unitId={unitId} majors={majors} />)
+							openModal('CUSTOM', undefined, <AddEmail unitId={unitId} majors={majors} unit={unit} />)
 						}}>
 						<ScrollText className='mr-2 h-4 w-4' />
 						Add new

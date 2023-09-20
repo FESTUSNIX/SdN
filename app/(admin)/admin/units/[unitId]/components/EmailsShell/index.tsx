@@ -45,9 +45,17 @@ const EmailsShell = async ({ unitId }: Props) => {
 
 	const [emails, majors] = await Promise.all([emailsData, majorsData])
 
+	const unit = await prisma.unit.findFirst({
+		where: {
+			id: unitId
+		}
+	})
+
+	if (!emails || !majors || !unit) return null
+
 	return (
 		<div>
-			<Emails unitId={unitId} emails={emails} majors={majors} />
+			<Emails unitId={unitId} emails={emails} majors={majors} unit={unit} />
 		</div>
 	)
 }
