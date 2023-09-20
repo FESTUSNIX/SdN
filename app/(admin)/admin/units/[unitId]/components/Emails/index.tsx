@@ -3,11 +3,10 @@
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 import { Button } from '@/app/components/ui/Button'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
-import useResponsive from '@/app/hooks/useResponsive'
 import { cn } from '@/lib/utils/utils'
 import { Major, Prisma, Qualification } from '@prisma/client'
 import { Mail, ScrollText, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import AddEmail from '../AddEmail'
 import EmailCard from '../EmailCard'
 
@@ -30,15 +29,7 @@ type Props = {
 
 const Emails = ({ unitId, emails, majors }: Props) => {
 	const { openModal } = useGlobalModalContext()
-
 	const [open, setOpen] = useState(false)
-
-	const { isLG: lgBreakpoint } = useResponsive()
-	const [isLG, setIsLG] = useState(false)
-
-	useEffect(() => {
-		setIsLG(lgBreakpoint)
-	}, [lgBreakpoint])
 
 	return (
 		<>
@@ -53,8 +44,10 @@ const Emails = ({ unitId, emails, majors }: Props) => {
 			</Button>
 
 			<div
-				className='fixed right-0 top-0 z-30 ml-1 flex h-screen shrink-0 flex-col overflow-hidden border-l bg-background duration-300 lg:relative lg:w-96'
-				style={{ width: open ? (isLG ? '384px' : '100%') : 0 }}>
+				className={cn(
+					'fixed right-0 top-0 z-30 ml-1 flex h-screen shrink-0 flex-col overflow-hidden border-l bg-background duration-300 lg:relative',
+					open ? 'w-full lg:w-96' : 'w-0'
+				)}>
 				<div className='flex items-center justify-between border-b px-4 py-4'>
 					<h2 className='mr-6 text-lg font-bold'>Emails</h2>
 					<div className='lg:h-10 lg:w-10'></div>
