@@ -1,33 +1,21 @@
 'use client'
 
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
-import EditorOutput from '@/app/components/EditorOutput'
 import UserAvatar from '@/app/components/UserAvatar'
 import { Button } from '@/app/components/ui/Button'
 import { Dialog, DialogContent, DialogFooter } from '@/app/components/ui/Dialog'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { Separator } from '@/app/components/ui/Separator/separator'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/Tabs/tabs'
 import { H3, H4, Muted } from '@/app/components/ui/Typography'
-import { Prisma } from '@prisma/client'
-import { Pencil } from 'lucide-react'
-import DeleteEmail from '../DeleteEmail'
-import { toast } from 'react-hot-toast'
+import { EmailData } from '@/types/unitEmail'
 import { format } from 'date-fns'
+import { Pencil } from 'lucide-react'
+import { toast } from 'react-hot-toast'
+import DeleteEmail from '../DeleteEmail'
 
-type Props = {
-	emailId: number
-	title: string
-	content: Prisma.JsonValue
-	sentAt: Date
-	sentTo: string[]
-	user: {
-		name: string | null
-		image: string | null
-		email: string
-	}
-}
+type Props = EmailData
 
-const ViewEmail = ({ content, sentAt, title, user, sentTo, emailId }: Props) => {
+const ViewEmail = ({ content, sentAt, title, user, sentTo, id }: Props) => {
 	const {
 		modalState: { show },
 		closeModal
@@ -80,9 +68,19 @@ const ViewEmail = ({ content, sentAt, title, user, sentTo, emailId }: Props) => 
 				<Separator />
 
 				<div className='mx-auto h-full w-full max-w-xl overflow-hidden'>
-					<ScrollArea className='h-full'>
-						<EditorOutput content={JSON.parse(content as string)} />
-					</ScrollArea>
+					<Tabs defaultValue='html' className='flex h-full w-full flex-col overflow-y-auto'>
+						<TabsList className='w-max'>
+							<TabsTrigger value='html'>HTML</TabsTrigger>
+							<TabsTrigger value='text'>Plain text</TabsTrigger>
+						</TabsList>
+
+						<TabsContent value='html' className='flex h-full grow flex-col'>
+							<iframe srcDoc={content?.html} className='h-full w-full grow rounded-md border' />
+						</TabsContent>
+						<TabsContent value='text' className='flex grow flex-col'>
+							<div className='grow whitespace-pre-line rounded-md border p-4'>{content?.text}</div>
+						</TabsContent>
+					</Tabs>
 				</div>
 
 				<DialogFooter>
@@ -101,7 +99,7 @@ const ViewEmail = ({ content, sentAt, title, user, sentTo, emailId }: Props) => 
 							</Button>
 						))}
 
-						<DeleteEmail emailId={emailId} />
+						<DeleteEmail emailId={id} />
 					</div>
 				</DialogFooter>
 			</DialogContent>

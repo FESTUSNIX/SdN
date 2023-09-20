@@ -1,25 +1,13 @@
 'use client'
 
-import React from 'react'
-import ViewEmail from './ViewEmail'
 import UserAvatar from '@/app/components/UserAvatar'
 import { H3, Muted } from '@/app/components/ui/Typography'
+import { EmailData } from '@/types/unitEmail'
 import { formatDistance } from 'date-fns'
 import { useGlobalModalContext } from '../../../context/GlobalModalContext'
-import { Prisma } from '@prisma/client'
+import ViewEmail from './ViewEmail'
 
-type Props = {
-	id: number
-	title: string
-	content: Prisma.JsonValue
-	sentAt: Date
-	sentTo: string[]
-	user: {
-		name: string | null
-		image: string | null
-		email: string
-	}
-}
+type Props = EmailData
 
 const EmailCard = ({ content, id, sentAt, sentTo, title, user }: Props) => {
 	const { openModal } = useGlobalModalContext()
@@ -31,7 +19,7 @@ const EmailCard = ({ content, id, sentAt, sentTo, title, user }: Props) => {
 				openModal(
 					'CUSTOM',
 					undefined,
-					<ViewEmail emailId={id} content={content} sentAt={sentAt} title={title} user={user} sentTo={sentTo} />
+					<ViewEmail id={id} content={content} sentAt={sentAt} title={title} user={user} sentTo={sentTo} />
 				)
 			}}
 			className='flex gap-x-4 gap-y-2 overflow-hidden rounded-lg border p-4'>

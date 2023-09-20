@@ -1,10 +1,9 @@
 import { TextField } from '@/app/components/Forms/TextField'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { UnitEmailPayload } from '@/lib/validators/unitEmail'
-import { ControllerRenderProps, UseFormReturn } from 'react-hook-form'
-import EmailEditor from './components/EmailEditor'
-import SendTo from './components/SendTo'
+import { Form } from '@/app/components/ui/Form'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/Tabs/tabs'
+import { UnitEmailPayload } from '@/lib/validators/unitEmail'
+import { UseFormReturn } from 'react-hook-form'
+import SendTo from './components/SendTo'
 
 type Props = {
 	form: UseFormReturn<UnitEmailPayload, any, undefined>
@@ -13,8 +12,6 @@ type Props = {
 }
 
 const EmailForm = ({ form, emailHtml, emailPlainText }: Props) => {
-	console.log(emailPlainText)
-
 	return (
 		<Form {...form}>
 			<form>

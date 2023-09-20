@@ -1,17 +1,12 @@
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
-import FirstUnitEmail from '@/app/(admin)/admin/email/components/FirstUnitEmail'
 import { Button } from '@/app/components/ui/Button'
 import { UnitEmailPayload } from '@/lib/validators/unitEmail'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { Loader2 } from 'lucide-react'
-import { Session } from 'next-auth'
 import { useRouter } from 'next/navigation'
-import React from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
-import { render } from '@react-email/render'
-import { Major, Qualification } from '@prisma/client'
 
 type Props = {
 	form: UseFormReturn<UnitEmailPayload, any, undefined>

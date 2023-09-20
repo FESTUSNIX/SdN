@@ -4,7 +4,8 @@ import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalCo
 import { Button } from '@/app/components/ui/Button'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { cn } from '@/lib/utils/utils'
-import { Major, Prisma, Qualification, Unit } from '@prisma/client'
+import { EmailData } from '@/types/unitEmail'
+import { Major, Qualification, Unit } from '@prisma/client'
 import { Mail, ScrollText, X } from 'lucide-react'
 import { useState } from 'react'
 import AddEmail from '../AddEmail'
@@ -12,18 +13,7 @@ import EmailCard from '../EmailCard'
 
 type Props = {
 	unitId: number
-	emails: {
-		id: number
-		title: string
-		content: Prisma.JsonValue
-		sentAt: Date
-		sentTo: string[]
-		user: {
-			name: string | null
-			image: string | null
-			email: string
-		}
-	}[]
+	emails: EmailData[]
 	majors: (Major & { qualifications: Pick<Qualification, 'name'>[] })[]
 	unit: Unit
 }

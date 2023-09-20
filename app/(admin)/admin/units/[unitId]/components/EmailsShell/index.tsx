@@ -1,6 +1,6 @@
-import React from 'react'
-import Emails from '../Emails'
 import prisma from '@/prisma/client'
+import { EmailData } from '@/types/unitEmail'
+import Emails from '../Emails'
 
 type Props = {
 	unitId: number
@@ -55,7 +55,7 @@ const EmailsShell = async ({ unitId }: Props) => {
 
 	return (
 		<div>
-			<Emails unitId={unitId} emails={emails} majors={majors} unit={unit} />
+			<Emails unitId={unitId} emails={emails as EmailData[]} majors={majors} unit={unit} />
 		</div>
 	)
 }
