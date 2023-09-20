@@ -33,6 +33,13 @@ const EmailsShell = async ({ unitId }: Props) => {
 	const majorsData = prisma.major.findMany({
 		where: {
 			unitId: unitId
+		},
+		include: {
+			qualifications: {
+				select: {
+					name: true
+				}
+			}
 		}
 	})
 

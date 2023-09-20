@@ -3,36 +3,39 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { UnitEmailPayload } from '@/lib/validators/unitEmail'
 import { ControllerRenderProps, UseFormReturn } from 'react-hook-form'
 import EmailEditor from './components/EmailEditor'
-import SentTo from './components/SentTo'
+import SendTo from './components/SendTo'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/Tabs/tabs'
 
 type Props = {
 	form: UseFormReturn<UnitEmailPayload, any, undefined>
+	emailHtml: string
+	emailPlainText: string
 }
 
-const EmailForm = ({ form }: Props) => {
+const EmailForm = ({ form, emailHtml, emailPlainText }: Props) => {
+	console.log(emailPlainText)
+
 	return (
 		<Form {...form}>
 			<form>
 				<div className='space-y-8 px-2'>
 					<TextField formControl={form.control} accessorKey='title' label='Title' placeholder='Aa...' />
 
-					<SentTo formControl={form.control} />
+					<SendTo formControl={form.control} />
 
-					
-					<FormField
-						control={form.control}
-						name={'content'}
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Content</FormLabel>
-								<FormControl>
-									<EmailEditor open={true} field={field as ControllerRenderProps<any, string>} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+					<Tabs defaultValue='html' className='w-full'>
+						<TabsList>
+							<TabsTrigger value='html'>HTML</TabsTrigger>
+							<TabsTrigger value='text'>Plain text</TabsTrigger>
+						</TabsList>
 
+						<TabsContent value='html'>
+							<iframe srcDoc={emailHtml} className='h-full min-h-[600px] w-full rounded-md border' />
+						</TabsContent>
+						<TabsContent value='text'>
+							<div className='whitespace-pre-line rounded-md border p-4'>{emailPlainText}</div>
+						</TabsContent>
+					</Tabs>
 				</div>
 			</form>
 		</Form>

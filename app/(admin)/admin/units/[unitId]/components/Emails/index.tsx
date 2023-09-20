@@ -5,7 +5,7 @@ import { Button } from '@/app/components/ui/Button'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import useResponsive from '@/app/hooks/useResponsive'
 import { cn } from '@/lib/utils/utils'
-import { Major, Prisma } from '@prisma/client'
+import { Major, Prisma, Qualification } from '@prisma/client'
 import { Mail, ScrollText, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import AddEmail from '../AddEmail'
@@ -25,7 +25,7 @@ type Props = {
 			email: string
 		}
 	}[]
-	majors: Major[]
+	majors: (Major & { qualifications: Pick<Qualification, 'name'>[] })[]
 }
 
 const Emails = ({ unitId, emails, majors }: Props) => {

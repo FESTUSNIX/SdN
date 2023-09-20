@@ -1,4 +1,5 @@
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
+import FirstUnitEmail from '@/app/(admin)/admin/email/components/FirstUnitEmail'
 import { Button } from '@/app/components/ui/Button'
 import { UnitEmailPayload } from '@/lib/validators/unitEmail'
 import { useMutation } from '@tanstack/react-query'
@@ -9,36 +10,39 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
+import { render } from '@react-email/render'
+import { Major, Qualification } from '@prisma/client'
 
 type Props = {
 	form: UseFormReturn<UnitEmailPayload, any, undefined>
 	unitId: number
-	session: Session
+	emailHtml: string
+	emailPlainText: string
 }
 
-const AddEmailSubmit = ({ form, unitId, session }: Props) => {
+const AddEmailSubmit = ({ form, unitId, emailHtml, emailPlainText }: Props) => {
 	const { closeModal } = useGlobalModalContext()
 
 	const router = useRouter()
 
 	const { mutate: createEmail, isLoading } = useMutation({
 		mutationFn: async (values: UnitEmailPayload) => {
-			toast.loading('Adding a new email...')
+			toast.loading('Sending email...')
 
 			const payload: UnitEmailPayload = {
 				title: values.title,
-				content: values.content,
-				sentBy: values.sentBy ?? session?.user?.id,
-				sentTo: [],
+				content: { html: emailHtml, text: emailPlainText },
+				sentBy: values.sentBy,
+				sendTo: values.sendTo,
 				sentAt: new Date(),
 				unitId: unitId
 			}
 
 			console.log(payload)
-			// const { data } = await axios.post(`/api/emails`, payload)
 
-			// return data
-			return 'yes'
+			const { data } = await axios.post(`/api/emails`, payload)
+
+			return data
 		},
 		onError: err => {
 			toast.dismiss()
@@ -54,7 +58,7 @@ const AddEmailSubmit = ({ form, unitId, session }: Props) => {
 		onSuccess: data => {
 			toast.dismiss()
 
-			toast.success('Added a new email.')
+			toast.success('Sent email.')
 			form.reset()
 
 			closeModal()
@@ -65,7 +69,7 @@ const AddEmailSubmit = ({ form, unitId, session }: Props) => {
 	return isLoading ? (
 		<Button disabled>
 			<Loader2 className='mr-2 h-4 w-4 animate-spin' />
-			Adding new email
+			Sending email
 		</Button>
 	) : (
 		<Button
@@ -73,7 +77,7 @@ const AddEmailSubmit = ({ form, unitId, session }: Props) => {
 			onClick={() => {
 				form.handleSubmit(e => createEmail(e))()
 			}}>
-			Add new email
+			Send email
 		</Button>
 	)
 }

@@ -4,16 +4,18 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { UnitEmailPayload, UnitEmailValidator } from '@/lib/validators/unitEmail'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Major, Qualification } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import AddEmailSubmit from '../AddEmailSubmit'
 import EmailForm from '../EmailForm'
-import { Major } from '@prisma/client'
+import FirstUnitEmail from '@/app/(admin)/admin/email/components/FirstUnitEmail'
+import { render } from '@react-email/render'
 
 type Props = {
 	unitId: number
-	majors: Major[]
+	majors: (Major & { qualifications: Pick<Qualification, 'name'>[] })[]
 }
 
 const AddEmail = ({ unitId, majors }: Props) => {
@@ -22,21 +24,22 @@ const AddEmail = ({ unitId, majors }: Props) => {
 	const { closeModal, modalState } = useGlobalModalContext()
 	const { show } = modalState
 
+	const emailHtml = render(<FirstUnitEmail majors={majors} />)
+	const emailPlainText = render(<FirstUnitEmail majors={majors} />, {
+		plainText: true
+	})
+
+	console.log(emailPlainText)
+
 	const form = useForm<UnitEmailPayload>({
-		resolver: zodResolver(
-			UnitEmailValidator.omit({ unitId: true }).extend({
-				content: z.array(z.any()).refine(v => v.length > 0, {
-					message: 'Email content cannot be empty.'
-				})
-			})
-		),
+		resolver: zodResolver(UnitEmailValidator.omit({ unitId: true })),
 		defaultValues: {
 			title: '',
-			content: [],
+			content: { html: emailHtml, text: emailPlainText },
 			sentBy: session?.user?.id,
 			sentAt: new Date(),
 			unitId: unitId,
-			sentTo: []
+			sendTo: []
 		}
 	})
 
@@ -51,19 +54,11 @@ const AddEmail = ({ unitId, majors }: Props) => {
 			<DialogContent className='h-full sm:max-h-[calc(100vh-8rem)] md:!max-w-[700px] lg:!max-w-[900px]'>
 				<ScrollArea>
 					<DialogHeader>
-						<DialogTitle>Add a new email</DialogTitle>
+						<DialogTitle>Send a new email</DialogTitle>
 					</DialogHeader>
 
 					<div className='mt-6'>
-						<EmailForm form={form} />
-
-						<div className='flex flex-col gap-2'>
-							{majors.map(major => (
-								<div key={major.id}>
-									#{major.id} - {major.name}, {JSON.stringify(major)}
-								</div>
-							))}
-						</div>
+						<EmailForm form={form} emailPlainText={emailPlainText} emailHtml={emailHtml} />
 					</div>
 
 					<DialogFooter className='mt-6 gap-y-2'>
@@ -71,7 +66,7 @@ const AddEmail = ({ unitId, majors }: Props) => {
 							Cancel
 						</Button>
 
-						<AddEmailSubmit form={form} unitId={unitId} session={session} />
+						<AddEmailSubmit form={form} unitId={unitId} emailPlainText={emailPlainText} emailHtml={emailHtml} />
 					</DialogFooter>
 				</ScrollArea>
 			</DialogContent>

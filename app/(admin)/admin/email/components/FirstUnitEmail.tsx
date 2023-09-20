@@ -1,4 +1,4 @@
-import { Major } from '@prisma/client'
+import { Major, Qualification } from '@prisma/client'
 import {
 	Body,
 	Container,
@@ -15,9 +15,11 @@ import {
 } from '@react-email/components'
 import * as React from 'react'
 
-type MAJOR_KEYS = keyof Major
+type Props = {
+	majors: (Major & { qualifications: Pick<Qualification, 'name'>[] })[]
+}
 
-export const FirstUnitEmail = ({ majors }: { majors: Major[] }) => {
+export const FirstUnitEmail = ({ majors }: Props) => {
 	return (
 		<Tailwind config={tailwindConfig}>
 			<Html>
@@ -41,11 +43,14 @@ export const FirstUnitEmail = ({ majors }: { majors: Major[] }) => {
 								margin-bottom: 0.125rem;
 								padding-left: 0.375em;
 							}
-							li::before {
-								content: attr(data-bullet);
-								margin-right: 0.375rem;
-								color: inherit;
+							h2 {
+								scroll-margin: 80px,
+								padding-bottom: 8px,
+								font-size: 24px,
+								line-height: 32px,
+								font-weight: 500
 							}
+							
 
 					`}</style>
 				</Head>
@@ -55,19 +60,21 @@ export const FirstUnitEmail = ({ majors }: { majors: Major[] }) => {
 				<Body className='bg-background text-foreground' style={{ fontFamily: `Outfit, sans-serif` }}>
 					<Section>
 						<Container>
-							<Section className='bg-primary'>
+							<Section style={{ backgroundColor: '#3361cc' }}>
 								<Img
-									src={'/wordmark-horizontal-white@512.png'}
-									width='300'
-									height='300'
-									className='mx-auto h-auto w-[250px] max-w-full py-8'
+									src={
+										'https://hdwhiwewvgvllyhftczq.supabase.co/storage/v1/object/public/share/wordmark-horizontal-white@512.png'
+									}
+									width='500'
+									height='500'
+									style={{ margin: 'auto', width: '250px', maxWidth: '100%', padding: '32px 16px', height: 'auto' }}
 									alt='Studia dla Nauczycieli'
 								/>
 							</Section>
 							<Section className='mt-8'>
 								<Row>
 									<h1 className='scroll-m-20 text-3xl font-semibold tracking-tight'>Lorem ipsum dolor</h1>
-									<h2 className={h2}>
+									<h2 style={h2}>
 										Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque ab ex culpa est earum repellendus.
 									</h2>
 									<Text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, ut.</Text>
@@ -81,12 +88,12 @@ export const FirstUnitEmail = ({ majors }: { majors: Major[] }) => {
 							<Hr />
 
 							<Section className='tw-prose prose'>
-								<h2 className={'mb-4 mt-4' + h2}>Unit data</h2>
+								<h2 style={{ ...h2, margin: '16px 0' }}>Unit data</h2>
 
-								<ul className='prose'>
+								<ul className='list-disc'>
 									{['name', 'email', 'phone', 'isPublic', 'website', 'unitType', 'logo', 'nip', 'regon'].map(
 										(key, i) => (
-											<li key={i} data-bullet='•'>
+											<li key={i}>
 												<span>{key}</span>
 											</li>
 										)
@@ -101,16 +108,25 @@ export const FirstUnitEmail = ({ majors }: { majors: Major[] }) => {
 
 							<Hr />
 
-							<Section className=''>
-								<h2 className={'mb-4 mt-4 ' + h2}>Majors</h2>
+							<Section>
+								<h2 style={{ ...h2, margin: '16px 0' }}>Majors</h2>
 
 								<div className='mt-6 grid'>
 									<table className={'block max-w-full border-collapse overflow-x-auto'}>
 										<thead>
 											<Tr>
-												{Object.keys(majors[0]).map((key: any, i) => (
-													<th key={i} className={'px-4 py-2 text-start ' + tableBorder}>
-														<Text className='m-0 p-0'>{key}</Text>
+												{['Nazwa kierunku', 'Uprawnienia'].map((key, i) => (
+													<th
+														key={i}
+														style={{
+															borderWidth: '1px',
+															borderStyle: 'solid',
+															borderColor: '#e5e5e5',
+															borderCollapse: 'collapse',
+															padding: '16px 8px',
+															textAlign: 'start'
+														}}>
+														<Text style={{ margin: '0', padding: '0' }}>{key}</Text>
 													</th>
 												))}
 											</Tr>
@@ -118,13 +134,19 @@ export const FirstUnitEmail = ({ majors }: { majors: Major[] }) => {
 
 										<tbody>
 											{majors.map((item, i) => (
-												<Tr key={i} className={i % 2 === 0 ? 'bg-muted' : ''}>
-													{/* <>{console.log(Object.keys(item))}</> */}
-													{Object.keys(item).map((key, i) => (
-														<Td key={i}>
-															<Text className='m-0 p-0'>{JSON.stringify(item[key as MAJOR_KEYS])}</Text>
-														</Td>
-													))}
+												<Tr key={i} style={{ backgroundColor: i % 2 === 0 ? '#f5f5f5' : '#ffffff' }}>
+													<Td key={i}>
+														<Text style={{ margin: '0', padding: '0' }}>{item.name}</Text>
+													</Td>
+													<Td key={i}>
+														<Text style={{ margin: '0', padding: '0' }}>
+															{item.qualifications.map((qualification, i, items) => (
+																<span key={i}>
+																	{qualification.name} {i !== items.length - 1 && ','}
+																</span>
+															))}
+														</Text>
+													</Td>
 												</Tr>
 											))}
 										</tbody>
@@ -141,23 +163,63 @@ export const FirstUnitEmail = ({ majors }: { majors: Major[] }) => {
 
 export default FirstUnitEmail
 
-const Td = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-	return <td className={td + ' ' + className}>{children}</td>
+const Td = ({
+	children,
+	className,
+	style
+}: {
+	children: React.ReactNode
+	className?: string
+	style?: React.CSSProperties
+}) => {
+	return (
+		<td
+			className={className}
+			style={{
+				...style,
+				borderWidth: '1px',
+				borderStyle: 'solid',
+				borderColor: '#e5e5e5',
+				borderCollapse: 'collapse',
+				padding: '16px 8px',
+				textAlign: 'start',
+				minWidth: '200px'
+			}}>
+			{children}
+		</td>
+	)
 }
-const Tr = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-	return <tr className={tr + ' ' + className}>{children}</tr>
+const Tr = ({
+	children,
+	className,
+	style
+}: {
+	children: React.ReactNode
+	className?: string
+	style?: React.CSSProperties
+}) => {
+	return (
+		<tr
+			className={className}
+			style={{
+				...style,
+				borderWidth: '1px',
+				borderStyle: 'solid',
+				borderColor: '#e5e5e5',
+				borderCollapse: 'collapse'
+			}}>
+			{children}
+		</tr>
+	)
 }
 
-const td = 'border border-solid border-border border-collapse px-4 py-2 text-start min-w-[200px]'
-const tr = 'border border-solid border-border border-collapse'
-
-const tableBorder = 'border border-solid border-border border-collapse'
-
-const h2 = 'text-2xl font-medium scroll-m-20 pb-2 tracking-tight transition-colors first:mt-0'
-
-const xd = (
-	<div className='before-[xd] my-[0.125rem] before:mr-[0.375rem] before:text-inherit before:content-[xd]'></div>
-)
+const h2 = {
+	scrollMargin: '80px',
+	paddingBottom: '8px',
+	fontSize: '24px',
+	lineHeight: '32px',
+	fontWeight: 500
+}
 
 const tailwindConfig = {
 	theme: {

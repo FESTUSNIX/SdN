@@ -2,9 +2,12 @@ import { z } from 'zod'
 
 export const UnitEmailValidator = z.object({
 	title: z.string().nonempty(),
-	content: z.any(),
+	content: z.object({
+		html: z.string(),
+		text: z.string()
+	}),
 	sentBy: z.string(),
-	sentTo: z.string().array(),
+	sendTo: z.string().array(),
 	sentAt: z.coerce.date(),
 	unitId: z.number()
 })
