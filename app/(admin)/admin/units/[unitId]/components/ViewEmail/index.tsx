@@ -28,7 +28,7 @@ const ViewEmail = ({ content, sentAt, title, user, sentTo, id }: Props) => {
 			onOpenChange={open => {
 				if (!open) closeModal()
 			}}>
-			<DialogContent className='flex h-full flex-col overflow-hidden sm:max-h-[calc(100vh-8rem)] md:!max-w-2xl'>
+			<DialogContent className='flex h-full flex-col overflow-hidden sm:max-h-[calc(100vh-8rem)] md:max-w-2xl lg:max-w-3xl'>
 				<ScrollArea className='w-full'>
 					<div className='mb-8 flex items-center gap-x-4'>
 						<UserAvatar
