@@ -1,13 +1,13 @@
-import React from 'react'
-import Emails from '../Emails'
 import prisma from '@/prisma/client'
+import { EmailData } from '@/types/unitEmail'
+import Emails from '../Emails'
 
 type Props = {
 	unitId: number
 }
 
 const EmailsShell = async ({ unitId }: Props) => {
-	const emails = await prisma.unitEmail.findMany({
+	const emailsData = prisma.unitEmail.findMany({
 		where: {
 			unitId: unitId
 		},
@@ -30,9 +30,32 @@ const EmailsShell = async ({ unitId }: Props) => {
 		}
 	})
 
+	const majorsData = prisma.major.findMany({
+		where: {
+			unitId: unitId
+		},
+		include: {
+			qualifications: {
+				select: {
+					name: true
+				}
+			}
+		}
+	})
+
+	const [emails, majors] = await Promise.all([emailsData, majorsData])
+
+	const unit = await prisma.unit.findFirst({
+		where: {
+			id: unitId
+		}
+	})
+
+	if (!emails || !majors || !unit) return null
+
 	return (
 		<div>
-			<Emails unitId={unitId} emails={emails} />
+			<Emails unitId={unitId} emails={emails as EmailData[]} majors={majors} unit={unit} />
 		</div>
 	)
 }

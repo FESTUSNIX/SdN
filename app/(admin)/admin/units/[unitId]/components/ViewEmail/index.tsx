@@ -1,33 +1,22 @@
 'use client'
 
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
-import EditorOutput from '@/app/components/EditorOutput'
 import UserAvatar from '@/app/components/UserAvatar'
 import { Button } from '@/app/components/ui/Button'
 import { Dialog, DialogContent, DialogFooter } from '@/app/components/ui/Dialog'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H3, H4, Muted } from '@/app/components/ui/Typography'
-import { Prisma } from '@prisma/client'
-import { Pencil } from 'lucide-react'
-import DeleteEmail from '../DeleteEmail'
-import { toast } from 'react-hot-toast'
+import { EmailData } from '@/types/unitEmail'
 import { format } from 'date-fns'
+import { Pencil } from 'lucide-react'
+import { toast } from 'react-hot-toast'
+import DeleteEmail from '../DeleteEmail'
+import PreviewTabs from '../PreviewTabs'
 
-type Props = {
-	emailId: number
-	title: string
-	content: Prisma.JsonValue
-	sentAt: Date
-	sentTo: string[]
-	user: {
-		name: string | null
-		image: string | null
-		email: string
-	}
-}
+type Props = EmailData
 
-const ViewEmail = ({ content, sentAt, title, user, sentTo, emailId }: Props) => {
+const ViewEmail = ({ content, sentAt, title, user, sentTo, id }: Props) => {
 	const {
 		modalState: { show },
 		closeModal
@@ -39,8 +28,8 @@ const ViewEmail = ({ content, sentAt, title, user, sentTo, emailId }: Props) => 
 			onOpenChange={open => {
 				if (!open) closeModal()
 			}}>
-			<DialogContent className='flex h-full flex-col overflow-hidden sm:max-h-[calc(100vh-8rem)] md:!max-w-2xl'>
-				<div>
+			<DialogContent className='flex h-full flex-col overflow-hidden sm:max-h-[calc(100vh-8rem)] md:max-w-2xl lg:max-w-3xl'>
+				<ScrollArea className='w-full'>
 					<div className='mb-8 flex items-center gap-x-4'>
 						<UserAvatar
 							user={{ name: user?.name, image: user?.image }}
@@ -75,35 +64,33 @@ const ViewEmail = ({ content, sentAt, title, user, sentTo, emailId }: Props) => 
 						</H4>
 						<Muted className='leading-tight'>{format(sentAt, 'dd/MM/yyyy, HH:mm')}</Muted>
 					</div>
-				</div>
 
-				<Separator />
+					<Separator className='my-4' />
 
-				<div className='mx-auto h-full w-full max-w-xl overflow-hidden'>
-					<ScrollArea className='h-full'>
-						<EditorOutput content={JSON.parse(content as string)} />
-					</ScrollArea>
-				</div>
-
-				<DialogFooter>
-					<div className='flex flex-wrap items-center gap-2'>
-						{[
-							{
-								label: 'Edit',
-								Icon: Pencil,
-								onClick: () => {
-									toast('Coming soon :)')
-								}
-							}
-						].map(({ Icon, label, onClick }) => (
-							<Button disabled key={label} variant={'outline'} size={'sm'} onClick={onClick} className='rounded-full'>
-								<Icon className='mr-2 h-4 w-4 text-muted-foreground' /> {label}
-							</Button>
-						))}
-
-						<DeleteEmail emailId={emailId} />
+					<div className='h-full min-w-full max-w-full overflow-hidden'>
+						<PreviewTabs emailHtml={content?.html} emailPlainText={content?.text} />
 					</div>
-				</DialogFooter>
+
+					<DialogFooter className='mt-4'>
+						<div className='flex flex-wrap items-center gap-2'>
+							{[
+								{
+									label: 'Edit',
+									Icon: Pencil,
+									onClick: () => {
+										toast('Coming soon :)')
+									}
+								}
+							].map(({ Icon, label, onClick }) => (
+								<Button disabled key={label} variant={'outline'} size={'sm'} onClick={onClick} className='rounded-full'>
+									<Icon className='mr-2 h-4 w-4 text-muted-foreground' /> {label}
+								</Button>
+							))}
+
+							<DeleteEmail emailId={id} />
+						</div>
+					</DialogFooter>
+				</ScrollArea>
 			</DialogContent>
 		</Dialog>
 	)

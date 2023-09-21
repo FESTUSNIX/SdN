@@ -9,12 +9,12 @@ type Props = {
 	formControl: Control<UnitEmailPayload>
 }
 
-const SentTo = ({ formControl }: Props) => {
+const SendTo = ({ formControl }: Props) => {
 	const [inputValue, setInputValue] = useState('')
 
 	const handleKeyDown = (
 		event: KeyboardEvent<HTMLInputElement>,
-		field: ControllerRenderProps<UnitEmailPayload, 'sentTo'>
+		field: ControllerRenderProps<UnitEmailPayload, 'sendTo'>
 	) => {
 		if (event.key === 'Enter') {
 			field.onChange([...field.value, inputValue])
@@ -25,10 +25,10 @@ const SentTo = ({ formControl }: Props) => {
 	return (
 		<FormField
 			control={formControl}
-			name={'sentTo'}
+			name={'sendTo'}
 			render={({ field }) => (
 				<FormItem>
-					<FormLabel>Sent To</FormLabel>
+					<FormLabel>Send To</FormLabel>
 					<FormControl>
 						<div>
 							<Input
@@ -47,7 +47,7 @@ const SentTo = ({ formControl }: Props) => {
 							</div>
 						</div>
 					</FormControl>
-					<FormDescription>Ps. click enter after typing email</FormDescription>
+					<FormDescription>Click enter after typing email</FormDescription>
 					<FormMessage />
 				</FormItem>
 			)}
@@ -55,4 +55,4 @@ const SentTo = ({ formControl }: Props) => {
 	)
 }
 
-export default SentTo
+export default SendTo

@@ -1,38 +1,26 @@
 import { TextField } from '@/app/components/Forms/TextField'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { Form } from '@/app/components/ui/Form'
 import { UnitEmailPayload } from '@/lib/validators/unitEmail'
-import { ControllerRenderProps, UseFormReturn } from 'react-hook-form'
-import EmailEditor from './components/EmailEditor'
-import SentTo from './components/SentTo'
+import { UseFormReturn } from 'react-hook-form'
+import PreviewTabs from '../PreviewTabs'
+import SendTo from './components/SendTo'
 
 type Props = {
 	form: UseFormReturn<UnitEmailPayload, any, undefined>
+	emailHtml: string
+	emailPlainText: string
 }
 
-const EmailForm = ({ form }: Props) => {
+const EmailForm = ({ form, emailHtml, emailPlainText }: Props) => {
 	return (
 		<Form {...form}>
 			<form>
 				<div className='space-y-8 px-2'>
 					<TextField formControl={form.control} accessorKey='title' label='Title' placeholder='Aa...' />
 
-					<SentTo formControl={form.control} />
+					<SendTo formControl={form.control} />
 
-					
-					<FormField
-						control={form.control}
-						name={'content'}
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Content</FormLabel>
-								<FormControl>
-									<EmailEditor open={true} field={field as ControllerRenderProps<any, string>} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
+					<PreviewTabs emailHtml={emailHtml} emailPlainText={emailPlainText} />
 				</div>
 			</form>
 		</Form>
