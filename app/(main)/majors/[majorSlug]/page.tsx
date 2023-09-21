@@ -13,10 +13,10 @@ import UnitCard from './components/UnitCard'
 import Image from 'next/image'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 
-const MajorPage = async ({ params: { majorId } }: { params: { majorId: string } }) => {
+const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: string } }) => {
 	const major = await prisma.major.findFirst({
 		where: {
-			id: parseInt(majorId)
+			slug: majorSlug
 		},
 		include: {
 			qualifications: {

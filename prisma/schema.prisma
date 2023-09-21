@@ -21,8 +21,7 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -33,11 +32,6 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-enum UserRole {
-  ADMIN
-  USER
 }
 
 model User {
@@ -63,23 +57,23 @@ model VerificationToken {
 
 model Unit {
   id        Int          @id @default(autoincrement())
-  slug      String       @unique @default(cuid())
   name      String
-  email     String
-  phone     String?
-  isPublic  Boolean      @default(true)
-  notes     String?
-  website   String
-  unitType  String       @default("uczelnia")
-  cityId    Int
-  city      City         @relation(fields: [cityId], references: [id])
   logo      String?
+  isPublic  Boolean      @default(true)
   nip       String?
   regon     String?
+  unitType  String       @default("uczelnia")
+  website   String
   updatedAt DateTime?    @updatedAt
-  majors    Major[]
-  address   UnitAddress?
+  cityId    Int
+  email     String
+  notes     String?
+  phone     String?
+  slug      String       @unique @default(cuid())
   status    Status       @default(IN_PROGRESS)
+  majors    Major[]
+  city      City         @relation(fields: [cityId], references: [id])
+  address   UnitAddress?
   emails    UnitEmail[]
 
   @@unique([id, slug])
@@ -89,21 +83,14 @@ model Unit {
 model Major {
   id                    Int             @id @default(autoincrement())
   name                  String
-  unitId                Int
-  unitSlug              String
-  majorLevel            MajorLevel      @default(PODYPLOMOWE)
   cost                  Int?
+  unitId                Int
   address               String?
-  isRegulated           Boolean         @default(true)
   certificates          String?
-  completionConditions  Json?
   daysOfWeek            DaysOfWeek[]
-  description           Json?
   formOfStudy           String?         @default("zaoczne")
   numberOfSemesters     Int?
   organisator           String?
-  recruitmentConditions Json?
-  syllabus              Json?
   updatedAt             DateTime        @default(now()) @updatedAt
   canPayInInstallments  Boolean         @default(false)
   durationInHours       Int?
@@ -112,9 +99,17 @@ model Major {
   endDate               DateTime?       @db.Date
   startDate             DateTime?       @db.Date
   contact               String?
-  unit                  Unit            @relation(fields: [unitId], references: [id])
-  qualifications        Qualification[]
+  isRegulated           Boolean         @default(true)
+  majorLevel            MajorLevel      @default(PODYPLOMOWE)
   status                Status          @default(IN_PROGRESS)
+  unitSlug              String
+  completionConditions  Json?
+  description           Json?
+  recruitmentConditions Json?
+  syllabus              Json?
+  slug                  String          @unique @default(cuid())
+  unit                  Unit            @relation(fields: [unitId, unitSlug], references: [id, slug])
+  qualifications        Qualification[] @relation("MajorToQualification")
 
   @@index([name])
 }
@@ -136,18 +131,18 @@ model UnitEmail {
   sentAt  DateTime
   sentBy  String
   sentTo  String[]
-  user    User     @relation(fields: [sentBy], references: [id])
   unitId  Int
+  user    User     @relation(fields: [sentBy], references: [id])
   unit    Unit     @relation(fields: [unitId], references: [id], onDelete: Cascade)
 }
 
 model Qualification {
   id       Int               @id @default(autoincrement())
-  slug     String            @unique
   name     String            @unique
-  type     QualificationType @default(OGOLNE)
-  majors   Major[]
   keywords String[]
+  slug     String            @unique
+  type     QualificationType @default(OGOLNE)
+  majors   Major[]           @relation("MajorToQualification")
 }
 
 model Voivodeship {
@@ -161,8 +156,13 @@ model City {
   name          String
   voivodeshipId Int
   voivodeship   Voivodeship   @relation(fields: [voivodeshipId], references: [id])
-  unitAddress   UnitAddress[]
   units         Unit[]
+  unitAddress   UnitAddress[]
+}
+
+enum UserRole {
+  ADMIN
+  USER
 }
 
 enum DaysOfWeek {

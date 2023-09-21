@@ -1,5 +1,6 @@
 import { MajorValidator } from '@/lib/validators/major'
 import prisma from '@/prisma/client'
+import { createId } from '@paralleldrive/cuid2'
 import { z } from 'zod'
 
 export async function GET(req: Request) {
@@ -29,17 +30,36 @@ export async function POST(req: Request) {
 	try {
 		const body = await req.json()
 
-		const data = MajorValidator.omit({ id: true, unitSlug: true }).parse(body)
-
-		const qualificationsConnect = data.qualifications.map(qualification => {
-			return {
-				id: qualification
-			}
-		})
+		const {
+			cost,
+			daysOfWeek,
+			durationInHours,
+			endDate,
+			majorLevel,
+			name,
+			numberOfSemesters,
+			onlineDuration,
+			qualifications,
+			startDate,
+			status,
+			unitId,
+			address,
+			canPayInInstallments,
+			certificates,
+			completionConditions,
+			contact,
+			description,
+			formOfStudy,
+			isOnline,
+			isRegulated,
+			organisator,
+			recruitmentConditions,
+			syllabus
+		} = MajorValidator.omit({ id: true, unitSlug: true }).parse(body)
 
 		const unit = await prisma.unit.findUnique({
 			where: {
-				id: data.unitId
+				id: unitId
 			},
 			select: {
 				slug: true
@@ -48,39 +68,60 @@ export async function POST(req: Request) {
 
 		if (!unit) return new Response('Unit not found', { status: 404 })
 
+		const lastMajor = await prisma.major.findFirst({
+			orderBy: {
+				id: 'desc'
+			},
+			select: {
+				id: true
+			}
+		})
+
+		if (!lastMajor) return new Response('Could not create a new major', { status: 500 })
+
+		const qualificationsIds = qualifications.map(qualification => {
+			return {
+				id: qualification
+			}
+		})
+
+		const slug = createId()
+
 		const major = await prisma.major.create({
 			data: {
-				unitId: data.unitId,
+				id: lastMajor.id + 1,
+				slug: slug,
+				unitId: unitId,
 				unitSlug: unit.slug,
-				status: data.status,
-				name: data.name,
-				address: data.address,
-				contact: data.contact,
-				cost: data.cost,
-				durationInHours: data.durationInHours,
-				endDate: data.endDate,
-				formOfStudy: data.formOfStudy,
-				isOnline: !!data.isOnline,
-				majorLevel: data.majorLevel,
-				numberOfSemesters: data.numberOfSemesters,
-				onlineDuration: data.onlineDuration,
-				organisator: data.organisator,
-				recruitmentConditions: data.recruitmentConditions,
-				startDate: data.startDate,
-				syllabus: data.syllabus,
-				isRegulated: !!data.isRegulated,
-				canPayInInstallments: !!data.canPayInInstallments,
-				certificates: data.certificates,
-				completionConditions: data.completionConditions,
-				daysOfWeek: data.daysOfWeek,
-				description: data.description,
+				status: status,
+				name: name,
+				address: address || '',
+				contact: contact || '',
+				cost: cost,
+				durationInHours: durationInHours,
+				endDate: endDate,
+				formOfStudy: formOfStudy || '',
+				isOnline: !!isOnline,
+				majorLevel: majorLevel,
+				numberOfSemesters: numberOfSemesters,
+				onlineDuration: onlineDuration,
+				organisator: organisator || '',
+				recruitmentConditions: recruitmentConditions || [],
+				startDate: startDate,
+				syllabus: syllabus || [],
+				isRegulated: !!isRegulated,
+				canPayInInstallments: !!canPayInInstallments,
+				certificates: certificates || '',
+				completionConditions: completionConditions || [],
+				daysOfWeek: daysOfWeek,
+				description: description || [],
 				qualifications: {
-					connect: qualificationsConnect
+					connect: qualificationsIds
 				}
 			}
 		})
 
-		return new Response(major.name)
+		return new Response('OK')
 	} catch (error) {
 		if (error instanceof z.ZodError) {
 			return new Response('Invalid POST request data passed', { status: 422 })

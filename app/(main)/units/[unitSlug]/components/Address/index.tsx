@@ -63,9 +63,10 @@ const Address = ({ city, postalCode, street, voivodeship, GOOGLE_MAPS_API_KEY }:
 
 			<div className='h-[60vh] w-full overflow-hidden rounded-md'>
 				<GoogleMapReact
-					bootstrapURLKeys={{ key: 'AIzaSyCY1dA6XiSmdIVZEMn9lxaLhDa9f-KYQfU' }}
+					bootstrapURLKeys={{ key: GOOGLE_MAPS_API_KEY }}
 					defaultCenter={defaultProps.center}
 					defaultZoom={defaultProps.zoom}
+					yesIWantToUseGoogleMapApiInternals
 					center={{ lat: coordinates.lat, lng: coordinates.lng }}
 					options={{ streetView: true, streetViewControl: true }}>
 					<Marker lat={coordinates.lat} lng={coordinates.lng} />

@@ -1,9 +1,6 @@
 import MajorCard from '@/app/(main)/components/MajorCard'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/app/components/ui/Card'
 import { H2 } from '@/app/components/ui/Typography'
 import prisma from '@/prisma/client'
-import Link from 'next/link'
-import React from 'react'
 
 type Props = {
 	unitSlug: string
@@ -15,7 +12,7 @@ const Majors = async ({ unitSlug }: Props) => {
 			unitSlug
 		},
 		select: {
-			id: true,
+			slug: true,
 			name: true,
 			formOfStudy: true,
 			isOnline: true,
@@ -40,7 +37,7 @@ const Majors = async ({ unitSlug }: Props) => {
 
 			<div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
 				{majors.map(major => (
-					<MajorCard key={major.id} {...major} />
+					<MajorCard key={major.slug} {...major} />
 				))}
 			</div>
 		</section>

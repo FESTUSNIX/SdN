@@ -6,15 +6,15 @@ import { Major } from '@prisma/client'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
-type Props = Pick<Major, 'id' | 'name' | 'majorLevel' | 'isOnline'> & {
+type Props = Pick<Major, 'name' | 'majorLevel' | 'isOnline' | 'slug'> & {
 	qualifications: {
 		name: string
 	}[]
 }
 
-const MajorCard = ({ id, name, isOnline, majorLevel, qualifications }: Props) => {
+const MajorCard = ({ name, isOnline, majorLevel, qualifications, slug }: Props) => {
 	return (
-		<Link href={`/majors/${id}`} key={id} className='h-auto'>
+		<Link href={`/majors/${slug}`} key={slug} className='h-auto'>
 			<Card className='flex h-full flex-col'>
 				<CardHeader>
 					<H3 size='sm'>{name}</H3>
