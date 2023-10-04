@@ -52,7 +52,7 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 	const sectionStyles = 'border-b py-8'
 	return (
 		<main className='min-h-screen'>
-			<header className='relative border-b pb-6'>
+			<header className='relative overflow-hidden border-b pb-6'>
 				<div className='pointer-events-none relative -z-10 mb-8 h-[35vh] max-h-[500px] min-h-[260px] w-screen overflow-hidden border-b [clip-path:inset(0)] xl:h-[40vh]'>
 					<div className='fixed h-[35vh] max-h-[500px] min-h-[260px] w-screen xl:h-[40vh]'>
 						<Image

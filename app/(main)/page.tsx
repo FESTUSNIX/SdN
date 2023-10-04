@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
 	return (
-		<main className='relative flex grow flex-col'>
+		<main className='relative flex grow flex-col overflow-hidden'>
 			<header className='wrapper relative flex h-full grow flex-col items-center justify-center py-24'>
 				<div className='flex flex-col items-center text-center'>
 					<h1 className='max-w-3xl text-center text-4xl font-black uppercase sm:text-6xl md:text-7xl xl:text-8xl [@media(min-width:350px)]:max-sm:text-5xl'>
