@@ -29,17 +29,23 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 	const searchQuery = searchParams.q?.toString()
 	const majorLevel = searchParams.major_level as MajorLevel[] | MajorLevel | undefined
 	const isOnline = searchParams.is_online === undefined ? undefined : searchParams.is_online === 'true'
+
 	const priceRange = searchParams.price_range?.toString()
 	const [minPrice, maxPrice] = priceRange?.split('-') ?? []
 
-	if (!searchQuery && !majorLevel?.length && isOnline === undefined) {
+	const qualifications = searchParams.qualifications
+		?.toString()
+		.split('.')
+		.map(q => Number(q))
+
+	if (!searchQuery && !majorLevel?.length && isOnline === undefined && !priceRange && !qualifications) {
 		majors = await prisma.major.findMany({
 			select: majorDataSelect,
 			take: 20
 		})
 	}
 
-	if (searchQuery?.length || majorLevel?.length || isOnline !== undefined) {
+	if (searchQuery?.length || majorLevel?.length || isOnline !== undefined || priceRange || qualifications) {
 		majors = await prisma.major.findMany({
 			where: {
 				name: {
@@ -60,7 +66,14 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 							lte: typeof maxPrice === 'string' ? Number(maxPrice) : undefined
 						}
 					}
-				]
+				],
+				qualifications: {
+					some: {
+						id: {
+							in: qualifications
+						}
+					}
+				}
 			},
 			select: majorDataSelect,
 			take: 20
