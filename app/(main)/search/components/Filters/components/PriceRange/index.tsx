@@ -34,9 +34,7 @@ const PriceRange = () => {
 		const [minPrice, maxPrice] = searchQuery.split('-')
 
 		minPrice && maxPrice && setPriceRange([Number(minPrice), Number(maxPrice)])
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [searchParams])
 
 	useEffect(() => {
 		const [min, max] = debouncedPrice

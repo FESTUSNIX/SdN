@@ -50,14 +50,14 @@ const CheckboxGroup = ({ paramName, items, label, clearAllBtn = true }: Props) =
 		const params = new URLSearchParams(searchParams)
 		const searchQuery = params.getAll(paramName) ?? ''
 		setValues(searchQuery)
-	}, [])
+	}, [searchParams])
 
 	useEffect(() => {
 		router.push(pathname + '?' + createQueryString(paramName, values))
 	}, [debouncedQuery])
 
 	return (
-		<div className='my-2'>
+		<div>
 			<div className='mb-2'>
 				{label && (
 					<H3 size='sm' className='mb-1'>
