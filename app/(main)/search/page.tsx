@@ -1,9 +1,9 @@
+import { H1 } from '@/app/components/ui/Typography'
 import prisma from '@/prisma/client'
 import { MajorLevel } from '@prisma/client'
 import Filters from './components/Filters'
 import Results from './components/Results'
 import SearchBar from './components/SearchBar'
-import { H1, Muted } from '@/app/components/ui/Typography'
 
 const majorDataSelect = {
 	slug: true,
@@ -16,6 +16,7 @@ const majorDataSelect = {
 			slug: true
 		}
 	},
+	cost: true,
 	unit: {
 		select: {
 			name: true
@@ -28,6 +29,8 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 	const searchQuery = searchParams.q?.toString()
 	const majorLevel = searchParams.major_level as MajorLevel[] | MajorLevel | undefined
 	const isOnline = searchParams.is_online === undefined ? undefined : searchParams.is_online === 'true'
+	const priceRange = searchParams.price_range?.toString()
+	const [minPrice, maxPrice] = priceRange?.split('-') ?? []
 
 	if (!searchQuery && !majorLevel?.length && isOnline === undefined) {
 		majors = await prisma.major.findMany({
@@ -35,7 +38,6 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 			take: 20
 		})
 	}
-
 
 	if (searchQuery?.length || majorLevel?.length || isOnline !== undefined) {
 		majors = await prisma.major.findMany({
@@ -47,7 +49,18 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 				majorLevel: {
 					in: typeof majorLevel === 'string' ? [majorLevel] : majorLevel
 				},
-				isOnline: isOnline
+				isOnline: isOnline,
+				OR: [
+					{
+						cost: null
+					},
+					{
+						cost: {
+							gte: typeof minPrice === 'string' ? Number(minPrice) : undefined,
+							lte: typeof maxPrice === 'string' ? Number(maxPrice) : undefined
+						}
+					}
+				]
 			},
 			select: majorDataSelect,
 			take: 20
@@ -62,7 +75,7 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 
 			<div className='grid grid-cols-4 grid-rows-[auto_auto] gap-6'>
 				<div className='relative col-start-1 col-end-2 row-start-1 row-end-3'>
-					<Filters a={searchParams.is_online} b={isOnline} />
+					<Filters />
 				</div>
 
 				<div className='col-start-2 col-end-5 row-start-1 row-end-2 mb-6'>

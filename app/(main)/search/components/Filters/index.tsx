@@ -6,10 +6,7 @@ import { MajorLevel as MajorLevelObject } from '@prisma/client'
 import CheckboxGroup from './components/CheckboxGroup'
 import PriceRange from './components/PriceRange'
 
-type Props = {
-	a: any
-	b: any
-}
+type Props = {}
 
 const majorLevels: {
 	value: string
@@ -18,7 +15,7 @@ const majorLevels: {
 	return { value: key, label: majorLevelEnum[key as keyof typeof MajorLevelObject] }
 })
 
-const Filters = ({ a, b }: Props) => {
+const Filters = ({}: Props) => {
 	return (
 		<div className='sticky bottom-0 top-[calc(var(--nav-offset,_80px)+2rem)] rounded-lg border py-4'>
 			<div className='border-b px-4 pb-4'>

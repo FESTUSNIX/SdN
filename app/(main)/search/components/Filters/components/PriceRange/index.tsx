@@ -1,16 +1,15 @@
 'use client'
 
+import { Input } from '@/app/components/ui/Input'
 import { H3 } from '@/app/components/ui/Typography'
-import PriceRangeInput from '../PriceRangeInput'
 import { Slider } from '@/app/components/ui/slider'
+import { useDebounce } from '@/app/hooks/useDebounce'
+import { cn } from '@/lib/utils/utils'
+import { X } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState, useTransition } from 'react'
-import { useDebounce } from '@/app/hooks/useDebounce'
-import { Input } from '@/app/components/ui/Input'
 
-type Props = {}
-
-const PriceRange = (props: Props) => {
+const PriceRange = () => {
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()!
@@ -32,9 +31,11 @@ const PriceRange = (props: Props) => {
 		const params = new URLSearchParams(searchParams)
 		const searchQuery = params.get('price_range') ?? ''
 
-		const [minPrice, maxPrice] = searchQuery.split('-') ?? []
+		const [minPrice, maxPrice] = searchQuery.split('-')
 
-		setPriceRange([Number(minPrice), Number(maxPrice)])
+		minPrice && maxPrice && setPriceRange([Number(minPrice), Number(maxPrice)])
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	useEffect(() => {
@@ -44,17 +45,30 @@ const PriceRange = (props: Props) => {
 				scroll: false
 			})
 		})
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedPrice])
 
 	return (
 		<div>
-			<H3 size='sm' className='mb-3'>
-				Cena
-			</H3>
+			<div className='mb-2'>
+				<H3 size='sm' className='mb-1'>
+					Cena
+				</H3>
+				{(priceRange[0] !== 0 || priceRange[1] !== 10000) && (
+					<button
+						onClick={() => {
+							setPriceRange([0, 10000])
+						}}
+						className='flex items-center gap-1 text-muted-foreground hover:underline'>
+						<X className='h-3 w-3' />
+						<span className='text-xs'>Zresetuj wartości</span>
+					</button>
+				)}
+			</div>
 
 			<div className='flex items-center'>
-				<div className='relative'>
+				<div className='relative basis-1/2'>
 					<Input
 						type='number'
 						inputMode='numeric'
@@ -66,14 +80,14 @@ const PriceRange = (props: Props) => {
 							setPriceRange([value, priceRange[1]])
 						}}
 						placeholder='Od'
-						className='pr-7'
+						className='rounded-full pr-7'
 					/>
 					<span className='pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground'>
 						zł
 					</span>
 				</div>
-				<span className='mx-2 h-px w-6 bg-border' />
-				<div className='relative'>
+				<span className='mx-2 h-px w-4 bg-border' />
+				<div className='relative basis-1/2'>
 					<Input
 						type='number'
 						inputMode='numeric'
@@ -85,11 +99,15 @@ const PriceRange = (props: Props) => {
 							setPriceRange([priceRange[0], value])
 						}}
 						placeholder='Do'
-						className='pr-7'
+						className={cn('rounded-full pr-7', priceRange[1] >= 10000 && 'pl-6')}
 					/>
 					<span className='pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground'>
 						zł
 					</span>
+
+					{priceRange[1] >= 10000 && (
+						<span className='pointer-events-none absolute left-3 top-1/2 -translate-y-1/2'>+</span>
+					)}
 				</div>
 			</div>
 
