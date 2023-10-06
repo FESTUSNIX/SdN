@@ -1,14 +1,13 @@
-import { H2 } from '@/app/components/ui/Typography'
+import { ScrollArea } from '@/app/components/ui/ScrollArea'
+import { H2, H3 } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
+import prisma from '@/prisma/client'
 import { MajorLevel as MajorLevelObject } from '@prisma/client'
 import CheckboxGroup from './components/CheckboxGroup'
 import PriceRange from './components/PriceRange'
 import Qualifications from './components/Qualifications'
-import prisma from '@/prisma/client'
-import { X } from 'lucide-react'
-import Link from 'next/link'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import ResetFilters from './components/ResetFilters'
+import SwitchFilter from './components/SwitchFilter'
 
 type Props = {}
 
@@ -39,8 +38,9 @@ const Filters = async ({}: Props) => {
 			</div>
 
 			<ScrollArea className='h-[calc(100vh-var(--nav-offset,_80px)-4rem-49px)]'>
-				<div className='space-y-8 px-4 py-2'>
+				<div className='flex flex-col gap-10 px-4 py-6'>
 					<CheckboxGroup items={majorLevels} paramName='major_level' label='Poziom' />
+
 					<CheckboxGroup
 						paramName='is_online'
 						label='Tryb'
@@ -55,8 +55,19 @@ const Filters = async ({}: Props) => {
 							}
 						]}
 					/>
+
 					<PriceRange />
+
 					<Qualifications qualifications={qualifications} />
+
+					<div className='space-y-2.5'>
+						<H3 size='sm' className='mb-3'>
+							Dodatki
+						</H3>
+
+						<SwitchFilter paramName='is_regulated' label={'Zgodne z regulacjami'} />
+						<SwitchFilter paramName='pay_in_installments' label={'Płatność na raty'} />
+					</div>
 				</div>
 			</ScrollArea>
 		</div>

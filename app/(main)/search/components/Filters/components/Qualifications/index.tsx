@@ -68,7 +68,7 @@ const Qualifications = ({ qualifications }: Props) => {
 	const [showCount, setShowCount] = useState(10)
 
 	return (
-		<div className='my-2'>
+		<div>
 			<div className='mb-2'>
 				<H3 size='sm' className='mb-1'>
 					Kwalifikacje
@@ -91,7 +91,7 @@ const Qualifications = ({ qualifications }: Props) => {
 					placeholder='Wyszukaj kwalifikacje'
 					value={search}
 					onChange={e => setSearch(e.target.value)}
-					className=''
+					className='rounded-full'
 				/>
 			</div>
 

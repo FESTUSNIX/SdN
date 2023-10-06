@@ -38,14 +38,33 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		.split('.')
 		.map(q => Number(q))
 
-	if (!searchQuery && !majorLevel?.length && isOnline === undefined && !priceRange && !qualifications) {
+	const isRegulated = searchParams.is_regulated
+	const canPayInInstallments = searchParams.pay_in_installments
+
+	if (
+		!searchQuery &&
+		!majorLevel?.length &&
+		isOnline === undefined &&
+		!priceRange &&
+		!qualifications &&
+		!isRegulated &&
+		!isOnline
+	) {
 		majors = await prisma.major.findMany({
 			select: majorDataSelect,
 			take: 20
 		})
 	}
 
-	if (searchQuery?.length || majorLevel?.length || isOnline !== undefined || priceRange || qualifications) {
+	if (
+		searchQuery?.length ||
+		majorLevel?.length ||
+		isOnline !== undefined ||
+		priceRange ||
+		qualifications ||
+		isRegulated ||
+		isOnline
+	) {
 		majors = await prisma.major.findMany({
 			where: {
 				name: {
@@ -73,7 +92,9 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 							in: qualifications
 						}
 					}
-				}
+				},
+				isRegulated: isRegulated === 'true' ? true : undefined,
+				canPayInInstallments: canPayInInstallments === 'true' ? true : undefined
 			},
 			select: majorDataSelect,
 			take: 20
@@ -86,12 +107,12 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 				<H1 size='sm'>Znajdź studia dla siebie</H1>
 			</div>
 
-			<div className='grid grid-cols-4 grid-rows-[auto_auto] gap-6'>
+			<div className='grid grid-cols-4 grid-rows-[60px_auto] gap-6'>
 				<div className='relative col-start-1 col-end-2 row-start-1 row-end-3'>
 					<Filters />
 				</div>
 
-				<div className='col-start-2 col-end-5 row-start-1 row-end-2 mb-6'>
+				<div className='col-start-2 col-end-5 row-start-1 row-end-2'>
 					<SearchBar />
 				</div>
 
