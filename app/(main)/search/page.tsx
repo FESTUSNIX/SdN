@@ -41,6 +41,11 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 	const isRegulated = searchParams.is_regulated
 	const canPayInInstallments = searchParams.pay_in_installments
 
+	const cities = searchParams.cities
+		?.toString()
+		.split('.')
+		.map(c => Number(c))
+
 	if (
 		!searchQuery &&
 		!majorLevel?.length &&
@@ -48,7 +53,8 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		!priceRange &&
 		!qualifications &&
 		!isRegulated &&
-		!isOnline
+		!isOnline &&
+		!cities?.length
 	) {
 		majors = await prisma.major.findMany({
 			select: majorDataSelect,
@@ -63,7 +69,8 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		priceRange ||
 		qualifications ||
 		isRegulated ||
-		isOnline
+		isOnline ||
+		cities
 	) {
 		majors = await prisma.major.findMany({
 			where: {
@@ -94,7 +101,14 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 					}
 				},
 				isRegulated: isRegulated === 'true' ? true : undefined,
-				canPayInInstallments: canPayInInstallments === 'true' ? true : undefined
+				canPayInInstallments: canPayInInstallments === 'true' ? true : undefined,
+				unit: {
+					city: {
+						id: {
+							in: cities
+						}
+					}
+				}
 			},
 			select: majorDataSelect,
 			take: 20

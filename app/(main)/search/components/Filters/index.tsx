@@ -8,6 +8,7 @@ import PriceRange from './components/PriceRange'
 import Qualifications from './components/Qualifications'
 import ResetFilters from './components/ResetFilters'
 import SwitchFilter from './components/SwitchFilter'
+import CityFilter from './components/City'
 
 type Props = {}
 
@@ -18,8 +19,26 @@ const majorLevels: {
 	return { value: key, label: majorLevelEnum[key as keyof typeof MajorLevelObject] }
 })
 
+const isOnlineOptions = [
+	{
+		value: 'true',
+		label: 'Online'
+	},
+	{
+		value: 'false',
+		label: 'Stacjonarny'
+	}
+]
+
 const Filters = async ({}: Props) => {
 	const qualifications = await prisma.qualification.findMany({
+		select: {
+			id: true,
+			name: true
+		}
+	})
+
+	const cities = await prisma.city.findMany({
 		select: {
 			id: true,
 			name: true
@@ -41,30 +60,18 @@ const Filters = async ({}: Props) => {
 				<div className='flex flex-col gap-10 px-4 py-6'>
 					<CheckboxGroup items={majorLevels} paramName='major_level' label='Poziom' />
 
-					<CheckboxGroup
-						paramName='is_online'
-						label='Tryb'
-						items={[
-							{
-								value: 'true',
-								label: 'Online'
-							},
-							{
-								value: 'false',
-								label: 'Stacjonarny'
-							}
-						]}
-					/>
+					<CheckboxGroup paramName='is_online' label='Tryb' items={isOnlineOptions} />
 
 					<PriceRange />
 
 					<Qualifications qualifications={qualifications} />
 
+					<CityFilter cities={cities} />
+
 					<div className='space-y-2.5'>
 						<H3 size='sm' className='mb-3'>
 							Dodatki
 						</H3>
-
 						<SwitchFilter paramName='is_regulated' label={'Zgodne z regulacjami'} />
 						<SwitchFilter paramName='pay_in_installments' label={'Płatność na raty'} />
 					</div>
