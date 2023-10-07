@@ -9,6 +9,7 @@ import Qualifications from './components/Qualifications'
 import ResetFilters from './components/ResetFilters'
 import SwitchFilter from './components/SwitchFilter'
 import CityFilter from './components/City'
+import VoivodeshipFilter from './components/Voivodeship'
 
 type Props = {}
 
@@ -45,6 +46,13 @@ const Filters = async ({}: Props) => {
 		}
 	})
 
+	const voivodeships = await prisma.voivodeship.findMany({
+		select: {
+			id: true,
+			name: true
+		}
+	})
+
 	return (
 		<div className='sticky bottom-0 top-[calc(var(--nav-offset,_80px)+2rem)] max-h-[calc(100vh-var(--nav-offset,_80px)-4rem)] overflow-hidden rounded-lg border'>
 			<div className='flex items-center justify-between border-b px-4 py-2'>
@@ -67,6 +75,8 @@ const Filters = async ({}: Props) => {
 					<Qualifications qualifications={qualifications} />
 
 					<CityFilter cities={cities} />
+
+					<VoivodeshipFilter voivodeships={voivodeships} />
 
 					<div className='space-y-2.5'>
 						<H3 size='sm' className='mb-3'>

@@ -46,6 +46,11 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		.split('.')
 		.map(c => Number(c))
 
+	const voivodeships = searchParams.voivodeship
+		?.toString()
+		.split('.')
+		.map(v => Number(v))
+
 	if (
 		!searchQuery &&
 		!majorLevel?.length &&
@@ -54,7 +59,8 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		!qualifications &&
 		!isRegulated &&
 		!isOnline &&
-		!cities?.length
+		!cities?.length &&
+		!voivodeships?.length
 	) {
 		majors = await prisma.major.findMany({
 			select: majorDataSelect,
@@ -70,7 +76,8 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		qualifications ||
 		isRegulated ||
 		isOnline ||
-		cities
+		cities ||
+		voivodeships
 	) {
 		majors = await prisma.major.findMany({
 			where: {
@@ -106,6 +113,11 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 					city: {
 						id: {
 							in: cities
+						},
+						voivodeship: {
+							id: {
+								in: voivodeships
+							}
 						}
 					}
 				}
