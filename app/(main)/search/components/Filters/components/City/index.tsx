@@ -46,15 +46,12 @@ const CityFilter = ({ cities }: Props) => {
 		const params = new URLSearchParams(searchParams)
 		const citiesParams = params.get('cities')
 
-		if (!citiesParams) return
-
 		const citiesOptions = citiesParams
 			?.split('.')
 			.map(c => cityOptions.find(o => o.value === c))
 			.filter(i => i !== undefined)
 
-		// Typescript says it can be undefined even after filtering it out
-		citiesOptions && setSelectedCities(citiesOptions as { value: string; label: string }[])
+		setSelectedCities(citiesOptions?.length ? (citiesOptions as { value: string; label: string }[]) : null)
 	}, [searchParams])
 
 	useEffect(() => {
