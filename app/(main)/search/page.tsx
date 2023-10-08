@@ -1,33 +1,14 @@
+import { getMajorSearchResults } from '@/app/_actions/major'
 import { H1 } from '@/app/components/ui/Typography'
-import prisma from '@/prisma/client'
 import { MajorLevel } from '@prisma/client'
 import Filters from './components/Filters'
+import { Pagination } from './components/Pagination'
 import Results from './components/Results'
 import SearchBar from './components/SearchBar'
 import Sort from './components/Sort'
 
-const majorDataSelect = {
-	slug: true,
-	name: true,
-	isOnline: true,
-	majorLevel: true,
-	qualifications: {
-		select: {
-			name: true,
-			slug: true
-		}
-	},
-	cost: true,
-	unit: {
-		select: {
-			name: true
-		}
-	}
-}
-
 const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
-	let majors
-	const searchQuery = searchParams.q?.toString().replace(/[\s\n\t]/g, '_') ?? ''
+	const searchQuery = searchParams.q?.toString().replace(/[\s\n\t]/g, '_')
 	const majorLevel = searchParams.major_level as MajorLevel[] | MajorLevel | undefined
 	const isOnline = searchParams.is_online === undefined ? undefined : searchParams.is_online === 'true'
 
@@ -58,97 +39,29 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 	} = {}
 	orderBy[orderByKey] = orderByValue
 
-	if (
-		!searchQuery &&
-		!majorLevel?.length &&
-		isOnline === undefined &&
-		!priceRange &&
-		!qualifications &&
-		!isRegulated &&
-		!isOnline &&
-		!cities?.length &&
-		!voivodeships?.length
-	) {
-		majors = await prisma.major.findMany({
-			orderBy,
-			select: majorDataSelect,
-			take: 20
-		})
-	}
+	const page = searchParams.page ?? '1'
+	const per_page = searchParams.per_page ?? '30'
 
-	if (
-		searchQuery?.length ||
-		majorLevel?.length ||
-		isOnline !== undefined ||
-		priceRange ||
-		qualifications ||
-		isRegulated ||
-		isOnline ||
-		cities ||
+	const limit = typeof per_page === 'string' ? parseInt(per_page) : 30
+	const offset = typeof page === 'string' ? (parseInt(page) - 1) * limit : 0
+
+	const { data: majors, pagination } = await getMajorSearchResults({
+		canPayInInstallments: canPayInInstallments === 'true',
+		cities,
+		isOnline,
+		isRegulated: isRegulated === 'true',
+		limit,
+		majorLevel,
+		maxPrice,
+		minPrice,
+		offset,
+		orderBy,
+		qualifications,
+		searchQuery,
 		voivodeships
-	) {
-		majors = await prisma.major.findMany({
-			orderBy,
-			where: {
-				majorLevel: {
-					in: typeof majorLevel === 'string' ? [majorLevel] : majorLevel
-				},
-				isOnline: isOnline,
-				OR: [
-					{
-						name: {
-							contains: searchQuery,
-							mode: 'insensitive'
-						}
-					},
-					{
-						unit: {
-							name: {
-								contains: searchQuery,
-								mode: 'insensitive'
-							}
-						}
-					}
-				],
-				AND: {
-					OR: [
-						{
-							cost: null
-						},
-						{
-							cost: {
-								gte: typeof minPrice === 'string' ? Number(minPrice) : undefined,
-								lte: typeof maxPrice === 'string' ? Number(maxPrice) : undefined
-							}
-						}
-					]
-				},
-				qualifications: {
-					some: {
-						id: {
-							in: qualifications
-						}
-					}
-				},
-				isRegulated: isRegulated === 'true' ? true : undefined,
-				canPayInInstallments: canPayInInstallments === 'true' ? true : undefined,
-				unit: {
-					city: {
-						id: {
-							in: cities
-						},
-						voivodeship: {
-							id: {
-								in: voivodeships
-							}
-						}
-					}
-				}
-			},
-			select: majorDataSelect,
-			take: 20
-		})
-	}
+	})
+
+	const pageCount = Math.ceil(pagination.total / limit)
 
 	return (
 		<main className='wrapper py-12'>
@@ -161,17 +74,29 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 					<Filters />
 				</div>
 
-				<div className='col-start-2 col-end-5'>
+				<div className='col-start-2 col-end-5 row-start-1 row-end-3'>
 					<div className='mb-12'>
-						<div className='flex items-center gap-4'>
+						<div className='mb-4'>
 							<SearchBar />
 						</div>
 
-						<Sort />
+						<div className='flex items-center justify-between'>
+							<div></div>
+
+							<Sort />
+						</div>
 					</div>
 
 					<div className=''>
 						<Results majors={majors} />
+					</div>
+
+					<div className='mt-16'>
+						<Pagination
+							pageCount={pageCount}
+							page={typeof page === 'string' ? page : page[0]}
+							per_page={typeof per_page === 'string' ? per_page : per_page[0]}
+						/>
 					</div>
 				</div>
 			</div>

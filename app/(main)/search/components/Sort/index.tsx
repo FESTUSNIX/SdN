@@ -76,7 +76,7 @@ const Sort = () => {
 	return (
 		<div className='shrink-0'>
 			<Select onValueChange={setCurrentSort} value={currentSort} defaultValue={options[0].value}>
-				<SelectTrigger className='ml-auto mt-4 h-auto w-[180px] rounded-full py-2'>
+				<SelectTrigger className='h-auto w-[180px] rounded-full py-2'>
 					<SelectValue placeholder='Sortowanie' />
 				</SelectTrigger>
 				<SelectContent>
