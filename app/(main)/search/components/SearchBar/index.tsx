@@ -37,11 +37,11 @@ const SearchBar = () => {
 	}, [debouncedQuery])
 
 	return (
-		<div className='relative'>
+		<div className='relative grow'>
 			<SearchIcon className='pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 select-none text-muted-foreground' />
 			<Input
 				placeholder='Szukaj wśród 2568 ofert'
-				className='h-auto rounded-full bg-secondary py-4 pl-12 pr-6'
+				className='h-auto rounded-full py-4 pl-12 pr-6'
 				value={query}
 				onChange={handleChange}
 			/>

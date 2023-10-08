@@ -4,6 +4,7 @@ import { MajorLevel } from '@prisma/client'
 import Filters from './components/Filters'
 import Results from './components/Results'
 import SearchBar from './components/SearchBar'
+import Sort from './components/Sort'
 
 const majorDataSelect = {
 	slug: true,
@@ -51,6 +52,12 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		.split('.')
 		.map(v => Number(v))
 
+	const [orderByKey, orderByValue] = searchParams.sort?.toString().split('.') ?? []
+	let orderBy: {
+		[key: string]: string
+	} = {}
+	orderBy[orderByKey] = orderByValue
+
 	if (
 		!searchQuery &&
 		!majorLevel?.length &&
@@ -63,6 +70,7 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		!voivodeships?.length
 	) {
 		majors = await prisma.major.findMany({
+			orderBy,
 			select: majorDataSelect,
 			take: 20
 		})
@@ -80,6 +88,7 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		voivodeships
 	) {
 		majors = await prisma.major.findMany({
+			orderBy,
 			where: {
 				majorLevel: {
 					in: typeof majorLevel === 'string' ? [majorLevel] : majorLevel
@@ -147,17 +156,23 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 				<H1 size='sm'>Znajdź studia dla siebie</H1>
 			</div>
 
-			<div className='grid grid-cols-4 grid-rows-[60px_auto] gap-6'>
+			<div className='grid grid-cols-4 gap-6'>
 				<div className='relative col-start-1 col-end-2 row-start-1 row-end-3'>
 					<Filters />
 				</div>
 
-				<div className='col-start-2 col-end-5 row-start-1 row-end-2'>
-					<SearchBar />
-				</div>
+				<div className='col-start-2 col-end-5'>
+					<div className='mb-12'>
+						<div className='flex items-center gap-4'>
+							<SearchBar />
+						</div>
 
-				<div className='col-span-full col-start-2 row-start-2'>
-					<Results majors={majors} />
+						<Sort />
+					</div>
+
+					<div className=''>
+						<Results majors={majors} />
+					</div>
 				</div>
 			</div>
 		</main>
