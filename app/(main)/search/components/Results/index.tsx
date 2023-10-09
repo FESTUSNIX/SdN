@@ -1,7 +1,7 @@
-import { Skeleton } from '@/app/components/ui/skeleton'
-import { MajorLevel } from '@prisma/client'
-import MajorCard from '../MajorCard'
 import { cn } from '@/lib/utils/utils'
+import { MajorLevel } from '@prisma/client'
+import { Suspense } from 'react'
+import MajorCard from '../MajorCard'
 import MajorCardSkeleton from '../MajorCardSkeleton'
 
 type Props = {
@@ -32,27 +32,29 @@ const Results = ({ majors, listType }: Props) => {
 				listType === 'grid' && 'grid-cols-3',
 				listType === 'list' && 'grid-cols-1'
 			)}>
-			{(!majors || !majors.length) &&
-				Array(10)
+			<Suspense
+				fallback={Array(10)
 					.fill(0)
-					.map((_, i) => <MajorCardSkeleton key={i} type={listType} />)}
-
-			{majors &&
-				majors.length > 0 &&
-				majors?.map(major => (
-					<MajorCard
-						key={major.slug}
-						data={{
-							name: major.name,
-							slug: major.slug,
-							isOnline: major.isOnline,
-							majorLevel: major.majorLevel,
-							qualifications: major.qualifications,
-							unit: major.unit
-						}}
-						type={listType}
-					/>
-				))}
+					.map((_, i) => (
+						<MajorCardSkeleton key={i} type={listType} />
+					))}>
+				{majors &&
+					majors.length > 0 &&
+					majors?.map(major => (
+						<MajorCard
+							key={major.slug}
+							data={{
+								name: major.name,
+								slug: major.slug,
+								isOnline: major.isOnline,
+								majorLevel: major.majorLevel,
+								qualifications: major.qualifications,
+								unit: major.unit
+							}}
+							type={listType}
+						/>
+					))}
+			</Suspense>
 		</div>
 	)
 }
