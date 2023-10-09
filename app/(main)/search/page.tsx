@@ -1,5 +1,5 @@
 import { getMajorSearchResults } from '@/app/_actions/major'
-import { H1 } from '@/app/components/ui/Typography'
+import { H1, H3 } from '@/app/components/ui/Typography'
 import { MajorLevel } from '@prisma/client'
 import Filters from './components/Filters'
 import ListTypeSelect from './components/ListTypeSelect/'
@@ -96,6 +96,13 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 							listType={(listType === 'list' || listType === 'grid' ? listType : undefined) ?? 'grid'}
 						/>
 					</div>
+
+					{!majors && (
+						<div className='mx-auto py-4 text-center'>
+							<H3>Nie znaleźliśmy odpowiednich kierunków</H3>
+							<p>Usuń wybrane filtry aby przywrócić wszystkie wyniki</p>
+						</div>
+					)}
 
 					{majors.length > 0 && (
 						<div className='mt-16'>
