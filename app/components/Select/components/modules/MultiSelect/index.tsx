@@ -3,24 +3,32 @@
 import { selectComponents } from '@/app/components/Select/components/elements'
 import { selectClassNames } from '@/app/components/Select/styles/classNames'
 import { selectInlineStyles } from '@/app/components/Select/styles/inline'
-import Select, { GroupBase, Props as SelectProps } from 'react-select'
+import Select from 'react-select'
 
-type CustomProps = {
-	onSelectChange(values: number[]): void
+type Option = {
+	value: number | string
+	label: string
 }
 
-export function MultiSelect<
-	OptionType,
-	IsMulti extends boolean = false,
-	GroupType extends GroupBase<OptionType> = GroupBase<OptionType>
->(props: SelectProps<OptionType, IsMulti, GroupType> & CustomProps) {
+type Props = {
+	placeholder?: string
+	options: Option[]
+	onSelectChange(values: number[]): void
+	defaultValues?: Option[]
+}
+
+export function MultiSelect({ placeholder = 'Select...', options, onSelectChange, defaultValues }: Props) {
 	return (
 		<Select
-			{...props}
 			unstyled
-			onChange={(option: any) => props.onSelectChange([...option?.map((opt: any) => opt.value)])}
-			styles={selectInlineStyles as any}
-			components={selectComponents as any}
+			defaultValue={defaultValues}
+			onChange={(option: any) => onSelectChange([...option?.map((opt: any) => opt.value)])}
+			isMulti
+			isClearable={false}
+			options={options}
+			placeholder={placeholder}
+			styles={selectInlineStyles}
+			components={selectComponents}
 			classNames={selectClassNames}
 		/>
 	)
