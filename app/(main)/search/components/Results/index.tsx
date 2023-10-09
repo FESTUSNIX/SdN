@@ -1,6 +1,8 @@
 import { Skeleton } from '@/app/components/ui/skeleton'
 import { MajorLevel } from '@prisma/client'
 import MajorCard from '../MajorCard'
+import { cn } from '@/lib/utils/utils'
+import MajorCardSkeleton from '../MajorCardSkeleton'
 
 type Props = {
 	majors:
@@ -18,40 +20,37 @@ type Props = {
 				}[]
 		  }[]
 		| undefined
+
+	listType: 'grid' | 'list'
 }
 
-const Results = ({ majors }: Props) => {
+const Results = ({ majors, listType }: Props) => {
 	return (
-		<div className='grid grid-cols-3 gap-x-1 gap-y-2'>
-			{!majors &&
+		<div
+			className={cn(
+				'grid gap-x-1 gap-y-2',
+				listType === 'grid' && 'grid-cols-3',
+				listType === 'list' && 'grid-cols-1'
+			)}>
+			{(!majors || !majors.length) &&
 				Array(10)
 					.fill(0)
-					.map((_, i) => (
-						<div key={i} className='p-3'>
-							<Skeleton className='h-52 rounded-lg' />
-							<div className='py-2'>
-								<Skeleton className='mb-1.5 mt-1 h-4' />
-								<Skeleton className='mb-4 h-5 w-4/5' />
-
-								<div className='flex flex-col gap-1'>
-									<Skeleton className='h-3.5 w-2/3' />
-									<Skeleton className='h-3.5 w-3/4' />
-									<Skeleton className='h-3.5 w-2/4' />
-								</div>
-							</div>
-						</div>
-					))}
+					.map((_, i) => <MajorCardSkeleton key={i} type={listType} />)}
 
 			{majors &&
+				majors.length > 0 &&
 				majors?.map(major => (
 					<MajorCard
 						key={major.slug}
-						name={major.name}
-						slug={major.slug}
-						isOnline={major.isOnline}
-						majorLevel={major.majorLevel}
-						qualifications={major.qualifications}
-						unit={major.unit}
+						data={{
+							name: major.name,
+							slug: major.slug,
+							isOnline: major.isOnline,
+							majorLevel: major.majorLevel,
+							qualifications: major.qualifications,
+							unit: major.unit
+						}}
+						type={listType}
 					/>
 				))}
 		</div>

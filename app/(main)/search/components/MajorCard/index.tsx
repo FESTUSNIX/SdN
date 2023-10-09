@@ -1,24 +1,36 @@
 import { Skeleton } from '@/app/components/ui/skeleton'
 import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
 import { urlFor } from '@/lib/supabase/getUrlFor'
+import { cn } from '@/lib/utils/utils'
 import { Major } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
 
-type Props = Pick<Major, 'name' | 'majorLevel' | 'isOnline' | 'slug'> & {
-	qualifications: {
-		slug: string
-		name: string
-	}[]
-	unit: {
-		name: string
+type Props = {
+	data: Pick<Major, 'name' | 'majorLevel' | 'isOnline' | 'slug'> & {
+		qualifications: {
+			slug: string
+			name: string
+		}[]
+		unit: {
+			name: string
+		}
 	}
+	type?: 'grid' | 'list'
 }
 
-const MajorCard = ({ name, isOnline, majorLevel, qualifications, slug, unit }: Props) => {
+const MajorCard = ({ data, type = 'grid' }: Props) => {
+	const { name, isOnline, majorLevel, qualifications, slug, unit } = data
+
 	return (
-		<Link href={`majors/${slug}`} className='rounded-lg p-3 duration-300 hover:shadow'>
-			<div className='relative h-52 w-full'>
+		<Link
+			href={`majors/${slug}`}
+			className={cn(
+				'flex rounded-lg p-3 duration-300 hover:shadow',
+				type === 'grid' && 'flex-col gap-4',
+				type === 'list' && 'flex-row gap-6'
+			)}>
+			<div className={cn('relative', type === 'grid' && 'h-52 w-full', type === 'list' && 'h-36 w-36')}>
 				<Image
 					src={urlFor('qualification_images', `${qualifications[0]?.slug}.jpg`).publicUrl}
 					alt={`Zdjęcie kwalifikacji ${qualifications[0]?.name}`}
@@ -29,8 +41,8 @@ const MajorCard = ({ name, isOnline, majorLevel, qualifications, slug, unit }: P
 				<Skeleton className='absolute inset-0 -z-10 rounded-lg' />
 			</div>
 
-			<div className='py-2'>
-				<div className='mb-1 truncate text-sm'>{unit.name}</div>
+			<div className=''>
+				<div className='mb-1 truncate text-xs'>{unit.name}</div>
 
 				<h3 className='truncate-vertical-2 mb-4 text-base leading-tight'>{name}</h3>
 

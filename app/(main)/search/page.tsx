@@ -2,6 +2,7 @@ import { getMajorSearchResults } from '@/app/_actions/major'
 import { H1 } from '@/app/components/ui/Typography'
 import { MajorLevel } from '@prisma/client'
 import Filters from './components/Filters'
+import ListTypeSelect from './components/ListTypeSelect/'
 import { Pagination } from './components/Pagination'
 import Results from './components/Results'
 import SearchBar from './components/SearchBar'
@@ -63,6 +64,8 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 
 	const pageCount = Math.ceil(pagination.total / limit)
 
+	const listType = typeof searchParams.list_type === 'string' ? searchParams.list_type : searchParams.list_type?.[0]
+
 	return (
 		<main className='wrapper py-12'>
 			<div className='mb-16'>
@@ -80,24 +83,29 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 							<SearchBar />
 						</div>
 
-						<div className='flex items-center justify-between'>
-							<div></div>
+						<div className='flex items-start justify-between'>
+							<ListTypeSelect />
 
 							<Sort />
 						</div>
 					</div>
 
 					<div className=''>
-						<Results majors={majors} />
-					</div>
-
-					<div className='mt-16'>
-						<Pagination
-							pageCount={pageCount}
-							page={typeof page === 'string' ? page : page[0]}
-							per_page={typeof per_page === 'string' ? per_page : per_page[0]}
+						<Results
+							majors={majors}
+							listType={(listType === 'list' || listType === 'grid' ? listType : undefined) ?? 'grid'}
 						/>
 					</div>
+
+					{majors.length > 0 && (
+						<div className='mt-16'>
+							<Pagination
+								pageCount={pageCount}
+								page={typeof page === 'string' ? page : page[0]}
+								per_page={typeof per_page === 'string' ? per_page : per_page[0]}
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 		</main>
