@@ -1,8 +1,7 @@
-import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/components/ui/Avatar'
-import { AvatarProps } from '@radix-ui/react-avatar'
-import { Icons } from '../Icons'
 import { User } from '@prisma/client'
+import { AvatarProps } from '@radix-ui/react-avatar'
+import { UserIcon } from 'lucide-react'
 
 type Props = {
 	user: Pick<User, 'name' | 'image'>
@@ -21,7 +20,7 @@ const UserAvatar = ({ user, ...props }: Props) => {
 			) : (
 				<AvatarFallback>
 					<span className='sr-only'>{user.name}</span>
-					<Icons.user className='h-4 w-4' />
+					<UserIcon className='h-4 w-4' />
 				</AvatarFallback>
 			)}
 		</Avatar>
