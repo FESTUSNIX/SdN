@@ -4,14 +4,17 @@ import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
 import prisma from '@/prisma/client'
 import { MajorLevel as MajorLevelObject } from '@prisma/client'
 import CheckboxGroup from './components/CheckboxGroup'
+import CityFilter from './components/City'
 import PriceRange from './components/PriceRange'
 import Qualifications from './components/Qualifications'
 import ResetFilters from './components/ResetFilters'
 import SwitchFilter from './components/SwitchFilter'
-import CityFilter from './components/City'
 import VoivodeshipFilter from './components/Voivodeship'
 
-type Props = {}
+type Props = {
+	citiesParam: number[] | undefined
+	voivodeshipsParam: number[] | undefined
+}
 
 const majorLevels: {
 	value: string
@@ -31,7 +34,7 @@ const isOnlineOptions = [
 	}
 ]
 
-const Filters = async ({}: Props) => {
+const Filters = async ({ citiesParam, voivodeshipsParam }: Props) => {
 	const qualifications = await prisma.qualification.findMany({
 		select: {
 			id: true,
@@ -40,13 +43,28 @@ const Filters = async ({}: Props) => {
 	})
 
 	const cities = await prisma.city.findMany({
+		where: {
+			voivodeshipId: {
+				in: voivodeshipsParam
+			}
+		},
 		select: {
 			id: true,
-			name: true
+			name: true,
+			voivodeshipId: true
 		}
 	})
 
 	const voivodeships = await prisma.voivodeship.findMany({
+		where: {
+			cities: {
+				some: {
+					id: {
+						in: citiesParam
+					}
+				}
+			}
+		},
 		select: {
 			id: true,
 			name: true
@@ -74,9 +92,10 @@ const Filters = async ({}: Props) => {
 
 					<Qualifications qualifications={qualifications} />
 
-					<CityFilter cities={cities} />
-
-					<VoivodeshipFilter voivodeships={voivodeships} />
+					<div className='space-y-2'>
+						<VoivodeshipFilter voivodeships={voivodeships} />
+						<CityFilter cities={cities} />
+					</div>
 
 					<div className='space-y-2.5'>
 						<H3 size='sm' className='mb-3'>

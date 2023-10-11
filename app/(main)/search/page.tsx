@@ -74,7 +74,7 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 
 			<div className='grid grid-cols-4 gap-6'>
 				<div className='relative col-start-1 col-end-2 row-start-1 row-end-3'>
-					<Filters />
+					<Filters citiesParam={cities} voivodeshipsParam={voivodeships} />
 				</div>
 
 				<div className='col-start-2 col-end-5 row-start-1 row-end-3'>
