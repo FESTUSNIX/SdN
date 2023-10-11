@@ -6,8 +6,10 @@ import { Badge } from '@/app/components/ui/Badge'
 import { Button } from '@/app/components/ui/Button'
 import { Command, CommandGroup, CommandItem } from '@/app/components/ui/Command'
 import { X } from 'lucide-react'
+import { cn } from '@/lib/utils/utils'
 
 interface MultiSelectProps {
+	disabled?: boolean
 	selected: Option[] | null
 	setSelected: React.Dispatch<React.SetStateAction<Option[] | null>>
 	onChange?: (value: Option[] | null) => void
@@ -21,6 +23,7 @@ type Option = {
 }
 
 export function MultiSelect({
+	disabled,
 	selected,
 	setSelected,
 	onChange,
@@ -109,8 +112,12 @@ export function MultiSelect({
 					<CommandPrimitive.Input
 						ref={inputRef}
 						placeholder={placeholder}
-						className='flex-1 bg-transparent px-1 py-0.5 outline-none placeholder:text-muted-foreground'
+						className={cn(
+							'flex-1 bg-transparent px-1 py-0.5 outline-none placeholder:text-muted-foreground',
+							disabled && 'opacity-50'
+						)}
 						value={query}
+						disabled={disabled}
 						onValueChange={setQuery}
 						onBlur={() => setIsOpen(false)}
 						onFocus={() => setIsOpen(true)}
