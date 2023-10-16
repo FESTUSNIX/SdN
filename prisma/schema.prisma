@@ -45,6 +45,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   emails        UnitEmail[]
+  unit          Unit?       @relation(fields: [unitId], references: [id])
+  unitId        Int?
 }
 
 model VerificationToken {
@@ -71,6 +73,7 @@ model Unit {
   phone     String?
   slug      String       @unique @default(cuid())
   status    Status       @default(IN_PROGRESS)
+  managers  User[]
   majors    Major[]
   city      City         @relation(fields: [cityId], references: [id])
   address   UnitAddress?

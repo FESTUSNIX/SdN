@@ -6,6 +6,7 @@ import { Input } from '@/app/components/ui/Input'
 import { LoginPayload, LoginValidator } from '@/lib/validators/login'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
+import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
@@ -14,6 +15,9 @@ type Props = {}
 
 const LoginForm = () => {
 	const [isLoading, setIsLoading] = useState(false)
+
+	const searchParams = useSearchParams()
+	const callbackUrl = searchParams.get('callbackUrl')
 
 	const form = useForm<LoginPayload>({
 		resolver: zodResolver(LoginValidator),
@@ -31,7 +35,7 @@ const LoginForm = () => {
 			await signIn('credentials', {
 				email: email,
 				password: password,
-				callbackUrl: '/admin'
+				callbackUrl: callbackUrl || '/'
 			})
 		} catch (error) {
 			toast('There was an error while logging in. Please try again.')
