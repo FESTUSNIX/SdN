@@ -1,3 +1,5 @@
+import { UserRole } from '@prisma/client'
+import { UseFormReturn } from 'react-hook-form'
 import { z } from 'zod'
 
 export const RegisterValidator = z.object({
@@ -14,7 +16,10 @@ export const RegisterValidator = z.object({
 	}),
 	password: z.string().nonempty({
 		message: 'Password is required'
-	})
+	}),
+	role: z.nativeEnum(UserRole)
 })
 
 export type RegisterPayload = z.infer<typeof RegisterValidator>
+
+export type RegisterFormType = UseFormReturn<RegisterPayload, any, undefined>

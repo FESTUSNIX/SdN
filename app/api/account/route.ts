@@ -8,7 +8,7 @@ export async function POST(request: Request) {
 	try {
 		const body = await request.json()
 
-		const { email, password, name } = RegisterValidator.parse(body)
+		const { email, password, name, role } = RegisterValidator.parse(body)
 		const user = await prisma.user.findUnique({
 			where: { email }
 		})
@@ -23,7 +23,8 @@ export async function POST(request: Request) {
 			data: {
 				name,
 				email,
-				password: hashedPassword
+				password: hashedPassword,
+				role: role
 			}
 		})
 

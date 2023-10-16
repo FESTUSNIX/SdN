@@ -163,6 +163,7 @@ model City {
 enum UserRole {
   ADMIN
   USER
+  UNIT
 }
 
 enum DaysOfWeek {

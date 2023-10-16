@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useReducer, useState } from 'react'
+import AddAccount from '../accounts/components/AddAccount'
+import AddQualification from '../qualifications/components/AddQualification'
+import EditQualification from '../qualifications/components/EditQualification'
 import AddMajor from '../units/[unitId]/components/Majors/components/AddMajor'
 import EditMajor from '../units/[unitId]/components/Majors/components/EditMajor'
 import AddUnit from '../units/components/AddUnit'
 import EditUnit from '../units/components/EditUnit'
 import { useGlobalModalContext } from './GlobalModalContext'
-import AddQualification from '../qualifications/components/AddQualification'
-import EditQualification from '../qualifications/components/EditQualification'
 
 type SheetState = {
 	content: JSX.Element | null
@@ -20,6 +21,7 @@ export type SHEET_TYPES =
 	| 'EDIT_MAJOR'
 	| 'ADD_QUALIFICATION'
 	| 'EDIT_QUALIFICATION'
+	| 'ADD_ACCOUNT'
 	| 'CLOSE'
 
 const defaultState = {
@@ -63,6 +65,12 @@ const sheetReducer = (state: any, action: { type: SHEET_TYPES; defaultValues?: a
 		case 'EDIT_QUALIFICATION':
 			return {
 				content: <EditQualification />,
+				show: true,
+				defaultValues: action.defaultValues
+			}
+		case 'ADD_ACCOUNT':
+			return {
+				content: <AddAccount />,
 				show: true,
 				defaultValues: action.defaultValues
 			}
