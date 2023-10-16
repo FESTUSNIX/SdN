@@ -32,7 +32,8 @@ const ThemeSwitch = (buttonProps: Props) => {
 				<Button
 					{...buttonProps}
 					className='rounded-full duration-300 hover:border-muted-foreground'
-					variant={'outline'}>
+					variant={'outline'}
+					size={'icon'}>
 					{resolvedTheme === 'dark' ? (
 						<Moon className='h-5 w-5 text-muted-foreground' />
 					) : (
