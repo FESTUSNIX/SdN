@@ -1,8 +1,8 @@
 import { getAuthSession } from '@/lib/auth/auth'
-import { PasswordValidator } from '@/lib/validators/password'
 import prisma from '@/prisma/client'
 import { z } from 'zod'
 import bcrypt from 'bcryptjs'
+import { PasswordChangeValidator } from '@/lib/validators/password'
 
 export async function PATCH(req: Request) {
 	try {
@@ -13,10 +13,24 @@ export async function PATCH(req: Request) {
 		}
 
 		const body = await req.json()
+		const { currentPassword, newPassword } = PasswordChangeValidator.parse(body)
 
-		const { password } = PasswordValidator.parse(body)
+		const user = await prisma.user.findFirst({
+			where: {
+				id: session.user.id
+			},
+			select: {
+				password: true
+			}
+		})
 
-		const hashedPassword = await bcrypt.hash(password, 10)
+		if (!user) return new Response('Unauthorized', { status: 401 })
+
+		const match = await bcrypt.compare(currentPassword, user?.password)
+
+		if (!match) return new Response('Provided password is invalid', { status: 401 })
+
+		const hashedPassword = await bcrypt.hash(newPassword, 10)
 
 		await prisma.user.update({
 			where: {
