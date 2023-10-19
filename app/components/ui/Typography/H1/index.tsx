@@ -6,7 +6,7 @@ type Props = {
 	size?: 'base' | 'sm'
 }
 
-export function H1({ children, className, size = 'base' }: Props) {
+export function H1({ children, className, size = 'sm' }: Props) {
 	return (
 		<h1
 			className={cn(
