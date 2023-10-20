@@ -12,7 +12,7 @@ export function H1({ children, className, size = 'sm' }: Props) {
 			className={cn(
 				'scroll-m-20 tracking-tight',
 				size === 'base' && 'text-4xl font-extrabold lg:text-5xl',
-				size === 'sm' && 'text-3xl font-semibold lg:text-4xl',
+				size === 'sm' && 'text-3xl font-semibold',
 				className
 			)}>
 			{children}
