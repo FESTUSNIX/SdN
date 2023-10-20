@@ -56,24 +56,24 @@ export default async function ManageAccountPage() {
 				<div className='space-y-4 rounded-lg border bg-card px-4 py-2.5 text-card-foreground shadow-sm'>
 					<div className='py-2'>
 						<H3 className='text-sm font-bold leading-none'>Nazwa</H3>
-						<p className='text-muted-foreground'>{user.name}</p>
+						<p className='break-all text-muted-foreground'>{user.name}</p>
 					</div>
 
 					<Separator />
 
 					<div className='py-2'>
 						<H3 className='text-sm font-bold leading-none'>Email</H3>
-						<p className='text-muted-foreground'>{user.email}</p>
+						<p className='break-all text-muted-foreground'>{user.email}</p>
 					</div>
 
 					<Separator />
 
 					<div className='flex items-center justify-between py-2'>
-						<div className=''>
+						<div className='max-w-full'>
 							<H3 className='text-sm font-bold leading-none'>Hasło</H3>
-							<p className='text-muted-foreground'>***************</p>
+							<p className='truncate pr-2 text-muted-foreground'>***************</p>
 						</div>
-						<div className=''>
+						<div className='shrink-0'>
 							<ChangePassword />
 						</div>
 					</div>
@@ -92,9 +92,9 @@ export default async function ManageAccountPage() {
 							<li
 								key={manager.id}
 								className='flex items-center rounded-lg border bg-card px-4 py-2.5 text-sm text-card-foreground shadow-sm'>
-								<div className='flex items-center pr-8'>
+								<div className='flex flex-col truncate md:flex-row md:items-center'>
 									<span className='shrink-0'>{manager.email}</span>
-									<span className='px-4 font-bold text-muted-foreground'>&middot;</span>
+									<span className='hidden px-4 font-bold text-muted-foreground md:inline-block'>&middot;</span>
 									<span className='truncate text-muted-foreground'>{manager.name}</span>
 								</div>
 							</li>
@@ -103,7 +103,7 @@ export default async function ManageAccountPage() {
 				</section>
 			)}
 
-			<div className='mt-auto self-end pt-6'>
+			<div className='mt-auto self-end py-6'>
 				<SignOutBtn />
 			</div>
 		</div>
