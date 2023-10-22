@@ -1,7 +1,6 @@
 import { Button } from '@/app/components/ui/Button'
 import { Input } from '@/app/components/ui/Input'
-import { Switch } from '@/app/components/ui/Switch'
-import { cn } from '@/lib/utils/utils'
+import { RadioGroup, RadioGroupItem } from '@/app/components/ui/radio-group'
 import { PublicUnitPayload } from '@/lib/validators/public-unit'
 import { ChevronsUpDown } from 'lucide-react'
 
@@ -69,12 +68,23 @@ const PreviewForm = ({ defaultValues, city }: Props) => {
 					</div>
 				</div>
 
-				<div className='flex flex-row items-center justify-between rounded-lg border p-4'>
-					<div className={cn('space-y-0.5 pr-8 opacity-50')}>
-						<label className='text-base'>Placówka publiczna</label>
-					</div>
-					<div>
-						<Switch checked={defaultValues.isPublic} disabled className='!mt-0' />
+				<div className='flex flex-col space-y-2'>
+					<label className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
+						Status placówki
+					</label>
+					<div className='py-2'>
+						<RadioGroup disabled value={defaultValues.isPublic ? 'publiczna' : 'prywatna'} className=''>
+							<div className='flex items-center space-x-3 space-y-0'>
+								<RadioGroupItem value='publiczna' />
+
+								<label className='cursor-not-allowed text-sm font-normal leading-none opacity-70'>Publiczna</label>
+							</div>
+							<div className='flex items-center space-x-3 space-y-0'>
+								<RadioGroupItem value='prywatna' />
+
+								<label className='cursor-not-allowed text-sm font-normal leading-none opacity-70'>Prywatna</label>
+							</div>
+						</RadioGroup>
 					</div>
 				</div>
 

@@ -1,7 +1,7 @@
 import { FormControl, FormField, FormItem, FormLabel } from '@/app/components/ui/Form'
-import { Switch } from '@/app/components/ui/Switch'
-import { cn } from '@/lib/utils/utils'
 import { PublicUnitFormType } from '@/lib/validators/public-unit'
+import { RadioGroup, RadioGroupItem } from '../../ui/radio-group'
+import FieldTitle from '../FieldTitle'
 
 type Props = {
 	form: PublicUnitFormType
@@ -13,12 +13,27 @@ const IsPublic = ({ form }: Props) => {
 			control={form.control}
 			name='isPublic'
 			render={({ field }) => (
-				<FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
-					<div className={cn('space-y-0.5 pr-8')}>
-						<FormLabel className='text-base'>Placówka publiczna</FormLabel>
-					</div>
-					<FormControl>
-						<Switch checked={field.value} onCheckedChange={field.onChange} className='!mt-0' />
+				<FormItem>
+					<FieldTitle form={form} fieldName='isPublic' label='Status jednostki' />
+					<FormControl className='py-2'>
+						<RadioGroup
+							onValueChange={value => field.onChange(value === 'publiczna')}
+							defaultValue={field.value ? 'publiczna' : 'prywatna'}
+							value={field.value ? 'publiczna' : 'prywatna'}
+							className='flex flex-col'>
+							<FormItem className='flex items-center space-x-3 space-y-0'>
+								<FormControl>
+									<RadioGroupItem value='publiczna' />
+								</FormControl>
+								<FormLabel className='font-normal'>Publiczna</FormLabel>
+							</FormItem>
+							<FormItem className='flex items-center space-x-3 space-y-0'>
+								<FormControl>
+									<RadioGroupItem value='prywatna' />
+								</FormControl>
+								<FormLabel className='font-normal'>Prywatna</FormLabel>
+							</FormItem>
+						</RadioGroup>
 					</FormControl>
 				</FormItem>
 			)}
