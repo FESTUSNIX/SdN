@@ -46,7 +46,6 @@ const AdminUnitPage = async ({ params: { unitId } }: Props) => {
 				select: {
 					id: true,
 					street: true,
-					city: true,
 					postalCode: true
 				}
 			}

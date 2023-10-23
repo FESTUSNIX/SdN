@@ -57,7 +57,6 @@ export async function POST(req: Request) {
 					create: {
 						street: data.street ?? '',
 						postalCode: data.postalCode ?? '',
-						cityId: data.cityId
 					}
 				},
 				status: data.status

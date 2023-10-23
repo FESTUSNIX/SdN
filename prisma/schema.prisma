@@ -121,9 +121,7 @@ model UnitAddress {
   id         Int     @id @default(autoincrement())
   street     String?
   postalCode String?
-  cityId     Int
   unitId     Int     @unique
-  city       City    @relation(fields: [cityId], references: [id])
   unit       Unit    @relation(fields: [unitId], references: [id], onDelete: Cascade)
 }
 
@@ -155,12 +153,11 @@ model Voivodeship {
 }
 
 model City {
-  id            Int           @id @default(autoincrement())
+  id            Int         @id @default(autoincrement())
   name          String
   voivodeshipId Int
-  voivodeship   Voivodeship   @relation(fields: [voivodeshipId], references: [id])
+  voivodeship   Voivodeship @relation(fields: [voivodeshipId], references: [id])
   units         Unit[]
-  unitAddress   UnitAddress[]
 }
 
 enum UserRole {
