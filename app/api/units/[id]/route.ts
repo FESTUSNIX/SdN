@@ -1,6 +1,7 @@
 import prisma from '@/prisma/client'
 import { UnitValidator } from '@/lib/validators/unit'
 import { z } from 'zod'
+import { getAuthSession } from '@/lib/auth/auth'
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
 	try {
@@ -65,6 +66,33 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
 	try {
 		const id = params.id
+
+		const session = await getAuthSession()
+		if (!session) {
+			return new Response('Not authenticated', { status: 401 })
+		}
+
+		const unitToUpdate = await prisma.unit.findFirst({
+			where: {
+				id: parseInt(id)
+			},
+			select: {
+				managers: {
+					select: {
+						id: true
+					}
+				}
+			}
+		})
+
+		if (!unitToUpdate) {
+			return new Response('Could not find unit to update', { status: 404 })
+		}
+
+		if (!(session.user.role === 'ADMIN' || unitToUpdate.managers.some(m => m.id === session.user.id))) {
+			return new Response('Not authenticated', { status: 403 })
+		}
+
 		const body = await req.json()
 
 		const {
@@ -82,17 +110,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 			postalCode,
 			regon,
 			street
-		} = UnitValidator.parse(body)
-
-		const unitToUpdate = await prisma.unit.findFirst({
-			where: {
-				id: parseInt(id)
-			}
-		})
-
-		if (!unitToUpdate) {
-			return new Response('Could not find unit to update', { status: 404 })
-		}
+		} = UnitValidator.partial().parse(body)
 
 		await prisma.unit.update({
 			where: {
@@ -102,7 +120,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 				status: status,
 				name: name,
 				logo: logo,
-				phone: phone ?? '',
+				phone: phone,
 				email: email,
 				cityId: cityId,
 				isPublic: isPublic,
@@ -114,14 +132,12 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 				address: {
 					upsert: {
 						create: {
-							street: street ?? '',
-							postalCode: postalCode ?? '',
-							cityId: cityId
+							street: street,
+							postalCode: postalCode
 						},
 						update: {
-							street: street ?? '',
-							postalCode: postalCode ?? '',
-							cityId: cityId
+							street: street,
+							postalCode: postalCode
 						}
 					}
 				}
