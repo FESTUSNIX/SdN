@@ -26,7 +26,7 @@ const MajorCard = ({ data, type = 'grid' }: Props) => {
 		<Link
 			href={`majors/${slug}`}
 			className={cn(
-				'flex rounded-lg p-3 duration-300 hover:shadow',
+				'flex rounded-lg p-3 duration-300 hover:shadow dark:border dark:border-transparent dark:hover:border-border',
 				type === 'grid' && 'flex-col gap-4',
 				type === 'list' && 'flex-row gap-6'
 			)}>
