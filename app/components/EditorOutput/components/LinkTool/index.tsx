@@ -6,12 +6,12 @@ export function CustomLinkToolRenderer({ data }: any) {
 
 	return (
 		<div className='not-prose my-2'>
-			<Link href={data.link} className='not-prose block max-w-2xl'>
+			<Link href={data.link} target='_blank' rel='noopener' className='not-prose block max-w-2xl'>
 				<Card>
 					<CardHeader>
 						<div className='flex w-full flex-col-reverse justify-between gap-4 md:flex-row md:gap-12'>
 							<CardTitle>{data.meta.title}</CardTitle>
-							{data.meta.image && (
+							{data.meta.image.url && (
 								<div
 									className='aspect-square w-16 shrink-0 rounded-md bg-cover bg-center'
 									style={{ backgroundImage: `url(${data.meta.image.url})` }}
