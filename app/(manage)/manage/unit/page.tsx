@@ -53,36 +53,32 @@ export default async function ManageUnitPage() {
 	if (!unit) return <div>Nie udało się wczytać danych</div>
 
 	return (
-		<div className='flex h-full flex-col gap-8'>
+		<div className='flex h-full flex-col'>
+			<section className='mb-4 mt-6'>
+				<H1>Jednostka</H1>
+				<Muted className='max-w-lg text-base'>
+					Zarządzaj publicznymi danymi jednostki. Te dane wyświetlają się na ogólnodostępnej stronie jednostki.
+				</Muted>
+
+				<Separator className='mt-4' />
+			</section>
+
 			<Tabs defaultValue='view'>
 				<TabsList>
 					<TabsTrigger value='view'>Przeglądaj</TabsTrigger>
 					<TabsTrigger value='edit'>Edytuj</TabsTrigger>
 				</TabsList>
 				<TabsContent value='view'>
-					<section className='mt-6'>
-						<H1>Jednostka</H1>
-
-						<Separator className='mt-4' />
-					</section>
-
 					<section className='space-y-2 py-6'>
 						<PreviewUnitData unit={unit} />
 					</section>
 				</TabsContent>
 				<TabsContent value='edit'>
-					<section className='mt-6'>
-						<H1>Edytuj dane jednostki</H1>
-						<Muted>Opublikowanie zmian na stronie może potrwać do 48 godzin</Muted>
-
-						<Separator className='mt-4' />
-					</section>
-
 					<section className='space-y-2 py-6'>
 						<Suspense
 							fallback={
-								<div className='grid grid-cols-2 gap-8'>
-									<EditUnitFormSkeleton />
+								<div className='grid gap-8 xl:grid-cols-2'>
+									<EditUnitFormSkeleton className='hidden xl:block' />
 									<EditUnitFormSkeleton />
 								</div>
 							}>

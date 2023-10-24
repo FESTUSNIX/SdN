@@ -102,8 +102,8 @@ const EditUnit = ({ defaultValues, city }: Props) => {
 	})
 
 	return (
-		<div className='grid grid-cols-2 gap-8'>
-			<div className='rounded-md border bg-card p-2 px-4 py-2.5 text-card-foreground shadow-sm'>
+		<div className='grid gap-8 xl:grid-cols-2'>
+			<div className='hidden rounded-md border bg-card p-2 px-4 py-2.5 text-card-foreground shadow-sm xl:block'>
 				<H2 className='py-2 text-xl'>Domyślne wartości</H2>
 				<Separator className='mb-6 mt-2.5' />
 				<PreviewForm defaultValues={defaultValues} city={city} />
