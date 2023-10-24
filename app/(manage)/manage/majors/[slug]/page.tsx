@@ -3,6 +3,7 @@ import { H1 } from '@/app/components/ui/Typography'
 import { getAuthSession } from '@/lib/auth/auth'
 import prisma from '@/prisma/client'
 import { redirect } from 'next/navigation'
+import PreviewMajorData from './components/PreviewMajorData'
 
 export default async function ManageMajorPage({ params: { slug } }: { params: { slug: string } }) {
 	const session = await getAuthSession()
@@ -18,6 +19,14 @@ export default async function ManageMajorPage({ params: { slug } }: { params: { 
 					}
 				}
 			}
+		},
+		include: {
+			qualifications: {
+				select: {
+					id: true,
+					name: true
+				}
+			}
 		}
 	})
 
@@ -31,7 +40,9 @@ export default async function ManageMajorPage({ params: { slug } }: { params: { 
 				<Separator className='mt-4' />
 			</section>
 
-			<section className='space-y-2'></section>
+			<section className='space-y-2 pb-6'>
+				<PreviewMajorData major={major} />
+			</section>
 		</div>
 	)
 }
