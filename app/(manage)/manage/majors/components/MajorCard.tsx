@@ -20,7 +20,7 @@ const MajorCard = ({ data }: Props) => {
 	return (
 		<Link
 			href={`/manage/majors/${slug}`}
-			className='flex flex-row gap-4 rounded-lg p-3 duration-300 hover:shadow dark:border dark:hover:border-border max-md:shadow dark:md:border-transparent lg:gap-6'>
+			className='flex flex-row gap-4 rounded-lg border p-3 duration-300 hover:shadow dark:hover:border-foreground/40 lg:gap-6'>
 			<div className='relative mt-1 hidden h-12 w-12 shrink-0 md:block lg:mt-0 lg:h-28 lg:w-28'>
 				<Image
 					src={urlFor('qualification_images', `${qualifications[0]?.slug}.jpg`).publicUrl}
@@ -53,11 +53,9 @@ const MajorCard = ({ data }: Props) => {
 					<h4 className='my-1 text-xs'>
 						<span className='   '>Kwalifikacje: </span>
 						<span className=''>
-							{[
-								...qualifications,
-								{ slug: 'xdddd', name: 'informatyka' },
-								{ slug: 'xdddd', name: 'technik mcdonalds' }
-							].map((qualification, i, elements) => `${qualification.name}${i !== elements.length - 1 ? ', ' : ''}`)}
+							{qualifications.map(
+								(qualification, i, elements) => `${qualification.name}${i !== elements.length - 1 ? ', ' : ''}`
+							)}
 						</span>
 					</h4>
 				</div>
