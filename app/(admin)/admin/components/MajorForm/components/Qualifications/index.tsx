@@ -1,9 +1,9 @@
+import { MultiSelect } from '@/app/components/Select'
 import { FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
 import { MajorFormType } from '@/lib/validators/major'
 import { Qualification } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { MultiSelect } from '@/app/components/Select'
 
 type Props = {
 	form: MajorFormType

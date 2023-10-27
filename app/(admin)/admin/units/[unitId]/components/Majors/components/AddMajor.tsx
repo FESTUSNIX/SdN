@@ -17,10 +17,14 @@ import toast from 'react-hot-toast'
 import { useFormChanges } from '../../../../../hooks/useFormChanges'
 
 const AddMajor = () => {
-	const { closeSheet } = useGlobalSheetContext()
+	const {
+		closeSheet,
+		sheetState: { defaultValues }
+	} = useGlobalSheetContext()
 	const { unitId: unitIdParam } = useParams()
 
-	const unitId = typeof unitIdParam === 'string' ? parseInt(unitIdParam) : parseInt(unitIdParam[0])
+	const unitId =
+		(typeof unitIdParam === 'string' ? parseInt(unitIdParam) : parseInt(unitIdParam?.[0])) || defaultValues.unitId
 
 	const form = useForm<MajorPayload>({
 		resolver: zodResolver(MajorValidator.omit({ unitSlug: true, id: true })),

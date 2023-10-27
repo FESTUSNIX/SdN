@@ -5,7 +5,9 @@ export const MajorValidator = z.object({
 	id: z.number(),
 	unitId: z.number(),
 	unitSlug: z.string(),
-	name: z.string().nonempty(),
+	name: z.string().min(2, {
+		message: 'Nazwa musi zawierać conajmniej 2 znaki'
+	}),
 	majorLevel: z.enum(['PIERWSZEGO_STOPNIA', 'DRUGIEGO_STOPNIA', 'JEDNOLITE_MAGISTERSKIE', 'PODYPLOMOWE']),
 	cost: z.coerce.number().nullable(),
 	address: z.string().optional().nullable(),
@@ -28,7 +30,7 @@ export const MajorValidator = z.object({
 	contact: z.string().optional().nullable(),
 	status: z.enum(['IN_PROGRESS', 'FINISHED', 'TO_CHECK']),
 	qualifications: z.number().array().min(1, {
-		message: 'You must select at least one qualification'
+		message: 'Musisz wybrać conajmniej jedną kwalifikacje'
 	})
 })
 

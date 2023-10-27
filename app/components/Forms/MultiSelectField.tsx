@@ -1,29 +1,29 @@
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { Input } from '@/app/components/ui/Input'
 import { Control, FieldValues, Path } from 'react-hook-form'
-import { Textarea } from '../../ui/Textarea/textarea'
-import { HTMLInputTypeAttribute } from 'react'
+import { MultiSelect } from '../MultiSelect'
+import { Skeleton } from '../ui/skeleton'
 
 type Props<T extends FieldValues> = {
 	formControl: Control<T>
 	accessorKey: Path<T>
+	options:
+		| {
+				label: string
+				value: string
+		  }[]
+		| undefined
 	label?: string
 	placeholder?: string
 	description?: string
-	type?: HTMLInputTypeAttribute
-	nullable?: boolean
-	textarea?: boolean
 }
 
-export const TextField = <T extends FieldValues>({
+export const MultiSelectField = <T extends FieldValues>({
 	formControl,
 	label,
+	options,
 	accessorKey,
-	placeholder,
-	description,
-	type = 'text',
-	nullable = false,
-	textarea
+	placeholder = 'Wybierz opcję',
+	description
 }: Props<T>) => {
 	return (
 		<FormField
@@ -33,10 +33,15 @@ export const TextField = <T extends FieldValues>({
 				<FormItem>
 					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
-						{textarea ? (
-							<Textarea {...field} placeholder={placeholder} value={field.value ?? ''} />
+						{options?.length ? (
+							<MultiSelect
+								options={options}
+								selected={field.value}
+								setSelected={field.onChange}
+								placeholder={placeholder}
+							/>
 						) : (
-							<Input {...field} type={type} placeholder={placeholder} value={field.value ?? ''} />
+							<Skeleton className='h-10 w-full' />
 						)}
 					</FormControl>
 					{description && <FormDescription>{description}</FormDescription>}

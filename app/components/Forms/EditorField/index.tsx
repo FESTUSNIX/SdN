@@ -11,16 +11,16 @@ import {
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
 import { cn } from '@/lib/utils/utils'
 import { useRef, useState } from 'react'
-import { Control, ControllerRenderProps } from 'react-hook-form'
+import { Control, ControllerRenderProps, FieldValues, Path } from 'react-hook-form'
 import Editor from '../../../(admin)/admin/components/MajorEditor'
 import EditorOutput from '../../EditorOutput'
 import { Button } from '../../ui/Button'
 import { ScrollArea } from '../../ui/ScrollArea'
 import { Muted } from '../../ui/Typography'
 
-type Props = {
-	formControl: Control<any>
-	accessorKey: string
+type Props<T extends FieldValues> = {
+	formControl: Control<T>
+	accessorKey: Path<T>
 	label?: string
 	placeholder?: string
 	description?: string
@@ -28,20 +28,20 @@ type Props = {
 	modalDescription?: string
 }
 
-export const EditorField = ({
+export const EditorField = <T extends FieldValues>({
 	formControl,
 	label,
 	accessorKey,
 	placeholder,
 	description,
 	modalDescription,
-	modalTitle = 'Add rich text'
-}: Props) => {
+	modalTitle
+}: Props<T>) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const childRef = useRef()
 	const { openModal } = useGlobalModalContext()
 
-	const handleUnsavedChanges = async (field: ControllerRenderProps<any, string>, open: boolean) => {
+	const handleUnsavedChanges = async (field: ControllerRenderProps<T, Path<T>>, open: boolean) => {
 		if (open) return setIsOpen(open)
 
 		const currentValue = await (childRef?.current as any).getCurrentValue()
@@ -49,7 +49,7 @@ export const EditorField = ({
 		if (
 			currentValue?.blocks &&
 			currentValue.blocks.length &&
-			JSON.stringify(currentValue?.blocks) !== JSON.stringify(field.value) 
+			JSON.stringify(currentValue?.blocks) !== JSON.stringify(field.value)
 		) {
 			return openModal('CUSTOM', {
 				title: 'Confirm to close',
@@ -93,11 +93,16 @@ export const EditorField = ({
 							</DialogTrigger>
 							<DialogContent className='flex h-full flex-col gap-0 p-0 sm:max-h-[calc(100vh-8rem)] md:!max-w-[700px] lg:!max-w-[900px] '>
 								<DialogHeader className={cn('border-b p-6', modalDescription ? 'pb-2' : 'pb-4')}>
-									<DialogTitle>{modalTitle}</DialogTitle>
+									<DialogTitle>{modalTitle || label}</DialogTitle>
 									{modalDescription && <DialogDescription>{modalDescription}</DialogDescription>}
 								</DialogHeader>
 								<ScrollArea className='max-h-full grow px-6'>
-									<Editor open={isOpen} placeholder={placeholder} field={field} ref={childRef} />
+									<Editor
+										open={isOpen}
+										placeholder={placeholder}
+										field={field as unknown as ControllerRenderProps<any, string>}
+										ref={childRef}
+									/>
 								</ScrollArea>
 								<DialogFooter className='border-t p-6 pt-4'>
 									<div className='flex items-center gap-2'>

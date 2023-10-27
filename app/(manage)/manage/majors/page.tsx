@@ -4,6 +4,7 @@ import { getAuthSession } from '@/lib/auth/auth'
 import prisma from '@/prisma/client'
 import { redirect } from 'next/navigation'
 import MajorCard from './components/MajorCard'
+import AddMajor from './components/AddMajor'
 
 export default async function ManageMajorsPage() {
 	const session = await getAuthSession()
@@ -19,6 +20,9 @@ export default async function ManageMajorsPage() {
 				}
 			}
 		},
+		orderBy: {
+			updatedAt: 'desc'
+		},
 		select: {
 			id: true,
 			name: true,
@@ -27,7 +31,9 @@ export default async function ManageMajorsPage() {
 			slug: true,
 			unit: {
 				select: {
-					name: true
+					id: true,
+					name: true,
+					slug: true
 				}
 			},
 			qualifications: {
@@ -39,6 +45,8 @@ export default async function ManageMajorsPage() {
 		}
 	})
 
+	if (!majors) return <div>Nie odnaleziono żadnych kierunków</div>
+
 	return (
 		<div className='flex h-full flex-col gap-8'>
 			<section>
@@ -46,6 +54,12 @@ export default async function ManageMajorsPage() {
 				<Muted className='text-base'>Zarządzaj kierunkami jednostki</Muted>
 
 				<Separator className='mt-4' />
+			</section>
+
+			<section className='flex items-center'>
+				<div className='ml-auto'>
+					<AddMajor unitId={majors[0].unit.id}  />
+				</div>
 			</section>
 
 			<section className='space-y-2 pb-6'>

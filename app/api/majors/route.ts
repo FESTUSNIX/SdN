@@ -1,6 +1,9 @@
+import { getAuthSession } from '@/lib/auth/auth'
 import { MajorValidator } from '@/lib/validators/major'
 import prisma from '@/prisma/client'
 import { createId } from '@paralleldrive/cuid2'
+import { revalidatePath } from 'next/cache'
+import { NextRequest } from 'next/server'
 import { z } from 'zod'
 
 export async function GET(req: Request) {
@@ -26,47 +29,36 @@ export async function GET(req: Request) {
 	}
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
 	try {
+		const session = await getAuthSession()
+		if (!session) {
+			return new Response('Not authenticated', { status: 401 })
+		}
+
 		const body = await req.json()
 
-		const {
-			cost,
-			daysOfWeek,
-			durationInHours,
-			endDate,
-			majorLevel,
-			name,
-			numberOfSemesters,
-			onlineDuration,
-			qualifications,
-			startDate,
-			status,
-			unitId,
-			address,
-			canPayInInstallments,
-			certificates,
-			completionConditions,
-			contact,
-			description,
-			formOfStudy,
-			isOnline,
-			isRegulated,
-			organisator,
-			recruitmentConditions,
-			syllabus
-		} = MajorValidator.omit({ id: true, unitSlug: true }).parse(body)
-
+		const data = MajorValidator.omit({ id: true, unitSlug: true }).partial({ status: true }).parse(body)
+		console.log('GOES')
 		const unit = await prisma.unit.findUnique({
 			where: {
-				id: unitId
+				id: data.unitId
 			},
 			select: {
-				slug: true
+				slug: true,
+				managers: {
+					select: {
+						id: true
+					}
+				}
 			}
 		})
 
 		if (!unit) return new Response('Unit not found', { status: 404 })
+
+		if (!(session.user.role === 'ADMIN' || unit.managers.some(m => m.id === session.user.id))) {
+			return new Response('Not authenticated', { status: 403 })
+		}
 
 		const lastMajor = await prisma.major.findFirst({
 			orderBy: {
@@ -76,10 +68,9 @@ export async function POST(req: Request) {
 				id: true
 			}
 		})
-
 		if (!lastMajor) return new Response('Could not create a new major', { status: 500 })
 
-		const qualificationsIds = qualifications.map(qualification => {
+		const qualificationsIds = data.qualifications.map(qualification => {
 			return {
 				id: qualification
 			}
@@ -91,30 +82,30 @@ export async function POST(req: Request) {
 			data: {
 				id: lastMajor.id + 1,
 				slug: slug,
-				unitId: unitId,
+				unitId: data.unitId,
 				unitSlug: unit.slug,
-				status: status,
-				name: name,
-				address: address || '',
-				contact: contact || '',
-				cost: cost,
-				durationInHours: durationInHours,
-				endDate: endDate,
-				formOfStudy: formOfStudy || '',
-				isOnline: !!isOnline,
-				majorLevel: majorLevel,
-				numberOfSemesters: numberOfSemesters,
-				onlineDuration: onlineDuration,
-				organisator: organisator || '',
-				recruitmentConditions: recruitmentConditions || [],
-				startDate: startDate,
-				syllabus: syllabus || [],
-				isRegulated: !!isRegulated,
-				canPayInInstallments: !!canPayInInstallments,
-				certificates: certificates || '',
-				completionConditions: completionConditions || [],
-				daysOfWeek: daysOfWeek,
-				description: description || [],
+				status: data.status ?? 'IN_PROGRESS',
+				name: data.name,
+				address: data.address || '',
+				contact: data.contact || '',
+				cost: data.cost,
+				durationInHours: data.durationInHours,
+				endDate: data.endDate,
+				formOfStudy: data.formOfStudy || '',
+				isOnline: !!data.isOnline,
+				majorLevel: data.majorLevel,
+				numberOfSemesters: data.numberOfSemesters,
+				onlineDuration: data.onlineDuration,
+				organisator: data.organisator || '',
+				recruitmentConditions: data.recruitmentConditions || [],
+				startDate: data.startDate,
+				syllabus: data.syllabus || [],
+				isRegulated: !!data.isRegulated,
+				canPayInInstallments: !!data.canPayInInstallments,
+				certificates: data.certificates || '',
+				completionConditions: data.completionConditions || [],
+				daysOfWeek: data.daysOfWeek,
+				description: data.description || [],
 				qualifications: {
 					connect: qualificationsIds
 				}
