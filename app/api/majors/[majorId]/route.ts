@@ -86,7 +86,7 @@ export async function PATCH(req: Request, { params }: { params: { majorId: strin
 			status,
 			syllabus,
 			isRegulated
-		} = MajorValidator.omit({ unitSlug: true, unitId: true }).parse(body)
+		} = MajorValidator.omit({ unitSlug: true, unitId: true }).partial().parse(body)
 
 		const majorToUpdate = await prisma.major.findFirst({
 			where: {
@@ -98,22 +98,26 @@ export async function PATCH(req: Request, { params }: { params: { majorId: strin
 			return new Response('Could not find major to update', { status: 404 })
 		}
 
-		const qualificationsConnect = qualifications.map(qualification => {
-			return {
-				id: qualification
-			}
-		})
+		let qualificationsConnect
 
-		await prisma.major.update({
-			where: {
-				id: id
-			},
-			data: {
-				qualifications: {
-					set: []
+		if (qualifications) {
+			qualificationsConnect = qualifications.map(qualification => {
+				return {
+					id: qualification
 				}
-			}
-		})
+			})
+
+			await prisma.major.update({
+				where: {
+					id: id
+				},
+				data: {
+					qualifications: {
+						set: []
+					}
+				}
+			})
+		}
 
 		await prisma.major.update({
 			where: {
