@@ -10,6 +10,10 @@ export default withAuth(
 		if (req.nextUrl.pathname.startsWith('/manage') && req.nextauth.token?.role !== 'UNIT') {
 			return NextResponse.redirect(new URL('/login', req.url))
 		}
+
+		if (['/manage', '/manage/'].includes(req.nextUrl.pathname)) {
+			return NextResponse.rewrite(new URL('/manage/account', req.url))
+		}
 	},
 	{
 		callbacks: {
