@@ -3,8 +3,11 @@ import { H3 } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
 import { capitalize } from '@/lib/utils/capitalize'
 import { Major, Qualification } from '@prisma/client'
-import { Fragment } from 'react'
+import { ForwardRefExoticComponent, Fragment } from 'react'
+import { ControllerRenderProps } from 'react-hook-form'
+import { EditField } from './EditField'
 import RichTextField from './RichTextField'
+import { TestFieldEdit } from './TestFieldEdit'
 
 type Props = {
 	major: Omit<Major, ''> & { qualifications: Pick<Qualification, 'id' | 'name'>[] }
@@ -36,73 +39,91 @@ const PreviewMajorData = ({ major }: Props) => {
 
 	const items: {
 		title: string
-		value: React.ReactNode | null
+		value: any
+		customComponent?: React.ReactNode
+		editComp: ForwardRefExoticComponent<Omit<ControllerRenderProps, 'ref'>>
 	}[] = [
 		{
 			title: 'Nazwa',
-			value: name
+			value: name,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Poziom',
-			value: majorLevelEnum[majorLevel]
+			value: majorLevelEnum[majorLevel],
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Tryb',
-			value: isOnline ? 'Online' : 'Stacjonarny'
+			value: isOnline ? 'Online' : 'Stacjonarny',
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Kwalifikacje',
-			value: (
+			value: qualifications,
+			customComponent: (
 				<>
 					{qualifications.map(
 						(qualification, i, elements) => `${qualification.name}${i !== elements.length - 1 ? ', ' : ''}`
 					)}
 				</>
-			)
+			),
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Cena',
-			value: cost
+			value: cost,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Płatność w ratach',
-			value: canPayInInstallments ? 'Tak' : 'Nie'
+			value: canPayInInstallments ? 'Tak' : 'Nie',
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Czas trwania',
-			value: durationInHours
+			value: durationInHours,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Liczba semestrów',
-			value: numberOfSemesters
+			value: numberOfSemesters,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Zgodne z regulacjami',
-			value: isRegulated ? 'Tak' : 'Nie'
+			value: isRegulated ? 'Tak' : 'Nie',
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Data rozpoczęcia',
-			value: startDate?.toLocaleDateString()
+			value: startDate?.toLocaleDateString(),
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Data zakończenia',
-			value: endDate?.toLocaleDateString()
+			value: endDate?.toLocaleDateString(),
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Kontakt',
-			value: contact
+			value: contact,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Organizator',
-			value: organisator
+			value: organisator,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Adres',
-			value: address
+			value: address,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Certyfikaty',
-			value: certificates
+			value: certificates,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Zajęcia odbywają się w dni',
@@ -110,23 +131,28 @@ const PreviewMajorData = ({ major }: Props) => {
 				? daysOfWeek.map(
 						(day, i, elements) => `${capitalize(day.toLowerCase())}${i !== elements.length - 1 ? ', ' : ''}`
 				  )
-				: null
+				: null,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Opis',
-			value: <RichTextField name='Opis' content={description} />
+			value: <RichTextField name='Opis' content={description} />,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Wymogi przyjęcia',
-			value: <RichTextField name='Wymogi przyjęcia' content={recruitmentConditions} />
+			value: <RichTextField name='Wymogi przyjęcia' content={recruitmentConditions} />,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Wymogi ukończenia',
-			value: <RichTextField name='Wymogi ukończenia' content={completionConditions} />
+			value: <RichTextField name='Wymogi ukończenia' content={completionConditions} />,
+			editComp: TestFieldEdit
 		},
 		{
 			title: 'Program nauki',
-			value: <RichTextField name='Program nauki' content={syllabus} />
+			value: <RichTextField name='Program nauki' content={syllabus} />,
+			editComp: TestFieldEdit
 		}
 	]
 
@@ -134,9 +160,15 @@ const PreviewMajorData = ({ major }: Props) => {
 		<div className='space-y-4 rounded-lg border bg-card px-4 py-2.5 text-card-foreground shadow-sm'>
 			{items.map((item, i) => (
 				<Fragment key={`${item.title}-${item.value}`}>
-					<div className='py-2'>
+					<div className='grid grid-cols-2 grid-rows-[auto_auto] py-2'>
 						<H3 className='text-sm font-bold leading-none'>{item.title}</H3>
-						<div className='break-all text-muted-foreground'>{item.value || 'Brak danych'}</div>
+
+						<EditField
+							accessorKey='name'
+							defaultValue={item.value}
+							Component={item.editComp}
+							previewComponent={item.customComponent}
+						/>
 					</div>
 
 					{i !== items.length - 1 && <Separator />}
