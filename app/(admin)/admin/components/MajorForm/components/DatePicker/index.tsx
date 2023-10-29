@@ -8,16 +8,16 @@ import { CalendarIcon } from 'lucide-react'
 import { Control } from 'react-hook-form'
 
 type Props = {
-	formControl: Control<any>
+	control: Control<any>
 	accessorKey: string
 	label?: string
 	placeholder?: string
 }
 
-export const DatePicker = ({ formControl, label, accessorKey, placeholder = 'Pick a date' }: Props) => {
+export const DatePicker = ({ control, label, accessorKey, placeholder = 'Pick a date' }: Props) => {
 	return (
 		<FormField
-			control={formControl}
+			control={control}
 			name={accessorKey}
 			render={({ field }) => (
 				<FormItem>

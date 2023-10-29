@@ -2,8 +2,8 @@ import { X } from 'lucide-react'
 import React from 'react'
 
 type Props = {
-	defaultValue: string | number | boolean | null | undefined
-	currentValue: string | number | boolean | null | undefined
+	defaultValue: any
+	currentValue: any
 	resetFn: () => void
 }
 

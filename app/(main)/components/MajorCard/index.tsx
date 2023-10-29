@@ -1,7 +1,7 @@
 import { Badge } from '@/app/components/ui/Badge'
 import { Card, CardContent, CardFooter, CardHeader } from '@/app/components/ui/Card'
 import { H3, H4 } from '@/app/components/ui/Typography'
-import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
+import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { Major } from '@prisma/client'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'

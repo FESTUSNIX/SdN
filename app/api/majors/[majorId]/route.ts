@@ -1,3 +1,4 @@
+import { getAuthSession } from '@/lib/auth/auth'
 import { MajorValidator } from '@/lib/validators/major'
 import prisma from '@/prisma/client'
 import { z } from 'zod'
@@ -59,8 +60,39 @@ export async function DELETE(req: Request, { params }: { params: { majorId: stri
 
 export async function PATCH(req: Request, { params }: { params: { majorId: string } }) {
 	try {
-		const body = await req.json()
 		const id = parseInt(params.majorId)
+
+		const session = await getAuthSession()
+		if (!session) {
+			return new Response('Not authenticated', { status: 401 })
+		}
+
+		const majorToUpdate = await prisma.major.findFirst({
+			where: {
+				id: id
+			},
+			select: {
+				unit: {
+					select: {
+						managers: {
+							select: {
+								id: true
+							}
+						}
+					}
+				}
+			}
+		})
+
+		if (!majorToUpdate) {
+			return new Response('Could not find major to update', { status: 404 })
+		}
+
+		if (!(session.user.role === 'ADMIN' || majorToUpdate.unit.managers.some(m => m.id === session.user.id))) {
+			return new Response('Not authenticated', { status: 403 })
+		}
+
+		const body = await req.json()
 
 		const {
 			address,
@@ -87,16 +119,6 @@ export async function PATCH(req: Request, { params }: { params: { majorId: strin
 			syllabus,
 			isRegulated
 		} = MajorValidator.omit({ unitSlug: true, unitId: true }).partial().parse(body)
-
-		const majorToUpdate = await prisma.major.findFirst({
-			where: {
-				id: id
-			}
-		})
-
-		if (!majorToUpdate) {
-			return new Response('Could not find major to update', { status: 404 })
-		}
 
 		let qualificationsConnect
 

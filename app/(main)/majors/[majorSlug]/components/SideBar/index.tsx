@@ -3,7 +3,7 @@ import { H3, Muted } from '@/app/components/ui/Typography'
 import { Major } from '@prisma/client'
 import Duration from '../SideBarDuration'
 import { Separator } from '@/app/components/ui/Separator/separator'
-import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
+import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { cn } from '@/lib/utils/utils'
 
 type Props = { major: Major }

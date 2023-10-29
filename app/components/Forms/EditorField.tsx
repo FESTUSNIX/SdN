@@ -12,14 +12,14 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessa
 import { cn } from '@/lib/utils/utils'
 import { useRef, useState } from 'react'
 import { Control, ControllerRenderProps, FieldValues, Path } from 'react-hook-form'
-import Editor from '../../../(admin)/admin/components/MajorEditor'
-import EditorOutput from '../../EditorOutput'
-import { Button } from '../../ui/Button'
-import { ScrollArea } from '../../ui/ScrollArea'
-import { Muted } from '../../ui/Typography'
+import Editor from '../../(admin)/admin/components/MajorEditor'
+import EditorOutput from '../EditorOutput'
+import { Button } from '../ui/Button'
+import { ScrollArea } from '../ui/ScrollArea'
+import { Muted } from '../ui/Typography'
 
 type Props<T extends FieldValues> = {
-	formControl: Control<T>
+	control?: Control<T>
 	accessorKey: Path<T>
 	label?: string
 	placeholder?: string
@@ -29,7 +29,7 @@ type Props<T extends FieldValues> = {
 }
 
 export const EditorField = <T extends FieldValues>({
-	formControl,
+	control,
 	label,
 	accessorKey,
 	placeholder,
@@ -52,12 +52,14 @@ export const EditorField = <T extends FieldValues>({
 			JSON.stringify(currentValue?.blocks) !== JSON.stringify(field.value)
 		) {
 			return openModal('CUSTOM', {
-				title: 'Confirm to close',
-				description: 'There are unsaved changes. Are you sure you want to close the panel? Your changes will be lost.',
+				title: 'Czy napewno chcesz zamknąć',
+				description: 'Masz niezapisane zmiany. Czy na pewno chcesz zamknąć panel? Twoje zmiany zostaną utracone.',
 				onConfirm: () => {
 					setIsOpen(false)
 				},
-				confirmButtonVariant: 'destructive'
+				confirmButtonText: 'Zamknij',
+				confirmButtonVariant: 'destructive',
+				cancelButtonText: 'Anuluj'
 			})
 		}
 
@@ -66,7 +68,7 @@ export const EditorField = <T extends FieldValues>({
 
 	return (
 		<FormField
-			control={formControl}
+			control={control}
 			name={accessorKey}
 			render={({ field }) => (
 				<FormItem>
@@ -107,14 +109,14 @@ export const EditorField = <T extends FieldValues>({
 								<DialogFooter className='border-t p-6 pt-4'>
 									<div className='flex items-center gap-2'>
 										<Button variant={'secondary'} onClick={() => setIsOpen(false)}>
-											Cancel
+											Anuluj
 										</Button>
 										<Button
 											onClick={() => {
 												;(childRef?.current as any).onEditorSubmit()
 												setIsOpen(false)
 											}}>
-											Submit
+											Potwierdź
 										</Button>
 									</div>
 								</DialogFooter>

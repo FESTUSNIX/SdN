@@ -6,10 +6,10 @@ import { KeyboardEvent, useState } from 'react'
 import { Control, ControllerRenderProps } from 'react-hook-form'
 
 type Props = {
-	formControl: Control<UnitEmailPayload>
+	control: Control<UnitEmailPayload>
 }
 
-const SendTo = ({ formControl }: Props) => {
+const SendTo = ({ control }: Props) => {
 	const [inputValue, setInputValue] = useState('')
 
 	const handleKeyDown = (
@@ -24,7 +24,7 @@ const SendTo = ({ formControl }: Props) => {
 
 	return (
 		<FormField
-			control={formControl}
+			control={control}
 			name={'sendTo'}
 			render={({ field }) => (
 				<FormItem>

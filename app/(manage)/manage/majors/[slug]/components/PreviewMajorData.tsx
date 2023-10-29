@@ -1,16 +1,25 @@
+'use client'
+
+import { BooleanField } from '@/app/components/Forms/BooleanField'
+import { DateField } from '@/app/components/Forms/DateField'
+import { EditorField } from '@/app/components/Forms/EditorField'
+import { DaysOfWeek } from '@/app/components/Forms/Major/DaysOfWeek'
+import { QualificationsField } from '@/app/components/Forms/Major/Qualifications'
+import { SelectField } from '@/app/components/Forms/SelectField'
+import { TextField } from '@/app/components/Forms/TextField'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H3 } from '@/app/components/ui/Typography'
-import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
+import { majorLevelEnum, majorLevelOptions } from '@/app/constants/majorLevel'
 import { capitalize } from '@/lib/utils/capitalize'
+import { MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { Major, Qualification } from '@prisma/client'
-import { ForwardRefExoticComponent, Fragment } from 'react'
-import { ControllerRenderProps } from 'react-hook-form'
+import { Fragment } from 'react'
+import { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { EditField } from './EditField'
 import RichTextField from './RichTextField'
-import { TestFieldEdit } from './TestFieldEdit'
 
 type Props = {
-	major: Omit<Major, ''> & { qualifications: Pick<Qualification, 'id' | 'name'>[] }
+	major: Major & { qualifications: Pick<Qualification, 'id' | 'name'>[] }
 }
 
 const PreviewMajorData = ({ major }: Props) => {
@@ -38,121 +47,157 @@ const PreviewMajorData = ({ major }: Props) => {
 	} = major
 
 	const items: {
+		accessorKey: keyof MajorPayload
 		title: string
 		value: any
-		customComponent?: React.ReactNode
-		editComp: ForwardRefExoticComponent<Omit<ControllerRenderProps, 'ref'>>
+		customComponent?: <T extends FieldValues, K extends keyof T>(value: T[K]) => React.ReactNode
+		editComponent: <T extends FieldValues>(props: { accessorKey: FieldPath<T>; control?: Control<T> }) => JSX.Element
 	}[] = [
 		{
+			accessorKey: 'name',
 			title: 'Nazwa',
 			value: name,
-			editComp: TestFieldEdit
+			editComponent: props => TextField({ placeholder: 'np. Informatyka', ...props })
 		},
 		{
+			accessorKey: 'majorLevel',
 			title: 'Poziom',
-			value: majorLevelEnum[majorLevel],
-			editComp: TestFieldEdit
+			value: majorLevel,
+			customComponent: value => majorLevelEnum[value],
+			editComponent: props => SelectField({ options: majorLevelOptions, ...props })
 		},
 		{
+			accessorKey: 'isOnline',
 			title: 'Tryb',
 			value: isOnline ? 'Online' : 'Stacjonarny',
-			editComp: TestFieldEdit
+			editComponent: props => BooleanField({ options: ['Online', 'Stacjonarny'], ...props })
 		},
 		{
+			accessorKey: 'qualifications',
 			title: 'Kwalifikacje',
 			value: qualifications,
-			customComponent: (
+			customComponent: value => (
 				<>
-					{qualifications.map(
-						(qualification, i, elements) => `${qualification.name}${i !== elements.length - 1 ? ', ' : ''}`
+					{value.map(
+						(qualification: { id: number; name: string }, i: number, elements: { id: number; name: string }[]) =>
+							`${qualification.name}${i !== elements.length - 1 ? ', ' : ''}`
 					)}
 				</>
 			),
-			editComp: TestFieldEdit
+			editComponent: QualificationsField
 		},
 		{
+			accessorKey: 'cost',
 			title: 'Cena',
 			value: cost,
-			editComp: TestFieldEdit
+			editComponent: props => TextField({ placeholder: '1234...', type: 'number', ...props })
 		},
 		{
+			accessorKey: 'canPayInInstallments',
 			title: 'Płatność w ratach',
 			value: canPayInInstallments ? 'Tak' : 'Nie',
-			editComp: TestFieldEdit
+			editComponent: BooleanField
 		},
 		{
+			accessorKey: 'durationInHours',
 			title: 'Czas trwania',
 			value: durationInHours,
-			editComp: TestFieldEdit
+			editComponent: props =>
+				TextField({ placeholder: '123...', type: 'number', description: 'Podany w godzinach', ...props })
 		},
 		{
+			accessorKey: 'numberOfSemesters',
 			title: 'Liczba semestrów',
 			value: numberOfSemesters,
-			editComp: TestFieldEdit
+			editComponent: props => TextField({ placeholder: '12...', type: 'number', ...props })
 		},
 		{
+			accessorKey: 'isRegulated',
 			title: 'Zgodne z regulacjami',
 			value: isRegulated ? 'Tak' : 'Nie',
-			editComp: TestFieldEdit
+			editComponent: BooleanField
 		},
 		{
+			accessorKey: 'startDate',
 			title: 'Data rozpoczęcia',
-			value: startDate?.toLocaleDateString(),
-			editComp: TestFieldEdit
+			value: startDate,
+			customComponent: value => value?.toLocaleDateString('pl'),
+			editComponent: DateField
 		},
 		{
+			accessorKey: 'endDate',
 			title: 'Data zakończenia',
-			value: endDate?.toLocaleDateString(),
-			editComp: TestFieldEdit
+			value: endDate,
+			customComponent: value => value?.toLocaleDateString('pl'),
+			editComponent: DateField
 		},
 		{
-			title: 'Kontakt',
-			value: contact,
-			editComp: TestFieldEdit
-		},
-		{
+			accessorKey: 'organisator',
 			title: 'Organizator',
 			value: organisator,
-			editComp: TestFieldEdit
+			editComponent: props =>
+				TextField({
+					placeholder: 'np. Organizacja Acme',
+					description: 'Jedynie jeżeli uczelnia nie jest organizatorem',
+					...props
+				})
 		},
 		{
+			accessorKey: 'address',
 			title: 'Adres',
 			value: address,
-			editComp: TestFieldEdit
+			editComponent: props => TextField({ placeholder: 'np. Studencka 21, 31-116 Kraków', ...props })
 		},
 		{
+			accessorKey: 'certificates',
 			title: 'Certyfikaty',
 			value: certificates,
-			editComp: TestFieldEdit
+			editComponent: props =>
+				TextField({
+					placeholder: 'np. Cisco, DevOps Fundamentals, ...',
+					description: 'Certyfikaty zapewnione po ukończeniu studiów',
+					...props
+				})
 		},
 		{
+			accessorKey: 'daysOfWeek',
 			title: 'Zajęcia odbywają się w dni',
-			value: daysOfWeek.length
-				? daysOfWeek.map(
-						(day, i, elements) => `${capitalize(day.toLowerCase())}${i !== elements.length - 1 ? ', ' : ''}`
-				  )
-				: null,
-			editComp: TestFieldEdit
+			value: daysOfWeek,
+			customComponent: value =>
+				value.length
+					? daysOfWeek.map(
+							(day, i, elements) => `${capitalize(day.toLowerCase())}${i !== elements.length - 1 ? ', ' : ''}`
+					  )
+					: null,
+			editComponent: DaysOfWeek
 		},
 		{
+			accessorKey: 'description',
 			title: 'Opis',
-			value: <RichTextField name='Opis' content={description} />,
-			editComp: TestFieldEdit
+			value: description,
+			customComponent: value => <RichTextField name='Opis' content={value} />,
+			editComponent: props => EditorField({ modalTitle: 'Edytuj opis', placeholder: 'Aa...', ...props })
 		},
 		{
+			accessorKey: 'recruitmentConditions',
 			title: 'Wymogi przyjęcia',
-			value: <RichTextField name='Wymogi przyjęcia' content={recruitmentConditions} />,
-			editComp: TestFieldEdit
+			value: recruitmentConditions,
+			customComponent: value => <RichTextField name='Wymogi przyjęcia' content={value} />,
+			editComponent: props => EditorField({ modalTitle: 'Edytuj wymogi przyjęcia', placeholder: 'Aa...', ...props })
 		},
 		{
+			accessorKey: 'completionConditions',
 			title: 'Wymogi ukończenia',
-			value: <RichTextField name='Wymogi ukończenia' content={completionConditions} />,
-			editComp: TestFieldEdit
+			value: completionConditions,
+			customComponent: value => <RichTextField name='Wymogi ukończenia' content={value} />,
+			editComponent: props => EditorField({ modalTitle: 'Edytuj wymogi ukończenia', placeholder: 'Aa...', ...props })
 		},
 		{
+			accessorKey: 'syllabus',
 			title: 'Program nauki',
-			value: <RichTextField name='Program nauki' content={syllabus} />,
-			editComp: TestFieldEdit
+			value: syllabus,
+			customComponent: value => <RichTextField name='Program nauki' content={value} />,
+			editComponent: props => EditorField({ modalTitle: 'Edytuj program nauki', placeholder: 'Aa...', ...props })
 		}
 	]
 
@@ -164,10 +209,12 @@ const PreviewMajorData = ({ major }: Props) => {
 						<H3 className='text-sm font-bold leading-none'>{item.title}</H3>
 
 						<EditField
-							accessorKey='name'
+							FormFieldComp={item.editComponent}
+							majorId={major.id}
+							accessorKey={item.accessorKey}
 							defaultValue={item.value}
-							Component={item.editComp}
-							previewComponent={item.customComponent}
+							PreviewComponent={item.customComponent}
+							schema={MajorValidator}
 						/>
 					</div>
 

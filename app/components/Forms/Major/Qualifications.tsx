@@ -1,18 +1,21 @@
-import { MajorFormType } from '@/lib/validators/major'
 import { Qualification } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { Suspense, useEffect, useMemo, useState } from 'react'
-import { Skeleton } from '../../ui/skeleton'
-import { MultiSelectField } from '../MultiSelectField'
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/Form'
+import { useEffect, useMemo, useState } from 'react'
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 import { MultiSelect } from '../../MultiSelect'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/Form'
+import { Skeleton } from '../../ui/skeleton'
 
-type Props = {
-	form: MajorFormType
+type Props<T extends FieldValues> = {
+	accessorKey: FieldPath<T>
+	control?: Control<T>
+	label?: string
 }
 
-export const QualificationsField = ({ form }: Props) => {
+export const QualificationsField = <T extends FieldValues>({ control, accessorKey, label }: Props<T>) => {
+	const { field, formState } = useController({ name: accessorKey, control: control })
+
 	const { data: qualifications } = useQuery({
 		queryKey: ['qualifications'],
 		queryFn: async () => {
@@ -31,7 +34,7 @@ export const QualificationsField = ({ form }: Props) => {
 	const defaultQualifications = useMemo(
 		() =>
 			qualificationsOptions?.filter(qualification =>
-				form.formState.defaultValues?.qualifications?.includes(parseInt(qualification.value))
+				formState.defaultValues?.qualifications?.includes(parseInt(qualification.value))
 			),
 		[]
 	)
@@ -41,16 +44,16 @@ export const QualificationsField = ({ form }: Props) => {
 	)
 
 	useEffect(() => {
-		form.setValue('qualifications', selectedQualifications?.map(q => parseInt(q.value)) ?? [])
+		field.onChange(selectedQualifications?.map(q => parseInt(q.value)) ?? [])
 	}, [selectedQualifications])
 
 	return (
 		<FormField
-			control={form.control}
-			name={'qualifications'}
+			control={control}
+			name={accessorKey}
 			render={({ field }) => (
 				<FormItem>
-					<FormLabel>Kwalifikacje</FormLabel>
+					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
 						{qualificationsOptions?.length ? (
 							<MultiSelect

@@ -16,9 +16,9 @@ const EmailForm = ({ form, emailHtml, emailPlainText }: Props) => {
 		<Form {...form}>
 			<form>
 				<div className='space-y-8 px-2'>
-					<TextField formControl={form.control} accessorKey='title' label='Title' placeholder='Aa...' />
+					<TextField control={form.control} accessorKey='title' label='Title' placeholder='Aa...' />
 
-					<SendTo formControl={form.control} />
+					<SendTo control={form.control} />
 
 					<PreviewTabs emailHtml={emailHtml} emailPlainText={emailPlainText} />
 				</div>

@@ -1,5 +1,5 @@
 import { Skeleton } from '@/app/components/ui/skeleton'
-import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
+import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { cn } from '@/lib/utils/utils'
 import { Major } from '@prisma/client'

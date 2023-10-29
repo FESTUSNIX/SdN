@@ -1,7 +1,7 @@
 import EditorOutput from '@/app/components/EditorOutput'
 import { Badge } from '@/app/components/ui/Badge'
 import { H1, H2, Muted } from '@/app/components/ui/Typography'
-import { majorLevelEnum } from '@/app/constants/majorLevelEnum'
+import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { cn } from '@/lib/utils/utils'
 import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation'

@@ -3,7 +3,7 @@ import { FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui
 import { Control } from 'react-hook-form'
 
 type Props = {
-	formControl: Control<any>
+	control: Control<any>
 }
 
 const dayOptions = [
@@ -16,10 +16,10 @@ const dayOptions = [
 	{ label: 'Sunday', value: 'SUNDAY' }
 ]
 
-const DaysOfWeek = ({ formControl }: Props) => {
+const DaysOfWeek = ({ control }: Props) => {
 	return (
 		<FormField
-			control={formControl}
+			control={control}
 			name='daysOfWeek'
 			render={({ field }) => (
 				<FormItem>

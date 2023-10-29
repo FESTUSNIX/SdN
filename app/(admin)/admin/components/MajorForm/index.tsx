@@ -41,7 +41,7 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 						</CollapsibleContent>
 					</Collapsible>
 
-					<TextField formControl={form.control} accessorKey='name' label='Name' placeholder='Aa...' />
+					<TextField control={form.control} accessorKey='name' label='Name' placeholder='Aa...' />
 
 					<MajorLevel form={form} />
 
@@ -59,47 +59,47 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 					</div>
 
 					{/* IS REGULATED */}
-					<SwitchField formControl={form.control} accessorKey='isRegulated' label='Is regulated' />
+					<SwitchField control={form.control} accessorKey='isRegulated' label='Is regulated' />
 
 					{/* CAN PAY IN INSTALLMENTS */}
-					<SwitchField formControl={form.control} accessorKey='canPayInInstallments' label='Can pay in installments' />
+					<SwitchField control={form.control} accessorKey='canPayInInstallments' label='Can pay in installments' />
 
 					{/* DURATION IN HOURS */}
 					<TextField
-						formControl={form.control}
+						control={form.control}
 						accessorKey='durationInHours'
 						label='Duration in hours'
 						placeholder='12456...'
-						nullable
+						type='number'
 					/>
 
 					{/* IS ONLINE */}
-					<SwitchField formControl={form.control} accessorKey='isOnline' label='Is online' />
+					<SwitchField control={form.control} accessorKey='isOnline' label='Is online' />
 
 					{/* ONLINE DURATION */}
 
 					{form.watch('isOnline') && (
 						<TextField
-							formControl={form.control}
+							control={form.control}
 							accessorKey='onlineDuration'
 							label='Online duration'
 							placeholder='12456...'
-							nullable
+							type='number'
 						/>
 					)}
 
 					{/* COST */}
-					<TextField formControl={form.control} accessorKey='cost' label='Cost' placeholder='12456...' nullable />
+					<TextField control={form.control} accessorKey='cost' label='Cost' placeholder='12456...' />
 
 					{/* ADDRESS */}
-					<TextField formControl={form.control} accessorKey='address' label='Address' placeholder='Aa...' />
+					<TextField control={form.control} accessorKey='address' label='Address' placeholder='Aa...' />
 
 					{/* CERTIFICATES */}
-					<TextField formControl={form.control} accessorKey='certificates' label='Certificates' placeholder='Aa...' />
+					<TextField control={form.control} accessorKey='certificates' label='Certificates' placeholder='Aa...' />
 
 					{/* COMPLETION CONDITIONS */}
 					<EditorField
-						formControl={form.control}
+						control={form.control}
 						accessorKey='completionConditions'
 						label='Completion conditions'
 						placeholder='Start writing here'
@@ -107,11 +107,11 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 					/>
 
 					{/* DAYS OF WEEK */}
-					<DaysOfWeek formControl={form.control} />
+					<DaysOfWeek control={form.control} />
 
 					{/* DESCRIPTION */}
 					<EditorField
-						formControl={form.control}
+						control={form.control}
 						accessorKey='description'
 						label='Description'
 						placeholder='Start writing here'
@@ -119,23 +119,23 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 					/>
 
 					{/* FORM OF STUDY */}
-					<TextField formControl={form.control} accessorKey='formOfStudy' label='Form of Study' placeholder='Aa...' />
+					<TextField control={form.control} accessorKey='formOfStudy' label='Form of Study' placeholder='Aa...' />
 
 					{/* NUMBER OF SEMESTERS */}
 					<TextField
-						formControl={form.control}
+						control={form.control}
 						accessorKey='numberOfSemesters'
 						label='Number of semesters'
 						placeholder='12456...'
-						nullable
+						type='number'
 					/>
 
 					{/* ORGANISATOR */}
-					<TextField formControl={form.control} accessorKey='organisator' label='Organisator' placeholder='Aa...' />
+					<TextField control={form.control} accessorKey='organisator' label='Organisator' placeholder='Aa...' />
 
 					{/* RECRUITMENT CONDITIONS */}
 					<EditorField
-						formControl={form.control}
+						control={form.control}
 						accessorKey='recruitmentConditions'
 						label='Recruitment conditions'
 						placeholder='Start writing here'
@@ -144,7 +144,7 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 
 					{/* SYLLABUS */}
 					<EditorField
-						formControl={form.control}
+						control={form.control}
 						accessorKey='syllabus'
 						label='Syllabus'
 						placeholder='Start writing here'
@@ -153,13 +153,13 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 					/>
 
 					{/* START DATE */}
-					<DatePicker formControl={form.control} accessorKey='startDate' label='Start date' />
+					<DatePicker control={form.control} accessorKey='startDate' label='Start date' />
 
 					{/* END DATE */}
-					<DatePicker formControl={form.control} accessorKey='endDate' label='End date' />
+					<DatePicker control={form.control} accessorKey='endDate' label='End date' />
 
 					{/* CONTACT */}
-					<TextField formControl={form.control} accessorKey='contact' label='Contact' placeholder='Aa...' />
+					<TextField control={form.control} accessorKey='contact' label='Contact' placeholder='Aa...' />
 				</div>
 			</form>
 		</Form>

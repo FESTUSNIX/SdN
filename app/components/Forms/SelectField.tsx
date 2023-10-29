@@ -1,10 +1,10 @@
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { Control, FieldValues, Path } from 'react-hook-form'
+import { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/Select'
 
 type Props<T extends FieldValues> = {
-	formControl: Control<T>
-	accessorKey: Path<T>
+	control?: Control<T>
+	accessorKey: FieldPath<T>
 	options: {
 		label: string
 		value: string
@@ -15,7 +15,7 @@ type Props<T extends FieldValues> = {
 }
 
 export const SelectField = <T extends FieldValues>({
-	formControl,
+	control,
 	label,
 	options,
 	accessorKey,
@@ -24,7 +24,7 @@ export const SelectField = <T extends FieldValues>({
 }: Props<T>) => {
 	return (
 		<FormField
-			control={formControl}
+			control={control}
 			name={accessorKey}
 			render={({ field }) => (
 				<FormItem>

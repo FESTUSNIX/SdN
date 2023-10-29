@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 		const body = await req.json()
 
 		const data = MajorValidator.omit({ id: true, unitSlug: true }).partial({ status: true }).parse(body)
-		console.log('GOES')
+
 		const unit = await prisma.unit.findUnique({
 			where: {
 				id: data.unitId

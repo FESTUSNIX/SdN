@@ -1,29 +1,24 @@
+'use client'
+
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
 import { Control, FieldPath, FieldValues } from 'react-hook-form'
-import { MultiSelect } from '../MultiSelect'
-import { Skeleton } from '../ui/skeleton'
+import { Textarea, TextareaProps } from '../ui/Textarea/textarea'
 
 type Props<T extends FieldValues> = {
-	control: Control<T>
 	accessorKey: FieldPath<T>
-	options:
-		| {
-				label: string
-				value: string
-		  }[]
-		| undefined
+	control?: Control<T>
 	label?: string
-	placeholder?: string
 	description?: string
-}
+	placeholder?: string
+} & { textareaProps?: TextareaProps }
 
-export const MultiSelectField = <T extends FieldValues>({
-	control,
+export const TextareaField = <T extends FieldValues>({
 	label,
-	options,
+	description,
 	accessorKey,
-	placeholder = 'Wybierz opcję',
-	description
+	control,
+	placeholder,
+	textareaProps
 }: Props<T>) => {
 	return (
 		<FormField
@@ -33,16 +28,7 @@ export const MultiSelectField = <T extends FieldValues>({
 				<FormItem>
 					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
-						{options?.length ? (
-							<MultiSelect
-								options={options}
-								selected={field.value}
-								setSelected={field.onChange}
-								placeholder={placeholder}
-							/>
-						) : (
-							<Skeleton className='h-10 w-full' />
-						)}
+						<Textarea {...field} {...textareaProps} placeholder={placeholder} value={field.value ?? ''} />
 					</FormControl>
 					{description && <FormDescription>{description}</FormDescription>}
 					<FormMessage />

@@ -16,6 +16,7 @@ type Props = {
 
 const Editor = forwardRef(({ open, field, placeholder = 'Zacznij pisać tekst tutaj' }: Props, ref) => {
 	const editorRef = useRef<EditorJS>()
+	const isReady = useRef(false)
 
 	const initializeEditor = useCallback(async () => {
 		const EditorJS = (await import('@editorjs/editorjs')).default
@@ -64,13 +65,15 @@ const Editor = forwardRef(({ open, field, placeholder = 'Zacznij pisać tekst tu
 			await initializeEditor()
 		}
 
-		if (open) {
+		if (open && !isReady.current) {
 			init()
+			isReady.current = true
 
 			return () => {
 				if (editorRef.current) {
 					editorRef.current.destroy()
 					editorRef.current = undefined
+					isReady.current = false
 				}
 			}
 		}

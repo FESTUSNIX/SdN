@@ -19,9 +19,9 @@ const QualificationForm = ({ form, onSubmit }: Props) => {
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(e => onSubmit(e))} className='py-4'>
 				<div className='space-y-8 px-6'>
-					<TextField formControl={form.control} accessorKey='name' label='Name' placeholder='Aa...' />
+					<TextField control={form.control} accessorKey='name' label='Name' placeholder='Aa...' />
 
-					<Type formControl={form.control} />
+					<Type control={form.control} />
 				</div>
 
 				<Separator className='my-12' />

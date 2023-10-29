@@ -1,11 +1,13 @@
-import { MajorFormType } from '@/lib/validators/major'
 import { DaysOfWeek as DaysOfWeekType } from '@prisma/client'
 import { useEffect, useMemo, useState } from 'react'
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 import { MultiSelect } from '../../MultiSelect'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/Form'
 
-type Props = {
-	form: MajorFormType
+type Props<T extends FieldValues> = {
+	accessorKey: FieldPath<T>
+	control?: Control<T>
+	label?: string
 }
 
 const dayOptions: { label: string; value: DaysOfWeekType }[] = [
@@ -18,11 +20,13 @@ const dayOptions: { label: string; value: DaysOfWeekType }[] = [
 	{ label: 'Niedziela', value: 'SUNDAY' }
 ]
 
-export const DaysOfWeek = ({ form }: Props) => {
+export const DaysOfWeek = <T extends FieldValues>({ control, accessorKey, label }: Props<T>) => {
+	const { field, formState } = useController({ name: accessorKey, control: control })
+
 	const defaultQualifications = useMemo(
 		() =>
 			dayOptions?.filter(qualification =>
-				form.formState.defaultValues?.qualifications?.includes(parseInt(qualification.value))
+				formState.defaultValues?.qualifications?.includes(parseInt(qualification.value))
 			),
 		[]
 	)
@@ -32,16 +36,17 @@ export const DaysOfWeek = ({ form }: Props) => {
 	)
 
 	useEffect(() => {
-		form.setValue('daysOfWeek', (selectedDays?.map(q => q.value) ?? []) as DaysOfWeekType[])
+		console.log(selectedDays?.map(q => q.value))
+		field.onChange((selectedDays?.map(q => q.value) ?? []) as DaysOfWeekType[])
 	}, [selectedDays])
 
 	return (
 		<FormField
-			control={form.control}
-			name={'daysOfWeek'}
+			control={control}
+			name={accessorKey}
 			render={({ field }) => (
 				<FormItem>
-					<FormLabel>Zajęcia odbywają się w</FormLabel>
+					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
 						<MultiSelect
 							options={dayOptions}

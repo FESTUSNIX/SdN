@@ -1,18 +1,18 @@
 import { FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/app/components/ui/Form'
 import { Control } from 'react-hook-form'
-import { Switch } from '../../ui/Switch'
+import { Switch } from '../ui/Switch'
 
 type Props = {
-	formControl: Control<any>
+	control: Control<any>
 	accessorKey: string
 	label: string
 	description?: string
 }
 
-export const SwitchField = ({ formControl, label, accessorKey, description }: Props) => {
+export const SwitchField = ({ control, label, accessorKey, description }: Props) => {
 	return (
 		<FormField
-			control={formControl}
+			control={control}
 			name={accessorKey}
 			render={({ field }) => (
 				<FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>

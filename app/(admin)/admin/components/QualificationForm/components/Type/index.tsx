@@ -4,7 +4,7 @@ import { Control } from 'react-hook-form'
 import { QualificationType } from '@prisma/client'
 
 type Props = {
-	formControl: Control<any>
+	control: Control<any>
 }
 
 const typeOptions = [
@@ -16,10 +16,10 @@ const typeOptions = [
 	})
 ]
 
-const Type = ({ formControl }: Props) => {
+const Type = ({ control }: Props) => {
 	return (
 		<FormField
-			control={formControl}
+			control={control}
 			name='type'
 			render={({ field }) => (
 				<FormItem>

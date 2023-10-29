@@ -5,24 +5,24 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/Pop
 import { cn } from '@/lib/utils/utils'
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
-import { Control, FieldValues, Path } from 'react-hook-form'
+import { Control, FieldPath, FieldValues } from 'react-hook-form'
 
 type Props<T extends FieldValues> = {
-	formControl: Control<T>
-	accessorKey: Path<T>
+	control?: Control<T>
+	accessorKey: FieldPath<T>
 	label?: string
 	placeholder?: string
 }
 
 export const DateField = <T extends FieldValues>({
-	formControl,
+	control,
 	label,
 	accessorKey,
 	placeholder = 'Wybierz datę'
 }: Props<T>) => {
 	return (
 		<FormField
-			control={formControl}
+			control={control}
 			name={accessorKey}
 			render={({ field }) => (
 				<FormItem>

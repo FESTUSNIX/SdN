@@ -8,3 +8,13 @@ export const majorLevelEnum: { [key in MajorLevelKeys]: string } = {
 	JEDNOLITE_MAGISTERSKIE: 'Jednolite Magisterskie',
 	PODYPLOMOWE: 'Podyplomowe'
 }
+
+export const majorLevelOptions: {
+	value: MajorLevelKeys
+	label: string
+}[] = [
+	{ value: 'PODYPLOMOWE', label: 'Podyplomowe' },
+	{ value: 'PIERWSZEGO_STOPNIA', label: 'Pierwszego Stopnia' },
+	{ value: 'DRUGIEGO_STOPNIA', label: 'Drugiego Stopnia' },
+	{ value: 'JEDNOLITE_MAGISTERSKIE', label: 'Jednolite Magisterskie' }
+]

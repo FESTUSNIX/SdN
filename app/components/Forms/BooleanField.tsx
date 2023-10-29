@@ -1,17 +1,17 @@
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { Control, FieldValues, Path } from 'react-hook-form'
+import { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 
 type Props<T extends FieldValues> = {
-	formControl: Control<T>
-	accessorKey: Path<T>
+	control?: Control<T>
+	accessorKey: FieldPath<T>
 	label?: string
 	options?: [string, string]
 	description?: string
 }
 
 export const BooleanField = <T extends FieldValues>({
-	formControl,
+	control,
 	label,
 	options,
 	accessorKey,
@@ -19,7 +19,7 @@ export const BooleanField = <T extends FieldValues>({
 }: Props<T>) => {
 	return (
 		<FormField
-			control={formControl}
+			control={control}
 			name={accessorKey}
 			render={({ field }) => (
 				<FormItem>
