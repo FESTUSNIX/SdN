@@ -1,5 +1,7 @@
+import { Skeleton } from '@/app/components/ui/skeleton'
 import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
 import Address from './components/Address'
 import Details from './components/Details'
 import Header from './components/Header'
@@ -95,13 +97,22 @@ export default async function UnitPage({ params }: Props) {
 				regon={regon}
 			/>
 
-			<Address
-				GOOGLE_MAPS_API_KEY={GOOGLE_MAPS_API_KEY}
-				city={city}
-				voivodeship={voivodeship}
-				postalCode={address?.postalCode ?? null}
-				street={address?.street ?? null}
-			/>
+			<Suspense
+				fallback={
+					<div className='border-b py-6'>
+						<Skeleton className='h-7 w-48' />
+						<Skeleton className='my-4 h-6 w-56' />
+						<Skeleton className='h-[60vh] w-full' />
+					</div>
+				}>
+				<Address
+					GOOGLE_MAPS_API_KEY={GOOGLE_MAPS_API_KEY}
+					city={city}
+					voivodeship={voivodeship}
+					postalCode={address?.postalCode ?? null}
+					street={address?.street ?? null}
+				/>
+			</Suspense>
 
 			<Majors unitSlug={params.unitSlug} />
 		</main>
