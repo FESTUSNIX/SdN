@@ -1,13 +1,10 @@
 import { Separator } from '@/app/components/ui/Separator/separator'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/Tabs/tabs'
 import { H1, Muted } from '@/app/components/ui/Typography'
 import { getAuthSession } from '@/lib/auth/auth'
 import prisma from '@/prisma/client'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { Suspense } from 'react'
-import EditUnit from './components/EditUnit'
-import PreviewUnitData from './components/PreviewUnitData'
-import EditUnitFormSkeleton from './loaders/EditUnitFormSkeleton'
+import { ManageUnitData } from './components/ManageUnitData'
 
 export default async function ManageUnitPage() {
 	const session = await getAuthSession()
@@ -28,6 +25,7 @@ export default async function ManageUnitPage() {
 			unitType: true,
 			city: {
 				select: {
+					id: true,
 					name: true
 				}
 			},
@@ -53,56 +51,22 @@ export default async function ManageUnitPage() {
 	if (!unit) return <div>Nie udało się wczytać danych</div>
 
 	return (
-		<div className='flex h-full flex-col'>
+		<div className='flex h-full flex-col gap-y-8'>
 			<section className='mb-4 mt-6'>
 				<H1>Jednostka</H1>
 				<Muted className='max-w-lg text-base'>
-					Zarządzaj publicznymi danymi jednostki. Te dane wyświetlają się na ogólnodostępnej stronie jednostki.
+					Zarządzaj publicznymi danymi jednostki. Te dane wyświetlają się na ogólnodostępnej{' '}
+					<Link href={`/units/${unit.slug}`} className='font-medium underline'>
+						stronie jednostki.
+					</Link>
 				</Muted>
 
 				<Separator className='mt-4' />
 			</section>
 
-			<Tabs defaultValue='view'>
-				<TabsList>
-					<TabsTrigger value='view'>Przeglądaj</TabsTrigger>
-					<TabsTrigger value='edit'>Edytuj</TabsTrigger>
-				</TabsList>
-				<TabsContent value='view'>
-					<section className='space-y-2 py-6'>
-						<PreviewUnitData unit={unit} />
-					</section>
-				</TabsContent>
-				<TabsContent value='edit'>
-					<section className='space-y-2 py-6'>
-						<Suspense
-							fallback={
-								<div className='grid gap-8 xl:grid-cols-2'>
-									<EditUnitFormSkeleton className='hidden xl:block' />
-									<EditUnitFormSkeleton />
-								</div>
-							}>
-							<EditUnit
-								city={unit.city.name}
-								defaultValues={{
-									cityId: unit.cityId,
-									email: unit.email,
-									isPublic: unit.isPublic,
-									name: unit.name,
-									website: unit.website,
-									id: unit.id,
-									logo: unit.logo,
-									nip: unit.nip ?? '',
-									phone: unit.phone ?? '',
-									postalCode: unit.address?.postalCode ?? '',
-									regon: unit.regon ?? '',
-									street: unit.address?.street ?? ''
-								}}
-							/>
-						</Suspense>
-					</section>
-				</TabsContent>
-			</Tabs>
+			<section className='space-y-2 pb-6'>
+				<ManageUnitData unit={unit} />
+			</section>
 		</div>
 	)
 }
