@@ -1,12 +1,12 @@
 'use client'
 
-import * as React from 'react'
-import { Command as CommandPrimitive } from 'cmdk'
 import { Badge } from '@/app/components/ui/Badge'
 import { Button } from '@/app/components/ui/Button'
 import { Command, CommandGroup, CommandItem } from '@/app/components/ui/Command'
-import { X } from 'lucide-react'
 import { cn } from '@/lib/utils/utils'
+import { Command as CommandPrimitive } from 'cmdk'
+import { ChevronDown, X } from 'lucide-react'
+import * as React from 'react'
 
 interface MultiSelectProps {
 	disabled?: boolean
@@ -83,7 +83,7 @@ export function MultiSelect({
 	return (
 		<Command onKeyDown={handleKeyDown} className='overflow-visible bg-transparent'>
 			<div className='group rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2'>
-				<div className='flex flex-wrap gap-1'>
+				<div className='relative flex grow flex-wrap gap-1 pr-4'>
 					{selected?.map(option => {
 						return (
 							<Badge key={option.value} variant='secondary' className='rounded hover:bg-secondary'>
@@ -122,6 +122,7 @@ export function MultiSelect({
 						onBlur={() => setIsOpen(false)}
 						onFocus={() => setIsOpen(true)}
 					/>
+					<ChevronDown className='pointer-events-none absolute right-0 top-1/2 h-4 w-4 shrink-0 -translate-y-1/2 select-none opacity-50' />
 				</div>
 			</div>
 			<div className='relative z-50 mt-2'>
