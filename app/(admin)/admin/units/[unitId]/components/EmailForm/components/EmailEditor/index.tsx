@@ -2,7 +2,7 @@
 
 // Thanks to Josh from https://www.youtube.com/@joshtriedcoding, make sure to subscribe
 
-import '@/app/(main)/styles/editor.css'
+import '@/app/components/EditorJs/editor.css'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import type EditorJS from '@editorjs/editorjs'
 import { ToolConstructable } from '@editorjs/editorjs'

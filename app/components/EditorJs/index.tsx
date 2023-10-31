@@ -2,11 +2,12 @@
 
 // Thanks to Josh from https://www.youtube.com/@joshtriedcoding, make sure to subscribe
 
-import '@/app/(main)/styles/editor.css'
+import '@/app/components/EditorJs/editor.css'
 import type EditorJS from '@editorjs/editorjs'
 import { ToolConstructable } from '@editorjs/editorjs'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react'
 import { ControllerRenderProps } from 'react-hook-form'
+import { dictionary } from './dictionary'
 
 type Props = {
 	field: ControllerRenderProps<any, string>
@@ -55,7 +56,8 @@ const Editor = forwardRef(({ open, field, placeholder = 'Zacznij pisać tekst tu
 						}
 					},
 					table: Table
-				}
+				},
+				i18n: dictionary
 			})
 		}
 	}, [])

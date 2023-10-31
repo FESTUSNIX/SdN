@@ -120,3 +120,43 @@
 .ct__content {
 	@apply !text-popover-foreground;
 }
+
+/* Table */
+
+.custom-editor .tc-wrap {
+	--color-background: theme(colors.background);
+	--color-text-secondary: theme(colors.muted.foreground);
+	--color-border: theme(colors.border);
+	--cell-size: 34px;
+	--toolbox-icon-size: 18px;
+	--toolbox-padding: 6px;
+	--toolbox-aiming-field-size: calc(var(--toolbox-icon-size) + var(--toolbox-padding) * 2);
+}
+
+.custom-editor .tc-popover {
+	--color-border: theme(colors.border);
+	--color-background: theme(colors.popover.DEFAULT);
+	--color-background-hover: theme(colors.accent.DEFAULT);
+	--color-background-confirm: theme(colors.destructive.DEFAULT);
+	--color-background-confirm-hover: theme(colors.destructive.DEFAULT);
+	--color-text-confirm: theme(colors.destructive.foreground);
+}
+
+.custom-editor .tc-toolbox {
+	--toolbox-padding: 6px;
+	--popover-margin: 30px;
+	--toggler-click-zone-size: 30px;
+	--toggler-dots-color: theme(colors.muted.foreground);
+	--toggler-dots-color-hovered: theme(colors.muted.foreground);
+}
+
+.custom-editor .tc-toolbox__toggler svg rect {
+	@apply fill-popover;
+}
+
+.custom-editor .tc-toolbox__toggler:hover svg {
+	@apply text-accent-foreground;
+}
+.custom-editor .tc-toolbox__toggler:hover svg rect {
+	@apply fill-accent;
+}

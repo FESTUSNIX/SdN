@@ -12,7 +12,7 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessa
 import { cn } from '@/lib/utils/utils'
 import { useRef, useState } from 'react'
 import { Control, ControllerRenderProps, FieldValues, Path } from 'react-hook-form'
-import Editor from '../../(admin)/admin/components/MajorEditor'
+import Editor from '../EditorJs'
 import EditorOutput from '../EditorOutput'
 import { Button } from '../ui/Button'
 import { ScrollArea } from '../ui/ScrollArea'
