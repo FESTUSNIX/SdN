@@ -1,11 +1,5 @@
 import EditorOutput from '@/app/components/EditorOutput'
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger
-} from '@/app/components/ui/Dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/app/components/ui/Dialog'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { type Prisma } from '@prisma/client'
 
@@ -14,7 +8,7 @@ type Props = {
 	name: string
 }
 
-const RichTextField = ({ content, name }: Props) => {
+const RichTextPreviewField = ({ content, name }: Props) => {
 	if (!(typeof content === 'object' && content?.length)) return <div>Brak danych</div>
 
 	return (
@@ -43,4 +37,4 @@ const RichTextField = ({ content, name }: Props) => {
 	)
 }
 
-export default RichTextField
+export default RichTextPreviewField

@@ -86,8 +86,6 @@ const AddMajor = ({ unitId }: Props) => {
 				unitId: unitId
 			}
 
-			console.log(payload)
-
 			const { data } = await axios.post('/api/majors', payload)
 			return data
 		},
@@ -115,7 +113,8 @@ const AddMajor = ({ unitId }: Props) => {
 
 			toast.success('Poymślnie dodano nowy kierunek')
 
-			const {} = axios.get('/api/revalidate')
+			const {} = axios.get('/api/revalidate?path=/manage/majors')
+
 			router.refresh()
 
 			setOpen(false)
@@ -131,7 +130,7 @@ const AddMajor = ({ unitId }: Props) => {
 		<div>
 			<Sheet open={open} onOpenChange={setOpen}>
 				<SheetTrigger asChild>
-					<Button size={'sm'}>
+					<Button className='rounded-full'>
 						<Plus className='mr-2 h-4 w-4' />
 						<span>Dodaj kierunek</span>
 					</Button>

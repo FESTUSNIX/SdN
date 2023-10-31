@@ -16,7 +16,7 @@ type Props<T extends FieldValues, K extends keyof T> = {
 	defaultValue: T[K]
 	FormFieldComp: (props: { accessorKey: FieldPath<T>; control?: Control<T> }) => React.JSX.Element
 } & {
-	majorId: number
+	apiPath: string
 	PreviewComponent?: (value: T[K]) => React.ReactNode
 	schema: z.ZodObject<any>
 }
@@ -26,7 +26,7 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 	defaultValue,
 	PreviewComponent,
 	FormFieldComp,
-	majorId,
+	apiPath,
 	schema
 }: Props<T, K>) => {
 	const [isEditing, setIsEditing] = useState(false)
@@ -51,7 +51,7 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 			setOptimisticValue(values[accessorKey])
 			setIsEditing(false)
 
-			const { data } = await axios.patch(`/api/majors/${majorId}`, payload)
+			const { data } = await axios.patch(apiPath, payload)
 
 			return payload
 		},
@@ -62,7 +62,7 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 
 			if (err instanceof AxiosError) {
 				if (err.response?.status === 404) {
-					return toast.error('Nie odnaleziono kierunku do aktualizacji')
+					return toast.error('Nie odnaleziono danych do aktualizacji')
 				}
 
 				if (err.response?.status === 403) {

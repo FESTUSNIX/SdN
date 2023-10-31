@@ -15,14 +15,14 @@ import { MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { Major, Qualification } from '@prisma/client'
 import { Fragment } from 'react'
 import { Control, FieldPath, FieldValues } from 'react-hook-form'
-import { EditField } from './EditField'
-import RichTextField from './RichTextField'
+import { EditField } from '../../../../../components/Forms/EditField'
+import RichTextPreviewField from './RichTextPreviewField'
 
 type Props = {
 	major: Major & { qualifications: Pick<Qualification, 'id' | 'name'>[] }
 }
 
-const PreviewMajorData = ({ major }: Props) => {
+export const ManageMajorData = ({ major }: Props) => {
 	const {
 		name,
 		address,
@@ -164,39 +164,39 @@ const PreviewMajorData = ({ major }: Props) => {
 			title: 'Zajęcia odbywają się w dni',
 			value: daysOfWeek,
 			customComponent: value =>
-				value.length
+				value.length > 0
 					? daysOfWeek.map(
 							(day, i, elements) => `${capitalize(day.toLowerCase())}${i !== elements.length - 1 ? ', ' : ''}`
 					  )
-					: null,
+					: 'Brak danych',
 			editComponent: DaysOfWeek
 		},
 		{
 			accessorKey: 'description',
 			title: 'Opis',
 			value: description,
-			customComponent: value => <RichTextField name='Opis' content={value} />,
+			customComponent: value => <RichTextPreviewField name='Opis' content={value} />,
 			editComponent: props => EditorField({ modalTitle: 'Edytuj opis', placeholder: 'Aa...', ...props })
 		},
 		{
 			accessorKey: 'recruitmentConditions',
 			title: 'Wymogi przyjęcia',
 			value: recruitmentConditions,
-			customComponent: value => <RichTextField name='Wymogi przyjęcia' content={value} />,
+			customComponent: value => <RichTextPreviewField name='Wymogi przyjęcia' content={value} />,
 			editComponent: props => EditorField({ modalTitle: 'Edytuj wymogi przyjęcia', placeholder: 'Aa...', ...props })
 		},
 		{
 			accessorKey: 'completionConditions',
 			title: 'Wymogi ukończenia',
 			value: completionConditions,
-			customComponent: value => <RichTextField name='Wymogi ukończenia' content={value} />,
+			customComponent: value => <RichTextPreviewField name='Wymogi ukończenia' content={value} />,
 			editComponent: props => EditorField({ modalTitle: 'Edytuj wymogi ukończenia', placeholder: 'Aa...', ...props })
 		},
 		{
 			accessorKey: 'syllabus',
 			title: 'Program nauki',
 			value: syllabus,
-			customComponent: value => <RichTextField name='Program nauki' content={value} />,
+			customComponent: value => <RichTextPreviewField name='Program nauki' content={value} />,
 			editComponent: props => EditorField({ modalTitle: 'Edytuj program nauki', placeholder: 'Aa...', ...props })
 		}
 	]
@@ -210,7 +210,7 @@ const PreviewMajorData = ({ major }: Props) => {
 
 						<EditField
 							FormFieldComp={item.editComponent}
-							majorId={major.id}
+							apiPath={`/api/majors/${major.id}`}
 							accessorKey={item.accessorKey}
 							defaultValue={item.value}
 							PreviewComponent={item.customComponent}
@@ -224,5 +224,3 @@ const PreviewMajorData = ({ major }: Props) => {
 		</div>
 	)
 }
-
-export default PreviewMajorData
