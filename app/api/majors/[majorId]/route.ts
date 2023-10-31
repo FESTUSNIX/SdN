@@ -1,6 +1,7 @@
 import { getAuthSession } from '@/lib/auth/auth'
 import { MajorValidator } from '@/lib/validators/major'
 import prisma from '@/prisma/client'
+import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
 export async function GET(req: Request, { params }: { params: { majorId: string } }) {
@@ -30,11 +31,30 @@ export async function GET(req: Request, { params }: { params: { majorId: string 
 
 export async function DELETE(req: Request, { params }: { params: { majorId: string } }) {
 	try {
+		const { searchParams } = new URL(req.url)
+		const revalidate = searchParams.get('revalidate')
+
+		const session = await getAuthSession()
+		if (!session) {
+			return new Response('Not authenticated', { status: 401 })
+		}
+
 		const id = parseInt(params.majorId)
 
 		const majorToDelete = await prisma.major.findFirst({
 			where: {
 				id: id
+			},
+			select: {
+				unit: {
+					select: {
+						managers: {
+							select: {
+								id: true
+							}
+						}
+					}
+				}
 			}
 		})
 
@@ -42,11 +62,17 @@ export async function DELETE(req: Request, { params }: { params: { majorId: stri
 			return new Response('Could not find major to delete', { status: 404 })
 		}
 
+		if (!(session.user.role === 'ADMIN' || majorToDelete.unit.managers.some(m => m.id === session.user.id))) {
+			return new Response('Not authenticated', { status: 403 })
+		}
+
 		await prisma.major.delete({
 			where: {
 				id: id
 			}
 		})
+
+		revalidate && revalidatePath(revalidate)
 
 		return new Response('OK')
 	} catch (error) {
