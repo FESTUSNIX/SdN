@@ -7,7 +7,8 @@ import prisma from '@/prisma/client'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import PreviewMajorData from './components/PreviewMajorData'
+import { DeleteMajor } from './components/DeleteMajor'
+import { ManageMajorData } from './components/ManageMajorData'
 
 export default async function ManageMajorPage({ params: { slug } }: { params: { slug: string } }) {
 	const session = await getAuthSession()
@@ -39,9 +40,7 @@ export default async function ManageMajorPage({ params: { slug } }: { params: { 
 	return (
 		<div className='flex h-full flex-col gap-8'>
 			<section>
-				<Link
-					href={'/manage/majors'}
-					className={cn(buttonVariants({ variant: 'link' }), 'mb-4 gap-2 pl-0')}>
+				<Link href={'/manage/majors'} className={cn(buttonVariants({ variant: 'link' }), 'mb-4 gap-2 pl-0')}>
 					<ArrowLeft className='h-4 w-4' />
 					<span>Powrót do listy</span>
 				</Link>
@@ -51,8 +50,14 @@ export default async function ManageMajorPage({ params: { slug } }: { params: { 
 				<Separator className='mt-4' />
 			</section>
 
-			<section className='space-y-2 pb-6'>
-				<PreviewMajorData major={major} />
+			<section className='space-y-2'>
+				<ManageMajorData major={major} />
+			</section>
+
+			<section className='pb-6'>
+				<div className='ml-auto w-max'>
+					<DeleteMajor id={major.id} name={major.name} />
+				</div>
 			</section>
 		</div>
 	)
