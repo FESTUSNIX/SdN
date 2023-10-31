@@ -1,10 +1,13 @@
 import { FormControl, FormField, FormItem, FormMessage } from '@/app/components/ui/Form'
 import { Input } from '@/app/components/ui/Input'
-import { PublicUnitFormType } from '@/lib/validators/public-unit'
+import { Control, FieldPath, FieldValues } from 'react-hook-form'
 import FieldTitle from '../FieldTitle'
 
-type Props = {
-	form: PublicUnitFormType
+type Props<T extends FieldValues> = {
+	accessorKey: FieldPath<T>
+	control?: Control<T>
+	label?: string
+	disableReset?: boolean
 }
 
 const normalizePostalCode = (value: string) => {
@@ -18,14 +21,14 @@ const normalizePostalCode = (value: string) => {
 	return (sliced[0] + '-' + sliced[1]).substring(0, 6)
 }
 
-const PostalCode = ({ form }: Props) => {
+const PostalCode = <T extends FieldValues>({ accessorKey, control, disableReset, label }: Props<T>) => {
 	return (
 		<FormField
-			control={form.control}
-			name='postalCode'
+			control={control}
+			name={accessorKey}
 			render={({ field }) => (
 				<FormItem>
-					<FieldTitle form={form} fieldName='postalCode' label='Kod pocztowy' />
+					{label && <FieldTitle disableReset={disableReset} accessorKey={accessorKey} label={label} />}
 					<FormControl>
 						<Input
 							{...field}

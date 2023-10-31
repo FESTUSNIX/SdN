@@ -36,7 +36,6 @@ export const DaysOfWeek = <T extends FieldValues>({ control, accessorKey, label 
 	)
 
 	useEffect(() => {
-		console.log(selectedDays?.map(q => q.value))
 		field.onChange((selectedDays?.map(q => q.value) ?? []) as DaysOfWeekType[])
 	}, [selectedDays])
 

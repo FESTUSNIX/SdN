@@ -14,7 +14,7 @@ const Name = ({ form }: Props) => {
 			name='name'
 			render={({ field }) => (
 				<FormItem>
-					<FieldTitle form={form} fieldName='name' label='Nazwa' />
+					<FieldTitle accessorKey='name' label='Nazwa' />
 
 					<FormControl>
 						<Input placeholder='Aa...' {...field} />

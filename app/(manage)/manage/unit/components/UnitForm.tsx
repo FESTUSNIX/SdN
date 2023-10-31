@@ -16,8 +16,8 @@ const UnitForm = ({ form, onSubmit }: Props) => {
 				<Name form={form} />
 				<Email form={form} />
 				<Website form={form} />
-				<City form={form} />
-				<PostalCode form={form} />
+				<City label='Miasto' control={form.control} accessorKey={'cityId'} />
+				<PostalCode control={form.control} accessorKey='postalCode' />
 				<Street form={form} />
 				<IsPublic form={form} />
 				<Phone form={form} />

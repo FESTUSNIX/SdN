@@ -14,7 +14,7 @@ const Phone = ({ form }: Props) => {
 			name='phone'
 			render={({ field }) => (
 				<FormItem>
-					<FieldTitle form={form} fieldName='phone' label='Telefon' />
+					<FieldTitle accessorKey='phone' label='Telefon' />
 					<FormControl>
 						<Input placeholder='+48 123 456 789' {...field} />
 					</FormControl>

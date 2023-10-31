@@ -14,7 +14,7 @@ const Regon = ({ form }: Props) => {
 			name='regon'
 			render={({ field }) => (
 				<FormItem>
-					<FieldTitle form={form} fieldName='regon' label='Regon' />
+					<FieldTitle accessorKey='regon' label='Regon' />
 					<FormControl>
 						<Input placeholder='123456789' {...field} maxLength={9} />
 					</FormControl>

@@ -4,13 +4,17 @@ import { FormControl, FormField, FormItem, FormMessage } from '@/app/components/
 import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/Popover'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { cn } from '@/lib/utils/utils'
-import { PublicUnitFormType } from '@/lib/validators/public-unit'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { cache, use, useState } from 'react'
+import { Control, FieldPath, FieldValues } from 'react-hook-form'
 import FieldTitle from '../FieldTitle'
+import { Skeleton } from '../../ui/skeleton'
 
-type Props = {
-	form: PublicUnitFormType
+type Props<T extends FieldValues> = {
+	accessorKey: FieldPath<T>
+	control?: Control<T>
+	label?: string
+	disableReset?: boolean
 }
 
 const getCities = cache(() =>
@@ -22,17 +26,19 @@ const getCities = cache(() =>
 	}).then(res => res.json())
 )
 
-const City = ({ form }: Props) => {
+const City = <T extends FieldValues>({ accessorKey, control, label, disableReset }: Props<T>) => {
 	const [open, setOpen] = useState(false)
-
 	const cities = use<{ id: number; name: string }[]>(getCities())
+
+	if (!cities) return <Skeleton className='h-10 w-full' />
+
 	return (
 		<FormField
-			control={form.control}
-			name='cityId'
+			control={control}
+			name={accessorKey}
 			render={({ field }) => (
 				<FormItem className='flex flex-col'>
-					<FieldTitle form={form} fieldName='cityId' label='Miasto' />
+					{label && <FieldTitle accessorKey={accessorKey} disableReset={disableReset} label={label} />}
 					<Popover open={open} onOpenChange={setOpen}>
 						<PopoverTrigger asChild>
 							<FormControl>
@@ -57,7 +63,7 @@ const City = ({ form }: Props) => {
 												value={option.name}
 												key={option.id}
 												onSelect={value => {
-													form.setValue('cityId', cities.filter(option => option.name.toLowerCase() === value)?.[0]?.id)
+													field.onChange(cities.filter(option => option.name.toLowerCase() === value)?.[0]?.id)
 													setOpen(false)
 												}}>
 												<Check

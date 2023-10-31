@@ -14,7 +14,7 @@ const NIP = ({ form }: Props) => {
 			name='nip'
 			render={({ field }) => (
 				<FormItem>
-					<FieldTitle form={form} fieldName='nip' label='NIP' />
+					<FieldTitle accessorKey='nip' label='NIP' />
 					<FormControl>
 						<Input placeholder='1234567890' {...field} maxLength={10} />
 					</FormControl>

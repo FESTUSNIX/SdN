@@ -14,7 +14,7 @@ const Street = ({ form }: Props) => {
 			name='street'
 			render={({ field }) => (
 				<FormItem>
-					<FieldTitle form={form} fieldName='street' label='Adres' />
+					<FieldTitle accessorKey='street' label='Adres' />
 					<FormControl>
 						<Input placeholder='Szkolna 12/3' {...field} />
 					</FormControl>

@@ -14,7 +14,7 @@ const Email = ({ form }: Props) => {
 			name='email'
 			render={({ field }) => (
 				<FormItem>
-					<FieldTitle form={form} fieldName='email' label='Email' />
+					<FieldTitle accessorKey='email' label='Email' />
 					<FormControl>
 						<Input placeholder='jan@kowalski.pl' type='email' {...field} />
 					</FormControl>

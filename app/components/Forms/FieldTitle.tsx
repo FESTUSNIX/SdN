@@ -1,22 +1,27 @@
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
+import { FieldPath, FieldValues, useController } from 'react-hook-form'
 import { FormLabel } from '../ui/Form'
 import ResetField from './ResetField'
 
-type Props<T extends FieldValues> = { form: UseFormReturn<T> } & {
-	fieldName: Path<T>
+type Props<T extends FieldValues> = {
+	accessorKey: FieldPath<T>
 	label: string
+	disableReset?: boolean
 }
 
-const FieldTitle = <T extends FieldValues>({ label, fieldName, form }: Props<T>) => {
+const FieldTitle = <T extends FieldValues>({ label, accessorKey, disableReset }: Props<T>) => {
+	const { field, formState } = useController({ name: accessorKey })
+
 	return (
 		<div className='flex items-center justify-between'>
 			<FormLabel>{label}</FormLabel>
 
-			<ResetField
-				defaultValue={form.formState.defaultValues?.[fieldName]}
-				currentValue={form.getValues(fieldName)}
-				resetFn={() => form.resetField(fieldName)}
-			/>
+			{disableReset && (
+				<ResetField
+					defaultValue={formState.defaultValues?.[accessorKey]}
+					currentValue={field.value}
+					resetFn={() => field.onChange(formState.defaultValues?.[accessorKey])}
+				/>
+			)}
 		</div>
 	)
 }

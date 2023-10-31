@@ -14,7 +14,7 @@ const Website = ({ form }: Props) => {
 			name='website'
 			render={({ field }) => (
 				<FormItem>
-					<FieldTitle form={form} fieldName='website' label='Strona internetowa' />
+					<FieldTitle accessorKey='website' label='Strona internetowa' />
 					<FormControl>
 						<Input placeholder='https://website.pl/' {...field} />
 					</FormControl>

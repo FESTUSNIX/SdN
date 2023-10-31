@@ -14,7 +14,7 @@ const IsPublic = ({ form }: Props) => {
 			name='isPublic'
 			render={({ field }) => (
 				<FormItem>
-					<FieldTitle form={form} fieldName='isPublic' label='Status jednostki' />
+					<FieldTitle accessorKey='isPublic' label='Status jednostki' />
 					<FormControl className='py-2'>
 						<RadioGroup
 							onValueChange={value => field.onChange(value === 'publiczna')}
