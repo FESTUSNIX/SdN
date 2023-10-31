@@ -32,7 +32,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 						<div className='h-20 md:h-[72px]' />
 						<Separator />
 
-						<div className='container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10'>
+						<div className='container flex-1 items-start max-sm:px-4 md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10'>
 							<aside className='h-full md:border-r md:px-4'>
 								<div className='py-8 md:sticky md:bottom-0 md:top-navOffset'>
 									<SidebarNav />
