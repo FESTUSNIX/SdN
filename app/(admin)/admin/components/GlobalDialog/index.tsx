@@ -53,8 +53,8 @@ const GlobalDialog = () => {
 							</Button>
 							<Button
 								variant={modalContent.confirmButtonVariant}
-								onClick={() => {
-									modalContent.onConfirm()
+								onClick={async () => {
+									await modalContent.onConfirm()
 									closeModal()
 								}}>
 								{modalContent.confirmButtonText}

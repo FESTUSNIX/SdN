@@ -9,7 +9,7 @@ type ModalContent = {
 	confirmButtonVariant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
 	cancelButtonText?: string
 	cancelButtonVariant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
-	onConfirm: () => void
+	onConfirm: () => void | Promise<any>
 	onCancel?: () => void
 }
 
