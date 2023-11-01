@@ -112,6 +112,21 @@
 			max-width: 1280px;
 		}
 	}
+
+	.grid-container {
+		@apply grid gap-x-4 md:gap-x-8;
+		grid-template-columns:
+			[full-start] 1fr [wrapper-start]
+			minmax(0, 75rem) [wrapper-end] 1fr [full-end];
+	}
+
+	.grid-container > * {
+		@apply col-start-[wrapper] col-end-[wrapper];
+	}
+
+	.grid-container > .container-fill {
+		@apply col-start-[full] col-end-[full];
+	}
 }
 
 @layer utilities {

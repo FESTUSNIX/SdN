@@ -1,29 +1,26 @@
 import Providers from '@/app/components/Providers'
 import '@/app/styles/globals.css'
 import { cn } from '@/lib/utils/utils'
+import { Metadata } from 'next'
 import { Outfit } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
-import Navbar from './components/Navbar'
-import SimplifiedFooter from './components/SimplifiedFooter'
 
 const outfit = Outfit({ subsets: ['latin-ext'] })
 
-export const metadata = {
+export const metadata: Metadata = {
 	title: {
-		template: '%s | Studia dla Nauczycieli',
-		default: 'Studia dla Nauczycieli'
+		default: 'Uwierzytelnianie | Studia Dla Nauczycieli',
+		template: '%s | Studia Dla Nauczycieli'
 	}
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<body className={cn(outfit.className, 'flex flex-col')}>
 				<Providers>
-					<Navbar />
-					<div className='pointer-events-none h-navOffset select-none'></div>
 					{children}
-					<SimplifiedFooter />
 					<Toaster />
 				</Providers>
 			</body>

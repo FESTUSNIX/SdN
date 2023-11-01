@@ -1,13 +1,13 @@
 import Navbar from '@/app/(main)/components/Navbar'
 import Providers from '@/app/components/Providers'
 import { Separator } from '@/app/components/ui/Separator/separator'
+import '@/app/styles/globals.css'
 import { getAuthSession } from '@/lib/auth/auth'
 import { Metadata } from 'next'
 import { Outfit } from 'next/font/google'
 import { redirect } from 'next/navigation'
 import { Toaster } from 'react-hot-toast'
 import SidebarNav from './components/SidebarNav'
-import './styles/globals.css'
 
 const outfit = Outfit({ subsets: ['latin-ext'] })
 
