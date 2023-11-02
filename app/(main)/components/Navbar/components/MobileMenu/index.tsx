@@ -21,7 +21,7 @@ export const MobileMenu = () => {
 				<HamburgerIcon toggled={isOpen} toggle={setIsOpen} size={24} label='Show menu' rounded />
 			</div>
 
-			<div
+			<nav
 				className={cn(
 					'fixed inset-0 z-40 flex items-center justify-center bg-background duration-300',
 					isOpen ? 'translate-x-0' : 'translate-x-full'
@@ -35,7 +35,7 @@ export const MobileMenu = () => {
 						</li>
 					))}
 				</ul>
-			</div>
+			</nav>
 		</div>
 	)
 }

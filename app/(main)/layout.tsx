@@ -1,3 +1,4 @@
+import { MobileNav } from '@/app/components/MobileNav'
 import Providers from '@/app/components/Providers'
 import '@/app/styles/globals.css'
 import { cn } from '@/lib/utils/utils'
@@ -24,6 +25,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<div className='pointer-events-none h-navOffset select-none'></div>
 					{children}
 					<SimplifiedFooter />
+
+					<MobileNav />
 					<Toaster />
 				</Providers>
 			</body>

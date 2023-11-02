@@ -1,7 +1,7 @@
 export const links = [
 	{
-		label: 'O nas',
-		path: '/about'
+		label: 'Wyszukiwarka',
+		path: '/search'
 	},
 	{
 		label: 'Kontakt',

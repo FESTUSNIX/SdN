@@ -1,4 +1,5 @@
 import Navbar from '@/app/(main)/components/Navbar'
+import { MobileNav } from '@/app/components/MobileNav'
 import Providers from '@/app/components/Providers'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import '@/app/styles/globals.css'
@@ -41,6 +42,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							<main className='flex w-full flex-col overflow-hidden pt-8'>{children}</main>
 						</div>
 					</div>
+
+					<MobileNav />
 
 					<Toaster />
 				</Providers>
