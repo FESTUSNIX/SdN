@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { LoginForm } from './components/LoginForm'
-import graduationImg from '/public/graduation.jpg'
+import graduationImg from '/public/images/login-page-deco.webp'
 
 export const metadata = {
 	title: 'Logowanie',
@@ -25,24 +25,31 @@ const LoginPage = async () => {
 			<div
 				className='absolute inset-0 col-span-1 row-span-full overflow-hidden bg-primary md:relative md:h-full'
 				aria-hidden>
-				<Image src={graduationImg} alt='' priority className='absolute inset-0 h-full w-full object-cover' />
+				<Image
+					src={graduationImg}
+					alt=''
+					priority
+					quality={75}
+					placeholder='blur'
+					className='absolute inset-0 h-full w-full object-cover'
+				/>
 				<div className='absolute inset-0 bg-primary/50 backdrop-blur-sm' />
 				<div className='absolute inset-0 bg-gradient-to-b from-black/50 via-black/0 to-black/50' />
 
-				<div className='absolute left-0 top-0 z-20 flex h-full w-full flex-col px-4 py-8 md:relative md:h-full md:justify-between lg:px-12'>
-					<Link href={'/'} className='text-sm text-muted'>
+				<div className='absolute left-0 top-0 flex h-full w-full flex-col px-4 py-8 md:relative md:h-full md:justify-between lg:px-12'>
+					<Link href={'/'} className='z-30 w-max text-sm text-[#f5f5f5]'>
 						<Icons.brand.logo className='h-10' />
 					</Link>
 
 					<div className='hidden md:block'>
-						<Link href={'mailto:kontakt@studiadlanauczycieli.pl'} className='text-sm text-muted hover:underline'>
+						<Link href={'mailto:kontakt@studiadlanauczycieli.pl'} className='text-sm text-[#f5f5f5] hover:underline'>
 							kontakt@studiadlanauczycieli.pl
 						</Link>
 					</div>
 				</div>
 			</div>
 			<div className='z-20 row-span-full flex h-full flex-col justify-center px-4 py-24 md:max-lg:col-span-2 lg:px-12'>
-				<div className='wrapper max-w-lg rounded-lg bg-background px-6 py-8 shadow-sm md:shadow-none'>
+				<div className='wrapper z-40 max-w-lg rounded-lg bg-background px-6 py-8 shadow-sm md:shadow-none'>
 					<div className='mb-8'>
 						<H1 className=''>Zaloguj się</H1>
 					</div>
