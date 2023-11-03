@@ -1,7 +1,9 @@
 import { getMajorSearchResults } from '@/app/_actions/major'
-import { H1, H3 } from '@/app/components/ui/Typography'
+import { H1, H2, H3 } from '@/app/components/ui/Typography'
 import { MajorLevel } from '@prisma/client'
 import Filters from './components/Filters'
+import ResetFilters from './components/Filters/components/ResetFilters'
+import { FiltersDialog } from './components/FiltersDialog'
 import ListTypeSelect from './components/ListTypeSelect/'
 import { Pagination } from './components/Pagination'
 import Results from './components/Results'
@@ -72,28 +74,42 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 				<H1 size='sm'>Znajdź studia dla siebie</H1>
 			</div>
 
-			<div className='grid grid-cols-4 gap-6'>
-				<div className='relative col-start-1 col-end-2 row-start-1 row-end-3'>
-					<Filters citiesParam={cities} voivodeshipsParam={voivodeships} />
+			<div className='flex gap-6'>
+				<div className='relative hidden max-w-xs shrink-0 xl:block'>
+					<div className='sticky bottom-0 top-[calc(var(--nav-offset,_80px)+2rem)] max-h-[calc(100vh-var(--nav-offset,_80px)-4rem)] overflow-hidden rounded-lg border bg-background'>
+						<div className='flex items-center justify-between border-b px-4 py-2'>
+							<H2 className='pb-0' size='sm'>
+								Filtry
+							</H2>
+							<div>
+								<ResetFilters />
+							</div>
+						</div>
+
+						<Filters citiesParam={cities} voivodeshipsParam={voivodeships} />
+					</div>
 				</div>
 
-				<div className='col-start-2 col-end-5 row-start-1 row-end-3'>
+				<div className='col-start-2 col-end-5 row-start-1 row-end-3 grow'>
 					<div className='mb-12'>
-						<div className='mb-4'>
+						<div className='mb-4 flex items-center gap-2'>
 							<SearchBar />
 						</div>
 
-						<div className='flex items-start justify-between'>
+						<div className='flex flex-wrap-reverse items-start justify-between gap-2'>
 							<ListTypeSelect />
 
-							<Sort />
+							<div className='flex items-center gap-2'>
+								<Sort />
+								<FiltersDialog citiesParam={cities} voivodeshipsParam={voivodeships} />
+							</div>
 						</div>
 					</div>
 
 					<div className=''>
 						<Results
 							majors={majors}
-							listType={(listType === 'list' || listType === 'grid' ? listType : undefined) ?? 'grid'}
+							listType={(listType === 'list' || listType === 'grid' ? listType : undefined) ?? 'list'}
 						/>
 					</div>
 

@@ -51,7 +51,7 @@ const ListTypeSelect = () => {
 		const params = new URLSearchParams(searchParams)
 		const listTypeParam = params.get('list_type')
 
-		setListType((listTypeParam === 'list' || listTypeParam === 'grid' ? listTypeParam : undefined) ?? 'grid')
+		setListType((listTypeParam === 'list' || listTypeParam === 'grid' ? listTypeParam : undefined) ?? 'list')
 	}, [searchParams])
 
 	useEffect(() => {

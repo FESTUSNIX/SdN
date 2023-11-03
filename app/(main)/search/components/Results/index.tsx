@@ -28,7 +28,7 @@ const Results = ({ majors, listType }: Props) => {
 	return (
 		<div
 			className={cn(
-				'grid gap-x-1 gap-y-2',
+				'grid gap-x-1 gap-y-2 @container',
 				listType === 'grid' && 'grid-cols-3',
 				listType === 'list' && 'grid-cols-1'
 			)}>
