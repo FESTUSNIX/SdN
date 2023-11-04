@@ -1,28 +1,36 @@
 import { getAuthSession } from '@/lib/auth/auth'
 import { cn } from '@/lib/utils/utils'
-import { GraduationCap, LucideProps, School2, UserCircle2 } from 'lucide-react'
+import { Heart, LucideProps, Search, UserCircle2 } from 'lucide-react'
 import { ReactElement } from 'react'
+import { Icons } from '../Icons'
 import { MobileNavLink } from './components/MobileNavLink'
 import { MobileNavShell } from './components/MobileNavShell'
 
 export const MobileNav = async () => {
 	const session = await getAuthSession()
 
-	const links: {
+	const links: ({
 		label: string
 		href: string
 		Icon: ReactElement<LucideProps>
-	}[] = [
+	} | null)[] = [
 		{
-			label: 'Kierunki',
+			label: 'Odkrywaj',
+			href: '/',
+			Icon: <Icons.brand.logo />
+		},
+		{
+			label: 'Szukaj',
 			href: '/search',
-			Icon: <GraduationCap />
+			Icon: <Search />
 		},
-		{
-			label: 'Uczelnie',
-			href: '/units',
-			Icon: <School2 />
-		},
+		session?.user
+			? {
+					label: 'Polubione',
+					href: '/liked',
+					Icon: <Heart />
+			  }
+			: null,
 		{
 			label: session?.user ? 'Konto' : 'Zaloguj się',
 			href: session?.user ? '/manage' : '/login',
@@ -34,11 +42,14 @@ export const MobileNav = async () => {
 		<MobileNavShell>
 			<nav className={cn('block w-full border-t bg-background py-4 md:hidden')}>
 				<ul className='wrapper flex items-center justify-around'>
-					{links.map(link => (
-						<li key={link.href}>
-							<MobileNavLink {...link} />
-						</li>
-					))}
+					{links.map(
+						link =>
+							link && (
+								<li key={link.href}>
+									<MobileNavLink {...link} />
+								</li>
+							)
+					)}
 				</ul>
 			</nav>
 		</MobileNavShell>

@@ -1,12 +1,11 @@
 'use client'
 
-import { Input } from '@/app/components/ui/Input'
 import { useDebounce } from '@/app/hooks/useDebounce'
 import { SearchIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 
-const SearchBar = () => {
+export const SearchBar = () => {
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()!
@@ -30,26 +29,35 @@ const SearchBar = () => {
 		const params = new URLSearchParams(searchParams)
 		const searchQuery = params.get('q') ?? ''
 
-		if (query === searchQuery) return
+		if (debouncedQuery === searchQuery) return
 
 		setQuery(searchQuery)
 	}, [searchParams])
 
 	useEffect(() => {
-		router.push(pathname + '?' + createQueryString('q', query))
+		if (!debouncedQuery) return router.push(pathname)
+
+		router.push('/search' + '?' + createQueryString('q', debouncedQuery))
 	}, [debouncedQuery])
 
 	return (
-		<div className='relative grow'>
-			<SearchIcon className='pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 select-none text-muted-foreground' />
-			<Input
-				placeholder='Szukaj wśród 2568 ofert'
-				className='h-auto rounded-full py-4 pl-12 pr-6'
+		<label className='relative flex max-w-full cursor-text items-center overflow-hidden rounded-full border border-input'>
+			<input
+				placeholder='Wyszukaj kierunki'
+				className='w-full grow px-4 py-2 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50'
 				value={query}
 				onChange={handleChange}
 			/>
-		</div>
+			<button
+				onClick={() => {
+					if (!debouncedQuery) return router.push('/search')
+
+					router.push('/search' + '?' + createQueryString('q', debouncedQuery))
+				}}
+				className='z-10 m-1 ml-0 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary duration-300 hover:bg-primary/90 active:scale-90'>
+				<SearchIcon className='pointer-events-none h-3.5 w-3.5 select-none stroke-[3] text-primary-foreground' />
+				<span className='sr-only'>Szukaj</span>
+			</button>
+		</label>
 	)
 }
-
-export default SearchBar

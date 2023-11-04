@@ -13,23 +13,25 @@ const options: {
 	Icon: LucideIcon
 }[] = [
 	{
-		value: 'grid',
-		label: 'Karty',
-		Icon: Icons.cards
-	},
-	{
 		value: 'list',
 		label: 'Lista',
 		Icon: Icons.list
+	},
+	{
+		value: 'grid',
+		label: 'Karty',
+		Icon: Icons.cards
 	}
 ]
 
 const ListTypeSelect = () => {
+	const defaultValue = 'list'
+
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()!
 	const [isPending, startTransition] = useTransition()
-	const [listType, setListType] = useState(options[0].value)
+	const [listType, setListType] = useState(defaultValue)
 	const debouncedListType = useDebounce(listType, 500)
 
 	const createQueryString = useCallback(
@@ -51,17 +53,16 @@ const ListTypeSelect = () => {
 		const params = new URLSearchParams(searchParams)
 		const listTypeParam = params.get('list_type')
 
-		setListType((listTypeParam === 'list' || listTypeParam === 'grid' ? listTypeParam : undefined) ?? 'list')
+		if (!listTypeParam) return
+
+		setListType(listTypeParam === 'list' || listTypeParam === 'grid' ? listTypeParam : defaultValue)
 	}, [searchParams])
 
 	useEffect(() => {
 		startTransition(() => {
-			router.push(
-				`${pathname}?${createQueryString('list_type', debouncedListType === 'default' ? '' : debouncedListType)}`,
-				{
-					scroll: false
-				}
-			)
+			router.push(`${pathname}?${createQueryString('list_type', debouncedListType)}`, {
+				scroll: false
+			})
 		})
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedListType])

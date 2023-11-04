@@ -1,6 +1,7 @@
 import { getMajorSearchResults } from '@/app/_actions/major'
 import { H1, H2, H3 } from '@/app/components/ui/Typography'
 import { MajorLevel } from '@prisma/client'
+import { Metadata } from 'next'
 import Filters from './components/Filters'
 import ResetFilters from './components/Filters/components/ResetFilters'
 import { FiltersDialog } from './components/FiltersDialog'
@@ -9,6 +10,10 @@ import { Pagination } from './components/Pagination'
 import Results from './components/Results'
 import SearchBar from './components/SearchBar'
 import Sort from './components/Sort'
+
+export const metadata: Metadata = {
+	title: 'Szukaj kierunku'
+}
 
 const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
 	const searchQuery = searchParams.q?.toString().replace(/[\s\n\t]/g, '_')

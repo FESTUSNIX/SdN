@@ -22,8 +22,8 @@ export const MobileNavShell = ({ children }: Props) => {
 		lastDirectionChange: 0
 	})
 
-	const topBoundary = 100
-	const bottomBoundary = 100
+	const topBoundary = 60
+	const bottomBoundary = 60
 
 	const controlNavbar = () => {
 		if (typeof window !== 'undefined') {
@@ -37,7 +37,9 @@ export const MobileNavShell = ({ children }: Props) => {
 					})
 				}
 
-				setShow(!(changeBoundary.lastDirectionChange + bottomBoundary < window.scrollY))
+				setShow(
+					!(changeBoundary.direction === 'down' && changeBoundary.lastDirectionChange + bottomBoundary < window.scrollY)
+				)
 			} else {
 				// On scroll up
 
@@ -48,7 +50,7 @@ export const MobileNavShell = ({ children }: Props) => {
 					})
 				}
 
-				setShow(changeBoundary.lastDirectionChange - topBoundary > window.scrollY)
+				setShow(changeBoundary.direction === 'up' && changeBoundary.lastDirectionChange - topBoundary > window.scrollY)
 			}
 
 			setLastScrollY(window.scrollY)
@@ -75,8 +77,12 @@ export const MobileNavShell = ({ children }: Props) => {
 	if (isMD) return null
 
 	return (
-		<div className={cn('fixed bottom-0 w-full duration-300 ease-in-out', show ? 'translate-y-0' : 'translate-y-full')}>
-			{children}
-		</div>
+		<>
+			<div
+				className={cn('fixed bottom-0 w-full duration-300 ease-in-out', show ? 'translate-y-0' : 'translate-y-full')}>
+				{children}
+			</div>
+			<div className='h-20' />
+		</>
 	)
 }
