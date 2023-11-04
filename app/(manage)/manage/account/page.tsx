@@ -1,10 +1,12 @@
+import { SignOutShell } from '@/app/components/SignOutShell'
+import { Button } from '@/app/components/ui/Button'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H1, H2, H3, Muted } from '@/app/components/ui/Typography'
 import { getAuthSession } from '@/lib/auth/auth'
 import prisma from '@/prisma/client'
+import { LogOut } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import ChangePassword from '../components/ChangePassword'
-import SignOutBtn from '../components/SignOutBtn'
 
 export default async function ManageAccountPage() {
 	const session = await getAuthSession()
@@ -104,7 +106,12 @@ export default async function ManageAccountPage() {
 			)}
 
 			<div className='mt-auto self-end py-6'>
-				<SignOutBtn />
+				<SignOutShell>
+					<Button variant={'outline'} className='text-destructive hover:border-destructive hover:text-destructive'>
+						<LogOut className='mr-2 h-4 w-4' />
+						<span>Wyloguj się</span>
+					</Button>
+				</SignOutShell>
 			</div>
 		</div>
 	)
