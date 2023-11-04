@@ -38,7 +38,7 @@ const LoginPage = async () => {
 
 				<div className='absolute left-0 top-0 flex h-full w-full flex-col px-4 py-8 md:relative md:h-full md:justify-between lg:px-12'>
 					<Link href={'/'} className='z-30 w-max text-sm text-[#f5f5f5]'>
-						<Icons.brand.logo className='h-10' />
+						<Icons.brand.wordmark className='h-10' />
 					</Link>
 
 					<div className='hidden md:block'>
