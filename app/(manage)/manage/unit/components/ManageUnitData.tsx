@@ -68,7 +68,7 @@ export const ManageUnitData = ({ unit }: Props) => {
 		{
 			accessorKey: 'street',
 			title: 'Adres',
-			value: address?.postalCode ?? '',
+			value: address?.street ?? '',
 			editComponent: props => TextField({ placeholder: 'Szkolna 12/3', ...props })
 		},
 		{
