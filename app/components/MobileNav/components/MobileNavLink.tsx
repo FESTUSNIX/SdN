@@ -15,7 +15,8 @@ type Props = {
 export const MobileNavLink = ({ Icon, href, label }: Props) => {
 	const path = usePathname()
 
-	const isActive = (href: string) => path.startsWith('/' + (href.split('/').filter(s => s)[0] ?? ''))
+	const isActive = (href: string) =>
+		href === '/' ? path === href : path.startsWith('/' + (href.split('/').filter(s => s)[0] ?? ''))
 
 	const clonedIcon = React.cloneElement(Icon, {
 		className: 'mb-1 h-6 w-6'
