@@ -1,5 +1,6 @@
 import { Icons } from '@/app/components/Icons'
 import Link from 'next/link'
+import { Suspense } from 'react'
 import AccountDropdown from './components/AccountDropdown'
 import { DynamicBorder } from './components/DynamicBorder'
 import { SearchBar } from './components/SearchBar'
@@ -17,7 +18,9 @@ const Navbar = async () => {
 				</Link>
 
 				<div className='max-w-full shrink overflow-hidden pl-4'>
-					<SearchBar />
+					<Suspense>
+						<SearchBar />
+					</Suspense>
 				</div>
 
 				<nav className='hidden md:block'>
