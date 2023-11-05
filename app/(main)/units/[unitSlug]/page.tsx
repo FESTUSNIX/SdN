@@ -9,21 +9,9 @@ import Majors from './components/Majors'
 
 type Props = { params: { unitSlug: string } }
 
-export async function generateStaticParams() {
-	const units = await prisma.unit.findMany({
-		select: {
-			slug: true
-		}
-	})
-
-	return units?.map(unit => ({
-		unitSlug: unit.slug
-	}))
-}
-
-const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY!
-
 export default async function UnitPage({ params }: Props) {
+	const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY!
+
 	const unit = await prisma.unit.findFirst({
 		where: {
 			slug: params.unitSlug
