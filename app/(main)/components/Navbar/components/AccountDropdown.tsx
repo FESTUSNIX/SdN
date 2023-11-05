@@ -1,21 +1,14 @@
-import {
-    Heart,
-    LogIn,
-    LogOut,
-    Mail,
-    Settings,
-    User
-} from 'lucide-react'
+import { Heart, LogIn, LogOut, Mail, Settings, User } from 'lucide-react'
 
 import { SignOutShell } from '@/app/components/SignOutShell'
 import UserAvatar from '@/app/components/UserAvatar'
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger
 } from '@/app/components/ui/DropdownMenu'
 import { getAuthSession } from '@/lib/auth/auth'
 import Link from 'next/link'
