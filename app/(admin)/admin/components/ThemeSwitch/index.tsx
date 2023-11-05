@@ -39,7 +39,7 @@ const ThemeSwitch = (buttonProps: Props) => {
 					) : (
 						<Sun className='h-5 w-5 text-muted-foreground' />
 					)}
-					<span className='sr-only'>Switch Theme</span>
+					<span className='sr-only'>Zmień motyw aplikacji</span>
 				</Button>
 			</DropdownMenuTrigger>
 
@@ -50,8 +50,8 @@ const ThemeSwitch = (buttonProps: Props) => {
 						value !== theme && setTheme(value)
 					}}>
 					<DropdownMenuRadioItem value='system'>System</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value='light'>Light</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value='dark'>Dark</DropdownMenuRadioItem>
+					<DropdownMenuRadioItem value='light'>Jasny</DropdownMenuRadioItem>
+					<DropdownMenuRadioItem value='dark'>Ciemny</DropdownMenuRadioItem>
 				</DropdownMenuRadioGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
