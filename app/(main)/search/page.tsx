@@ -1,15 +1,19 @@
 import { getMajorSearchResults } from '@/app/_actions/major'
 import { H1, H2, H3 } from '@/app/components/ui/Typography'
+import { Skeleton } from '@/app/components/ui/skeleton'
 import { MajorLevel } from '@prisma/client'
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 import Filters from './components/Filters'
 import ResetFilters from './components/Filters/components/ResetFilters'
 import { FiltersDialog } from './components/FiltersDialog'
 import ListTypeSelect from './components/ListTypeSelect/'
 import { Pagination } from './components/Pagination'
 import Results from './components/Results'
+import { ResultsLoading } from './components/ResultsLoading'
 import SearchBar from './components/SearchBar'
 import Sort from './components/Sort'
+import { TransitionLoadingProvider } from './context/TransitionLoadingContext'
 
 export const metadata: Metadata = {
 	title: 'Szukaj kierunku'
@@ -79,63 +83,72 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 				<H1 size='sm'>Znajdź studia dla siebie</H1>
 			</div>
 
-			<div className='flex gap-6'>
-				<div className='relative hidden max-w-xs shrink-0 xl:block'>
-					<div className='sticky bottom-0 top-[calc(var(--nav-offset,_80px)+2rem)] max-h-[calc(100vh-var(--nav-offset,_80px)-4rem)] overflow-hidden rounded-lg border bg-background'>
-						<div className='flex items-center justify-between border-b px-4 py-2'>
-							<H2 className='pb-0' size='sm'>
-								Filtry
-							</H2>
-							<div>
-								<ResetFilters />
+			<TransitionLoadingProvider>
+				<div className='flex gap-6'>
+					<div className='relative hidden w-full max-w-xs shrink-0 xl:block'>
+						<div className='sticky bottom-0 top-[calc(var(--nav-offset,_80px)+2rem)] max-h-[calc(100vh-var(--nav-offset,_80px)-4rem)] overflow-hidden rounded-lg border bg-background'>
+							<div className='flex items-center justify-between border-b px-4 py-2'>
+								<H2 className='pb-0' size='sm'>
+									Filtry
+								</H2>
+								<div>
+									<ResetFilters />
+								</div>
+							</div>
+
+							<Suspense
+								fallback={
+									<Skeleton className='h-[calc(100vh-var(--nav-offset,_80px)-4rem-49px)] w-full rounded-none' />
+								}>
+								<Filters citiesParam={cities} voivodeshipsParam={voivodeships} />
+							</Suspense>
+						</div>
+					</div>
+
+					<div className='col-start-2 col-end-5 row-start-1 row-end-3 grow'>
+						<div className='mb-12'>
+							<div className='mb-4 flex items-center gap-2'>
+								<SearchBar />
+							</div>
+
+							<div className='flex flex-wrap-reverse items-start justify-between gap-2'>
+								<ListTypeSelect />
+
+								<div className='flex items-center gap-2'>
+									<Sort />
+									<FiltersDialog citiesParam={cities} voivodeshipsParam={voivodeships} />
+								</div>
 							</div>
 						</div>
 
-						<Filters citiesParam={cities} voivodeshipsParam={voivodeships} />
-					</div>
-				</div>
-
-				<div className='col-start-2 col-end-5 row-start-1 row-end-3 grow'>
-					<div className='mb-12'>
-						<div className='mb-4 flex items-center gap-2'>
-							<SearchBar />
+						<div className=''>
+							<ResultsLoading listType={(listType === 'list' || listType === 'grid' ? listType : undefined) ?? 'list'}>
+								<Results
+									majors={majors}
+									listType={(listType === 'list' || listType === 'grid' ? listType : undefined) ?? 'list'}
+								/>
+							</ResultsLoading>
 						</div>
 
-						<div className='flex flex-wrap-reverse items-start justify-between gap-2'>
-							<ListTypeSelect />
-
-							<div className='flex items-center gap-2'>
-								<Sort />
-								<FiltersDialog citiesParam={cities} voivodeshipsParam={voivodeships} />
+						{!majors.length && (
+							<div className='mx-auto py-4 text-center'>
+								<H3>Nie udało się odnaleźć kierunku z podanymi kryteriami</H3>
+								<p className='text-muted-foreground'>Usuń wybrane filtry aby przywrócić wszystkie wyniki</p>
 							</div>
-						</div>
+						)}
+
+						{majors.length > 0 && (
+							<div className='mt-16'>
+								<Pagination
+									pageCount={pageCount}
+									page={typeof page === 'string' ? page : page[0]}
+									per_page={typeof per_page === 'string' ? per_page : per_page[0]}
+								/>
+							</div>
+						)}
 					</div>
-
-					<div className=''>
-						<Results
-							majors={majors}
-							listType={(listType === 'list' || listType === 'grid' ? listType : undefined) ?? 'list'}
-						/>
-					</div>
-
-					{!majors && (
-						<div className='mx-auto py-4 text-center'>
-							<H3>Nie znaleźliśmy odpowiednich kierunków</H3>
-							<p>Usuń wybrane filtry aby przywrócić wszystkie wyniki</p>
-						</div>
-					)}
-
-					{majors.length > 0 && (
-						<div className='mt-16'>
-							<Pagination
-								pageCount={pageCount}
-								page={typeof page === 'string' ? page : page[0]}
-								per_page={typeof per_page === 'string' ? per_page : per_page[0]}
-							/>
-						</div>
-					)}
 				</div>
-			</div>
+			</TransitionLoadingProvider>
 		</main>
 	)
 }

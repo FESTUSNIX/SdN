@@ -1,5 +1,6 @@
 'use client'
 
+import { useTransitionLoading } from '@/app/(main)/search/context/TransitionLoadingContext'
 import { Switch } from '@/app/components/ui/Switch'
 import { Muted } from '@/app/components/ui/Typography'
 import { useDebounce } from '@/app/hooks/useDebounce'
@@ -18,7 +19,9 @@ const SwitchFilter = ({ paramName, label, description }: Props) => {
 	const searchParams = useSearchParams()!
 	const [isPending, startTransition] = useTransition()
 	const [isChecked, setIsChecked] = useState(false)
-	const debouncedIsChecked = useDebounce(isChecked, 250)
+	const debouncedIsChecked = useDebounce(isChecked, 100)
+
+	const { startLoading, stopLoading } = useTransitionLoading()
 
 	const createQueryString = useCallback(
 		(name: string, value: boolean) => {
@@ -49,6 +52,11 @@ const SwitchFilter = ({ paramName, label, description }: Props) => {
 			})
 		})
 	}, [debouncedIsChecked])
+
+	useEffect(() => {
+		isPending ? startLoading() : stopLoading()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isPending])
 
 	return (
 		<div>

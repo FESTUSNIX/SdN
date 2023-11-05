@@ -9,6 +9,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState, useTransition } from 'react'
 import { Qualification } from '@prisma/client'
 import { Input } from '@/app/components/ui/Input'
+import { useTransitionLoading } from '@/app/(main)/search/context/TransitionLoadingContext'
 
 type Props = {
 	qualifications: Pick<Qualification, 'id' | 'name'>[]
@@ -20,7 +21,9 @@ const Qualifications = ({ qualifications }: Props) => {
 	const searchParams = useSearchParams()!
 	const [isPending, startTransition] = useTransition()
 	const [selectedQualifications, setSelectedQualifications] = useState<number[]>([])
-	const debouncedSelectedQualifications = useDebounce(selectedQualifications, 250)
+	const debouncedSelectedQualifications = useDebounce(selectedQualifications, 100)
+
+	const { startLoading, stopLoading } = useTransitionLoading()
 
 	const createQueryString = useCallback(
 		(params: Record<string, string | number | null>) => {
@@ -63,6 +66,11 @@ const Qualifications = ({ qualifications }: Props) => {
 			)
 		})
 	}, [debouncedSelectedQualifications])
+
+	useEffect(() => {
+		isPending ? startLoading() : stopLoading()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isPending])
 
 	const [search, setSearch] = useState('')
 	const [showCount, setShowCount] = useState(10)

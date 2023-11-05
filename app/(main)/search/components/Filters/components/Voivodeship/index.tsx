@@ -1,5 +1,6 @@
 'use client'
 
+import { useTransitionLoading } from '@/app/(main)/search/context/TransitionLoadingContext'
 import { MultiSelect } from '@/app/components/MultiSelect'
 import { H3 } from '@/app/components/ui/Typography'
 import { useDebounce } from '@/app/hooks/useDebounce'
@@ -18,7 +19,9 @@ const VoivodeshipFilter = ({ voivodeships }: Props) => {
 	const searchParams = useSearchParams()!
 	const [isPending, startTransition] = useTransition()
 	const [selectedVoivodeships, setSelectedVoivodeships] = useState<{ value: string; label: string }[] | null>([])
-	const debouncedSelectedVoivodeships = useDebounce(selectedVoivodeships, 250)
+	const debouncedSelectedVoivodeships = useDebounce(selectedVoivodeships, 100)
+
+	const { startLoading, stopLoading } = useTransitionLoading()
 
 	const voivodeshipOptions: {
 		value: string
@@ -68,6 +71,11 @@ const VoivodeshipFilter = ({ voivodeships }: Props) => {
 			)
 		})
 	}, [debouncedSelectedVoivodeships])
+
+	useEffect(() => {
+		isPending ? startLoading() : stopLoading()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isPending])
 
 	return (
 		<div>

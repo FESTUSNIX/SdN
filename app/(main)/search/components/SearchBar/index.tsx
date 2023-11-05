@@ -12,7 +12,7 @@ const SearchBar = () => {
 	const searchParams = useSearchParams()!
 
 	const [query, setQuery] = useState('')
-	const debouncedQuery = useDebounce(query, 500)
+	const debouncedQuery = useDebounce(query, 250)
 
 	const createQueryString = useCallback(
 		(name: string, value: string) => {

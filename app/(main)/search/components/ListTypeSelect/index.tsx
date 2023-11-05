@@ -6,6 +6,7 @@ import { useDebounce } from '@/app/hooks/useDebounce'
 import { LucideIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState, useTransition } from 'react'
+import { useTransitionLoading } from '../../context/TransitionLoadingContext'
 
 const options: {
 	value: string
@@ -32,7 +33,9 @@ const ListTypeSelect = () => {
 	const searchParams = useSearchParams()!
 	const [isPending, startTransition] = useTransition()
 	const [listType, setListType] = useState(defaultValue)
-	const debouncedListType = useDebounce(listType, 500)
+	const debouncedListType = useDebounce(listType, 0)
+
+	const { startLoading, stopLoading } = useTransitionLoading()
 
 	const createQueryString = useCallback(
 		(name: string, value: string) => {
@@ -66,6 +69,11 @@ const ListTypeSelect = () => {
 		})
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedListType])
+
+	useEffect(() => {
+		isPending ? startLoading() : stopLoading()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isPending])
 
 	return (
 		<div className='shrink-0'>

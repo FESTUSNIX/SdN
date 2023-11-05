@@ -4,6 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useDebounce } from '@/app/hooks/useDebounce'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState, useTransition } from 'react'
+import { useTransitionLoading } from '../../context/TransitionLoadingContext'
 
 const options: {
 	value: string
@@ -37,7 +38,9 @@ const Sort = () => {
 	const searchParams = useSearchParams()!
 	const [isPending, startTransition] = useTransition()
 	const [currentSort, setCurrentSort] = useState('default')
-	const debouncedCurrentSort = useDebounce(currentSort, 500)
+	const debouncedCurrentSort = useDebounce(currentSort, 0)
+
+	const { startLoading, stopLoading } = useTransitionLoading()
 
 	const createQueryString = useCallback(
 		(name: string, value: string) => {
@@ -72,6 +75,11 @@ const Sort = () => {
 		})
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedCurrentSort])
+
+	useEffect(() => {
+		isPending ? startLoading() : stopLoading()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isPending])
 
 	return (
 		<div className='shrink-0'>

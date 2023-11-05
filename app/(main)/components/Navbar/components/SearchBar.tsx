@@ -11,7 +11,7 @@ export const SearchBar = () => {
 	const searchParams = useSearchParams()!
 
 	const [query, setQuery] = useState('')
-	const debouncedQuery = useDebounce(query, 500)
+	const debouncedQuery = useDebounce(query, 250)
 
 	const createQueryString = useCallback(
 		(name: string, value: string) => {
@@ -41,10 +41,10 @@ export const SearchBar = () => {
 	}, [debouncedQuery])
 
 	return (
-		<label className='relative flex max-w-full cursor-text items-center overflow-hidden rounded-full border border-input'>
+		<label className='relative flex h-10 max-w-full cursor-text items-center overflow-hidden rounded-full border border-input bg-background'>
 			<input
 				placeholder='Wyszukaj kierunki'
-				className='w-full grow px-4 py-2 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50'
+				className='w-full grow bg-transparent px-4 py-2 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50'
 				value={query}
 				onChange={handleChange}
 			/>

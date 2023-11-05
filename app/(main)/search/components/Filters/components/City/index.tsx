@@ -1,5 +1,6 @@
 'use client'
 
+import { useTransitionLoading } from '@/app/(main)/search/context/TransitionLoadingContext'
 import { MultiSelect } from '@/app/components/MultiSelect'
 import { H3 } from '@/app/components/ui/Typography'
 import { useDebounce } from '@/app/hooks/useDebounce'
@@ -18,7 +19,9 @@ const CityFilter = ({ cities }: Props) => {
 	const searchParams = useSearchParams()!
 	const [isPending, startTransition] = useTransition()
 	const [selectedCities, setSelectedCities] = useState<{ value: string; label: string }[] | null>([])
-	const debouncedSelectedCities = useDebounce(selectedCities, 250)
+	const debouncedSelectedCities = useDebounce(selectedCities, 100)
+
+	const { startLoading, stopLoading } = useTransitionLoading()
 
 	const cityOptions: {
 		value: string
@@ -63,6 +66,11 @@ const CityFilter = ({ cities }: Props) => {
 			})
 		})
 	}, [debouncedSelectedCities])
+
+	useEffect(() => {
+		isPending ? startLoading() : stopLoading()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isPending])
 
 	return (
 		<div>

@@ -1,12 +1,13 @@
 'use client'
 
+import { useTransitionLoading } from '@/app/(main)/search/context/TransitionLoadingContext'
 import { H3 } from '@/app/components/ui/Typography'
 import { Checkbox } from '@/app/components/ui/checkbox'
 import { useDebounce } from '@/app/hooks/useDebounce'
 import { CheckedState } from '@radix-ui/react-checkbox'
 import { X } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useTransition } from 'react'
 
 type Props = {
 	items: {
@@ -22,9 +23,12 @@ const CheckboxGroup = ({ paramName, items, label, clearAllBtn = true }: Props) =
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()!
+	const [isPending, startTransition] = useTransition()
+
+	const { startLoading, stopLoading } = useTransitionLoading()
 
 	const [values, setValues] = useState<(string | boolean)[]>([])
-	const debouncedQuery = useDebounce(values, 250)
+	const debouncedQuery = useDebounce(values, 100)
 
 	const createQueryString = useCallback(
 		(name: string, values: (string | boolean)[]) => {
@@ -53,8 +57,16 @@ const CheckboxGroup = ({ paramName, items, label, clearAllBtn = true }: Props) =
 	}, [searchParams])
 
 	useEffect(() => {
-		router.push(pathname + '?' + createQueryString(paramName, values))
+		startTransition(() => {
+			router.push(pathname + '?' + createQueryString(paramName, values))
+		})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedQuery])
+
+	useEffect(() => {
+		isPending ? startLoading() : stopLoading()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isPending])
 
 	return (
 		<div>

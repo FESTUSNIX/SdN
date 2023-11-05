@@ -1,5 +1,6 @@
 'use client'
 
+import { useTransitionLoading } from '@/app/(main)/search/context/TransitionLoadingContext'
 import { Input } from '@/app/components/ui/Input'
 import { H3 } from '@/app/components/ui/Typography'
 import { Slider } from '@/app/components/ui/slider'
@@ -15,7 +16,9 @@ const PriceRange = () => {
 	const searchParams = useSearchParams()!
 	const [isPending, startTransition] = useTransition()
 	const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000])
-	const debouncedPrice = useDebounce(priceRange, 500)
+	const debouncedPrice = useDebounce(priceRange, 100)
+
+	const { startLoading, stopLoading } = useTransitionLoading()
 
 	const createQueryString = useCallback(
 		(name: string, value: string) => {
@@ -46,6 +49,11 @@ const PriceRange = () => {
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedPrice])
+
+	useEffect(() => {
+		isPending ? startLoading() : stopLoading()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isPending])
 
 	return (
 		<div>
