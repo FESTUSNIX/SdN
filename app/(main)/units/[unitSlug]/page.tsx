@@ -7,9 +7,9 @@ import Details from './components/Details'
 import Header from './components/Header'
 import Majors from './components/Majors'
 
-type Props = { params: { unitSlug: string } }
+type Props = { params: { unitSlug: string }; searchParams: { [key: string]: string | string[] | undefined } }
 
-export default async function UnitPage({ params }: Props) {
+export default async function UnitPage({ params, searchParams }: Props) {
 	const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY!
 
 	const unit = await prisma.unit.findFirst({
@@ -58,8 +58,7 @@ export default async function UnitPage({ params }: Props) {
 		nip,
 		regon,
 		address,
-		updatedAt,
-		_count: { majors: majorsCount }
+		updatedAt
 	} = unit
 
 	return (
@@ -102,7 +101,7 @@ export default async function UnitPage({ params }: Props) {
 				/>
 			</Suspense>
 
-			<Majors unitSlug={params.unitSlug} />
+			<Majors unitSlug={params.unitSlug} searchParams={searchParams} />
 		</main>
 	)
 }

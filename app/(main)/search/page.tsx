@@ -1,6 +1,7 @@
 import { getMajorSearchResults } from '@/app/_actions/major'
 import MajorCard from '@/app/components/Majors/Card'
 import MajorsGrid from '@/app/components/Majors/Grid'
+import SearchBar from '@/app/components/SearchBar'
 import { H1, H2, H3 } from '@/app/components/ui/Typography'
 import { Skeleton } from '@/app/components/ui/skeleton'
 import { MajorLevel } from '@prisma/client'
@@ -12,7 +13,6 @@ import ResetFilters from './components/Filters/components/ResetFilters'
 import { FiltersDialog } from './components/FiltersDialog'
 import ListTypeSelect from './components/ListTypeSelect/'
 import { Pagination } from './components/Pagination'
-import SearchBar from './components/SearchBar'
 import Sort from './components/Sort'
 import { TransitionLoadingProvider } from './context/TransitionLoadingContext'
 
@@ -111,7 +111,7 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 					<div className='col-start-2 col-end-5 row-start-1 row-end-3 grow'>
 						<div className='mb-12'>
 							<div className='mb-4 flex items-center gap-2'>
-								<SearchBar />
+								<SearchBar placeholder={`Szukaj wśród ${pagination.total ?? 2568} wyników`} />
 							</div>
 
 							<div className='flex flex-wrap-reverse items-start justify-between gap-2'>

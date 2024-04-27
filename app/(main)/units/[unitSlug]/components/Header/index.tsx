@@ -27,9 +27,7 @@ const Header = ({ isPublic, logo, name, unitType, website, city, voivodeship }: 
 			</div>
 
 			<div>
-				<H1 size='sm' className=''>
-					{name}
-				</H1>
+				<H1 size='sm'>{name}</H1>
 
 				<div className='mb-6 mt-4 flex items-center gap-2 text-sm font-medium'>
 					<Badge variant={'secondary'}>

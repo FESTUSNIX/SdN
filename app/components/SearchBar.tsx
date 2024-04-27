@@ -2,17 +2,20 @@
 
 import { Input } from '@/app/components/ui/Input'
 import { useDebounce } from '@/app/hooks/useDebounce'
+import { cn } from '@/lib/utils/utils'
 import { SearchIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 
-const SearchBar = () => {
+const SearchBar = ({ placeholder, param, className }: { placeholder?: string; param?: string; className?: string }) => {
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()!
 
 	const [query, setQuery] = useState('')
 	const debouncedQuery = useDebounce(query, 250)
+
+	const paramName = param ?? 'q'
 
 	const createQueryString = useCallback(
 		(name: string, value: string) => {
@@ -28,22 +31,24 @@ const SearchBar = () => {
 
 	useEffect(() => {
 		const params = new URLSearchParams(searchParams)
-		const searchQuery = params.get('q') ?? ''
+		const searchQuery = params.get(paramName) ?? ''
 
 		if (query === searchQuery) return
 
 		setQuery(searchQuery)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchParams])
 
 	useEffect(() => {
-		router.push(pathname + '?' + createQueryString('q', query))
+		router.push(pathname + '?' + createQueryString(paramName, query), { scroll: false })
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedQuery])
 
 	return (
-		<div className='relative grow'>
+		<div className={cn('relative grow', className)}>
 			<SearchIcon className='pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 select-none text-muted-foreground' />
 			<Input
-				placeholder='Szukaj wśród 2568 ofert'
+				placeholder={placeholder ?? `Szukaj`}
 				className='h-auto rounded-full py-4 pl-12 pr-6'
 				value={query}
 				onChange={handleChange}
