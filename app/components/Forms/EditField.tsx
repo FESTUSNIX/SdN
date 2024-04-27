@@ -19,6 +19,7 @@ type Props<T extends FieldValues, K extends keyof T> = {
 	apiPath: string
 	PreviewComponent?: (value: T[K]) => React.ReactNode
 	schema: z.ZodObject<any>
+	preparePayload?: (value: T[K]) => Promise<T[K]> | T[K]
 }
 
 export const EditField = <T extends FieldValues, K extends keyof T>({
@@ -27,7 +28,8 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 	PreviewComponent,
 	FormFieldComp,
 	apiPath,
-	schema
+	schema,
+	preparePayload
 }: Props<T, K>) => {
 	const [isEditing, setIsEditing] = useState(false)
 	const [optimisticValue, setOptimisticValue] = useState(defaultValue)
@@ -44,8 +46,13 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 
 	const { mutate: updateField, isLoading } = useMutation({
 		mutationFn: async (values: FieldPayload) => {
-			const payload: Partial<FieldPayload> = {
+			let payload: Partial<FieldPayload> = {
 				...values
+			}
+
+			if (preparePayload) {
+				const preparedValue = await preparePayload(values[accessorKey] as T[K])
+				payload[accessorKey] = preparedValue
 			}
 
 			setOptimisticValue(values[accessorKey])

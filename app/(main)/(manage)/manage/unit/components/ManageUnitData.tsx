@@ -6,10 +6,15 @@ import { TextField } from '@/app/components/Forms/TextField'
 import { City as CityField, PostalCode } from '@/app/components/Forms/Unit'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H3 } from '@/app/components/ui/Typography'
+import { deleteFilesFromSupabase } from '@/lib/supabase/deleteFiles'
+import { urlFor } from '@/lib/supabase/getUrlFor'
+import { uploadFileToSupabase } from '@/lib/supabase/uploadImage'
 import { UnitPayload, UnitValidator } from '@/lib/validators/unit'
 import { City, Unit, UnitAddress } from '@prisma/client'
+import Image from 'next/image'
 import React, { Fragment } from 'react'
 import { Control, FieldPath, FieldValues } from 'react-hook-form'
+import { LogoField } from './LogoField'
 
 type Props = {
 	unit: Omit<Unit, 'updatedAt' | 'slug'> & { city: Pick<City, 'id' | 'name'> } & {
@@ -18,7 +23,22 @@ type Props = {
 }
 
 export const ManageUnitData = ({ unit }: Props) => {
-	const { id, name, email, website, city, address, isPublic, phone, nip, regon } = unit
+	const { id, name, email, website, city, address, isPublic, phone, nip, regon, logo } = unit
+
+	const handleImageUpdate = async (newLogo: UnitPayload['logo'], previousLogo: UnitPayload['logo'], unitId: number) => {
+		let filepath = previousLogo
+
+		if (previousLogo !== null && newLogo !== previousLogo) {
+			await deleteFilesFromSupabase('unit_logos', [`${unitId}/unit-logo`])
+			filepath = null
+		}
+
+		if (newLogo !== null && newLogo !== previousLogo) {
+			filepath = await uploadFileToSupabase('unit_logos', newLogo, `${unitId}/unit-logo?t=${new Date().toString()}`)
+		}
+
+		return filepath
+	}
 
 	const items: {
 		accessorKey: keyof UnitPayload
@@ -26,7 +46,31 @@ export const ManageUnitData = ({ unit }: Props) => {
 		value: any
 		customComponent?: <T extends FieldValues, K extends keyof T>(value: T[K]) => React.ReactNode
 		editComponent: <T extends FieldValues>(props: { accessorKey: FieldPath<T>; control?: Control<T> }) => JSX.Element
+		preparePayload?: (value: any) => Promise<any> | any
 	}[] = [
+		{
+			accessorKey: 'logo',
+			title: 'Logo',
+			value: logo,
+			editComponent: props => LogoField(),
+			customComponent: value => (
+				<Image
+					src={urlFor('unit_logos', value).publicUrl ?? ''}
+					alt='Logo uczelni'
+					width={400}
+					height={400}
+					className='size-32 mt-2 rounded-lg object-cover'
+				/>
+			),
+			preparePayload: async value => {
+				const newLogo = value as File
+				const previousLogo = logo
+
+				const filepath = await handleImageUpdate(newLogo, previousLogo, id)
+
+				return filepath
+			}
+		},
 		{
 			accessorKey: 'name',
 			title: 'Nazwa',
@@ -105,6 +149,7 @@ export const ManageUnitData = ({ unit }: Props) => {
 							defaultValue={item.value}
 							PreviewComponent={item.customComponent}
 							schema={UnitValidator}
+							preparePayload={item.preparePayload}
 						/>
 					</div>
 

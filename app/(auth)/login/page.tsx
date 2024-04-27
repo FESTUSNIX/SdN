@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { LoginForm } from './components/LoginForm'
 import graduationImg from '/public/images/login-page-deco.webp'
+import { Suspense } from 'react'
 
 export const metadata = {
 	title: 'Logowanie',
@@ -54,7 +55,9 @@ const LoginPage = async () => {
 						<H1 className=''>Zaloguj się</H1>
 					</div>
 
-					<LoginForm />
+					<Suspense>
+						<LoginForm />
+					</Suspense>
 
 					<Muted className='mt-4'>
 						Twoja uczelnia nie posiada jeszcze konta?{' '}

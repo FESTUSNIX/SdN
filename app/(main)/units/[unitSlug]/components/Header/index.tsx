@@ -1,5 +1,5 @@
 import { Badge } from '@/app/components/ui/Badge'
-import { H1, Muted } from '@/app/components/ui/Typography'
+import { H1 } from '@/app/components/ui/Typography'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { capitalize } from '@/lib/utils/capitalize'
 import { placeholderImage } from '@/lib/utils/placeholderImage'
@@ -16,13 +16,13 @@ type Props = Pick<Unit, 'name' | 'logo' | 'unitType' | 'isPublic' | 'website' | 
 const Header = ({ isPublic, logo, name, unitType, website, city, voivodeship }: Props) => {
 	return (
 		<header className='mt-12 flex flex-col gap-6 border-b py-6 lg:flex-row'>
-			<div className='mx-auto grid w-full max-w-full place-items-center overflow-hidden rounded-lg border bg-muted sm:max-w-[280px] md:mx-0 md:w-auto'>
+			<div className='max-w-60 sm:max-w-72 lg:max-w-48 aspect-square max-h-full w-full overflow-hidden rounded-lg border bg-muted md:mx-0 md:w-auto'>
 				<Image
 					src={logo ? urlFor('unit_logos', logo).publicUrl : placeholderImage}
 					alt={`Logo ${name}`}
 					width={300}
 					height={300}
-					className='aspect-square h-full w-full max-w-[200px] object-cover'
+					className='h-full w-full object-cover'
 				/>
 			</div>
 
