@@ -24,13 +24,11 @@ export const MobileNav = async () => {
 			href: '/search',
 			Icon: <Search />
 		},
-		session?.user
-			? {
-					label: 'Polubione',
-					href: '/liked',
-					Icon: <Heart />
-			  }
-			: null,
+		{
+			label: 'Polubione',
+			href: '/saved',
+			Icon: <Heart />
+		},
 		{
 			label: session?.user ? 'Konto' : 'Zaloguj się',
 			href: session?.user ? '/manage' : '/login',

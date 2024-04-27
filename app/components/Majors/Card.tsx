@@ -5,28 +5,33 @@ import { cn } from '@/lib/utils/utils'
 import { Major } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { LikeButton } from './LikeButton'
 
-type Props = {
-	data: Pick<Major, 'name' | 'majorLevel' | 'isOnline' | 'slug'> & {
-		qualifications: {
-			slug: string
-			name: string
-		}[]
-		unit: {
-			name: string
-		}
+export type MajorCardType = Pick<Major, 'name' | 'majorLevel' | 'isOnline' | 'slug'> & {
+	qualifications: {
+		slug: string
+		name: string
+	}[]
+	unit: {
+		name: string
 	}
-	type?: 'grid' | 'list'
 }
 
-const MajorCard = ({ data, type = 'grid' }: Props) => {
+type Props = {
+	data: MajorCardType
+	likeable?: boolean
+	type?: 'grid' | 'list'
+	onDislike?: (slug: string) => void
+}
+
+const MajorCard = ({ data, likeable = true, type = 'grid', onDislike }: Props) => {
 	const { name, isOnline, majorLevel, qualifications, slug, unit } = data
 
 	return (
 		<Link
 			href={`/majors/${slug}`}
 			className={cn(
-				'flex rounded-lg border p-3 duration-300 hover:shadow @2xl:gap-6 dark:hover:border-foreground/40',
+				'group relative flex rounded-lg border p-3 duration-300 hover:shadow @2xl:gap-6 dark:hover:border-foreground/40',
 				type === 'grid' && 'flex-col gap-4',
 				type === 'list' && 'flex-row gap-6'
 			)}>
@@ -74,6 +79,13 @@ const MajorCard = ({ data, type = 'grid' }: Props) => {
 					</h4>
 				</div>
 			</div>
+			{likeable && (
+				<LikeButton
+					majorSlug={slug}
+					onDislike={onDislike}
+					className='absolute right-2 top-2 z-10 opacity-0 shadow-md active:shadow-sm group-hover:opacity-100'
+				/>
+			)}
 		</Link>
 	)
 }

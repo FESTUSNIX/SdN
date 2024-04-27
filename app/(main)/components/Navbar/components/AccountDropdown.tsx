@@ -54,20 +54,18 @@ const AccountDropdown = async (props: Props) => {
 					)}
 				</DropdownMenuGroup>
 
-				{user && (
-					<>
-						<DropdownMenuSeparator />
+				<>
+					<DropdownMenuSeparator />
 
-						<DropdownMenuGroup>
-							<DropdownMenuItem asChild>
-								<Link href={'/liked'}>
-									<Heart className='mr-2 h-4 w-4' />
-									<span>Polubione</span>
-								</Link>
-							</DropdownMenuItem>
-						</DropdownMenuGroup>
-					</>
-				)}
+					<DropdownMenuGroup>
+						<DropdownMenuItem asChild>
+							<Link href={'/saved'}>
+								<Heart className='mr-2 h-4 w-4' />
+								<span>Polubione</span>
+							</Link>
+						</DropdownMenuItem>
+					</DropdownMenuGroup>
+				</>
 
 				<DropdownMenuSeparator />
 

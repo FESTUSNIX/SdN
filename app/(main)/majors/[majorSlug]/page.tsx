@@ -2,16 +2,16 @@ import EditorOutput from '@/app/components/EditorOutput'
 import { Badge } from '@/app/components/ui/Badge'
 import { H1, H2, Muted } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevel'
+import { urlFor } from '@/lib/supabase/getUrlFor'
 import { cn } from '@/lib/utils/utils'
 import prisma from '@/prisma/client'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import ActiveDays from './components/ActiveDays'
 import { Duration } from './components/Duration'
 import SideBar from './components/SideBar'
 import UnitCard from './components/UnitCard'
-import Image from 'next/image'
-import { urlFor } from '@/lib/supabase/getUrlFor'
 
 const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: string } }) => {
 	const major = await prisma.major.findFirst({

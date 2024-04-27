@@ -3,8 +3,8 @@
 import { useDebounce } from '@/app/hooks/useDebounce'
 import { cn } from '@/lib/utils/utils'
 import React from 'react'
-import { useTransitionLoading } from '../context/TransitionLoadingContext'
-import MajorCardSkeleton from './MajorCardSkeleton'
+import { useTransitionLoading } from '../../(main)/search/context/TransitionLoadingContext'
+import MajorCardSkeleton from './CardSkeleton'
 
 type Props = {
 	children: React.ReactNode

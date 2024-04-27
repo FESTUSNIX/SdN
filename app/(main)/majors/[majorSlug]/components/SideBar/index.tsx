@@ -1,10 +1,11 @@
+import { LikeButton } from '@/app/components/Majors/LikeButton'
 import { Card } from '@/app/components/ui/Card'
-import { H3, Muted } from '@/app/components/ui/Typography'
-import { Major } from '@prisma/client'
-import Duration from '../SideBarDuration'
 import { Separator } from '@/app/components/ui/Separator/separator'
+import { H3, Muted } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { cn } from '@/lib/utils/utils'
+import { Major } from '@prisma/client'
+import Duration from '../SideBarDuration'
 
 type Props = { major: Major }
 
@@ -114,6 +115,12 @@ const SideBar = ({ major }: Props) => {
 							</div>
 						</>
 					)}
+
+					<LikeButton
+						majorSlug={major.slug}
+						label={{ liked: 'Zapisane', disliked: 'Zapisz' }}
+						className='ml-auto mt-2 w-max'
+					/>
 				</Card>
 			</aside>
 		</div>

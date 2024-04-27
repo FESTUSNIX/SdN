@@ -1,16 +1,17 @@
 import { getMajorSearchResults } from '@/app/_actions/major'
+import MajorCard from '@/app/components/Majors/Card'
+import MajorsGrid from '@/app/components/Majors/Grid'
 import { H1, H2, H3 } from '@/app/components/ui/Typography'
 import { Skeleton } from '@/app/components/ui/skeleton'
 import { MajorLevel } from '@prisma/client'
 import { Metadata } from 'next'
 import { Suspense } from 'react'
+import { ResultsLoading } from '../../components/Majors/ResultsLoading'
 import Filters from './components/Filters'
 import ResetFilters from './components/Filters/components/ResetFilters'
 import { FiltersDialog } from './components/FiltersDialog'
 import ListTypeSelect from './components/ListTypeSelect/'
 import { Pagination } from './components/Pagination'
-import Results from './components/Results'
-import { ResultsLoading } from './components/ResultsLoading'
 import SearchBar from './components/SearchBar'
 import Sort from './components/Sort'
 import { TransitionLoadingProvider } from './context/TransitionLoadingContext'
@@ -75,7 +76,9 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 
 	const pageCount = Math.ceil(pagination.total / limit)
 
-	const listType = typeof searchParams.list_type === 'string' ? searchParams.list_type : searchParams.list_type?.[0]
+	const listTypeParam =
+		typeof searchParams.list_type === 'string' ? searchParams.list_type : searchParams.list_type?.[0]
+	const listType = listTypeParam === 'grid' ? 'grid' : 'list'
 
 	return (
 		<main className='wrapper py-12'>
@@ -122,11 +125,25 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 						</div>
 
 						<div className=''>
-							<ResultsLoading listType={(listType === 'list' || listType === 'grid' ? listType : undefined) ?? 'list'}>
-								<Results
-									majors={majors}
-									listType={(listType === 'list' || listType === 'grid' ? listType : undefined) ?? 'list'}
-								/>
+							<ResultsLoading listType={listType}>
+								<MajorsGrid listType={listType}>
+									{majors &&
+										majors.length > 0 &&
+										majors?.map(major => (
+											<MajorCard
+												key={major.slug}
+												data={{
+													name: major.name,
+													slug: major.slug,
+													isOnline: major.isOnline,
+													majorLevel: major.majorLevel,
+													qualifications: major.qualifications,
+													unit: major.unit
+												}}
+												type={listType}
+											/>
+										))}
+								</MajorsGrid>
 							</ResultsLoading>
 						</div>
 
