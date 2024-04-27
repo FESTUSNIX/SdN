@@ -15,7 +15,7 @@ import { MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { Major, Qualification } from '@prisma/client'
 import { Fragment } from 'react'
 import { Control, FieldPath, FieldValues } from 'react-hook-form'
-import { EditField } from '../../../../../components/Forms/EditField'
+import { EditField } from '@/app/components/Forms/EditField'
 import RichTextPreviewField from './RichTextPreviewField'
 
 type Props = {

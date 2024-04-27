@@ -81,10 +81,10 @@
 		@apply border-border;
 	}
 	html {
-		@apply h-full scroll-smooth;
+		@apply h-full overflow-auto scroll-smooth selection:bg-primary/75 selection:text-primary-foreground;
 	}
 	body {
-		@apply min-h-full bg-background text-foreground;
+		@apply min-h-full min-w-full bg-background text-foreground;
 	}
 }
 

@@ -39,7 +39,7 @@ const MajorCard = ({ name, isOnline, majorLevel, qualifications, slug }: Props) 
 				</CardContent>
 				<CardFooter className='mt-auto hover:underline'>
 					<div className='ml-auto flex items-center'>
-						<span className=''>See more</span>
+						<span className=''>Zobacz więcej</span>
 						<ArrowRight className='ml-2 h-4 w-4 text-muted-foreground' />
 					</div>
 				</CardFooter>

@@ -36,7 +36,11 @@ const formSchema = z
 		path: ['confirmNewPassword']
 	})
 
-const ChangePassword = () => {
+type Props = {
+	className?: string
+}
+
+const ChangePassword = ({ className }: Props) => {
 	const [isOpen, setIsOpen] = useState(false)
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -78,7 +82,9 @@ const ChangePassword = () => {
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger asChild>
-				<Button variant={'link'}>Zmień hasło</Button>
+				<Button variant={'link'} className={className}>
+					Zmień hasło
+				</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[425px]'>
 				<DialogHeader>

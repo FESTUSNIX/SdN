@@ -76,7 +76,7 @@
 		@apply h-full;
 	}
 	body {
-		@apply min-h-full bg-background text-foreground;
+		@apply min-h-full min-w-full bg-background text-foreground;
 	}
 }
 
