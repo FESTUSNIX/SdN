@@ -1,4 +1,4 @@
-import { MultiSelect } from '@/app/components/Select'
+import { MultiSelect } from '@/app/components/MultiSelect'
 import { FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
 import { Control } from 'react-hook-form'
 
@@ -24,7 +24,12 @@ const DaysOfWeek = ({ control }: Props) => {
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>Days of week</FormLabel>
-					<MultiSelect options={dayOptions} onSelectChange={field.onChange} placeholder='Select days of week...' />
+					<MultiSelect
+						options={dayOptions}
+						selected={field.value}
+						setSelected={field.onChange}
+						placeholder='Select days of week...'
+					/>
 					<FormMessage />
 				</FormItem>
 			)}

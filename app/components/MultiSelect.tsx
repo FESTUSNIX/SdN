@@ -1,18 +1,18 @@
 'use client'
 
-import { Badge } from '@/app/components/ui/Badge'
-import { Button } from '@/app/components/ui/Button'
-import { Command, CommandGroup, CommandItem } from '@/app/components/ui/Command'
 import { cn } from '@/lib/utils/utils'
 import { Command as CommandPrimitive } from 'cmdk'
 import { ChevronDown, X } from 'lucide-react'
 import * as React from 'react'
+import { Badge } from './ui/Badge'
+import { Button } from './ui/Button'
+import { Command, CommandGroup, CommandItem } from './ui/Command'
 
 interface MultiSelectProps {
 	disabled?: boolean
-	selected: Option[] | null
-	setSelected: React.Dispatch<React.SetStateAction<Option[] | null>>
-	onChange?: (value: Option[] | null) => void
+	selected: string[] | null
+	setSelected: (value: string[] | null) => void
+	onChange?: (value: string[] | null) => void
 	placeholder?: string
 	options: Option[]
 }
@@ -27,7 +27,7 @@ export function MultiSelect({
 	selected,
 	setSelected,
 	onChange,
-	placeholder = 'Select options',
+	placeholder = 'Wybierz',
 	options
 }: MultiSelectProps) {
 	const inputRef = React.useRef<HTMLInputElement>(null)
@@ -40,17 +40,17 @@ export function MultiSelect({
 	}, [onChange, selected])
 
 	const handleSelect = React.useCallback(
-		(option: Option) => {
-			setSelected(prev => [...(prev ?? []), option])
+		(option: string) => {
+			setSelected([...(selected ?? []), option])
 		},
-		[setSelected]
+		[setSelected, selected]
 	)
 
 	const handleRemove = React.useCallback(
-		(option: Option) => {
-			setSelected(prev => prev?.filter(item => item !== option) ?? [])
+		(option: string) => {
+			setSelected(selected?.filter(item => item !== option) ?? [])
 		},
-		[setSelected]
+		[setSelected, selected]
 	)
 
 	const handleKeyDown = React.useCallback(
@@ -58,7 +58,7 @@ export function MultiSelect({
 			if (!inputRef.current) return
 
 			if (event.key === 'Backspace' || event.key === 'Delete') {
-				setSelected(prev => prev?.slice(0, -1) ?? [])
+				setSelected(selected?.slice(0, -1) ?? [])
 			}
 
 			// Blur input on escape
@@ -66,13 +66,13 @@ export function MultiSelect({
 				inputRef.current.blur()
 			}
 		},
-		[setSelected]
+		[setSelected, selected]
 	)
 
 	// Memoize filtered options to avoid unnecessary re-renders
 	const filteredOptions = React.useMemo(() => {
 		return options.filter(option => {
-			if (selected?.find(item => item.value === option.value)) return false
+			if (selected?.find(item => item === option.value)) return false
 
 			if (query.length === 0) return true
 
@@ -84,31 +84,33 @@ export function MultiSelect({
 		<Command onKeyDown={handleKeyDown} className='overflow-visible bg-transparent'>
 			<div className='group rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2'>
 				<div className='relative flex grow flex-wrap gap-1 pr-4'>
-					{selected?.map(option => {
-						return (
-							<Badge key={option.value} variant='secondary' className='rounded hover:bg-secondary'>
-								{option.label}
-								<Button
-									aria-label='Usuń opcję'
-									size='sm'
-									className='ml-2 h-auto bg-transparent p-0 text-primary hover:bg-transparent hover:text-destructive'
-									onKeyDown={e => {
-										if (e.key === 'Enter') {
+					{options
+						.filter(o => selected?.includes(o.value))
+						?.map(option => {
+							return (
+								<Badge key={option.value} variant='secondary' className='rounded hover:bg-secondary'>
+									{option.label}
+									<Button
+										aria-label='Usuń opcję'
+										size='sm'
+										className='ml-2 h-auto bg-transparent p-0 text-primary hover:bg-transparent hover:text-destructive'
+										onKeyDown={e => {
+											if (e.key === 'Enter') {
+												e.preventDefault()
+												e.stopPropagation()
+												handleRemove(option.value)
+											}
+										}}
+										onMouseDown={e => {
 											e.preventDefault()
 											e.stopPropagation()
-											handleRemove(option)
-										}
-									}}
-									onMouseDown={e => {
-										e.preventDefault()
-										e.stopPropagation()
-									}}
-									onClick={() => handleRemove(option)}>
-									<X className='h-3 w-3' aria-hidden='true' />
-								</Button>
-							</Badge>
-						)
-					})}
+										}}
+										onClick={() => handleRemove(option.value)}>
+										<X className='h-3 w-3' aria-hidden='true' />
+									</Button>
+								</Badge>
+							)
+						})}
 					<CommandPrimitive.Input
 						ref={inputRef}
 						placeholder={placeholder}
@@ -139,7 +141,7 @@ export function MultiSelect({
 											e.stopPropagation()
 										}}
 										onSelect={() => {
-											handleSelect(option)
+											handleSelect(option.value)
 											setQuery('')
 										}}>
 										{option.label}

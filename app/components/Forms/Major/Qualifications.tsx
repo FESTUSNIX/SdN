@@ -36,15 +36,17 @@ export const QualificationsField = <T extends FieldValues>({ control, accessorKe
 			qualificationsOptions?.filter(qualification =>
 				formState.defaultValues?.qualifications?.includes(parseInt(qualification.value))
 			),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	)
 
-	const [selectedQualifications, setSelectedQualifications] = useState<{ value: string; label: string }[] | null>(
-		defaultQualifications ?? null
+	const [selectedQualifications, setSelectedQualifications] = useState<string[] | null>(
+		defaultQualifications?.map(q => q.value) ?? null
 	)
 
 	useEffect(() => {
-		field.onChange(selectedQualifications?.map(q => parseInt(q.value)) ?? [])
+		field.onChange(selectedQualifications?.map(q => parseInt(q)) ?? [])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedQualifications])
 
 	return (

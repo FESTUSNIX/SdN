@@ -1,4 +1,4 @@
-import { MultiSelect } from '@/app/components/Select'
+import { MultiSelect } from '@/app/components/MultiSelect'
 import { FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
 import { MajorFormType } from '@/lib/validators/major'
 import { Qualification } from '@prisma/client'
@@ -22,14 +22,10 @@ const Qualifications = ({ form }: Props) => {
 
 	const qualificationsOptions = qualifications?.map(qualification => ({
 		label: qualification.name,
-		value: qualification.id
+		value: qualification.id.toString()
 	}))
 
 	if (!qualificationsOptions) return null
-
-	const defaultQualifications = qualificationsOptions.filter(qualification =>
-		form.formState.defaultValues?.qualifications?.includes(qualification.value)
-	)
 
 	return (
 		<FormField
@@ -40,8 +36,8 @@ const Qualifications = ({ form }: Props) => {
 					<FormLabel>Qualifications</FormLabel>
 					<MultiSelect
 						options={qualificationsOptions}
-						onSelectChange={field.onChange}
-						defaultValues={defaultQualifications}
+						selected={field.value.map(q => q.toString())}
+						setSelected={field.onChange}
 						placeholder='Select qualifications...'
 					/>
 					<FormMessage />

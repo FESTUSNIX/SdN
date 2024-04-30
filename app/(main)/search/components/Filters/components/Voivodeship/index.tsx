@@ -18,7 +18,7 @@ const VoivodeshipFilter = ({ voivodeships }: Props) => {
 	const pathname = usePathname()
 	const searchParams = useSearchParams()!
 	const [isPending, startTransition] = useTransition()
-	const [selectedVoivodeships, setSelectedVoivodeships] = useState<{ value: string; label: string }[] | null>([])
+	const [selectedVoivodeships, setSelectedVoivodeships] = useState<string[] | null>([])
 	const debouncedSelectedVoivodeships = useDebounce(selectedVoivodeships, 100)
 
 	const { startLoading, stopLoading } = useTransitionLoading()
@@ -54,22 +54,19 @@ const VoivodeshipFilter = ({ voivodeships }: Props) => {
 			.map(v => voivodeshipOptions.find(o => o.value === v))
 			.filter(i => i !== undefined)
 
-		setSelectedVoivodeships(
-			voivodeshipsOptions?.length ? (voivodeshipsOptions as { value: string; label: string }[]) : null
-		)
+		setSelectedVoivodeships(voivodeshipsOptions?.map(v => v?.value!) ?? [])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchParams])
 
 	useEffect(() => {
 		if (!debouncedSelectedVoivodeships) return
 
 		startTransition(() => {
-			router.push(
-				`${pathname}?${createQueryString('voivodeship', debouncedSelectedVoivodeships?.map(q => q.value).join('.'))}`,
-				{
-					scroll: false
-				}
-			)
+			router.push(`${pathname}?${createQueryString('voivodeship', debouncedSelectedVoivodeships?.join('.'))}`, {
+				scroll: false
+			})
 		})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedSelectedVoivodeships])
 
 	useEffect(() => {

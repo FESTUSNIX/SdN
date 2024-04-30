@@ -18,7 +18,7 @@ const CityFilter = ({ cities }: Props) => {
 	const pathname = usePathname()
 	const searchParams = useSearchParams()!
 	const [isPending, startTransition] = useTransition()
-	const [selectedCities, setSelectedCities] = useState<{ value: string; label: string }[] | null>([])
+	const [selectedCities, setSelectedCities] = useState<string[] | null>([])
 	const debouncedSelectedCities = useDebounce(selectedCities, 100)
 
 	const { startLoading, stopLoading } = useTransitionLoading()
@@ -54,17 +54,19 @@ const CityFilter = ({ cities }: Props) => {
 			.map(c => cityOptions.find(o => o.value === c))
 			.filter(i => i !== undefined)
 
-		setSelectedCities(citiesOptions?.length ? (citiesOptions as { value: string; label: string }[]) : null)
+		setSelectedCities(citiesOptions?.map(c => c?.value!) ?? [])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchParams])
 
 	useEffect(() => {
 		if (!debouncedSelectedCities) return
 
 		startTransition(() => {
-			router.push(`${pathname}?${createQueryString('cities', debouncedSelectedCities.map(q => q.value).join('.'))}`, {
+			router.push(`${pathname}?${createQueryString('cities', debouncedSelectedCities.join('.'))}`, {
 				scroll: false
 			})
 		})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedSelectedCities])
 
 	useEffect(() => {
