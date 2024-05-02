@@ -46,6 +46,11 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		.split('.')
 		.map(v => Number(v))
 
+	const units = searchParams.units
+		?.toString()
+		.split('.')
+		.map(u => Number(u))
+
 	const [orderByKey, orderByValue] = searchParams.sort?.toString().split('.') ?? []
 	let orderBy: {
 		[key: string]: string
@@ -71,7 +76,8 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		orderBy,
 		qualifications,
 		searchQuery,
-		voivodeships
+		voivodeships,
+		units
 	})
 
 	const pageCount = Math.ceil(pagination.total / limit)

@@ -15,6 +15,7 @@ type MajorSearchInput = {
 	canPayInInstallments: boolean | undefined
 	cities: number[] | undefined
 	voivodeships: number[] | undefined
+	units: number[] | undefined
 	limit: number
 	offset: number
 }
@@ -31,6 +32,7 @@ export const getMajorSearchResults = async ({
 	canPayInInstallments,
 	cities,
 	voivodeships,
+	units,
 	limit,
 	offset
 }: MajorSearchInput) => {
@@ -81,6 +83,9 @@ export const getMajorSearchResults = async ({
 			isRegulated: isRegulated || undefined,
 			canPayInInstallments: canPayInInstallments || undefined,
 			unit: {
+				id: {
+					in: units
+				},
 				city: {
 					id: {
 						in: cities

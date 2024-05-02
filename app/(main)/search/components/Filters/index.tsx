@@ -10,6 +10,7 @@ import PriceRange from './components/PriceRange'
 import Qualifications from './components/Qualifications'
 import SwitchFilter from './components/SwitchFilter'
 import VoivodeshipFilter from './components/Voivodeship'
+import UnitFilter from './components/UnitFilter'
 
 type Props = {
 	citiesParam: number[] | undefined
@@ -72,6 +73,13 @@ const Filters = async ({ citiesParam, voivodeshipsParam, className }: Props) => 
 		}
 	})
 
+	const units = await prisma.unit.findMany({
+		select: {
+			id: true,
+			name: true
+		}
+	})
+
 	return (
 		<ScrollArea className={cn('h-[calc(100vh-var(--nav-offset,_80px)-4rem-49px)]', className)}>
 			<div className='flex flex-col gap-10 px-4 py-6'>
@@ -82,6 +90,8 @@ const Filters = async ({ citiesParam, voivodeshipsParam, className }: Props) => 
 				<PriceRange />
 
 				<Qualifications qualifications={qualifications} />
+
+				<UnitFilter units={units} />
 
 				<div className='space-y-2'>
 					<VoivodeshipFilter voivodeships={voivodeships} />
