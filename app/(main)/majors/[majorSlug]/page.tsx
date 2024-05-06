@@ -50,13 +50,15 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 	} = major
 
 	const sectionStyles = 'border-b py-8'
+
+	console.log('IMG ===============', urlFor('qualification_images', `${qualifications[0].slug}.jpg`).publicUrl)
 	return (
 		<main className='min-h-screen'>
 			<header className='relative overflow-hidden border-b pb-6'>
 				<div className='pointer-events-none relative -z-10 mb-8 h-[35vh] max-h-[500px] min-h-[260px] w-screen overflow-hidden border-b [clip-path:inset(0)] xl:h-[40vh]'>
 					<div className='fixed h-[35vh] max-h-[500px] min-h-[260px] w-screen xl:h-[40vh]'>
 						<Image
-							src={urlFor('qualification_images', `${qualifications[0].slug}.jpg`).publicUrl}
+							src={urlFor('qualification_images', `${qualifications[0]?.slug}.jpg`).publicUrl}
 							alt={`Zdjęcie kwalifikacji ${qualifications[0].name}`}
 							fill
 							sizes='100vw'

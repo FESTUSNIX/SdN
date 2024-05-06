@@ -5,10 +5,16 @@ import { cn } from '@/lib/utils/utils'
 import { Outfit } from 'next/font/google'
 import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
-import Navbar from './components/Navbar'
+import Navbar from '@/app/components/Navbar'
 import SimplifiedFooter from './components/SimplifiedFooter'
+import localFont from 'next/font/local'
 
-const outfit = Outfit({ subsets: ['latin-ext'] })
+const body = Outfit({ subsets: ['latin-ext'], variable: '--font-body' })
+const heading = localFont({
+	src: '../../public/fonts/Chillax-Variable.ttf',
+	variable: '--font-heading',
+	display: 'swap'
+})
 
 export const metadata = {
 	title: {
@@ -20,7 +26,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang='en' suppressHydrationWarning>
-			<body className={cn(outfit.className, 'flex flex-col')}>
+			<body className={cn(`${body.className} ${heading.variable}`, 'flex flex-col')}>
 				<Providers>
 					<Suspense>
 						<Navbar />

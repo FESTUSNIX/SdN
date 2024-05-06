@@ -1,5 +1,6 @@
 import { Card, CardFooter, CardHeader } from '@/app/components/ui/Card'
 import { H3 } from '@/app/components/ui/Typography'
+import { urlFor } from '@/lib/supabase/getUrlFor'
 import { placeholderImage } from '@/lib/utils/placeholderImage'
 import prisma from '@/prisma/client'
 import { ArrowRight, Globe, Mail, Phone } from 'lucide-react'
@@ -34,7 +35,7 @@ const UnitCard = async ({ unitId }: Props) => {
 				<div className='flex'>
 					<div>
 						<Image
-							src={logo || placeholderImage}
+							src={urlFor('unit_logos', logo ?? '').publicUrl || placeholderImage}
 							alt={`Logo ${name}`}
 							width={100}
 							height={100}

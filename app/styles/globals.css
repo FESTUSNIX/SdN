@@ -31,6 +31,9 @@
 		--destructive: 0 84.2% 60.2%;
 		--destructive-foreground: 0 0% 98%;
 
+		--alternative: 38.2 87% 61%;
+		--alternative-foreground: 38.2 87% 100%;
+
 		--ring: 0 0% 63.9%;
 
 		--radius: 0.5rem;
@@ -72,6 +75,9 @@
 		--destructive: 0 62.8% 30.6%;
 		--destructive-foreground: 0 85.7% 97.3%;
 
+		--alternative: 38.2 87% 61%;
+		--alternative-foreground: 38.2 87% 100%;
+
 		--ring: 0 0% 14.9%;
 	}
 }
@@ -84,7 +90,7 @@
 		@apply h-full overflow-auto scroll-smooth selection:bg-primary/75 selection:text-primary-foreground;
 	}
 	body {
-		@apply min-h-full min-w-full bg-background text-foreground;
+		@apply min-h-full min-w-full bg-background font-body text-foreground;
 	}
 }
 

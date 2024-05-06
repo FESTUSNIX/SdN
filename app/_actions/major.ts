@@ -57,6 +57,25 @@ export const getMajorSearchResults = async ({
 							mode: 'insensitive'
 						}
 					}
+				},
+				{
+					qualifications: {
+						some: {
+							OR: [
+								{
+									name: {
+										contains: searchQuery,
+										mode: 'insensitive'
+									}
+								},
+								{
+									keywords: {
+										hasSome: searchQuery?.split('_')
+									}
+								}
+							]
+						}
+					}
 				}
 			],
 			AND: {

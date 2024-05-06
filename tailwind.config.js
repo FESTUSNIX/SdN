@@ -11,6 +11,10 @@ module.exports = {
 			}
 		},
 		extend: {
+			fontFamily: {
+				body: ['var(--font-body)'],
+				heading: ['var(--font-heading)']
+			},
 			spacing: {
 				navOffset: 'var(--nav-offset,_80px)'
 			},
@@ -67,6 +71,10 @@ module.exports = {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				alternative: {
+					DEFAULT: 'hsl(var(--alternative))',
+					foreground: 'hsl(var(--alternative-foreground))'
 				}
 			},
 			borderRadius: {

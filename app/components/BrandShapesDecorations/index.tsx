@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils/utils'
 import React from 'react'
 
 type Props = {
-	size: number
+	size?: number
 	type: 'square' | 'circle' | 'triangle' | 'half-circle'
 	className?: string
 }
