@@ -56,14 +56,14 @@ export const ExtendedSearchBar = ({ placeholder, className }: { placeholder?: st
 	}
 
 	const inputStyles =
-		'h-auto focus-visible:outline-none bg-background disabled:cursor-not-allowed disabled:opacity-50 py-4 pr-12 pr-6'
+		'h-auto focus-visible:outline-none bg-background w-full disabled:cursor-not-allowed md:w-48 lg:w-56 disabled:opacity-50 py-4 pr-6'
 
 	return (
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
 				className={cn(
-					'relative flex h-16 w-max items-center rounded-full border border-transparent bg-background pl-8 pr-1.5 shadow-[0px_10px_36px_rgb(0_0_0_/_0.075)] duration-300 dark:border-border dark:shadow-none',
+					'relative flex w-full flex-col items-center rounded-3xl border border-transparent bg-background px-4 shadow-[0px_10px_36px_rgb(0_0_0_/_0.075)] duration-300 dark:border-border dark:shadow-none max-md:gap-y-1 sm:flex-row sm:flex-wrap md:h-16 md:w-max md:rounded-full md:pl-8 md:pr-1.5',
 					form.formState.errors.searchQuery && 'border-destructive dark:border-destructive',
 					className
 				)}>
@@ -71,11 +71,11 @@ export const ExtendedSearchBar = ({ placeholder, className }: { placeholder?: st
 					control={form.control}
 					name='searchQuery'
 					render={({ field }) => (
-						<FormItem>
+						<FormItem className='w-full sm:w-1/3 sm:grow'>
 							<FormControl>
-								<label className='flex h-full items-center gap-3'>
+								<label className='flex h-full w-full items-center gap-3'>
 									<span className='sr-only'>Nazwa kierunku lub uczelni</span>
-									<SearchIcon className='size-5' />
+									<SearchIcon className='size-5 shrink-0' />
 									<input placeholder={placeholder ?? `Kierunek lub uczelnia`} className={inputStyles} {...field} />
 								</label>
 							</FormControl>
@@ -83,17 +83,17 @@ export const ExtendedSearchBar = ({ placeholder, className }: { placeholder?: st
 					)}
 				/>
 
-				<div className='h-[calc(100%-2rem)] w-px bg-border' />
+				<div className='h-px w-full shrink-0 bg-border sm:h-8 sm:w-px md:h-[calc(100%-2rem)]' />
 
 				<FormField
 					control={form.control}
 					name='location'
 					render={({ field }) => (
-						<FormItem>
+						<FormItem className='w-full sm:w-1/3 sm:grow'>
 							<FormControl>
-								<label className='flex h-full items-center gap-3 pl-6'>
+								<label className='flex h-full w-full items-center gap-3 sm:pl-6'>
 									<span className='sr-only'>Lokalizacja</span>
-									<MapPinIcon className='size-5' />
+									<MapPinIcon className='size-5 shrink-0' />
 									<input placeholder={placeholder ?? `Kraków, Małopolskie`} className={inputStyles} {...field} />
 								</label>
 							</FormControl>
@@ -101,7 +101,10 @@ export const ExtendedSearchBar = ({ placeholder, className }: { placeholder?: st
 					)}
 				/>
 
-				<Button type='submit' disabled={isLoading} className='my-1 h-auto gap-4 rounded-full px-9 py-3'>
+				<Button
+					type='submit'
+					disabled={isLoading}
+					className='my-2 h-auto w-full gap-4 rounded-full px-9 py-3 md:my-1 md:w-auto'>
 					<span className='text-xl'>{isLoading ? 'Szukam...' : 'Szukaj'}</span>
 					<SearchIcon className='size-5 rotate-90' />
 				</Button>
