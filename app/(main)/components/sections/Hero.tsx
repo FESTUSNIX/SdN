@@ -1,6 +1,7 @@
 import { ExtendedSearchBar } from '@/app/components/ExtendedSearchBar'
 import Image from 'next/image'
 import { HeroTestimonials } from '../HeroTestimonials'
+import { Suspense } from 'react'
 
 type Props = {}
 
@@ -15,7 +16,9 @@ export const Hero = (props: Props) => {
 				</p>
 
 				<div className='mt-16 lg:mt-24'>
-					<ExtendedSearchBar />
+					<Suspense>
+						<ExtendedSearchBar />
+					</Suspense>
 				</div>
 
 				<div className='-order-1 mb-6 max-w-5xl font-heading text-4xl font-semibold sm:text-5xl md:text-6xl xl:text-7xl'>
