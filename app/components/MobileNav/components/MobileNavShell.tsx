@@ -22,8 +22,8 @@ export const MobileNavShell = ({ children }: Props) => {
 		lastDirectionChange: 0
 	})
 
-	const topBoundary = 60
-	const bottomBoundary = 60
+	const topBoundary = 120
+	const bottomBoundary = 120
 
 	const controlNavbar = () => {
 		if (typeof window !== 'undefined') {
@@ -79,10 +79,12 @@ export const MobileNavShell = ({ children }: Props) => {
 	return (
 		<>
 			<div
-				className={cn('fixed bottom-0 w-full duration-300 ease-in-out', show ? 'translate-y-0' : 'translate-y-full')}>
+				className={cn(
+					'fixed bottom-0 z-50 w-full duration-300 ease-in-out',
+					show ? 'translate-y-0' : 'translate-y-full'
+				)}>
 				{children}
 			</div>
-			<div className='h-20' />
 		</>
 	)
 }

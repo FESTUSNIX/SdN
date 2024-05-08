@@ -1,7 +1,7 @@
-import { socialMedia } from '@/app/(main)/constants/socialMedia'
 import IconBadge from '@/app/components/IconBadge'
 import { Button } from '@/app/components/ui/Button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/Card'
+import { socialMedia } from '@/app/constants/socialMedia'
 import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from 'lucide-react'
 
 type Props = {}

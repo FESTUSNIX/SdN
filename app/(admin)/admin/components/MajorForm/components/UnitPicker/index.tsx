@@ -1,10 +1,9 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/Select'
 import { MajorFormType } from '@/lib/validators/major'
-import { Qualification, Unit } from '@prisma/client'
+import { Unit } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { MultiSelect } from '@/app/components/Select'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/Select'
 
 type Props = {
 	form: MajorFormType

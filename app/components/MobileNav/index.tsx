@@ -38,7 +38,7 @@ export const MobileNav = async () => {
 
 	return (
 		<MobileNavShell>
-			<nav className={cn('block w-full border-t bg-background py-4 md:hidden')}>
+			<nav className={cn('relative z-50 block w-full border-t bg-background py-4 md:hidden')}>
 				<ul className='wrapper flex items-center justify-around'>
 					{links.map(
 						link =>

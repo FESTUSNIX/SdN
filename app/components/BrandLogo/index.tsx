@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils/utils'
-import Logo from '@/public/sdn-logo@svg.svg'
-import Banner from '@/public/sdn-logotyp@svg.svg'
+import Logo from '@/public/assets/logo.svg'
+import Banner from '@/public/assets/wordmark-horizontal.svg'
 import Image from 'next/image'
 
 export const BrandLogo = ({

@@ -2,7 +2,7 @@ import ThemeSwitch from '@/app/(admin)/admin/components/ThemeSwitch'
 import IconBadge from '@/app/components/IconBadge'
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
 import Link from 'next/link'
-import { socialMedia } from '../../constants/socialMedia'
+import { socialMedia } from '../../../constants/socialMedia'
 
 const links = [
 	{

@@ -2,10 +2,11 @@ import ThemeSwitch from '@/app/(admin)/admin/components/ThemeSwitch'
 import IconBadge from '@/app/components/IconBadge'
 import { Muted } from '@/app/components/ui/Typography'
 import { cn } from '@/lib/utils/utils'
-import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from 'lucide-react'
+import { Facebook, Instagram, Mail, Phone } from 'lucide-react'
 import Link from 'next/link'
-import { links as linkGroups } from './constants/links'
 import { socialMedia } from '../../constants/socialMedia'
+import { Icons } from '../Icons'
+import { links as linkGroups } from './constants/links'
 
 const Footer = () => {
 	const date = new Date()
@@ -17,17 +18,13 @@ const Footer = () => {
 				<div className='flex flex-wrap gap-x-16 gap-y-16'>
 					<div className='mr-auto flex flex-col gap-8'>
 						<div>
-							<div className='text-4xl font-black'>SdN</div>
+							<Icons.brand.wordmark className='h-12 w-auto text-primary' />
 						</div>
 
-						<div className='flex flex-col gap-2 text-muted-foreground'>
+						<div className='flex flex-col gap-2 text-foreground'>
 							<div className='flex items-center gap-4'>
 								<Phone className='h-4 w-4' />
 								<span>+48 123 456 789</span>
-							</div>
-							<div className='flex items-center gap-4'>
-								<Phone className='h-4 w-4' />
-								<span>+48 000 123 456</span>
 							</div>
 							<div className='flex items-center gap-4'>
 								<Mail className='h-4 w-4' />
@@ -60,15 +57,13 @@ const Footer = () => {
 				<div className='mt-12 flex flex-col-reverse items-center justify-between gap-y-6 border-t py-6 lg:flex-row'>
 					<div>
 						<p className='text-center text-sm text-muted-foreground md:w-max'>
-							Copyright &copy; {year ?? 2023} Studia dla Nauczycieli. Wszelkie Prawa Zastrzeżone.
+							Copyright &copy; {year ?? 2024} Studia dla Nauczycieli. Wszelkie Prawa Zastrzeżone.
 						</p>
 					</div>
 					<div className='flex flex-wrap items-center justify-center gap-4'>
 						<ThemeSwitch />
-						<IconBadge href={socialMedia.twitter} name='Twitter' Icon={Twitter} />
 						<IconBadge href={socialMedia.facebook} name='Facebook' Icon={Facebook} />
 						<IconBadge href={socialMedia.instagram} name='Instagram' Icon={Instagram} />
-						<IconBadge href={socialMedia.linkedIn} name='Linkedin' Icon={Linkedin} />
 					</div>
 				</div>
 			</div>

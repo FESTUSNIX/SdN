@@ -3,16 +3,16 @@ export const links: { title: string; links: { label: string; link: string; exter
 		title: 'Serwis',
 		links: [
 			{
-				label: 'Często zadawane pytania',
-				link: '/faq'
-			},
-			{
-				label: 'Kontakt',
-				link: '/contact'
-			},
-			{
 				label: 'O portalu',
 				link: '/about'
+			},
+			{
+				label: 'Szukaj',
+				link: '/search'
+			},
+			{
+				label: 'Logowanie',
+				link: '/login'
 			}
 		]
 	},
@@ -28,29 +28,23 @@ export const links: { title: string; links: { label: string; link: string; exter
 				label: 'Facebook',
 				link: '/',
 				external: true
-			},
-			{
-				label: 'Twitter',
-				link: '/',
-				external: true
-			},
-			{
-				label: 'LinkedIn',
-				link: '/',
-				external: true
 			}
 		]
 	},
 	{
-		title: 'Prywatność',
+		title: 'Pomoc',
 		links: [
 			{
 				label: 'Polityka prywatności',
 				link: '/privacy-policy'
 			},
 			{
-				label: 'Ustawienia ciasteczek',
-				link: '/cookie-settings'
+				label: 'Często zadawane pytania',
+				link: '/faq'
+			},
+			{
+				label: 'Kontakt',
+				link: '/contact'
 			}
 		]
 	}

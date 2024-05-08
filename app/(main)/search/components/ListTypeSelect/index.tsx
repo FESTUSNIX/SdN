@@ -3,7 +3,7 @@
 import { Icons } from '@/app/components/Icons'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/Select'
 import { useDebounce } from '@/app/hooks/useDebounce'
-import { LucideIcon } from 'lucide-react'
+import { LucideProps } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState, useTransition } from 'react'
 import { useTransitionLoading } from '../../context/TransitionLoadingContext'
@@ -11,7 +11,7 @@ import { useTransitionLoading } from '../../context/TransitionLoadingContext'
 const options: {
 	value: string
 	label: string
-	Icon: LucideIcon
+	Icon: (props: LucideProps) => JSX.Element
 }[] = [
 	{
 		value: 'list',

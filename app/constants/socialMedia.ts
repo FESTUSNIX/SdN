@@ -1,6 +1,6 @@
 export const socialMedia = {
 	instagram: '/',
-	facebook: '/',
+	facebook: 'https://www.facebook.com/StudiaDlaNauczycieli/',
 	twitter: '/',
 	linkedIn: '/'
 }
