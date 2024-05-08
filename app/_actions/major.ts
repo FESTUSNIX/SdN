@@ -70,7 +70,7 @@ export const getMajorSearchResults = async ({
 								},
 								{
 									keywords: {
-										hasSome: searchQuery?.split('_')
+										hasSome: searchQuery?.split('_') ?? []
 									}
 								}
 							]
@@ -95,7 +95,7 @@ export const getMajorSearchResults = async ({
 			qualifications: {
 				some: {
 					id: {
-						in: qualifications
+						in: (qualifications?.map(q => Number(q) || undefined).filter(q => q) as number[]) ?? []
 					}
 				}
 			},
