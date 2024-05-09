@@ -18,9 +18,14 @@ const SearchBar = ({ placeholder, param, className }: { placeholder?: string; pa
 	const paramName = param ?? 'q'
 
 	const createQueryString = useCallback(
-		(name: string, value: string) => {
+		(queries: { [key: string]: string | undefined }) => {
 			const params = new URLSearchParams(searchParams)
-			params.set(name, value)
+
+			Object.entries(queries).map(([key, value]) => {
+				if (!value) return params.delete(key)
+
+				return params.set(key, value)
+			})
 
 			return params.toString()
 		},
@@ -40,7 +45,9 @@ const SearchBar = ({ placeholder, param, className }: { placeholder?: string; pa
 	}, [searchParams])
 
 	useEffect(() => {
-		router.push(pathname + '?' + createQueryString(paramName, query), { scroll: false })
+		const queryString = createQueryString({ [paramName]: debouncedQuery })
+		console.log(queryString)
+		router.push(pathname + '?' + queryString, { scroll: false })
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedQuery])
 

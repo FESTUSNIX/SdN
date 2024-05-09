@@ -1,3 +1,5 @@
+import { socialMedia } from '@/app/constants/socialMedia';
+
 export const links: { title: string; links: { label: string; link: string; external?: boolean }[] }[] = [
 	{
 		title: 'Serwis',
@@ -21,12 +23,12 @@ export const links: { title: string; links: { label: string; link: string; exter
 		links: [
 			{
 				label: 'Instagram',
-				link: '/',
+				link: socialMedia.instagram,
 				external: true
 			},
 			{
 				label: 'Facebook',
-				link: '/',
+				link: socialMedia.facebook,
 				external: true
 			}
 		]

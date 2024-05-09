@@ -38,8 +38,8 @@ const Footer = () => {
 							<div key={group.title}>
 								<h5 className='mb-4 text-sm font-semibold'>{group.title}</h5>
 								<ul className='flex flex-row flex-wrap gap-x-4 gap-y-1 md:flex-col md:gap-2'>
-									{group.links.map(link => (
-										<li key={link.link}>
+									{group.links.map((link, i) => (
+										<li key={`${link.link}-${i}`}>
 											<Link
 												href={link.link}
 												target={link.external ? '_blank' : undefined}

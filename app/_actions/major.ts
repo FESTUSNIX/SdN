@@ -46,14 +46,14 @@ export const getMajorSearchResults = async ({
 			OR: [
 				{
 					name: {
-						contains: searchQuery,
+						contains: searchQuery || undefined,
 						mode: 'insensitive'
 					}
 				},
 				{
 					unit: {
 						name: {
-							contains: searchQuery,
+							contains: searchQuery || undefined,
 							mode: 'insensitive'
 						}
 					}
@@ -64,13 +64,13 @@ export const getMajorSearchResults = async ({
 							OR: [
 								{
 									name: {
-										contains: searchQuery,
+										contains: searchQuery || undefined,
 										mode: 'insensitive'
 									}
 								},
 								{
 									keywords: {
-										hasSome: searchQuery?.split('_') ?? undefined
+										hasSome: searchQuery?.split('_') || []
 									}
 								}
 							]

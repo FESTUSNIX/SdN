@@ -34,7 +34,7 @@ const ResetFilters = (props: Props) => {
 	useEffect(() => {
 		const params = new URLSearchParams(readOnlySearchParams)
 
-		for (const [key, value] of params.entries()) setShow(!['q', 'list_type'].includes(key))
+		setShow([...params.keys()].filter(key => !['q', 'list_type'].includes(key)).length > 0)
 	}, [readOnlySearchParams])
 
 	if (!show) return null

@@ -17,7 +17,7 @@ const STATS = [
 
 export const OurStats = (props: Props) => {
 	return (
-		<section className='z-10 flex w-full items-center justify-center bg-[#EEF1F6] py-8'>
+		<section className='z-10 flex w-full items-center justify-center bg-secondary py-8'>
 			<h2 className='sr-only'>nasze zalety</h2>
 
 			<ul className='wrapper flex w-full flex-row flex-wrap items-center justify-center gap-12 rounded-3xl bg-background px-8 py-6 md:justify-between 2xl:px-12'>

@@ -14,9 +14,14 @@ export const SearchBar = () => {
 	const debouncedQuery = useDebounce(query, 250)
 
 	const createQueryString = useCallback(
-		(name: string, value: string) => {
+		(queries: { [key: string]: string | undefined }) => {
 			const params = new URLSearchParams(searchParams)
-			params.set(name, value)
+
+			Object.entries(queries).map(([key, value]) => {
+				if (!value) return params.delete(key)
+
+				return params.set(key, value)
+			})
 
 			return params.toString()
 		},
@@ -32,12 +37,14 @@ export const SearchBar = () => {
 		if (debouncedQuery === searchQuery) return
 
 		setQuery(searchQuery)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchParams])
 
 	useEffect(() => {
-		if (!debouncedQuery) return router.push(pathname)
+		if (pathname !== '/search' && !debouncedQuery) return
 
-		router.push('/search' + '?' + createQueryString('q', debouncedQuery))
+		router.push('/search' + '?' + createQueryString({ q: debouncedQuery }), { scroll: false })
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedQuery])
 
 	return (
@@ -52,7 +59,7 @@ export const SearchBar = () => {
 				onClick={() => {
 					if (!debouncedQuery) return router.push('/search')
 
-					router.push('/search' + '?' + createQueryString('q', debouncedQuery))
+					router.push('/search' + '?' + createQueryString({ q: debouncedQuery }), { scroll: false })
 				}}
 				className='z-10 m-1 ml-0 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary duration-300 hover:bg-primary/90 active:scale-90'>
 				<SearchIcon className='pointer-events-none h-3.5 w-3.5 select-none stroke-[3] text-primary-foreground' />

@@ -41,7 +41,7 @@ const MajorCard = ({ data, likeable = true, type = 'grid', onDislike }: Props) =
 				className={cn(
 					'relative size-12 shrink-0 overflow-hidden rounded-md',
 					type === 'grid' && 'h-52 w-full',
-					type === 'list' && 'mt-1 size-36 @2xl:mt-0 @2xl:size-28'
+					type === 'list' && 'mt-1 hidden size-28 sm:block'
 				)}>
 				<Image
 					src={urlFor('qualification_images', `${qualifications[0]?.slug}.jpg`).publicUrl}
