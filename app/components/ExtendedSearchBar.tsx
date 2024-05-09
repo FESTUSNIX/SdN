@@ -3,16 +3,18 @@
 import { Form, FormControl, FormField, FormItem } from '@/app/components/ui/Form'
 import { cn } from '@/lib/utils/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { MapPinIcon, SearchIcon } from 'lucide-react'
+import { AwardIcon, SearchIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { majorLevelOptions } from '../constants/majorLevel'
 import { Button } from './ui/Button'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/Select'
 
 const formSchema = z.object({
 	searchQuery: z.string().min(1),
-	location: z.string().optional()
+	majorLevel: z.enum(['PIERWSZEGO_STOPNIA', 'DRUGIEGO_STOPNIA', 'JEDNOLITE_MAGISTERSKIE', 'PODYPLOMOWE']).optional()
 })
 
 export const ExtendedSearchBar = ({ placeholder, className }: { placeholder?: string; className?: string }) => {
@@ -23,18 +25,19 @@ export const ExtendedSearchBar = ({ placeholder, className }: { placeholder?: st
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			searchQuery: '',
-			location: ''
+			majorLevel: undefined
 		}
 	})
 
-	const { isLoading } = form.formState
+	const { isLoading, isValidating, isSubmitting } = form.formState
+	const isPending = isLoading || isValidating || isSubmitting
 
 	const createQueryString = useCallback(
 		(queries: { [key: string]: string | undefined }) => {
 			const params = new URLSearchParams(searchParams)
 
 			Object.entries(queries).map(([key, value]) => {
-				if (value === undefined || value === null) return params.delete(key)
+				if (!value) return params.delete(key)
 
 				return params.set(key, value)
 			})
@@ -49,14 +52,15 @@ export const ExtendedSearchBar = ({ placeholder, className }: { placeholder?: st
 			'/search' +
 				'?' +
 				createQueryString({
-					q: values.searchQuery
+					q: values.searchQuery,
+					major_level: values.majorLevel
 				}),
 			{ scroll: false }
 		)
 	}
 
 	const inputStyles =
-		'h-auto focus-visible:outline-none bg-background w-full disabled:cursor-not-allowed md:w-48 lg:w-56 disabled:opacity-50 py-4 pr-6'
+		'h-auto focus-visible:outline-none focus:ring-0 bg-background w-full disabled:cursor-not-allowed md:w-48 lg:w-56 disabled:opacity-50 py-4 pr-6'
 
 	return (
 		<Form {...form}>
@@ -87,25 +91,37 @@ export const ExtendedSearchBar = ({ placeholder, className }: { placeholder?: st
 
 				<FormField
 					control={form.control}
-					name='location'
+					name='majorLevel'
 					render={({ field }) => (
 						<FormItem className='w-full sm:w-1/3 sm:grow'>
-							<FormControl>
-								<label className='flex h-full w-full items-center gap-3 sm:pl-6'>
-									<span className='sr-only'>Lokalizacja</span>
-									<MapPinIcon className='size-5 shrink-0' />
-									<input placeholder={placeholder ?? `Kraków, Małopolskie`} className={inputStyles} {...field} />
-								</label>
-							</FormControl>
+							<label className='flex h-full w-full items-center gap-3 sm:pl-6'>
+								<span className='sr-only'>Typ studiów</span>
+								<AwardIcon className='size-5 shrink-0' />
+								<Select onValueChange={field.onChange as (value: string) => void} defaultValue={field.value}>
+									<FormControl>
+										<SelectTrigger
+											className={cn(inputStyles, 'border-none pl-0 text-base', !field.value && 'text-[#9ca3af]')}>
+											<SelectValue placeholder='Typ studiów' />
+										</SelectTrigger>
+									</FormControl>
+									<SelectContent align='center'>
+										{majorLevelOptions.map(option => (
+											<SelectItem key={option.value} value={option.value}>
+												{option.label}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</label>
 						</FormItem>
 					)}
 				/>
 
 				<Button
 					type='submit'
-					disabled={isLoading}
+					disabled={isPending}
 					className='my-2 h-auto w-full gap-4 rounded-full px-9 py-3 md:my-1 md:w-auto'>
-					<span className='text-xl'>{isLoading ? 'Szukam...' : 'Szukaj'}</span>
+					<span className='text-xl'>{isPending ? 'Szukam...' : 'Szukaj'}</span>
 					<SearchIcon className='size-5 rotate-90' />
 				</Button>
 			</form>
