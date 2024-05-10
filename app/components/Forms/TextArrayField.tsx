@@ -41,6 +41,7 @@ export const TextArrayField = <T extends FieldValues>({
 							maxItemLength={maxItemLength}
 							maxLength={maxLength}
 							ref={field.ref}
+							onBlur={field.onBlur}
 						/>
 					</FormControl>
 					{description && <FormDescription>{description}</FormDescription>}

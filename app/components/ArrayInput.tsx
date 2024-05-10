@@ -5,6 +5,7 @@ import { PlusIcon, X } from 'lucide-react'
 import { KeyboardEvent, forwardRef, useCallback, useEffect, useState } from 'react'
 import { Badge } from './ui/Badge'
 import { Button } from './ui/Button'
+import { InputProps } from './ui/Input'
 
 type ArrayInputProps = {
 	values: string[]
@@ -16,8 +17,8 @@ type ArrayInputProps = {
 	onMaxLengthError?: (value: string) => void
 	disabled?: boolean
 	placeholder?: string
-	onBlur?: () => void
 	clearErrors?: () => void
+	onBlur?: InputProps['onBlur']
 }
 
 export const ArrayInput = forwardRef<HTMLInputElement, ArrayInputProps>(
