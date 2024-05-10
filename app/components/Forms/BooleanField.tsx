@@ -27,8 +27,8 @@ export const BooleanField = <T extends FieldValues>({
 					<FormControl>
 						<RadioGroup
 							onValueChange={value => field.onChange(value === 'true')}
-							defaultValue={field.value ? 'true' : 'false'}
-							value={field.value ? 'true' : 'false'}
+							defaultValue={field.value === true ? 'true' : 'false'}
+							value={field.value === true ? 'true' : 'false'}
 							className='flex flex-col'>
 							<FormItem className='flex items-center space-x-3 space-y-0'>
 								<FormControl>

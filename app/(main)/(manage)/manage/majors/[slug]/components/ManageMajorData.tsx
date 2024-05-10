@@ -2,6 +2,7 @@
 
 import { BooleanField } from '@/app/components/Forms/BooleanField'
 import { DateField } from '@/app/components/Forms/DateField'
+import { EditField } from '@/app/components/Forms/EditField'
 import { EditorField } from '@/app/components/Forms/EditorField'
 import { DaysOfWeek } from '@/app/components/Forms/Major/DaysOfWeek'
 import { QualificationsField } from '@/app/components/Forms/Major/Qualifications'
@@ -9,13 +10,13 @@ import { SelectField } from '@/app/components/Forms/SelectField'
 import { TextField } from '@/app/components/Forms/TextField'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H3 } from '@/app/components/ui/Typography'
+import { DAYS_OF_WEEK_ENUM } from '@/app/constants/daysOfWeek'
 import { majorLevelEnum, majorLevelOptions } from '@/app/constants/majorLevel'
-import { capitalize } from '@/lib/utils/capitalize'
 import { MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { Major, Qualification } from '@prisma/client'
 import { Fragment } from 'react'
 import { Control, FieldPath, FieldValues } from 'react-hook-form'
-import { EditField } from '@/app/components/Forms/EditField'
+import { z } from 'zod'
 import RichTextPreviewField from './RichTextPreviewField'
 
 type Props = {
@@ -52,6 +53,7 @@ export const ManageMajorData = ({ major }: Props) => {
 		value: any
 		customComponent?: <T extends FieldValues, K extends keyof T>(value: T[K]) => React.ReactNode
 		editComponent: <T extends FieldValues>(props: { accessorKey: FieldPath<T>; control?: Control<T> }) => JSX.Element
+		preparePayload?: <T extends FieldValues, K extends keyof T>(value: T[K]) => any
 	}[] = [
 		{
 			accessorKey: 'name',
@@ -69,8 +71,9 @@ export const ManageMajorData = ({ major }: Props) => {
 		{
 			accessorKey: 'isOnline',
 			title: 'Tryb',
-			value: isOnline ? 'Online' : 'Stacjonarny',
-			editComponent: props => BooleanField({ options: ['Online', 'Stacjonarny'], ...props })
+			value: isOnline,
+			editComponent: props => BooleanField({ options: ['Online', 'Stacjonarny'], ...props }),
+			customComponent: value => (value ? 'Online' : 'Stacjonarny')
 		},
 		{
 			accessorKey: 'qualifications',
@@ -84,7 +87,8 @@ export const ManageMajorData = ({ major }: Props) => {
 					)}
 				</>
 			),
-			editComponent: QualificationsField
+			editComponent: props => QualificationsField({ control: props.control, accessorKey: props.accessorKey }),
+			preparePayload: value => value.map((q: { id: number; name: string }) => q.id)
 		},
 		{
 			accessorKey: 'cost',
@@ -95,8 +99,9 @@ export const ManageMajorData = ({ major }: Props) => {
 		{
 			accessorKey: 'canPayInInstallments',
 			title: 'Płatność w ratach',
-			value: canPayInInstallments ? 'Tak' : 'Nie',
-			editComponent: BooleanField
+			value: canPayInInstallments,
+			editComponent: BooleanField,
+			customComponent: value => (value ? 'Tak' : 'Nie')
 		},
 		{
 			accessorKey: 'durationInHours',
@@ -114,8 +119,9 @@ export const ManageMajorData = ({ major }: Props) => {
 		{
 			accessorKey: 'isRegulated',
 			title: 'Zgodne z regulacjami',
-			value: isRegulated ? 'Tak' : 'Nie',
-			editComponent: BooleanField
+			value: isRegulated,
+			editComponent: BooleanField,
+			customComponent: value => (value ? 'Tak' : 'Nie')
 		},
 		{
 			accessorKey: 'startDate',
@@ -165,9 +171,7 @@ export const ManageMajorData = ({ major }: Props) => {
 			value: daysOfWeek,
 			customComponent: value =>
 				value.length > 0
-					? daysOfWeek.map(
-							(day, i, elements) => `${capitalize(day.toLowerCase())}${i !== elements.length - 1 ? ', ' : ''}`
-					  )
+					? daysOfWeek.map((day, i, elements) => `${DAYS_OF_WEEK_ENUM[day]}${i !== elements.length - 1 ? ', ' : ''}`)
 					: 'Brak danych',
 			editComponent: DaysOfWeek
 		},
@@ -214,7 +218,18 @@ export const ManageMajorData = ({ major }: Props) => {
 							accessorKey={item.accessorKey}
 							defaultValue={item.value}
 							PreviewComponent={item.customComponent}
-							schema={MajorValidator}
+							schema={MajorValidator.extend({
+								qualifications: z
+									.object({
+										id: z.number(),
+										name: z.string()
+									})
+									.array()
+									.min(1, {
+										message: 'Musisz wybrać conajmniej jedną kwalifikacje'
+									})
+							})}
+							preparePayload={item.preparePayload}
 						/>
 					</div>
 

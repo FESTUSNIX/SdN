@@ -55,12 +55,13 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 				payload[accessorKey] = preparedValue
 			}
 
+			console.log('OPTIMISTIC VALUE', values[accessorKey])
 			setOptimisticValue(values[accessorKey])
 			setIsEditing(false)
 
 			const { data } = await axios.patch(apiPath, payload)
-
-			return payload
+			console.log('AFTER PATCH', data)
+			return values
 		},
 		onError: err => {
 			toast.dismiss()
@@ -87,6 +88,8 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 			toast.dismiss()
 
 			form.reset()
+
+			console.log('SUCCESS', data[accessorKey])
 
 			setIsEditing(false)
 			setOptimisticValue(data[accessorKey])

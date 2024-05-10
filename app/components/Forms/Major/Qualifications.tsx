@@ -16,7 +16,7 @@ type Props<T extends FieldValues> = {
 export const QualificationsField = <T extends FieldValues>({ control, accessorKey, label }: Props<T>) => {
 	const { field, formState } = useController({ name: accessorKey, control: control })
 
-	const { data: qualifications } = useQuery({
+	const { data: qualifications, isSuccess } = useQuery({
 		queryKey: ['qualifications'],
 		queryFn: async () => {
 			const { data } = await axios.get<Qualification[]>('/api/qualifications')
@@ -26,26 +26,47 @@ export const QualificationsField = <T extends FieldValues>({ control, accessorKe
 		cacheTime: 0
 	})
 
-	const qualificationsOptions = qualifications?.map(qualification => ({
-		label: qualification.name,
-		value: qualification.id.toString()
-	}))
-
-	const defaultQualifications = useMemo(
-		() =>
-			qualificationsOptions?.filter(qualification =>
-				formState.defaultValues?.qualifications?.includes(parseInt(qualification.value))
-			),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
-	)
+	const qualificationsOptions = useMemo(() => {
+		return qualifications?.map(qualification => ({
+			value: qualification.id.toString(),
+			label: qualification.name
+		}))
+	}, [qualifications])
 
 	const [selectedQualifications, setSelectedQualifications] = useState<string[] | null>(
-		defaultQualifications?.map(q => q.value) ?? null
+		qualificationsOptions
+			?.filter(qualification =>
+				formState.defaultValues?.qualifications?.find(
+					(q: { id: number; name: string }) => q.id === parseInt(qualification.value)
+				)
+			)
+			?.map(q => q.value) ?? null
 	)
 
 	useEffect(() => {
-		field.onChange(selectedQualifications?.map(q => parseInt(q)) ?? [])
+		if (qualifications && selectedQualifications === null) {
+			setSelectedQualifications(
+				qualificationsOptions
+					?.filter(qualification =>
+						formState.defaultValues?.qualifications?.find(
+							(q: { id: number; name: string }) => q.id === parseInt(qualification.value)
+						)
+					)
+					?.map(q => q.value) ?? null
+			)
+		}
+	}, [qualifications])
+
+	useEffect(() => {
+		const newQualifications =
+			selectedQualifications?.map(id => ({
+				id: parseInt(id),
+				name: qualificationsOptions?.find(q => q.value === id)?.label
+			})) ?? []
+
+		console.log('NEW', newQualifications)
+
+		field.onChange(newQualifications)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedQualifications])
 
@@ -57,7 +78,7 @@ export const QualificationsField = <T extends FieldValues>({ control, accessorKe
 				<FormItem>
 					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
-						{qualificationsOptions?.length ? (
+						{qualificationsOptions?.length && isSuccess ? (
 							<MultiSelect
 								options={qualificationsOptions}
 								selected={selectedQualifications}
