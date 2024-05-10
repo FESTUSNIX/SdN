@@ -9,15 +9,6 @@ export async function POST(req: Request) {
 
 		const { sentAt, sentBy, title, content, unitId, sendTo } = UnitEmailValidator.parse(body)
 
-		console.log({
-			title,
-			content: content,
-			sentAt: sentAt,
-			sentBy,
-			sendTo,
-			unitId: unitId
-		})
-
 		const info = await mailTransporter.sendMail({
 			from: '"Studia dla Nauczycieli" <info@studiadlanauczycieli.pl>',
 			to: sendTo,

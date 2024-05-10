@@ -143,7 +143,8 @@ export async function PATCH(req: Request, { params }: { params: { majorId: strin
 			startDate,
 			status,
 			syllabus,
-			isRegulated
+			isRegulated,
+			keywords
 		} = MajorValidator.omit({ unitSlug: true, unitId: true }).partial().parse(body)
 
 		let qualificationsConnect
@@ -196,7 +197,8 @@ export async function PATCH(req: Request, { params }: { params: { majorId: strin
 				description: description || [],
 				qualifications: {
 					connect: qualificationsConnect
-				}
+				},
+				keywords: keywords || []
 			}
 		})
 

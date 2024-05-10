@@ -52,7 +52,8 @@ const AddMajor = () => {
 			qualifications: [],
 			recruitmentConditions: [],
 			status: 'IN_PROGRESS',
-			syllabus: []
+			syllabus: [],
+			keywords: []
 		}
 	})
 
@@ -63,30 +64,10 @@ const AddMajor = () => {
 			toast.loading('Adding a major...')
 
 			const payload: Omit<MajorPayload, 'id' | 'unitSlug'> = {
+				...values,
 				unitId: unitId,
-				name: values.name,
-				majorLevel: values.majorLevel,
-				address: values.address,
-				canPayInInstallments: values.canPayInInstallments,
-				certificates: values.certificates,
-				completionConditions: values.completionConditions,
-				contact: values.contact,
-				cost: values.cost,
-				daysOfWeek: values.daysOfWeek,
-				description: values.description,
-				durationInHours: values.durationInHours,
 				endDate: values.endDate ? new Date(format(values.endDate, 'yyyy-MM-dd')) : null,
-				startDate: values.startDate ? new Date(format(values.startDate, 'yyyy-MM-dd')) : null,
-				formOfStudy: values.formOfStudy,
-				isOnline: values.isOnline,
-				numberOfSemesters: values.numberOfSemesters,
-				onlineDuration: values.onlineDuration,
-				organisator: values.organisator,
-				qualifications: values.qualifications,
-				recruitmentConditions: values.recruitmentConditions,
-				status: values.status,
-				syllabus: values.syllabus,
-				isRegulated: values.isRegulated
+				startDate: values.startDate ? new Date(format(values.startDate, 'yyyy-MM-dd')) : null
 			}
 
 			const { data } = await axios.post('/api/majors', payload)

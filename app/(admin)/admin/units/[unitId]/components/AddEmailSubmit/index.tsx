@@ -33,8 +33,6 @@ const AddEmailSubmit = ({ form, unitId, emailHtml, emailPlainText }: Props) => {
 				unitId: unitId
 			}
 
-			console.log(payload)
-
 			const { data } = await axios.post(`/api/emails`, payload)
 
 			return data

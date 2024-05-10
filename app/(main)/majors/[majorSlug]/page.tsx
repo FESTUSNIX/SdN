@@ -51,7 +51,6 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 
 	const sectionStyles = 'border-b py-8'
 
-	console.log('IMG ===============', urlFor('qualification_images', `${qualifications[0].slug}.jpg`).publicUrl)
 	return (
 		<main className='min-h-screen'>
 			<header className='relative overflow-hidden border-b pb-6'>

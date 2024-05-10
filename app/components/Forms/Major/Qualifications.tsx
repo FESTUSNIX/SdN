@@ -55,6 +55,7 @@ export const QualificationsField = <T extends FieldValues>({ control, accessorKe
 					?.map(q => q.value) ?? null
 			)
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [qualifications])
 
 	useEffect(() => {
@@ -63,8 +64,6 @@ export const QualificationsField = <T extends FieldValues>({ control, accessorKe
 				id: parseInt(id),
 				name: qualificationsOptions?.find(q => q.value === id)?.label
 			})) ?? []
-
-		console.log('NEW', newQualifications)
 
 		field.onChange(newQualifications)
 		// eslint-disable-next-line react-hooks/exhaustive-deps

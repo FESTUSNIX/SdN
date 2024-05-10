@@ -75,9 +75,9 @@ export const columns: ColumnDef<
 			const qualifications = row.original.qualifications
 
 			return (
-				<ul className='flex'>
+				<ul className='flex flex-wrap'>
 					{qualifications?.map((q, index) => (
-						<li key={q.id} className='first-letter:uppercase'>
+						<li key={q.id} className='inline-block first-letter:uppercase'>
 							{q.name}
 							{index !== qualifications.length - 1 && <span>,&nbsp;</span>}
 						</li>

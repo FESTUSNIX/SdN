@@ -113,6 +113,7 @@ model Major {
   slug                  String          @unique @default(cuid())
   unit                  Unit            @relation(fields: [unitId, unitSlug], references: [id, slug])
   qualifications        Qualification[] @relation("MajorToQualification")
+  keywords              String[]
 
   @@index([name])
 }

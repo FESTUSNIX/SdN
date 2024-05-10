@@ -46,7 +46,7 @@ const SearchBar = ({ placeholder, param, className }: { placeholder?: string; pa
 
 	useEffect(() => {
 		const queryString = createQueryString({ [paramName]: debouncedQuery })
-		console.log(queryString)
+
 		router.push(pathname + '?' + queryString, { scroll: false })
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedQuery])

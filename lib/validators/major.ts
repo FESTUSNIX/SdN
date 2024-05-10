@@ -31,7 +31,8 @@ export const MajorValidator = z.object({
 	status: z.enum(['IN_PROGRESS', 'FINISHED', 'TO_CHECK']),
 	qualifications: z.number().array().min(1, {
 		message: 'Musisz wybrać conajmniej jedną kwalifikacje'
-	})
+	}),
+	keywords: z.string().max(25).array().optional().nullable()
 })
 
 export type MajorPayload = z.infer<typeof MajorValidator>
@@ -56,7 +57,8 @@ export const MajorTableValidator = MajorValidatorWithFullQualifications.pick({
 	majorLevel: true,
 	status: true,
 	qualifications: true,
-	unitId: true
+	unitId: true,
+	keywords: true
 })
 
 export type MajorTablePayload = z.infer<typeof MajorTableValidator>

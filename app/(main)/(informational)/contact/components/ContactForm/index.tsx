@@ -31,7 +31,6 @@ const ContactForm = () => {
 	})
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values)
 		toast.success(
 			<div>
 				<H4>Submitted</H4>

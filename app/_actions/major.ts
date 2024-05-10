@@ -51,6 +51,11 @@ export const getMajorSearchResults = async ({
 					}
 				},
 				{
+					keywords: {
+						hasSome: searchQuery?.split('_') || []
+					}
+				},
+				{
 					unit: {
 						name: {
 							contains: searchQuery || undefined,

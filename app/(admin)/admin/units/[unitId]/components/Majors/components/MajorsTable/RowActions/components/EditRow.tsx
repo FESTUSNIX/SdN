@@ -15,7 +15,7 @@ type Props = {
 const EditRow = ({ majorId }: Props) => {
 	const { openSheet } = useGlobalSheetContext()
 
-	const { mutate: deleteRow } = useMutation({
+	const { mutate: editRow } = useMutation({
 		mutationFn: async () => {
 			const query = `/api/majors/${majorId}`
 
@@ -63,7 +63,8 @@ const EditRow = ({ majorId }: Props) => {
 				status,
 				syllabus,
 				unitId,
-				isRegulated
+				isRegulated,
+				keywords
 			} = MajorValidator.parse({ ...data, qualifications: qualificationsWithIdOnly })
 
 			const values: Omit<MajorPayload, 'unitSlug'> = {
@@ -91,7 +92,8 @@ const EditRow = ({ majorId }: Props) => {
 				daysOfWeek: daysOfWeek,
 				description: description,
 				status: status,
-				qualifications: qualifications
+				qualifications: qualifications,
+				keywords: keywords
 			}
 
 			openSheet('EDIT_MAJOR', values)
@@ -101,7 +103,7 @@ const EditRow = ({ majorId }: Props) => {
 	return (
 		<ContextMenuItem
 			onClick={() => {
-				deleteRow()
+				editRow()
 			}}>
 			<Pencil className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
 			Edit

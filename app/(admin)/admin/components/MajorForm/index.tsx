@@ -1,12 +1,14 @@
 'use client'
 
 import { EditorField } from '@/app/components/Forms/EditorField'
+import { KeywordsField } from '@/app/components/Forms/Major/Keywords'
 import { SwitchField } from '@/app/components/Forms/SwitchField'
 import { TextField } from '@/app/components/Forms/TextField'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/app/components/ui/Collapsible'
 import { Form, FormLabel } from '@/app/components/ui/Form'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H4, Muted } from '@/app/components/ui/Typography'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/app/components/ui/Collapsible'
+import { MAX_KEYWORDS, MAX_KEYWORD_LENGTH } from '@/app/constants/userLimits'
 import { MajorFormType, MajorPayload } from '@/lib/validators/major'
 import { ChevronsUpDown } from 'lucide-react'
 import { SubmitHandler } from 'react-hook-form'
@@ -57,6 +59,18 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 						<H4>Optional</H4>
 						<Muted>These fields are optional and can be filled later</Muted>
 					</div>
+
+					{/* KEYWORDS */}
+					<KeywordsField
+						control={form.control}
+						accessorKey='keywords'
+						label='Keywords'
+						placeholder='Aa, bb, cc'
+						maxItemLength={MAX_KEYWORD_LENGTH}
+						maxLength={MAX_KEYWORDS}
+						setError={form.setError}
+						clearErrors={form.clearErrors}
+					/>
 
 					{/* IS REGULATED */}
 					<SwitchField control={form.control} accessorKey='isRegulated' label='Is regulated' />

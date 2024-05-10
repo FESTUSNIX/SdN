@@ -28,7 +28,7 @@ const EditMajor = () => {
 
 	const { mutate: updateMajor, isLoading } = useMutation({
 		mutationFn: async (values: Omit<MajorPayload, 'unitSlug' | 'unitId'>) => {
-			toast.loading('Editing a major...')
+			toast.loading('Editing the major...')
 
 			const payload: Omit<MajorPayload, 'unitSlug' | 'unitId'> = {
 				id: values.id,
@@ -54,7 +54,8 @@ const EditMajor = () => {
 				recruitmentConditions: values.recruitmentConditions,
 				status: values.status,
 				syllabus: values.syllabus,
-				isRegulated: values.isRegulated
+				isRegulated: values.isRegulated,
+				keywords: values.keywords
 			}
 
 			const { data } = await axios.patch(`/api/majors/${values.id}`, payload)

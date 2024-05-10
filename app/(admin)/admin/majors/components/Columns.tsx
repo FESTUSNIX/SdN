@@ -1,14 +1,13 @@
 'use client'
 
 import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
-import { Button } from '@/app/components/ui/Button'
+import { Button, buttonVariants } from '@/app/components/ui/Button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
 import { cn } from '@/lib/utils/utils'
 import { MajorTablePayload } from '@/lib/validators/major'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal, Pointer } from 'lucide-react'
 import Link from 'next/link'
-import UnitCell from './UnitCell'
 
 export const columns: ColumnDef<MajorTablePayload>[] = [
 	{
@@ -75,9 +74,9 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 			const qualifications = row.original.qualifications
 
 			return (
-				<ul className='flex'>
+				<ul className='flex flex-wrap'>
 					{qualifications?.map((q, index) => (
-						<li key={q.id} className='first-letter:uppercase'>
+						<li key={q.id} className='inline-block first-letter:uppercase'>
 							{q.name}
 							{index !== qualifications.length - 1 && <span>,&nbsp;</span>}
 						</li>
@@ -93,15 +92,43 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 		}
 	},
 	{
+		id: 'keywords',
+		accessorKey: 'keywords',
+		header: ({ column }) => <ColumnHeader column={column} title='Keywords' />,
+		cell: ({ row }) => {
+			const keywords = row.original.keywords
+
+			return (
+				<ul className='flex flex-wrap'>
+					{keywords && keywords?.length > 0 ? (
+						keywords?.map((k, index) => (
+							<li key={k} className='inline-block first-letter:uppercase'>
+								{k}
+								{index !== keywords.length - 1 && <span>,&nbsp;</span>}
+							</li>
+						))
+					) : (
+						<li className='text-muted-foreground'>No data</li>
+					)}
+				</ul>
+			)
+		}
+	},
+	{
 		accessorKey: 'unitId',
 		header: ({ column }) => (
 			<div className='flex justify-end'>
 				<ColumnHeader column={column} title='Unit' />
 			</div>
 		),
-		cell: ({ row }) => {
-			return <UnitCell unitId={row.original.unitId} />
-		}
+		cell: ({ row }) => (
+			<Link
+				target='_blank'
+				href={`/admin/units/${row.original.unitId}`}
+				className={cn(buttonVariants({ variant: 'link' }), 'flex min-w-max justify-end')}>
+				Unit {row.original.unitId}
+			</Link>
+		)
 	},
 	{
 		id: 'actions',

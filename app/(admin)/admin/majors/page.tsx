@@ -1,7 +1,6 @@
+import { ClientSideDataTable } from '@/app/components/DataTable'
 import prisma from '@/prisma/client'
 import { Metadata } from 'next'
-
-import { ClientSideDataTable } from '@/app/components/DataTable'
 import RowActions from '../units/[unitId]/components/Majors/components/MajorsTable/RowActions'
 import { completionStatus } from '../units/constants/tableData'
 import { columns } from './components/Columns'
@@ -24,7 +23,8 @@ export default async function MajorsPage() {
 					type: true
 				}
 			},
-			unitId: true
+			unitId: true,
+			keywords: true
 		}
 	})
 
