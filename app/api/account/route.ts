@@ -1,14 +1,13 @@
-import bcrypt from 'bcryptjs'
-
 import { RegisterValidator } from '@/lib/validators/register'
 import prisma from '@/prisma/client'
+import bcrypt from 'bcryptjs'
 import { z } from 'zod'
 
 export async function POST(request: Request) {
 	try {
 		const body = await request.json()
 
-		const { email, password, name, role } = RegisterValidator.parse(body)
+		const { email, password, name, role, unitId } = RegisterValidator.parse(body)
 		const user = await prisma.user.findUnique({
 			where: { email }
 		})
@@ -19,12 +18,15 @@ export async function POST(request: Request) {
 
 		const hashedPassword = await bcrypt.hash(password, 10)
 
+		const unitIdToAssign = role === 'UNIT' && unitId ? parseInt(unitId) : undefined
+
 		const newUser = await prisma.user.create({
 			data: {
 				name,
 				email,
 				password: hashedPassword,
-				role: role
+				role: role,
+				unitId: unitIdToAssign
 			}
 		})
 

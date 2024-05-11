@@ -2,13 +2,13 @@
 
 import { Check, ChevronsUpDown } from 'lucide-react'
 
-import { cn } from '@/lib/utils/utils'
 import { Button } from '@/app/components/ui/Button'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/app/components/ui/Command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/Popover'
+import { cn } from '@/lib/utils/utils'
 import { useState } from 'react'
 
-type Props = {
+export type ComboboxProps = {
 	value: any
 	setValue: (value: any) => void
 	options: {
@@ -20,34 +20,35 @@ type Props = {
 	searchPlaceholder?: string
 }
 
-export function ComboboxDemo({
+export function Combobox({
 	emptyText = 'Not found',
 	placeholder,
 	searchPlaceholder,
 	value,
 	setValue,
 	options
-}: Props) {
+}: ComboboxProps) {
 	const [open, setOpen] = useState(false)
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
 				<Button variant='outline' role='combobox' aria-expanded={open} className='w-full justify-between'>
-					{value ? options.find(option => option.value === value)?.label : placeholder}
+					{value ? options.find(option => option.value === value)?.label ?? placeholder : placeholder}
 					<ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className='w-[200px] p-0'>
+			<PopoverContent className='h-[300px] w-[260px] p-0'>
 				<Command>
 					<CommandInput placeholder={searchPlaceholder} />
 					<CommandEmpty>{emptyText}</CommandEmpty>
-					<CommandGroup>
+					<CommandGroup className='overflow-y-auto'>
 						{options.map(option => (
 							<CommandItem
 								key={option.value}
-								onSelect={currentValue => {
-									setValue(currentValue === value ? '' : currentValue)
+								value={option.label}
+								onSelect={() => {
+									setValue(option.value === value ? '' : option.value)
 									setOpen(false)
 								}}>
 								<Check className={cn('mr-2 h-4 w-4', value === option.value ? 'opacity-100' : 'opacity-0')} />

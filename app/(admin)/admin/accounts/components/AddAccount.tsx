@@ -23,7 +23,8 @@ const AddAccount = () => {
 			name: '',
 			email: '',
 			password: '',
-			role: 'USER'
+			role: 'UNIT',
+			unitId: ''
 		}
 	})
 
@@ -35,7 +36,8 @@ const AddAccount = () => {
 				name: values.name,
 				email: values.email,
 				password: values.password,
-				role: values.role
+				role: values.role,
+				unitId: values.unitId
 			}
 
 			const { data } = await axios.post('/api/account', payload)

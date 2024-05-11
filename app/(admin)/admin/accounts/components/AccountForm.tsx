@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { RegisterFormType, RegisterPayload } from '@/lib/validators/register'
 import { UserRole } from '@prisma/client'
 import { SubmitHandler } from 'react-hook-form'
+import { ClientSideUnitSelect } from './ClientSideUnitSelect'
 
 type Props = {
 	form: RegisterFormType
@@ -22,6 +23,8 @@ const roleOptions = [
 ]
 
 const AccountForm = ({ form, onSubmit }: Props) => {
+	const role = form.watch('role')
+
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(e => onSubmit(e))} className='space-y-6 p-4'>
@@ -91,6 +94,22 @@ const AccountForm = ({ form, onSubmit }: Props) => {
 						</FormItem>
 					)}
 				/>
+
+				{role === 'UNIT' && (
+					<FormField
+						control={form.control}
+						name='unitId'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Unit</FormLabel>
+								<FormControl>
+									<ClientSideUnitSelect value={field.value} setValue={field.onChange} placeholder='Select a unit' />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				)}
 			</form>
 		</Form>
 	)
