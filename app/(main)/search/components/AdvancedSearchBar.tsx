@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils/utils'
 import { SearchIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+import { useTransitionLoading } from '../context/TransitionLoadingContext'
 
 type Props = {
 	debounceTime?: number
@@ -14,10 +15,12 @@ type Props = {
 	className?: string
 }
 
-const SearchBar = ({ placeholder, param, className, debounceTime = 500 }: Props) => {
+export const AdvancedSearchBar = ({ placeholder, param, className, debounceTime = 500 }: Props) => {
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()!
+
+	const { isLoading, startLoading, stopLoading } = useTransitionLoading()
 
 	const [query, setQuery] = useState('')
 	const debouncedQuery = useDebounce(query, debounceTime)
@@ -41,11 +44,14 @@ const SearchBar = ({ placeholder, param, className, debounceTime = 500 }: Props)
 
 	const pushQuery = useCallback(
 		(query: string) => {
+			if (isLoading) return
+			startLoading()
+
 			const queryString = createQueryString({ [paramName]: query })
 
 			router.push(pathname + '?' + queryString, { scroll: false })
 		},
-		[createQueryString, paramName, pathname, router]
+		[createQueryString, paramName, pathname, router, startLoading, isLoading]
 	)
 
 	useEffect(() => {
@@ -56,6 +62,7 @@ const SearchBar = ({ placeholder, param, className, debounceTime = 500 }: Props)
 
 		setQuery(searchQuery)
 
+		stopLoading()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchParams])
 
@@ -76,5 +83,3 @@ const SearchBar = ({ placeholder, param, className, debounceTime = 500 }: Props)
 		</div>
 	)
 }
-
-export default SearchBar

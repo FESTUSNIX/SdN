@@ -2,7 +2,7 @@
 
 import { useDebounce } from '@/app/hooks/useDebounce'
 import { cn } from '@/lib/utils/utils'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTransitionLoading } from '../../(main)/search/context/TransitionLoadingContext'
 import MajorCardSkeleton from './CardSkeleton'
 
@@ -12,9 +12,27 @@ type Props = {
 }
 
 export const ResultsLoading = ({ children, listType }: Props) => {
-	const { isLoading } = useTransitionLoading()
+	const { isLoading, stopLoading } = useTransitionLoading()
 
 	const debouncedIsLoading = useDebounce(isLoading, 50)
+
+	useEffect(() => {
+		let timeoutId: NodeJS.Timeout
+
+		if (isLoading) {
+			timeoutId = setTimeout(() => {
+				if (isLoading) {
+					stopLoading()
+				}
+			}, 10000)
+		}
+
+		return () => {
+			if (timeoutId) {
+				clearTimeout(timeoutId)
+			}
+		}
+	}, [isLoading, stopLoading])
 
 	if (debouncedIsLoading)
 		return (
