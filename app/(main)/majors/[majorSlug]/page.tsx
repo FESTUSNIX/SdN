@@ -146,12 +146,12 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 				<SideBar major={major} />
 			</div>
 
-			<section className={cn(sectionStyles, 'border-b-none wrapper border-t')}>
+			<section className={cn(sectionStyles, 'wrapper border-t border-b-transparent')}>
 				<H2 size='sm' className='mb-4'>
 					Organizowane przez
 				</H2>
 
-				<Suspense fallback={<div>Loading...</div>}>
+				<Suspense fallback={<div>Ładowanie...</div>}>
 					<UnitCard unitId={unitId} />
 				</Suspense>
 			</section>

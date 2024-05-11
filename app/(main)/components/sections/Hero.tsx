@@ -41,8 +41,9 @@ export const Hero = (props: Props) => {
 				<Image
 					src={'/images/main-hero-woman.png'}
 					alt='Nauczycielka korzystająca z wyszukiwarki studiów podyplomowych'
-					width={1000}
-					height={1000}
+					width={600}
+					height={800}
+					priority
 					className='pointer-events-none'
 				/>
 			</div>
