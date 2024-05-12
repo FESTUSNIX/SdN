@@ -2,12 +2,11 @@
 
 import { useDebounce } from '@/app/hooks/useDebounce'
 import { SearchIcon } from 'lucide-react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 
 export const SearchBar = () => {
 	const router = useRouter()
-	const pathname = usePathname()
 	const searchParams = useSearchParams()!
 
 	const [query, setQuery] = useState('')
@@ -39,13 +38,6 @@ export const SearchBar = () => {
 		setQuery(searchQuery)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchParams])
-
-	useEffect(() => {
-		if (pathname !== '/search' && !debouncedQuery) return
-
-		router.push('/search' + '?' + createQueryString({ q: debouncedQuery }), { scroll: false })
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [debouncedQuery])
 
 	return (
 		<label className='relative flex h-10 max-w-full cursor-text items-center overflow-hidden rounded-full border border-input bg-background'>

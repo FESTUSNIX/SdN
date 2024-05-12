@@ -6,7 +6,8 @@ import { Button } from '@/app/components/ui/Button'
 import { cn } from '@/lib/utils/utils'
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import * as React from 'react'
+import { useCallback, useEffect, useMemo, useTransition } from 'react'
+import { useTransitionLoading } from '../../context/TransitionLoadingContext'
 
 interface PaginationProps extends React.HTMLAttributes<HTMLDivElement> {
 	pageCount: number
@@ -19,9 +20,11 @@ export function Pagination({ pageCount, page, per_page, siblingCount = -1, class
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
-	const [isPending, startTransition] = React.useTransition()
+	const [isPending, startTransition] = useTransition()
 
-	const createQueryString = React.useCallback(
+	const { startLoading, stopLoading } = useTransitionLoading()
+
+	const createQueryString = useCallback(
 		(params: Record<string, string | number | null>) => {
 			const newSearchParams = new URLSearchParams(searchParams?.toString())
 
@@ -39,7 +42,7 @@ export function Pagination({ pageCount, page, per_page, siblingCount = -1, class
 	)
 
 	// Memoize pagination range to avoid unnecessary re-renders
-	const paginationRange = React.useMemo(() => {
+	const paginationRange = useMemo(() => {
 		const delta = siblingCount + 2
 
 		const range = []
@@ -62,6 +65,11 @@ export function Pagination({ pageCount, page, per_page, siblingCount = -1, class
 		return range
 	}, [pageCount, page, siblingCount])
 
+	useEffect(() => {
+		isPending ? startLoading() : stopLoading()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isPending])
+
 	return (
 		<div className={cn('flex flex-wrap items-center justify-center gap-2', className)} {...props}>
 			<Button
@@ -73,8 +81,7 @@ export function Pagination({ pageCount, page, per_page, siblingCount = -1, class
 					startTransition(() => {
 						router.push(
 							`${pathname}?${createQueryString({
-								page: 1,
-								per_page: per_page ?? null
+								page: 1
 							})}`
 						)
 					})
@@ -91,8 +98,7 @@ export function Pagination({ pageCount, page, per_page, siblingCount = -1, class
 					startTransition(() => {
 						router.push(
 							`${pathname}?${createQueryString({
-								page: Number(page) - 1,
-								per_page: per_page ?? null
+								page: Number(page) - 1
 							})}`
 						)
 					})
@@ -116,8 +122,7 @@ export function Pagination({ pageCount, page, per_page, siblingCount = -1, class
 							startTransition(() => {
 								router.push(
 									`${pathname}?${createQueryString({
-										page: pageNumber,
-										per_page: per_page ?? null
+										page: pageNumber
 									})}`
 								)
 							})
@@ -136,8 +141,7 @@ export function Pagination({ pageCount, page, per_page, siblingCount = -1, class
 					startTransition(() => {
 						router.push(
 							`${pathname}?${createQueryString({
-								page: Number(page) + 1,
-								per_page: per_page ?? null
+								page: Number(page) + 1
 							})}`
 						)
 					})
@@ -153,8 +157,7 @@ export function Pagination({ pageCount, page, per_page, siblingCount = -1, class
 				onClick={() => {
 					router.push(
 						`${pathname}?${createQueryString({
-							page: pageCount ?? 10,
-							per_page: per_page ?? null
+							page: pageCount ?? 10
 						})}`
 					)
 				}}

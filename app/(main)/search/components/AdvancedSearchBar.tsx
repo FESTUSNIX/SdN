@@ -5,7 +5,7 @@ import { useDebounce } from '@/app/hooks/useDebounce'
 import { cn } from '@/lib/utils/utils'
 import { SearchIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useTransition } from 'react'
 import { useTransitionLoading } from '../context/TransitionLoadingContext'
 
 type Props = {
@@ -15,11 +15,12 @@ type Props = {
 	className?: string
 }
 
-export const AdvancedSearchBar = ({ placeholder, param, className, debounceTime = 500 }: Props) => {
+export const AdvancedSearchBar = ({ placeholder, param, className, debounceTime = 0 }: Props) => {
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()!
 
+	const [isPending, startTransition] = useTransition()
 	const { isLoading, startLoading, stopLoading } = useTransitionLoading()
 
 	const [query, setQuery] = useState('')
@@ -44,14 +45,13 @@ export const AdvancedSearchBar = ({ placeholder, param, className, debounceTime 
 
 	const pushQuery = useCallback(
 		(query: string) => {
-			if (isLoading) return
-			startLoading()
-
-			const queryString = createQueryString({ [paramName]: query })
-
-			router.push(pathname + '?' + queryString, { scroll: false })
+			startTransition(() => {
+				const queryString = createQueryString({ [paramName]: query })
+				router.push(pathname + '?' + queryString, { scroll: false })
+			})
 		},
-		[createQueryString, paramName, pathname, router, startLoading, isLoading]
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[createQueryString, paramName, pathname, router, isLoading]
 	)
 
 	useEffect(() => {
@@ -62,7 +62,6 @@ export const AdvancedSearchBar = ({ placeholder, param, className, debounceTime 
 
 		setQuery(searchQuery)
 
-		stopLoading()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchParams])
 
@@ -70,6 +69,11 @@ export const AdvancedSearchBar = ({ placeholder, param, className, debounceTime 
 		pushQuery(debouncedQuery)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedQuery])
+
+	useEffect(() => {
+		isPending ? startLoading() : stopLoading()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isPending])
 
 	return (
 		<div className={cn('relative grow', className)}>
