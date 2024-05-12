@@ -15,6 +15,7 @@ import ListTypeSelect from './components/ListTypeSelect/'
 import { Pagination } from './components/Pagination'
 import Sort from './components/Sort'
 import { TransitionLoadingProvider } from './context/TransitionLoadingContext'
+import { SearchParamsChangeHandler } from './components/SearchParamsChangeHandler'
 
 export const metadata: Metadata = {
 	title: 'Szukaj kierunku'
@@ -63,7 +64,7 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 	const limit = typeof per_page === 'string' ? parseInt(per_page) : 30
 	const offset = typeof page === 'string' ? (parseInt(page) - 1) * limit : 0
 
-	const { data: majors, pagination } = await getMajorSearchResults({
+	const params = {
 		canPayInInstallments: canPayInInstallments === 'true',
 		cities,
 		isOnline,
@@ -78,7 +79,9 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		searchQuery,
 		voivodeships,
 		units
-	})
+	}
+
+	const { data: majors, pagination } = await getMajorSearchResults(params)
 
 	const pageCount = Math.ceil(pagination.total / limit)
 
@@ -171,6 +174,12 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 						)}
 					</div>
 				</div>
+				{/* <SearchParamsChangeHandler
+					params={{
+						...params,
+						page: typeof page === 'string' ? page : page[0]
+					}}
+				/> */}
 			</TransitionLoadingProvider>
 		</main>
 	)

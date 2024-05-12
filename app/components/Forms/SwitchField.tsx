@@ -3,7 +3,7 @@ import { Control } from 'react-hook-form'
 import { Switch } from '../ui/Switch'
 
 type Props = {
-	control: Control<any>
+	control?: Control<any>
 	accessorKey: string
 	label: string
 	description?: string

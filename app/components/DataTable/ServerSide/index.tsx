@@ -3,7 +3,7 @@
 // Thanks to sadmann7 for server side table
 // https://github.com/sadmann7/shadcn-table-v2/
 
-import { SHEET_TYPES } from '@/app/(admin)/admin/context/GlobalSheetContext'
+import { SheetTypes } from '@/app/(admin)/admin/constants/Sheets'
 import { FilterOption } from '@/app/components/DataTable/FacetedFilter'
 import { useDebounce } from '@/app/hooks/useDebounce'
 import {
@@ -42,7 +42,7 @@ interface DataTableProps<TData, TValue> {
 		row: Row<TData>
 		children: ReactElement
 	}>
-	sheetType?: SHEET_TYPES
+	sheetType?: SheetTypes
 	buttonText?: string
 	fixedPagination?: boolean
 }

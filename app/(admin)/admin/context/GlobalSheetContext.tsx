@@ -1,11 +1,5 @@
 import React, { createContext, useContext, useReducer, useState } from 'react'
-import AddAccount from '../accounts/components/AddAccount'
-import AddQualification from '../qualifications/components/AddQualification'
-import EditQualification from '../qualifications/components/EditQualification'
-import AddMajor from '../units/[unitId]/components/Majors/components/AddMajor'
-import EditMajor from '../units/[unitId]/components/Majors/components/EditMajor'
-import AddUnit from '../units/components/AddUnit'
-import EditUnit from '../units/components/EditUnit'
+import { SHEETS, SheetTypes } from '../constants/Sheets'
 import { useGlobalModalContext } from './GlobalModalContext'
 
 type SheetState = {
@@ -14,73 +8,32 @@ type SheetState = {
 	defaultValues?: any
 }
 
-export type SHEET_TYPES =
-	| 'ADD_UNIT'
-	| 'EDIT_UNIT'
-	| 'ADD_MAJOR'
-	| 'EDIT_MAJOR'
-	| 'ADD_QUALIFICATION'
-	| 'EDIT_QUALIFICATION'
-	| 'ADD_ACCOUNT'
-	| 'CLOSE'
-
 const defaultState = {
 	content: null,
 	show: false,
 	defaultValues: {}
 }
 
-const sheetReducer = (state: any, action: { type: SHEET_TYPES; defaultValues?: any }) => {
-	switch (action.type) {
-		case 'ADD_UNIT':
-			return {
-				content: <AddUnit />,
-				show: true,
-				defaultValues: action.defaultValues
-			}
-		case 'EDIT_UNIT':
-			return {
-				content: <EditUnit />,
-				show: true,
-				defaultValues: action.defaultValues
-			}
-		case 'ADD_MAJOR':
-			return {
-				content: <AddMajor />,
-				show: true,
-				defaultValues: action.defaultValues
-			}
-		case 'EDIT_MAJOR':
-			return {
-				content: <EditMajor />,
-				show: true,
-				defaultValues: action.defaultValues
-			}
-		case 'ADD_QUALIFICATION':
-			return {
-				content: <AddQualification />,
-				show: true,
-				defaultValues: action.defaultValues
-			}
-		case 'EDIT_QUALIFICATION':
-			return {
-				content: <EditQualification />,
-				show: true,
-				defaultValues: action.defaultValues
-			}
-		case 'ADD_ACCOUNT':
-			return {
-				content: <AddAccount />,
-				show: true,
-				defaultValues: action.defaultValues
-			}
-		case 'CLOSE':
-			return defaultState
+const sheetReducer = (state: any, action: { type: SheetTypes; defaultValues?: any }) => {
+	const Component = SHEETS[action.type]
+
+	if (action.type === 'CLOSE') {
+		return defaultState
 	}
+
+	if (Component) {
+		return {
+			content: <Component />,
+			show: true,
+			defaultValues: action.defaultValues
+		}
+	}
+
+	return state
 }
 
 type GlobalSheetContext = {
-	openSheet: (sheetType: SHEET_TYPES, defaultValues?: any) => void
+	openSheet: (sheetType: SheetTypes, defaultValues?: any) => void
 	closeSheet: (requireConfirmModal?: boolean, closeConfirmed?: boolean) => void
 	sheetState: SheetState
 	setRequireConfirmation: (isFormDirty: boolean) => void
@@ -101,7 +54,7 @@ export const GlobalSheetProvider = ({ children }: { children: React.ReactNode })
 
 	const { openModal } = useGlobalModalContext()
 
-	const openSheet = (type: SHEET_TYPES, defaultValues?: any) => {
+	const openSheet = (type: SheetTypes, defaultValues?: any) => {
 		sheetDispatch({
 			type,
 			defaultValues

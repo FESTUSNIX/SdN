@@ -58,26 +58,27 @@ model VerificationToken {
 }
 
 model Unit {
-  id        Int          @id @default(autoincrement())
-  name      String
-  logo      String?
-  isPublic  Boolean      @default(true)
-  nip       String?
-  regon     String?
-  unitType  String       @default("uczelnia")
-  website   String
-  updatedAt DateTime?    @updatedAt
-  cityId    Int
-  email     String
-  notes     String?
-  phone     String?
-  slug      String       @unique @default(cuid())
-  status    Status       @default(IN_PROGRESS)
-  managers  User[]
-  majors    Major[]
-  city      City         @relation(fields: [cityId], references: [id])
-  address   UnitAddress?
-  emails    UnitEmail[]
+  id            Int            @id @default(autoincrement())
+  name          String
+  logo          String?
+  isPublic      Boolean        @default(true)
+  nip           String?
+  regon         String?
+  unitType      String         @default("uczelnia")
+  website       String
+  updatedAt     DateTime?      @updatedAt
+  cityId        Int
+  email         String
+  notes         String?
+  phone         String?
+  slug          String         @unique @default(cuid())
+  status        Status         @default(IN_PROGRESS)
+  managers      User[]
+  majors        Major[]
+  city          City           @relation(fields: [cityId], references: [id])
+  address       UnitAddress?
+  emails        UnitEmail[]
+  subscriptions Subscription[]
 
   @@unique([id, slug])
   @@index([name, slug])
@@ -159,6 +160,15 @@ model City {
   voivodeshipId Int
   voivodeship   Voivodeship @relation(fields: [voivodeshipId], references: [id])
   units         Unit[]
+}
+
+model Subscription {
+  slug   String    @id @default(cuid())
+  unit   Unit      @relation(fields: [unitId], references: [id])
+  unitId Int
+  from   DateTime  @default(now())
+  to     DateTime?
+  type   String
 }
 
 enum UserRole {

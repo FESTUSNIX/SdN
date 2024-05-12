@@ -6,7 +6,7 @@ import RowActions from './components/QualificationsTable/RowActions'
 import { qualificationTypeOptions } from './constants/qualificationTypeOptions'
 
 export const metadata: Metadata = {
-	title: 'Manage qualifications | SdN',
+	title: 'Manage qualifications',
 	description: 'Admin panel - qualifications'
 }
 

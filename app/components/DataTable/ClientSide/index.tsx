@@ -1,6 +1,6 @@
 'use client'
 
-import { SHEET_TYPES } from '@/app/(admin)/admin/context/GlobalSheetContext'
+import { SheetTypes } from '@/app/(admin)/admin/constants/Sheets'
 import { FilterOption } from '@/app/components/DataTable/FacetedFilter'
 import {
 	getCoreRowModel,
@@ -35,7 +35,7 @@ interface DataTableProps<TData, TValue> {
 		row: Row<TData>
 		children: ReactElement
 	}>
-	sheetType?: SHEET_TYPES
+	sheetType?: SheetTypes
 	buttonText?: string
 	fixedPagination?: boolean
 }

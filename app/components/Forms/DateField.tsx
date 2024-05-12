@@ -46,7 +46,7 @@ export const DateField = <T extends FieldValues>({
 									onSelect={e => {
 										field.onChange(e)
 									}}
-									disabled={date => date < new Date()}
+									disabled={{ before: new Date() }}
 									initialFocus
 								/>
 							</PopoverContent>

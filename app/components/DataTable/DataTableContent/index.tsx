@@ -1,6 +1,6 @@
 'use client'
 
-import { SHEET_TYPES } from '@/app/(admin)/admin/context/GlobalSheetContext'
+import { SheetTypes } from '@/app/(admin)/admin/constants/Sheets'
 import { FilterOption } from '@/app/components/DataTable/FacetedFilter'
 import { Pagination } from '@/app/components/DataTable/Pagination'
 import { Toolbar } from '@/app/components/DataTable/Toolbar'
@@ -26,7 +26,7 @@ type PropsTable<TData> = {
 		row: Row<TData>
 		children: ReactElement
 	}>
-	sheetType?: SHEET_TYPES
+	sheetType?: SheetTypes
 	buttonText?: string
 	fixedPagination?: boolean
 }

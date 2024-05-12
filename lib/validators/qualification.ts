@@ -12,4 +12,4 @@ export const QualificationValidator = z.object({
 
 export type QualificationPayload = z.infer<typeof QualificationValidator>
 
-export type QualificationFormType = UseFormReturn<QualificationPayload & { keywordInput: string }, any, undefined>
+export type QualificationFormType = UseFormReturn<QualificationPayload, any, undefined>

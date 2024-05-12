@@ -1,6 +1,7 @@
 'use client'
 
-import { SHEET_TYPES, useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
+import { SheetTypes } from '@/app/(admin)/admin/constants/Sheets'
+import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
 import { ViewOptions } from '@/app/components/DataTable/ColumnToggle'
 import { FacetedFilter, type FilterOption } from '@/app/components/DataTable/FacetedFilter'
 import RefreshTable from '@/app/components/DataTable/RefreshTable'
@@ -20,7 +21,7 @@ interface DataTableToolbarProps<TData> {
 		id: keyof TData
 		title: string
 	}[]
-	sheetType?: SHEET_TYPES
+	sheetType?: SheetTypes
 	buttonText?: string
 }
 
