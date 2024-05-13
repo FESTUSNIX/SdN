@@ -4,6 +4,7 @@ import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetCo
 import { Button } from '@/app/components/ui/Button'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/Sheet'
+import { getFirstParamValue } from '@/lib/utils/utils'
 import { MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -23,8 +24,7 @@ const AddMajor = () => {
 	} = useGlobalSheetContext()
 	const { unitId: unitIdParam } = useParams()
 
-	const unitId =
-		(typeof unitIdParam === 'string' ? parseInt(unitIdParam) : parseInt(unitIdParam?.[0])) || defaultValues.unitId
+	const unitId = parseInt(getFirstParamValue(unitIdParam, defaultValues?.unitId) ?? '')
 
 	const form = useForm<MajorPayload>({
 		resolver: zodResolver(MajorValidator.omit({ unitSlug: true, id: true })),
@@ -65,7 +65,6 @@ const AddMajor = () => {
 
 			const payload: Omit<MajorPayload, 'id' | 'unitSlug'> = {
 				...values,
-				unitId: unitId,
 				endDate: values.endDate ? new Date(format(values.endDate, 'yyyy-MM-dd')) : null,
 				startDate: values.startDate ? new Date(format(values.startDate, 'yyyy-MM-dd')) : null
 			}

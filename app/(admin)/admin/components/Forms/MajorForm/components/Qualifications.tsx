@@ -37,7 +37,7 @@ const Qualifications = ({ form }: Props) => {
 					<MultiSelect
 						options={qualificationsOptions}
 						selected={field.value.map(q => q.toString())}
-						setSelected={field.onChange}
+						setSelected={values => field.onChange(values?.map(v => parseInt(v)))}
 						placeholder='Select qualifications...'
 					/>
 					<FormMessage />

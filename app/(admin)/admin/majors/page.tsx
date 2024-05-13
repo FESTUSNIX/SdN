@@ -1,8 +1,8 @@
 import { ClientSideDataTable } from '@/app/components/DataTable'
 import prisma from '@/prisma/client'
 import { Metadata } from 'next'
+import { STATUS_OPTIONS } from '../constants/statusOptions'
 import RowActions from '../units/[unitId]/components/Majors/components/MajorsTable/RowActions'
-import { completionStatus } from '../units/constants/tableData'
 import { columns } from './components/Columns'
 
 export const metadata: Metadata = {
@@ -53,7 +53,7 @@ export default async function MajorsPage() {
 					{
 						id: 'status',
 						title: 'Status',
-						options: completionStatus
+						options: STATUS_OPTIONS
 					}
 				]}
 				searchableColumns={[
@@ -63,6 +63,8 @@ export default async function MajorsPage() {
 					}
 				]}
 				RowActions={RowActions}
+				buttonText='Add Major'
+				sheetType='ADD_MAJOR'
 			/>
 		</main>
 	)

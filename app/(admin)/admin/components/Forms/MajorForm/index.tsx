@@ -1,5 +1,6 @@
 'use client'
 
+import { CustomField } from '@/app/components/Forms/CustomField'
 import { DateField } from '@/app/components/Forms/DateField'
 import { EditorField } from '@/app/components/Forms/EditorField'
 import { KeywordsField } from '@/app/components/Forms/Major/Keywords'
@@ -7,13 +8,12 @@ import { MultiSelectField } from '@/app/components/Forms/MultiSelectField'
 import { SelectField } from '@/app/components/Forms/SelectField'
 import { SwitchField } from '@/app/components/Forms/SwitchField'
 import { TextField } from '@/app/components/Forms/TextField'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/app/components/ui/Collapsible'
-import { Form, FormLabel } from '@/app/components/ui/Form'
+import { UnitSelect } from '@/app/components/Forms/UnitSelect'
+import { Form } from '@/app/components/ui/Form'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H4, Muted } from '@/app/components/ui/Typography'
 import { MAX_KEYWORDS, MAX_KEYWORD_LENGTH } from '@/app/constants/userLimits'
 import { MajorFormType, MajorPayload } from '@/lib/validators/major'
-import { ChevronsUpDown } from 'lucide-react'
 import { SubmitHandler } from 'react-hook-form'
 import { STATUS_OPTIONS } from '../../../constants/statusOptions'
 import Qualifications from './components/Qualifications'
@@ -24,24 +24,22 @@ type Props = {
 }
 
 const MajorForm = ({ form, onSubmit }: Props) => {
-	const unitId = form.getValues().unitId
-
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(e => onSubmit(e))} id='major-form' className='py-4'>
 				<div className='space-y-8 px-6'>
-					<Collapsible>
-						<CollapsibleTrigger asChild>
-							<FormLabel className='flex cursor-pointer items-center justify-between'>
-								<span className='sr-only'>Toggle</span>
-								<span>Unit data</span>
-								<ChevronsUpDown className='h-4 w-4' />
-							</FormLabel>
-						</CollapsibleTrigger>
-						<CollapsibleContent>
-							<Muted>ID: {unitId}</Muted>
-						</CollapsibleContent>
-					</Collapsible>
+					<CustomField
+						control={form.control}
+						accessorKey='unitId'
+						label='Unit'
+						render={({ field }) => (
+							<UnitSelect
+								value={field.value.toString()}
+								setValue={val => field.onChange(parseInt(val))}
+								placeholder='Select a unit'
+							/>
+						)}
+					/>
 
 					<TextField control={form.control} accessorKey='name' label='Name' placeholder='Aa...' />
 
