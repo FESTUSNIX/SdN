@@ -41,9 +41,17 @@ export const UnitTableValidator = z.object({
 	}),
 	_count: z.object({
 		majors: z.number()
-	})
+	}),
+	subscriptions: z
+		.object({
+			to: z.date(),
+			from: z.date(),
+			type: z.string()
+		})
+		.array()
 })
 
 export type UnitPayload = z.infer<typeof UnitValidator>
+export type TableUnitData = z.infer<typeof UnitTableValidator>
 
 export type UnitFormType = UseFormReturn<UnitPayload, any, undefined>

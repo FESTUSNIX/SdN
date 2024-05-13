@@ -1,26 +1,10 @@
 import { ClientSideDataTable } from '@/app/components/DataTable'
 import prisma from '@/prisma/client'
-import { Status } from '@prisma/client'
 import { Metadata } from 'next'
+import { STATUS_OPTIONS } from '../constants/statusOptions'
+import { UNIT_TYPE_OPTIONS } from '../constants/unitTypesOptions'
 import { columns } from './components/UnitsTable/Columns'
 import RowActions from './components/UnitsTable/RowActions'
-import { completionStatus, unitTypes } from './constants/tableData'
-
-export type TableUnitData = {
-	id: number
-	slug: string
-	name: string
-	email: string
-	unitType: string
-	website: string
-	status: Status
-	city: {
-		name: string
-	}
-	_count: {
-		majors: number
-	}
-}
 
 export const metadata: Metadata = {
 	title: 'Manage units'
@@ -45,6 +29,18 @@ export default async function UnitsPage() {
 				select: {
 					majors: true
 				}
+			},
+			subscriptions: {
+				where: {
+					to: {
+						gte: new Date()
+					}
+				},
+				select: {
+					from: true,
+					to: true,
+					type: true
+				}
 			}
 		}
 	})
@@ -52,18 +48,19 @@ export default async function UnitsPage() {
 	return (
 		<div className='flex w-full flex-col items-center md:h-screen'>
 			<ClientSideDataTable
+				// @ts-ignore
 				columns={columns}
 				data={units}
 				filterableColumns={[
 					{
 						id: 'unitType',
 						title: 'Type',
-						options: unitTypes
+						options: UNIT_TYPE_OPTIONS
 					},
 					{
 						id: 'status',
 						title: 'Status',
-						options: completionStatus
+						options: STATUS_OPTIONS
 					}
 				]}
 				searchableColumns={[

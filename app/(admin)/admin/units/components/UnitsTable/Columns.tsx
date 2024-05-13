@@ -1,14 +1,14 @@
 'use client'
 
+import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
 import { Button } from '@/app/components/ui/Button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
 import { cn } from '@/lib/utils/utils'
-import { ColumnDef } from '@tanstack/react-table'
-import Link from 'next/link'
-import { unitTypes } from '../../constants/tableData'
-import { TableUnitData } from '../../page'
-import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
+import { TableUnitData } from '@/lib/validators/unit'
+import { type ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal, Pointer } from 'lucide-react'
+import Link from 'next/link'
+import { UNIT_TYPE_OPTIONS } from '../../../constants/unitTypesOptions'
 
 export const columns: ColumnDef<TableUnitData>[] = [
 	{
@@ -43,7 +43,7 @@ export const columns: ColumnDef<TableUnitData>[] = [
 			return <ColumnHeader column={column} title='#' />
 		},
 		enableHiding: false,
-		size: 20
+		size: 10
 	},
 	{
 		accessorKey: 'name',
@@ -54,26 +54,28 @@ export const columns: ColumnDef<TableUnitData>[] = [
 			const name: string = row.getValue('name')
 
 			return (
-				<Link target='_blank' href={`/admin/units/${row.getValue('id')}`} className='font-medium'>
+				<Link target='_blank' href={`/admin/units/${row.getValue('id')}`} className='min-w-full font-medium'>
 					{name}
 				</Link>
 			)
 		},
-		size: 350
+		minSize: 400
 	},
 	{
 		accessorKey: 'email',
-		header: ({ column }) => <ColumnHeader column={column} title='Email' />
+		header: ({ column }) => <ColumnHeader column={column} title='Email' />,
+		maxSize: 300
 	},
 	{
 		accessorKey: 'city.name',
-		header: ({ column }) => <ColumnHeader column={column} title='City' />
+		header: ({ column }) => <ColumnHeader column={column} title='City' />,
+		minSize: 200
 	},
 	{
 		accessorKey: 'unitType',
 		header: ({ column }) => <ColumnHeader column={column} title='Type' />,
 		cell: ({ row }) => {
-			const type = unitTypes.find(type => {
+			const type = UNIT_TYPE_OPTIONS.find(type => {
 				if (type.value === 'inna' && !['uczelnia', 'pdn'].includes(row.getValue('unitType'))) {
 					return true
 				}
@@ -132,6 +134,21 @@ export const columns: ColumnDef<TableUnitData>[] = [
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
+			)
+		}
+	},
+	{
+		accessorKey: 'subscriptions',
+		header: ({ column }) => {
+			return <ColumnHeader column={column} title='Subscription' />
+		},
+		cell: ({ row }) => {
+			return (
+				<p>
+					{row.original.subscriptions.length > 0
+						? row.original.subscriptions?.map((subscription: any) => subscription.type).join(', ')
+						: 'NULL'}
+				</p>
 			)
 		}
 	},
