@@ -1,6 +1,6 @@
 'use client'
 
-import { SheetTypes } from '@/app/(admin)/admin/constants/Sheets'
+import { SheetTypes } from '@/app/(admin)/admin/components/Sheets'
 import { FilterOption } from '@/app/components/DataTable/FacetedFilter'
 import { Pagination } from '@/app/components/DataTable/Pagination'
 import { Toolbar } from '@/app/components/DataTable/Toolbar'
@@ -92,12 +92,18 @@ export function DataTableContent<TData>({
 												{row.getVisibleCells().map((cell, index, cells) => (
 													<TableCell
 														key={cell.id}
-														style={{ width: cell.column.getSize() }}
+														style={{
+															width: cell.column.columnDef.size || cell.column.getSize(),
+															minWidth: cell.column.columnDef.minSize,
+															maxWidth: cell.column.columnDef.maxSize
+														}}
 														className={cn(
 															'border-r px-4 py-1 first:border-l-0 last:border-r-0',
-															['status'].includes(cell.column.id) && '!w-0 !border-none !px-0'
+															['status'].includes(cell.column.id) && '!w-0 !min-w-0 !border-none !px-0'
 														)}>
-														{flexRender(cell.column.columnDef.cell, cell.getContext())}
+														<div className='max-w-full break-words'>
+															{flexRender(cell.column.columnDef.cell, cell.getContext())}
+														</div>
 													</TableCell>
 												))}
 											</TableRow>

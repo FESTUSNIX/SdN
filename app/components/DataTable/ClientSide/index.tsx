@@ -1,6 +1,6 @@
 'use client'
 
-import { SheetTypes } from '@/app/(admin)/admin/constants/Sheets'
+import { SheetTypes } from '@/app/(admin)/admin/components/Sheets'
 import { FilterOption } from '@/app/components/DataTable/FacetedFilter'
 import {
 	getCoreRowModel,
@@ -53,12 +53,7 @@ export function ClientSideDataTable<TData, TValue>({
 	const [rowSelection, setRowSelection] = useState({})
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-	const [sorting, setSorting] = useState<SortingState>([
-		{
-			id: 'name',
-			desc: false
-		}
-	])
+	const [sorting, setSorting] = useState<SortingState>([])
 
 	const table = useReactTable({
 		data,

@@ -1,6 +1,6 @@
+import { STATUS_OPTIONS } from '@/app/(admin)/admin/constants/statusOptions'
 import { ClientSideDataTable } from '@/app/components/DataTable'
 import prisma from '@/prisma/client'
-import { completionStatus } from '../../../constants/tableData'
 import { columns } from './components/MajorsTable/Columns'
 import RowActions from './components/MajorsTable/RowActions'
 
@@ -53,7 +53,7 @@ const Majors = async ({ unitId }: Props) => {
 				{
 					id: 'status',
 					title: 'Status',
-					options: completionStatus
+					options: STATUS_OPTIONS
 				}
 			]}
 			searchableColumns={[

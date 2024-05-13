@@ -1,5 +1,6 @@
 'use client'
 
+import { STATUS_OPTIONS } from '@/app/(admin)/admin/constants/statusOptions'
 import {
 	ContextMenuRadioGroup,
 	ContextMenuRadioItem,
@@ -7,14 +8,13 @@ import {
 	ContextMenuSubContent,
 	ContextMenuSubTrigger
 } from '@/app/components/ui/ContextMenu'
+import { MajorTablePayload } from '@/lib/validators/major'
+import { Status } from '@prisma/client'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { Tags } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
-import { MajorPayload, MajorTablePayload } from '@/lib/validators/major'
-import { Status } from '@prisma/client'
-import { completionStatus } from '@/app/(admin)/admin/units/constants/tableData'
 
 type Props = {
 	rowData: Pick<MajorTablePayload, 'id' | 'status'>
@@ -60,7 +60,7 @@ const UpdateStatus = ({ rowData }: Props) => {
 					onValueChange={value => {
 						updateStatus(value as 'FINISHED' | 'IN_PROGRESS' | 'TO_CHECK')
 					}}>
-					{completionStatus.map(status => (
+					{STATUS_OPTIONS.map(status => (
 						<ContextMenuRadioItem key={status.value} value={status.value}>
 							{status.label}
 						</ContextMenuRadioItem>

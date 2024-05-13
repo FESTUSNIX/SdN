@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useState } from 'react'
-import { SHEETS, SheetTypes } from '../constants/Sheets'
+import { SHEETS, SheetTypes } from '../components/Sheets'
 import { useGlobalModalContext } from './GlobalModalContext'
 
 type SheetState = {

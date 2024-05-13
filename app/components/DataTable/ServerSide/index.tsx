@@ -3,7 +3,7 @@
 // Thanks to sadmann7 for server side table
 // https://github.com/sadmann7/shadcn-table-v2/
 
-import { SheetTypes } from '@/app/(admin)/admin/constants/Sheets'
+import { SheetTypes } from '@/app/(admin)/admin/components/Sheets'
 import { FilterOption } from '@/app/components/DataTable/FacetedFilter'
 import { useDebounce } from '@/app/hooks/useDebounce'
 import {

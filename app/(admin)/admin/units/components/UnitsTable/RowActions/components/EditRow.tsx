@@ -1,13 +1,12 @@
 'use client'
 
+import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
 import { ContextMenuItem } from '@/app/components/ui/ContextMenu'
-import { UnitPayload } from '@/lib/validators/unit'
+import { TableUnitData, UnitPayload } from '@/lib/validators/unit'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { Pencil } from 'lucide-react'
 import { toast } from 'react-hot-toast'
-import { TableUnitData } from '../../../../page'
-import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
 
 type Props = {
 	rowData: TableUnitData
@@ -16,7 +15,7 @@ type Props = {
 const EditRow = ({ rowData }: Props) => {
 	const { openSheet } = useGlobalSheetContext()
 
-	const { mutate: deleteRow } = useMutation({
+	const { mutate: editRow } = useMutation({
 		mutationFn: async () => {
 			const query = `/api/units/${rowData.id}`
 
@@ -63,7 +62,7 @@ const EditRow = ({ rowData }: Props) => {
 	return (
 		<ContextMenuItem
 			onClick={() => {
-				deleteRow()
+				editRow()
 			}}>
 			<Pencil className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
 			Edit

@@ -1,12 +1,12 @@
-import AddAccount from '../components/Sheets/account/AddAccount'
-import AddMajor from '../components/Sheets/major/AddMajor'
-import EditMajor from '../components/Sheets/major/EditMajor'
-import AddQualification from '../components/Sheets/qualification/AddQualification'
-import EditQualification from '../components/Sheets/qualification/EditQualification'
-import AddSubscription from '../components/Sheets/subscription/AddSubscription'
-import EditSubscription from '../components/Sheets/subscription/EditSubscription'
-import AddUnit from '../components/Sheets/unit/AddUnit'
-import EditUnit from '../components/Sheets/unit/EditUnit'
+import AddAccount from './account/AddAccount'
+import AddMajor from './major/AddMajor'
+import EditMajor from './major/EditMajor'
+import AddQualification from './qualification/AddQualification'
+import EditQualification from './qualification/EditQualification'
+import AddSubscription from './subscription/AddSubscription'
+import EditSubscription from './subscription/EditSubscription'
+import AddUnit from './unit/AddUnit'
+import EditUnit from './unit/EditUnit'
 
 export const SHEET_TYPES = [
 	'ADD_UNIT',

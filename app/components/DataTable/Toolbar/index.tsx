@@ -1,6 +1,6 @@
 'use client'
 
-import { SheetTypes } from '@/app/(admin)/admin/constants/Sheets'
+import { SheetTypes } from '@/app/(admin)/admin/components/Sheets'
 import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
 import { ViewOptions } from '@/app/components/DataTable/ColumnToggle'
 import { FacetedFilter, type FilterOption } from '@/app/components/DataTable/FacetedFilter'
