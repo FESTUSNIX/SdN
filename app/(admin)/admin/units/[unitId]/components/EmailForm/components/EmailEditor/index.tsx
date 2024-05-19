@@ -6,7 +6,7 @@ import '@/app/components/EditorJs/editor.css'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import type EditorJS from '@editorjs/editorjs'
 import { ToolConstructable } from '@editorjs/editorjs'
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { ControllerRenderProps } from 'react-hook-form'
 
 type Props = {
@@ -56,6 +56,7 @@ const EmailEditor = ({ open, field, placeholder = 'Zacznij pisać tekst tutaj' }
 				}
 			})
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	useEffect(() => {

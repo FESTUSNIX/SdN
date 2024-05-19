@@ -30,6 +30,7 @@ export const SearchBar = () => {
 		if (!query) return router.push(pathname)
 
 		router.push(pathname + '?' + createQueryString('q', query))
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedQuery])
 
 	return (

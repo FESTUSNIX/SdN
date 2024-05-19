@@ -60,6 +60,7 @@ const Editor = forwardRef(({ open, field, placeholder = 'Zacznij pisać tekst tu
 				i18n: dictionary
 			})
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	useEffect(() => {

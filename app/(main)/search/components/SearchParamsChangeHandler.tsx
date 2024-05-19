@@ -74,6 +74,7 @@ export const SearchParamsChangeHandler = ({ params: _params }: Props) => {
 				console.log('RESET PAGE')
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params])
 
 	return <div>SearchParamsChangeHandler</div>

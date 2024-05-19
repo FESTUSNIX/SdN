@@ -43,6 +43,7 @@ const SwitchFilter = ({ paramName, label, description }: Props) => {
 		const isCheckedParam = params.get(paramName) ?? ''
 
 		isCheckedParam && setIsChecked(isCheckedParam === 'true')
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchParams])
 
 	useEffect(() => {
@@ -51,6 +52,7 @@ const SwitchFilter = ({ paramName, label, description }: Props) => {
 				scroll: false
 			})
 		})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedIsChecked])
 
 	useEffect(() => {

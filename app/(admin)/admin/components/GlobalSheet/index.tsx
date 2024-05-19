@@ -12,6 +12,7 @@ const GlobalSheet = () => {
 
 	useEffect(() => {
 		closeSheet()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname, searchParams])
 
 	return (

@@ -22,6 +22,7 @@ const GlobalDialog = () => {
 
 	useEffect(() => {
 		closeModal()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname, searchParams])
 
 	if (component) return component

@@ -11,5 +11,6 @@ export const useFormChanges = (formState: FormState<any>) => {
 
 	useEffect(() => {
 		setRequireConfirmation(isDirty)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isDirty])
 }

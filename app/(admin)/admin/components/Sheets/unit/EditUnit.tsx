@@ -28,6 +28,7 @@ const EditUnit = () => {
 
 	useEffect(() => {
 		form.reset(defaultValues)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [defaultValues])
 
 	useFormChanges(form.formState)

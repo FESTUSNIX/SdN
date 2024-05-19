@@ -42,6 +42,7 @@ const CheckboxGroup = ({ paramName, items, label, clearAllBtn = true }: Props) =
 
 			return params.toString()
 		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[searchParams]
 	)
 
@@ -54,6 +55,7 @@ const CheckboxGroup = ({ paramName, items, label, clearAllBtn = true }: Props) =
 		const params = new URLSearchParams(searchParams)
 		const searchQuery = params.getAll(paramName) ?? ''
 		setValues(searchQuery)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchParams])
 
 	useEffect(() => {
