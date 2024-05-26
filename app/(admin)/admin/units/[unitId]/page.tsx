@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation'
 import AdminWrapper from '../../components/AdminWrapper'
 import EmailsShell from './components/EmailsShell'
 import Majors from './components/Majors'
+import { RemoveAllMajorsButton } from './components/RemoveAllMajorsButton'
 
 type Props = {
 	params: { unitId: string }
@@ -62,17 +63,21 @@ const AdminUnitPage = async ({ params: { unitId } }: Props) => {
 					{unit.name}
 				</h1>
 
-				<Link
-					target='_blank'
-					href={unit.website}
-					className={cn(
-						buttonVariants({
-							variant: 'link'
-						}),
-						'mt-6 self-start pl-0'
-					)}>
-					{unit.website}
-				</Link>
+				<div className='mt-8 flex flex-col'>
+					<RemoveAllMajorsButton id={unit.id} name={unit.name} slug={unit.slug} />
+
+					<Link
+						target='_blank'
+						href={unit.website}
+						className={cn(
+							buttonVariants({
+								variant: 'link'
+							}),
+							'mt-6 self-start pl-0'
+						)}>
+						{unit.website}
+					</Link>
+				</div>
 
 				<Majors unitId={unit.id} />
 			</AdminWrapper>
