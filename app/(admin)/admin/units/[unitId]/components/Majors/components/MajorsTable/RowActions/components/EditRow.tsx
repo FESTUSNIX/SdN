@@ -2,23 +2,29 @@
 
 import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
 import { ContextMenuItem } from '@/app/components/ui/ContextMenu'
-import { MajorPayload, MajorPayloadWithFullQualifications, MajorValidator } from '@/lib/validators/major'
+import {
+	MajorPayload,
+	MajorPayloadWithFullQualifications,
+	MajorTablePayload,
+	MajorValidator
+} from '@/lib/validators/major'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { Pencil } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 
 type Props = {
-	majorId: number
+	rowData: MajorTablePayload
 }
 
-const EditRow = ({ majorId }: Props) => {
-	const { openSheet } = useGlobalSheetContext()
+const EditRow = ({ rowData }: Props) => {
+	const { openSheet, overrideData } = useGlobalSheetContext()
 
 	const { mutate: editRow } = useMutation({
 		mutationFn: async () => {
-			const query = `/api/majors/${majorId}`
+			openSheet('EDIT_MAJOR', rowData)
 
+			const query = `/api/majors/${rowData.id}`
 			const { data } = await axios.get(query)
 
 			return data
@@ -39,64 +45,16 @@ const EditRow = ({ majorId }: Props) => {
 		onSuccess: (data: MajorPayloadWithFullQualifications) => {
 			const qualificationsWithIdOnly = data.qualifications.map(qualification => qualification.id)
 
-			const {
-				address,
-				canPayInInstallments,
-				certificates,
-				completionConditions,
-				contact,
-				cost,
-				daysOfWeek,
-				description,
-				durationInHours,
-				endDate,
-				formOfStudy,
-				isOnline,
-				majorLevel,
-				name,
-				numberOfSemesters,
-				onlineDuration,
-				organisator,
-				qualifications,
-				recruitmentConditions,
-				startDate,
-				status,
-				syllabus,
-				unitId,
-				isRegulated,
-				keywords
-			} = MajorValidator.parse({ ...data, qualifications: qualificationsWithIdOnly })
+			const parsedData = MajorValidator.parse({ ...data, qualifications: qualificationsWithIdOnly })
 
 			const values: Omit<MajorPayload, 'unitSlug'> = {
+				...parsedData,
 				id: data.id,
-				name: name,
-				address: address,
-				contact: contact,
-				cost: cost,
-				durationInHours: durationInHours,
-				endDate: endDate,
-				formOfStudy: formOfStudy,
-				isOnline: !!isOnline,
-				majorLevel: majorLevel,
-				numberOfSemesters: numberOfSemesters,
-				onlineDuration: onlineDuration,
-				organisator: organisator,
-				recruitmentConditions: recruitmentConditions,
-				startDate: startDate,
-				syllabus: syllabus,
-				unitId: unitId,
-				isRegulated: isRegulated,
-				canPayInInstallments: !!canPayInInstallments,
-				certificates: certificates,
-				completionConditions: completionConditions,
-				daysOfWeek: daysOfWeek,
-				description: description,
-				status: status,
-				qualifications: qualifications,
-				keywords: keywords
+				isOnline: !!parsedData.isOnline,
+				canPayInInstallments: !!parsedData.canPayInInstallments
 			}
 
-			openSheet('EDIT_MAJOR', values)
+			overrideData(values)
 		}
 	})
 

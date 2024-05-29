@@ -13,12 +13,13 @@ type Props = {
 }
 
 const EditRow = ({ rowData }: Props) => {
-	const { openSheet } = useGlobalSheetContext()
+	const { openSheet, overrideData } = useGlobalSheetContext()
 
 	const { mutate: editRow } = useMutation({
 		mutationFn: async () => {
-			const query = `/api/units/${rowData.id}`
+			openSheet('EDIT_UNIT', rowData)
 
+			const query = `/api/units/${rowData.id}`
 			const { data } = await axios.get(query)
 
 			return data
@@ -38,24 +39,16 @@ const EditRow = ({ rowData }: Props) => {
 		},
 		onSuccess: data => {
 			const values: UnitPayload = {
-				id: data.id,
-				name: data.name,
-				logo: data.logo,
-				email: data.email,
+				...data,
 				phone: data.phone ?? '',
-				isPublic: data.isPublic,
 				nip: data.nip ?? '',
 				regon: data.regon ?? '',
-				unitType: data.unitType,
-				cityId: data.cityId,
-				status: data.status,
-				website: data.website,
 				notes: data.notes ?? '',
 				street: data.address?.street ?? '',
 				postalCode: data.address?.postalCode ?? ''
 			}
 
-			openSheet('EDIT_UNIT', values)
+			overrideData(values)
 		}
 	})
 

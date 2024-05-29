@@ -14,18 +14,28 @@ const defaultState = {
 	defaultValues: {}
 }
 
-const sheetReducer = (state: any, action: { type: SheetTypes; defaultValues?: any }) => {
-	const Component = SHEETS[action.type]
+type ActionType = { type: SheetTypes; defaultValues?: any } | { type: 'OVERRIDE'; newData: any }
 
+const sheetReducer = (state: any, action: ActionType) => {
 	if (action.type === 'CLOSE') {
 		return defaultState
 	}
+
+	if (action.type === 'OVERRIDE') {
+		return {
+			...state,
+			defaultValues: action.newData
+		}
+	}
+
+	const Component = SHEETS[action.type]
 
 	if (Component) {
 		return {
 			content: <Component />,
 			show: true,
-			defaultValues: action.defaultValues
+			defaultValues: action.defaultValues,
+			overrideData: state.overrideData || (() => {})
 		}
 	}
 
@@ -37,13 +47,15 @@ type GlobalSheetContext = {
 	closeSheet: (requireConfirmModal?: boolean, closeConfirmed?: boolean) => void
 	sheetState: SheetState
 	setRequireConfirmation: (isFormDirty: boolean) => void
+	overrideData: (newData: any) => void
 }
 
 const initialState: GlobalSheetContext = {
 	openSheet: () => {},
 	closeSheet: () => {},
 	sheetState: defaultState,
-	setRequireConfirmation: () => {}
+	setRequireConfirmation: () => {},
+	overrideData: () => {}
 }
 
 const GlobalSheetContext = createContext(initialState)
@@ -73,8 +85,16 @@ export const GlobalSheetProvider = ({ children }: { children: React.ReactNode })
 		setRequireConfirmation(false)
 	}
 
+	// New function to override data
+	const overrideData = (newData: any) => {
+		sheetDispatch({
+			type: 'OVERRIDE',
+			newData
+		})
+	}
+
 	return (
-		<GlobalSheetContext.Provider value={{ sheetState, openSheet, closeSheet, setRequireConfirmation }}>
+		<GlobalSheetContext.Provider value={{ sheetState, openSheet, closeSheet, setRequireConfirmation, overrideData }}>
 			{children}
 		</GlobalSheetContext.Provider>
 	)

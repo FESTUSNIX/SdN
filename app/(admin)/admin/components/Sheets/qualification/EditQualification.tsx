@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useFormChanges } from '../../../hooks/useFormChanges'
 import QualificationForm from '../../Forms/QualificationForm'
+import { useEffect } from 'react'
 
 const EditQualification = () => {
 	const { closeSheet, sheetState } = useGlobalSheetContext()
@@ -63,6 +64,11 @@ const EditQualification = () => {
 			closeSheet(false, true)
 		}
 	})
+
+	useEffect(() => {
+		form.reset(defaultValues)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [defaultValues])
 
 	return (
 		<>

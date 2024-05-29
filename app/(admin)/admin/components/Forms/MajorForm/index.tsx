@@ -34,7 +34,7 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 						label='Unit'
 						render={({ field }) => (
 							<UnitSelect
-								value={field.value.toString()}
+								value={field.value?.toString() ?? ''}
 								setValue={val => field.onChange(parseInt(val))}
 								placeholder='Select a unit'
 							/>

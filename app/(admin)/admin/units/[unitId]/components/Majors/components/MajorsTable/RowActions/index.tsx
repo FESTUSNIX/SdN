@@ -41,7 +41,7 @@ export function RowActions<TData>({ row, children }: Props<TData>) {
 					</Link>
 				</ContextMenuItem>
 
-				<EditRow majorId={rowData.id} />
+				<EditRow rowData={rowData} />
 
 				<ContextMenuSeparator />
 

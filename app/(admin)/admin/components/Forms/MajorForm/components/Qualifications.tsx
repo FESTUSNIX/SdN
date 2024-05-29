@@ -36,7 +36,7 @@ const Qualifications = ({ form }: Props) => {
 					<FormLabel>Qualifications</FormLabel>
 					<MultiSelect
 						options={qualificationsOptions}
-						selected={field.value.map(q => q.toString())}
+						selected={field.value?.map(q => q.toString())}
 						setSelected={values => field.onChange(values?.map(v => parseInt(v)))}
 						placeholder='Select qualifications...'
 					/>

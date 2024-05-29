@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useFormChanges } from '../../../hooks/useFormChanges'
 import MajorForm from '../../Forms/MajorForm'
+import { useEffect } from 'react'
 
 const EditMajor = () => {
 	const { closeSheet, sheetState } = useGlobalSheetContext()
@@ -86,6 +87,11 @@ const EditMajor = () => {
 			closeSheet(false, true)
 		}
 	})
+
+	useEffect(() => {
+		form.reset(defaultValues)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [defaultValues])
 
 	return (
 		<>

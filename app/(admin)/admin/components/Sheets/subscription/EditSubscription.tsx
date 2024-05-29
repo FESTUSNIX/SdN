@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { Loader2 } from 'lucide-react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useFormChanges } from '../../../hooks/useFormChanges'
@@ -67,6 +68,11 @@ const EditSubscription = () => {
 			closeSheet(false, true)
 		}
 	})
+
+	useEffect(() => {
+		form.reset(defaultValues)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [defaultValues])
 
 	return (
 		<>

@@ -30,7 +30,10 @@ export const SelectField = <T extends FieldValues>({
 				<FormItem>
 					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
-						<Select onValueChange={field.onChange as (value: string) => void} defaultValue={field.value}>
+						<Select
+							onValueChange={field.onChange as (value: string) => void}
+							value={field.value}
+							defaultValue={field.value}>
 							<FormControl>
 								<SelectTrigger>
 									<SelectValue placeholder={placeholder} />

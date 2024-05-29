@@ -18,7 +18,8 @@ export const SHEET_TYPES = [
 	'ADD_ACCOUNT',
 	'CLOSE',
 	'ADD_SUBSCRIPTION',
-	'EDIT_SUBSCRIPTION'
+	'EDIT_SUBSCRIPTION',
+	'SET_VALUES'
 ] as const
 
 export type SheetTypes = (typeof SHEET_TYPES)[number]
@@ -35,5 +36,6 @@ export const SHEETS: {
 	ADD_ACCOUNT: AddAccount,
 	ADD_SUBSCRIPTION: AddSubscription,
 	EDIT_SUBSCRIPTION: EditSubscription,
-	CLOSE: () => null
+	CLOSE: () => null,
+	SET_VALUES: () => null
 }
