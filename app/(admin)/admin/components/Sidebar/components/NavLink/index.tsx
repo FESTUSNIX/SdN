@@ -13,7 +13,7 @@ type Props = {
 const NavLink = ({ children, tooltipText, href }: Props) => {
 	return (
 		<TooltipProvider>
-			<Tooltip>
+			<Tooltip delayDuration={50}>
 				<TooltipTrigger asChild>
 					<Link
 						href={href}
