@@ -51,7 +51,7 @@ const AddMajor = () => {
 			organisator: '',
 			qualifications: [],
 			recruitmentConditions: [],
-			status: 'IN_PROGRESS',
+			workStatus: 'IN_PROGRESS',
 			syllabus: [],
 			keywords: []
 		}

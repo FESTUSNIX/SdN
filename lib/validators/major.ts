@@ -28,11 +28,12 @@ export const MajorValidator = z.object({
 	endDate: z.coerce.date().nullable(),
 	startDate: z.coerce.date().nullable(),
 	contact: z.string().optional().nullable(),
-	status: z.enum(['IN_PROGRESS', 'FINISHED', 'TO_CHECK']),
+	workStatus: z.enum(['IN_PROGRESS', 'FINISHED', 'TO_CHECK']),
 	qualifications: z.number().array().min(1, {
 		message: 'Musisz wybrać conajmniej jedną kwalifikacje'
 	}),
-	keywords: z.string().max(25).array().optional().nullable()
+	keywords: z.string().max(25).array().optional().nullable(),
+	status: z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED'])
 })
 
 export type MajorPayload = z.infer<typeof MajorValidator>
@@ -55,7 +56,7 @@ export const MajorTableValidator = MajorValidatorWithFullQualifications.pick({
 	id: true,
 	name: true,
 	majorLevel: true,
-	status: true,
+	workStatus: true,
 	qualifications: true,
 	unitId: true,
 	keywords: true

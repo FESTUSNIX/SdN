@@ -10,7 +10,7 @@ import { Separator } from '@/app/components/ui/Separator/separator'
 import { H4, Muted } from '@/app/components/ui/Typography'
 import { UnitFormType, UnitPayload } from '@/lib/validators/unit'
 import { SubmitHandler } from 'react-hook-form'
-import { STATUS_OPTIONS } from '../../../constants/statusOptions'
+import { WORK_STATUS_OPTIONS } from '../../../../../constants/workStatusOptions'
 import City from './components/City'
 import Logo from './components/Logo'
 import UnitType from './components/UnitType'
@@ -39,7 +39,12 @@ const UnitForm = ({ form, onSubmit }: Props) => {
 
 					<SwitchField accessorKey='isPublic' label='Is public' />
 
-					<SelectField accessorKey='status' options={STATUS_OPTIONS} label='Status' placeholder='Select work status' />
+					<SelectField
+						accessorKey='workStatus'
+						options={WORK_STATUS_OPTIONS}
+						label='Work status'
+						placeholder='Select work status'
+					/>
 				</div>
 
 				<Separator className='my-12' />

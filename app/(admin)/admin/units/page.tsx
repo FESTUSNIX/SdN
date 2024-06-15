@@ -1,10 +1,10 @@
 import { ClientSideDataTable } from '@/app/components/DataTable'
 import prisma from '@/prisma/client'
 import { Metadata } from 'next'
-import { STATUS_OPTIONS } from '../constants/statusOptions'
 import { UNIT_TYPE_OPTIONS } from '../constants/unitTypesOptions'
 import { columns } from './components/UnitsTable/Columns'
 import RowActions from './components/UnitsTable/RowActions'
+import { WORK_STATUS_OPTIONS } from '@/app/constants/workStatusOptions'
 
 export const metadata: Metadata = {
 	title: 'Manage units'
@@ -19,7 +19,7 @@ export default async function UnitsPage() {
 			email: true,
 			unitType: true,
 			website: true,
-			status: true,
+			workStatus: true,
 			city: {
 				select: {
 					name: true
@@ -58,9 +58,9 @@ export default async function UnitsPage() {
 						options: UNIT_TYPE_OPTIONS
 					},
 					{
-						id: 'status',
-						title: 'Status',
-						options: STATUS_OPTIONS
+						id: 'workStatus',
+						title: 'Work status',
+						options: WORK_STATUS_OPTIONS
 					}
 				]}
 				searchableColumns={[

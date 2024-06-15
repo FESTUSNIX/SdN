@@ -6,9 +6,9 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 		const body = await req.json()
 		const id = parseInt(params.id)
 
-		const { status } = z
+		const { workStatus } = z
 			.object({
-				status: z.enum(['FINISHED', 'IN_PROGRESS', 'TO_CHECK'])
+				workStatus: z.enum(['FINISHED', 'IN_PROGRESS', 'TO_CHECK'])
 			})
 			.parse(body)
 
@@ -17,7 +17,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 				id: id
 			},
 			data: {
-				status: status
+				workStatus: workStatus
 			}
 		})
 
@@ -27,6 +27,6 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 			return new Response('Invalid PATCH request data passed', { status: 422 })
 		}
 
-		return new Response('Could not update status, please try again.', { status: 500 })
+		return new Response('Could not update work status, please try again.', { status: 500 })
 	}
 }

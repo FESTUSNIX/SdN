@@ -1,6 +1,5 @@
 'use client'
 
-import { STATUS_OPTIONS } from '@/app/(admin)/admin/constants/statusOptions'
 import {
 	ContextMenuRadioGroup,
 	ContextMenuRadioItem,
@@ -8,8 +7,9 @@ import {
 	ContextMenuSubContent,
 	ContextMenuSubTrigger
 } from '@/app/components/ui/ContextMenu'
+import { WORK_STATUS_OPTIONS } from '@/app/constants/workStatusOptions'
 import { MajorTablePayload } from '@/lib/validators/major'
-import { Status } from '@prisma/client'
+import { WorkStatus } from '@prisma/client'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { Tags } from 'lucide-react'
@@ -17,19 +17,19 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
 
 type Props = {
-	rowData: Pick<MajorTablePayload, 'id' | 'status'>
+	rowData: Pick<MajorTablePayload, 'id' | 'workStatus'>
 }
 
 const UpdateStatus = ({ rowData }: Props) => {
 	const router = useRouter()
 
 	const { mutate: updateStatus } = useMutation({
-		mutationFn: async (status: Status) => {
+		mutationFn: async (status: WorkStatus) => {
 			const payload = {
 				status
 			}
 
-			const { data } = await axios.patch(`/api/majors/${rowData.id}/status`, payload)
+			const { data } = await axios.patch(`/api/majors/${rowData.id}/workStatus`, payload)
 
 			return data
 		},
@@ -43,7 +43,7 @@ const UpdateStatus = ({ rowData }: Props) => {
 			return toast.error('Something went wrong.')
 		},
 		onSuccess: () => {
-			toast.success('Updated status')
+			toast.success('Updated work status')
 			router.refresh()
 		}
 	})
@@ -56,11 +56,11 @@ const UpdateStatus = ({ rowData }: Props) => {
 			</ContextMenuSubTrigger>
 			<ContextMenuSubContent>
 				<ContextMenuRadioGroup
-					value={rowData.status}
+					value={rowData.workStatus}
 					onValueChange={value => {
-						updateStatus(value as 'FINISHED' | 'IN_PROGRESS' | 'TO_CHECK')
+						updateStatus(value as WorkStatus)
 					}}>
-					{STATUS_OPTIONS.map(status => (
+					{WORK_STATUS_OPTIONS.map(status => (
 						<ContextMenuRadioItem key={status.value} value={status.value}>
 							{status.label}
 						</ContextMenuRadioItem>

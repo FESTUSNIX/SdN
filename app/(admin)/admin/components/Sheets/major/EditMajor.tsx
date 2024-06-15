@@ -53,7 +53,7 @@ const EditMajor = () => {
 				organisator: values.organisator,
 				qualifications: values.qualifications,
 				recruitmentConditions: values.recruitmentConditions,
-				status: values.status,
+				workStatus: values.workStatus,
 				syllabus: values.syllabus,
 				isRegulated: values.isRegulated,
 				keywords: values.keywords

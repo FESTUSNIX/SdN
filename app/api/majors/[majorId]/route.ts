@@ -141,7 +141,7 @@ export async function PATCH(req: Request, { params }: { params: { majorId: strin
 			qualifications,
 			recruitmentConditions,
 			startDate,
-			status,
+			workStatus,
 			syllabus,
 			isRegulated,
 			keywords
@@ -173,7 +173,7 @@ export async function PATCH(req: Request, { params }: { params: { majorId: strin
 				id: id
 			},
 			data: {
-				status: status,
+				workStatus: workStatus,
 				name: name,
 				address: address,
 				contact: contact,
@@ -181,24 +181,24 @@ export async function PATCH(req: Request, { params }: { params: { majorId: strin
 				durationInHours: durationInHours,
 				endDate: endDate,
 				formOfStudy: formOfStudy,
-				isOnline: !!isOnline,
+				isOnline: isOnline,
 				majorLevel: majorLevel,
 				numberOfSemesters: numberOfSemesters,
 				onlineDuration: onlineDuration,
 				organisator: organisator,
-				recruitmentConditions: recruitmentConditions || [],
+				recruitmentConditions: recruitmentConditions,
 				startDate: startDate,
-				syllabus: syllabus || [],
+				syllabus: syllabus,
 				isRegulated: isRegulated,
-				canPayInInstallments: !!canPayInInstallments,
+				canPayInInstallments: canPayInInstallments,
 				certificates: certificates,
-				completionConditions: completionConditions || [],
+				completionConditions: completionConditions,
 				daysOfWeek: daysOfWeek,
-				description: description || [],
+				description: description,
 				qualifications: {
 					connect: qualificationsConnect
 				},
-				keywords: keywords || []
+				keywords: keywords === null ? undefined : keywords
 			}
 		})
 

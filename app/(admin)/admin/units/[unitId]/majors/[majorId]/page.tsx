@@ -74,7 +74,7 @@ const MajorPage = async ({ params: { unitId, majorId } }: Props) => {
 							</li>
 							<li className='flex items-center'>
 								<span className='text-lg first-letter:uppercase'>Status:&nbsp;</span>
-								<span className='text-foreground/70'>{major.status}</span>
+								<span className='text-foreground/70'>{major.workStatus}</span>
 							</li>
 							<li className='flex items-center'>
 								<span className='text-lg first-letter:uppercase'>Unit ID:&nbsp;</span>

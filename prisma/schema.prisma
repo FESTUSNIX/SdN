@@ -72,7 +72,7 @@ model Unit {
   notes         String?
   phone         String?
   slug          String         @unique @default(cuid())
-  status        Status         @default(IN_PROGRESS)
+  workStatus    WorkStatus     @default(IN_PROGRESS)
   managers      User[]
   majors        Major[]
   city          City           @relation(fields: [cityId], references: [id])
@@ -105,7 +105,7 @@ model Major {
   contact               String?
   isRegulated           Boolean         @default(true)
   majorLevel            MajorLevel      @default(PODYPLOMOWE)
-  status                Status          @default(IN_PROGRESS)
+  workStatus            WorkStatus      @default(IN_PROGRESS)
   unitSlug              String
   completionConditions  Json?
   description           Json?
@@ -115,6 +115,7 @@ model Major {
   unit                  Unit            @relation(fields: [unitId, unitSlug], references: [id, slug])
   qualifications        Qualification[] @relation("MajorToQualification")
   keywords              String[]
+  status                Status          @default(DRAFT)
 
   @@index([name])
 }
@@ -194,7 +195,7 @@ enum MajorLevel {
   PODYPLOMOWE
 }
 
-enum Status {
+enum WorkStatus {
   FINISHED
   IN_PROGRESS
   TO_CHECK
@@ -205,4 +206,10 @@ enum QualificationType {
   SPECJALISTYCZNE
   ZAWODOWE
   INNE
+}
+
+enum Status {
+  PUBLISHED
+  DRAFT
+  ARCHIVED
 }

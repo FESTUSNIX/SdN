@@ -1,8 +1,8 @@
-import { STATUS_OPTIONS } from '@/app/(admin)/admin/constants/statusOptions'
 import { ClientSideDataTable } from '@/app/components/DataTable'
 import prisma from '@/prisma/client'
 import { columns } from './components/MajorsTable/Columns'
 import RowActions from './components/MajorsTable/RowActions'
+import { WORK_STATUS_OPTIONS } from '@/app/constants/workStatusOptions'
 
 type Props = {
 	unitId: number
@@ -17,7 +17,7 @@ const Majors = async ({ unitId }: Props) => {
 			id: true,
 			name: true,
 			majorLevel: true,
-			status: true,
+			workStatus: true,
 			qualifications: {
 				select: {
 					id: true,
@@ -51,9 +51,9 @@ const Majors = async ({ unitId }: Props) => {
 					options: qualificationsOptionsFormated
 				},
 				{
-					id: 'status',
-					title: 'Status',
-					options: STATUS_OPTIONS
+					id: 'workStatus',
+					title: 'Work status',
+					options: WORK_STATUS_OPTIONS
 				}
 			]}
 			searchableColumns={[

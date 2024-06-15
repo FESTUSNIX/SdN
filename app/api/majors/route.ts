@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
 
 		const body = await req.json()
 
-		const data = MajorValidator.omit({ id: true, unitSlug: true }).partial({ status: true }).parse(body)
+		const data = MajorValidator.omit({ id: true, unitSlug: true }).partial({ workStatus: true }).parse(body)
 
 		const unit = await prisma.unit.findUnique({
 			where: {
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
 				slug: slug,
 				unitId: data.unitId,
 				unitSlug: unit.slug,
-				status: data.status ?? 'IN_PROGRESS',
+				workStatus: data.workStatus ?? 'IN_PROGRESS',
 				name: data.name,
 				address: data.address || '',
 				contact: data.contact || '',

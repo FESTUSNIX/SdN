@@ -102,7 +102,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 			phone,
 			isPublic,
 			name,
-			status,
+			workStatus,
 			website,
 			logo,
 			nip,
@@ -117,7 +117,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 				id: parseInt(id)
 			},
 			data: {
-				status: status,
+				workStatus: workStatus,
 				name: name,
 				logo: logo,
 				phone: phone,

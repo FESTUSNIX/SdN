@@ -19,7 +19,7 @@ type Props = {
 	unitId: number
 }
 
-type AddMajorPayload = Omit<MajorPayload, 'status' | 'id' | 'unitSlug'>
+type AddMajorPayload = Omit<MajorPayload, 'workStatus' | 'id' | 'unitSlug'>
 
 const AddMajor = ({ unitId }: Props) => {
 	const [open, setOpen] = useState(false)
@@ -29,7 +29,7 @@ const AddMajor = ({ unitId }: Props) => {
 	const searchParams = useSearchParams()
 
 	const form = useForm<AddMajorPayload>({
-		resolver: zodResolver(MajorValidator.omit({ unitId: true, unitSlug: true, id: true, status: true })),
+		resolver: zodResolver(MajorValidator.omit({ unitId: true, unitSlug: true, id: true, workStatus: true })),
 		defaultValues: {
 			name: '',
 			majorLevel: 'PODYPLOMOWE',

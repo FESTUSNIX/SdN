@@ -63,7 +63,7 @@ export function DataTableContent<TData>({
 												style={{ width: header.getSize() }}
 												className={cn(
 													'relative border-r first:border-l-0 last:border-r-0',
-													['status'].includes(header.column.id) && '!w-0 !border-none !px-0'
+													['workStatus'].includes(header.column.id) && '!w-0 !border-none !px-0'
 												)}>
 												{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
 												{header.column.getCanResize() && (
@@ -99,7 +99,7 @@ export function DataTableContent<TData>({
 														}}
 														className={cn(
 															'border-r px-4 py-1 first:border-l-0 last:border-r-0',
-															['status'].includes(cell.column.id) && '!w-0 !min-w-0 !border-none !px-0'
+															['workStatus'].includes(cell.column.id) && '!w-0 !min-w-0 !border-none !px-0'
 														)}>
 														<div className='max-w-full break-words'>
 															{flexRender(cell.column.columnDef.cell, cell.getContext())}

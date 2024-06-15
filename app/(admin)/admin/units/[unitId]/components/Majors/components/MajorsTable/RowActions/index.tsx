@@ -48,7 +48,7 @@ export function RowActions<TData>({ row, children }: Props<TData>) {
 				<UpdateStatus
 					rowData={{
 						id: rowData.id,
-						status: rowData.status
+						workStatus: rowData.workStatus
 					}}
 				/>
 

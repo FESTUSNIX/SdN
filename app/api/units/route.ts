@@ -56,10 +56,10 @@ export async function POST(req: Request) {
 				address: {
 					create: {
 						street: data.street ?? '',
-						postalCode: data.postalCode ?? '',
+						postalCode: data.postalCode ?? ''
 					}
 				},
-				status: data.status
+				workStatus: data.workStatus
 			}
 		})
 

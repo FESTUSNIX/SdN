@@ -4,7 +4,7 @@ import { useFormChanges } from '@/app/(admin)/admin/hooks/useFormChanges'
 import { Button } from '@/app/components/ui/Button'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/Sheet'
-import { supabase } from '@/lib/supabase/supabase'
+import { uploadFileToSupabase } from '@/lib/supabase/uploadImage'
 import { UnitPayload, UnitValidator } from '@/lib/validators/unit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -13,7 +13,6 @@ import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useGlobalSheetContext } from '../../../context/GlobalSheetContext'
-import { uploadFileToSupabase } from '@/lib/supabase/uploadImage'
 import UnitForm from '../../Forms/UnitForm'
 
 const AddUnit = () => {
@@ -35,7 +34,7 @@ const AddUnit = () => {
 			postalCode: '',
 			cityId: 0,
 			notes: '',
-			status: 'IN_PROGRESS'
+			workStatus: 'IN_PROGRESS'
 		}
 	})
 
@@ -59,7 +58,7 @@ const AddUnit = () => {
 				notes: values.notes,
 				street: values.street,
 				postalCode: values.postalCode,
-				status: values.status
+				workStatus: values.workStatus
 			}
 
 			const { data } = await axios.post('/api/units', payload)

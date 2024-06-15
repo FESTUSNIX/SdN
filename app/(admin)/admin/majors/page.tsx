@@ -1,7 +1,7 @@
 import { ClientSideDataTable } from '@/app/components/DataTable'
 import prisma from '@/prisma/client'
 import { Metadata } from 'next'
-import { STATUS_OPTIONS } from '../constants/statusOptions'
+import { WORK_STATUS_OPTIONS } from '../../../constants/workStatusOptions'
 import RowActions from '../units/[unitId]/components/Majors/components/MajorsTable/RowActions'
 import { columns } from './components/Columns'
 
@@ -15,7 +15,7 @@ export default async function MajorsPage() {
 			id: true,
 			name: true,
 			majorLevel: true,
-			status: true,
+			workStatus: true,
 			qualifications: {
 				select: {
 					id: true,
@@ -51,9 +51,9 @@ export default async function MajorsPage() {
 						options: qualificationsOptionsFormated
 					},
 					{
-						id: 'status',
-						title: 'Status',
-						options: STATUS_OPTIONS
+						id: 'workStatus',
+						title: 'Work status',
+						options: WORK_STATUS_OPTIONS
 					}
 				]}
 				searchableColumns={[

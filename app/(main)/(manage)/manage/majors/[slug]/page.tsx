@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { DeleteMajor } from './components/DeleteMajor'
 import { ManageMajorData } from './components/ManageMajorData'
+import { MajorCompletion } from '../components/MajorCompletion'
 
 export default async function ManageMajorPage({ params: { slug } }: { params: { slug: string } }) {
 	const session = await getAuthSession()
@@ -45,7 +46,11 @@ export default async function ManageMajorPage({ params: { slug } }: { params: { 
 					<span>Powrót do listy</span>
 				</Link>
 
-				<H1>{major.name}</H1>
+				<div className='flex flex-wrap items-center justify-between gap-x-12 gap-y-4'>
+					<H1>{major.name}</H1>
+
+					<MajorCompletion data={major} />
+				</div>
 
 				<Separator className='mt-4' />
 			</section>

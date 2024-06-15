@@ -5,6 +5,7 @@ import { DateField } from '@/app/components/Forms/DateField'
 import { EditField } from '@/app/components/Forms/EditField'
 import { EditorField } from '@/app/components/Forms/EditorField'
 import { DaysOfWeek } from '@/app/components/Forms/Major/DaysOfWeek'
+import { KeywordsField } from '@/app/components/Forms/Major/Keywords'
 import { QualificationsField } from '@/app/components/Forms/Major/Qualifications'
 import { SelectField } from '@/app/components/Forms/SelectField'
 import { TextField } from '@/app/components/Forms/TextField'
@@ -12,6 +13,7 @@ import { Separator } from '@/app/components/ui/Separator/separator'
 import { H3 } from '@/app/components/ui/Typography'
 import { DAYS_OF_WEEK_ENUM } from '@/app/constants/daysOfWeek'
 import { majorLevelEnum, majorLevelOptions } from '@/app/constants/majorLevel'
+import { MAX_KEYWORDS, MAX_KEYWORD_LENGTH } from '@/app/constants/userLimits'
 import { MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { Major, Qualification } from '@prisma/client'
 import { Fragment } from 'react'
@@ -30,7 +32,7 @@ export const ManageMajorData = ({ major }: Props) => {
 		canPayInInstallments,
 		certificates,
 		completionConditions,
-		contact,
+		keywords,
 		cost,
 		daysOfWeek,
 		description,
@@ -202,6 +204,23 @@ export const ManageMajorData = ({ major }: Props) => {
 			value: syllabus,
 			customComponent: value => <RichTextPreviewField name='Program nauki' content={value} />,
 			editComponent: props => EditorField({ modalTitle: 'Edytuj program nauki', placeholder: 'Aa...', ...props })
+		},
+		{
+			accessorKey: 'keywords',
+			title: 'Słowa kluczowe',
+			value: keywords,
+			customComponent: value => (value.length > 0 ? value.join(', ') : 'Brak danych'),
+			editComponent: props => {
+				return KeywordsField({
+					placeholder: 'Aa, bb, cc',
+					maxItemLength: MAX_KEYWORD_LENGTH,
+					maxLength: MAX_KEYWORDS,
+					setError: props.control?.setError!,
+					clearErrors: ((accessorKey: string) =>
+						props.control?.setError(props.accessorKey, { type: 'custom', message: '' }, { shouldFocus: false })) as any,
+					...props
+				})
+			}
 		}
 	]
 

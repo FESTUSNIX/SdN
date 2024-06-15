@@ -15,7 +15,7 @@ import { H4, Muted } from '@/app/components/ui/Typography'
 import { MAX_KEYWORDS, MAX_KEYWORD_LENGTH } from '@/app/constants/userLimits'
 import { MajorFormType, MajorPayload } from '@/lib/validators/major'
 import { SubmitHandler } from 'react-hook-form'
-import { STATUS_OPTIONS } from '../../../constants/statusOptions'
+import { WORK_STATUS_OPTIONS } from '../../../../../constants/workStatusOptions'
 import Qualifications from './components/Qualifications'
 
 type Props = {
@@ -52,7 +52,12 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 
 					<Qualifications form={form} />
 
-					<SelectField accessorKey='status' options={STATUS_OPTIONS} label='Status' placeholder='Select work status' />
+					<SelectField
+						accessorKey='workStatus'
+						options={WORK_STATUS_OPTIONS}
+						label='Work status'
+						placeholder='Select work status'
+					/>
 				</div>
 
 				<Separator className='my-12' />

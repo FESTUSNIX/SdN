@@ -41,7 +41,7 @@ export default async function ManageUnitPage() {
 			},
 			nip: true,
 			regon: true,
-			status: true,
+			workStatus: true,
 			cityId: true,
 			slug: true,
 			notes: true

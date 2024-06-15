@@ -22,7 +22,7 @@ export const ListWrapper = ({
 	className?: string
 }): JSX.Element => {
 	if (style === 'unordered') return <ul className={cn('tw-prose my-0 list-none', className)}>{children}</ul>
-	if (style === 'ordered') return <ol className={cn('tw-prose my-0 list-none', className)}>{children}</ol>
+	if (style === 'ordered') return <ol className={cn('tw-prose my-0 list-none !pl-0', className)}>{children}</ol>
 
 	return children
 }
@@ -46,7 +46,7 @@ const NestedListItem = ({
 			before-dynamic-value={style === 'ordered' ? prevIndexes : ''}
 			className={cn(
 				'my-0.5',
-				style === 'ordered' && `before:mr-1.5 before:content-[attr(before-dynamic-value)]`,
+				style === 'ordered' && `list-none before:mr-2 before:content-[attr(before-dynamic-value)]`,
 				style === 'unordered' && `before:mr-1.5 before:text-inherit before:content-['•']`
 			)}>
 			{item.content}

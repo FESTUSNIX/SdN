@@ -12,21 +12,21 @@ import { UNIT_TYPE_OPTIONS } from '../../../constants/unitTypesOptions'
 
 export const columns: ColumnDef<TableUnitData>[] = [
 	{
-		id: 'status',
-		accessorKey: 'status',
+		id: 'workStatus',
+		accessorKey: 'workStatus',
 		header: ' ',
 		cell: ({ row }) => {
-			const status = row.getValue('status')
+			const workStatus = row.getValue('workStatus')
 
 			return (
 				<span
 					className={cn(
 						'absolute left-0 top-0 h-full w-1.5',
-						status === 'FINISHED'
+						workStatus === 'FINISHED'
 							? 'bg-emerald-400/20'
-							: status === 'IN_PROGRESS'
+							: workStatus === 'IN_PROGRESS'
 							? 'bg-orange-400/20'
-							: status === 'TO_CHECK'
+							: workStatus === 'TO_CHECK'
 							? 'bg-purple-400/20'
 							: ''
 					)}

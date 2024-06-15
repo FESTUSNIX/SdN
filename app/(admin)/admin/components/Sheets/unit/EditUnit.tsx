@@ -73,7 +73,7 @@ const EditUnit = () => {
 				notes: values.notes,
 				street: values.street ?? '',
 				postalCode: values.postalCode ?? '',
-				status: values.status
+				workStatus: values.workStatus
 			}
 
 			const { data } = await axios.patch(`/api/units/${defaultValues.id}`, payload)

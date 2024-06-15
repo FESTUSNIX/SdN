@@ -73,7 +73,7 @@ export default async function ManageMajorsPage({
 				<Separator className='mt-4' />
 			</section>
 
-			<section className='flex flex-col justify-between gap-x-6 gap-y-4 sm:flex-row lg:items-center lg:gap-x-12'>
+			<section className='flex flex-col justify-between gap-x-2 gap-y-4 sm:flex-row lg:items-center'>
 				<div className='grow'>
 					<SearchBar />
 				</div>
