@@ -1,4 +1,3 @@
-import { getMajorSearchResults } from '@/app/_actions/major'
 import MajorCard from '@/app/components/Majors/Card'
 import MajorsGrid from '@/app/components/Majors/Grid'
 import { H1, H2, H3 } from '@/app/components/ui/Typography'
@@ -15,7 +14,7 @@ import ListTypeSelect from './components/ListTypeSelect/'
 import { Pagination } from './components/Pagination'
 import Sort from './components/Sort'
 import { TransitionLoadingProvider } from './context/TransitionLoadingContext'
-import { SearchParamsChangeHandler } from './components/SearchParamsChangeHandler'
+import { getMajorSearchResults } from '@/lib/queries/major'
 
 export const metadata: Metadata = {
 	title: 'Szukaj kierunku'

@@ -120,37 +120,12 @@ export async function PATCH(req: Request, { params }: { params: { majorId: strin
 
 		const body = await req.json()
 
-		const {
-			address,
-			canPayInInstallments,
-			certificates,
-			completionConditions,
-			contact,
-			cost,
-			daysOfWeek,
-			description,
-			durationInHours,
-			endDate,
-			formOfStudy,
-			isOnline,
-			majorLevel,
-			name,
-			numberOfSemesters,
-			onlineDuration,
-			organisator,
-			qualifications,
-			recruitmentConditions,
-			startDate,
-			workStatus,
-			syllabus,
-			isRegulated,
-			keywords
-		} = MajorValidator.omit({ unitSlug: true, unitId: true }).partial().parse(body)
+		const parsedValues = MajorValidator.omit({ unitSlug: true, unitId: true }).partial().parse(body)
 
 		let qualificationsConnect
 
-		if (qualifications) {
-			qualificationsConnect = qualifications.map(qualification => {
+		if (parsedValues.qualifications) {
+			qualificationsConnect = parsedValues.qualifications.map(qualification => {
 				return {
 					id: qualification
 				}
@@ -173,32 +148,11 @@ export async function PATCH(req: Request, { params }: { params: { majorId: strin
 				id: id
 			},
 			data: {
-				workStatus: workStatus,
-				name: name,
-				address: address,
-				contact: contact,
-				cost: cost,
-				durationInHours: durationInHours,
-				endDate: endDate,
-				formOfStudy: formOfStudy,
-				isOnline: isOnline,
-				majorLevel: majorLevel,
-				numberOfSemesters: numberOfSemesters,
-				onlineDuration: onlineDuration,
-				organisator: organisator,
-				recruitmentConditions: recruitmentConditions,
-				startDate: startDate,
-				syllabus: syllabus,
-				isRegulated: isRegulated,
-				canPayInInstallments: canPayInInstallments,
-				certificates: certificates,
-				completionConditions: completionConditions,
-				daysOfWeek: daysOfWeek,
-				description: description,
+				...parsedValues,
 				qualifications: {
 					connect: qualificationsConnect
 				},
-				keywords: keywords === null ? undefined : keywords
+				keywords: parsedValues.keywords === null ? undefined : parsedValues.keywords
 			}
 		})
 

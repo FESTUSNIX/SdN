@@ -7,9 +7,10 @@ import prisma from '@/prisma/client'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { MajorCompletion } from '../components/MajorCompletion'
 import { DeleteMajor } from './components/DeleteMajor'
 import { ManageMajorData } from './components/ManageMajorData'
-import { MajorCompletion } from '../components/MajorCompletion'
+import { StatusEdit } from './components/StatusEdit'
 
 export default async function ManageMajorPage({ params: { slug } }: { params: { slug: string } }) {
 	const session = await getAuthSession()
@@ -59,10 +60,9 @@ export default async function ManageMajorPage({ params: { slug } }: { params: { 
 				<ManageMajorData major={major} />
 			</section>
 
-			<section className='pb-6'>
-				<div className='ml-auto w-max'>
-					<DeleteMajor id={major.id} name={major.name} />
-				</div>
+			<section className={'flex flex-wrap items-center justify-end gap-2 pb-6'}>
+				<DeleteMajor id={major.id} name={major.name} />
+				<StatusEdit id={major.id} name={major.name} status={major.status} />
 			</section>
 		</div>
 	)

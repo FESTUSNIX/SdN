@@ -17,6 +17,7 @@ import { MajorFormType, MajorPayload } from '@/lib/validators/major'
 import { SubmitHandler } from 'react-hook-form'
 import { WORK_STATUS_OPTIONS } from '../../../../../constants/workStatusOptions'
 import Qualifications from './components/Qualifications'
+import { MAJOR_STATUS_OPTIONS } from '@/app/constants/MAJOR_STATUS_OPTIONS'
 
 type Props = {
 	form: MajorFormType
@@ -57,6 +58,13 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 						options={WORK_STATUS_OPTIONS}
 						label='Work status'
 						placeholder='Select work status'
+					/>
+
+					<SelectField
+						accessorKey='status'
+						options={MAJOR_STATUS_OPTIONS}
+						label='Publication status'
+						placeholder='Select publication status'
 					/>
 				</div>
 

@@ -32,7 +32,6 @@ export const MajorCompletion = ({ data }: Props) => {
 					totalFields.push(obj)
 				} else {
 					keys.forEach(key => {
-						console.log(key, obj[key])
 						traverse(obj[key])
 					})
 				}
@@ -52,7 +51,7 @@ export const MajorCompletion = ({ data }: Props) => {
 		return (completedFields.length / totalFields.length) * 100
 	}
 
-	const completionPercentage = Math.floor(calculateCompletion(progressData))
+	const completionPercentage = Math.min(Math.floor(calculateCompletion(progressData)), 100)
 
 	return (
 		<TooltipProvider>

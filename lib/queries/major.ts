@@ -42,6 +42,7 @@ export const getMajorSearchResults = async ({
 			majorLevel: {
 				in: typeof majorLevel === 'string' ? [majorLevel] : majorLevel
 			},
+			status: 'PUBLISHED',
 			isOnline: isOnline,
 			OR: [
 				{

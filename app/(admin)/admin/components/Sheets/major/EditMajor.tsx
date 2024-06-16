@@ -32,31 +32,9 @@ const EditMajor = () => {
 			toast.loading('Editing the major...')
 
 			const payload: Omit<MajorPayload, 'unitSlug' | 'unitId'> = {
-				id: values.id,
-				name: values.name,
-				majorLevel: values.majorLevel,
-				address: values.address,
-				canPayInInstallments: values.canPayInInstallments,
-				certificates: values.certificates,
-				completionConditions: values.completionConditions,
-				contact: values.contact,
-				cost: values.cost,
-				daysOfWeek: values.daysOfWeek,
-				description: values.description,
-				durationInHours: values.durationInHours,
+				...values,
 				endDate: values.endDate ? new Date(format(values.endDate, 'yyyy-MM-dd')) : null,
-				startDate: values.startDate ? new Date(format(values.startDate, 'yyyy-MM-dd')) : null,
-				formOfStudy: values.formOfStudy,
-				isOnline: values.isOnline,
-				numberOfSemesters: values.numberOfSemesters,
-				onlineDuration: values.onlineDuration,
-				organisator: values.organisator,
-				qualifications: values.qualifications,
-				recruitmentConditions: values.recruitmentConditions,
-				workStatus: values.workStatus,
-				syllabus: values.syllabus,
-				isRegulated: values.isRegulated,
-				keywords: values.keywords
+				startDate: values.startDate ? new Date(format(values.startDate, 'yyyy-MM-dd')) : null
 			}
 
 			const { data } = await axios.patch(`/api/majors/${values.id}`, payload)

@@ -1,7 +1,7 @@
 'use client'
 
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
-import { removeAllMajorsFromUnit } from '@/app/_actions/removeAllMajorsFromUnit'
+import { removeAllMajorsFromUnit } from '@/app/_actions'
 import { Button } from '@/app/components/ui/Button'
 import { Unit } from '@prisma/client'
 import { useMutation } from '@tanstack/react-query'

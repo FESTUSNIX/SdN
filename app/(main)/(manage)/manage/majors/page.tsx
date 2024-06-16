@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation'
 import AddMajor from './components/AddMajor'
 import MajorCard from './components/MajorCard'
 import { SearchBar } from './components/SearchBar'
+import StatusSelect from './components/StatusSelect'
 
 export default async function ManageMajorsPage({
 	searchParams
@@ -16,6 +17,7 @@ export default async function ManageMajorsPage({
 	if (!session) redirect('/login')
 
 	const searchQuery = searchParams.q?.toString().replace(/[\s\n\t]/g, '_')
+	const status = searchParams.publication_status?.toString() as 'PUBLISHED' | 'DRAFT' | undefined
 
 	const majors = await prisma.major.findMany({
 		where: {
@@ -29,7 +31,8 @@ export default async function ManageMajorsPage({
 						id: session.user.id
 					}
 				}
-			}
+			},
+			status: ['PUBLISHED', 'DRAFT'].includes(status ?? '') ? status : undefined
 		},
 		orderBy: {
 			updatedAt: 'desc'
@@ -74,11 +77,15 @@ export default async function ManageMajorsPage({
 			</section>
 
 			<section className='flex flex-col justify-between gap-x-2 gap-y-4 sm:flex-row lg:items-center'>
-				<div className='grow'>
+				<div className='h-12'>
+					<StatusSelect />
+				</div>
+
+				<div className='h-12 grow'>
 					<SearchBar />
 				</div>
 
-				<div className='ml-auto'>{unit && <AddMajor unitId={unit.id} />}</div>
+				<div className='ml-auto h-12 shrink-0'>{unit && <AddMajor unitId={unit.id} />}</div>
 			</section>
 
 			<section className='space-y-2 pb-6'>

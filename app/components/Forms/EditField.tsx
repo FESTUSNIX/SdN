@@ -1,5 +1,6 @@
 'use client'
 
+import { revalidatePaths } from '@/app/_actions'
 import { Button } from '@/app/components/ui/Button'
 import { Form } from '@/app/components/ui/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,6 +17,7 @@ type Props<T extends FieldValues, K extends keyof T> = {
 	defaultValue: T[K]
 	FormFieldComp: (props: { accessorKey: FieldPath<T>; control?: Control<T> }) => React.JSX.Element
 } & {
+	pathsToRevalidate?: string[]
 	apiPath: string
 	PreviewComponent?: (value: T[K]) => React.ReactNode
 	schema: z.ZodObject<any>
@@ -29,6 +31,7 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 	FormFieldComp,
 	apiPath,
 	schema,
+	pathsToRevalidate,
 	preparePayload
 }: Props<T, K>) => {
 	const [isEditing, setIsEditing] = useState(false)
@@ -47,7 +50,8 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 	const { mutate: updateField, isLoading } = useMutation({
 		mutationFn: async (values: FieldPayload) => {
 			let payload: Partial<FieldPayload> = {
-				...values
+				...values,
+				...(pathsToRevalidate && { pathsToRevalidate })
 			}
 
 			if (preparePayload) {
@@ -85,6 +89,8 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 		},
 		onSuccess: data => {
 			toast.dismiss()
+
+			pathsToRevalidate && revalidatePaths(pathsToRevalidate)
 
 			form.reset()
 

@@ -34,11 +34,11 @@ export const SearchBar = () => {
 	}, [debouncedQuery])
 
 	return (
-		<div className='relative'>
+		<div className='relative h-full'>
 			<SearchIcon className='pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 select-none text-muted-foreground' />
 			<Input
 				placeholder='Wyszukaj kierunki'
-				className='rounded-full bg-secondary py-4 pl-12 pr-6'
+				className='h-full rounded-full py-4 pl-12 pr-6'
 				value={query}
 				onChange={handleChange}
 			/>

@@ -108,7 +108,9 @@ export async function POST(req: NextRequest) {
 				description: data.description || [],
 				qualifications: {
 					connect: qualificationsIds
-				}
+				},
+				keywords: data.keywords || [],
+				status: data.status || 'DRAFT'
 			}
 		})
 

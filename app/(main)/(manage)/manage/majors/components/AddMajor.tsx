@@ -14,12 +14,14 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import MajorForm from './MajorForm'
+import { z } from 'zod'
+import { revalidatePaths } from '@/app/_actions'
 
 type Props = {
 	unitId: number
 }
 
-type AddMajorPayload = Omit<MajorPayload, 'workStatus' | 'id' | 'unitSlug'>
+export type AddMajorPayload = Omit<MajorPayload, 'workStatus' | 'id' | 'unitSlug' | 'status'> & { status: boolean }
 
 const AddMajor = ({ unitId }: Props) => {
 	const [open, setOpen] = useState(false)
@@ -29,7 +31,11 @@ const AddMajor = ({ unitId }: Props) => {
 	const searchParams = useSearchParams()
 
 	const form = useForm<AddMajorPayload>({
-		resolver: zodResolver(MajorValidator.omit({ unitId: true, unitSlug: true, id: true, workStatus: true })),
+		resolver: zodResolver(
+			MajorValidator.omit({ unitId: true, unitSlug: true, id: true, workStatus: true }).extend({
+				status: z.boolean()
+			})
+		),
 		defaultValues: {
 			name: '',
 			majorLevel: 'PODYPLOMOWE',
@@ -52,7 +58,9 @@ const AddMajor = ({ unitId }: Props) => {
 			organisator: '',
 			qualifications: [],
 			recruitmentConditions: [],
-			syllabus: []
+			syllabus: [],
+			keywords: [],
+			status: false
 		}
 	})
 
@@ -60,30 +68,11 @@ const AddMajor = ({ unitId }: Props) => {
 		mutationFn: async (values: AddMajorPayload) => {
 			toast.loading('Trwa dodawanie kierunku...')
 
-			const payload: AddMajorPayload = {
-				name: values.name,
-				majorLevel: values.majorLevel,
-				address: values.address,
-				canPayInInstallments: values.canPayInInstallments,
-				certificates: values.certificates,
-				completionConditions: values.completionConditions,
-				contact: values.contact,
-				cost: values.cost,
-				daysOfWeek: values.daysOfWeek,
-				description: values.description,
-				durationInHours: values.durationInHours,
+			const payload = {
+				...values,
+				status: values.status ? 'PUBLISHED' : 'DRAFT',
 				endDate: values.endDate ? new Date(format(values.endDate, 'yyyy-MM-dd')) : null,
-				startDate: values.startDate ? new Date(format(values.startDate, 'yyyy-MM-dd')) : null,
-				formOfStudy: values.formOfStudy,
-				isOnline: values.isOnline,
-				numberOfSemesters: values.numberOfSemesters,
-				onlineDuration: values.onlineDuration,
-				organisator: values.organisator,
-				qualifications: values.qualifications,
-				recruitmentConditions: values.recruitmentConditions,
-				syllabus: values.syllabus,
-				isRegulated: values.isRegulated,
-				unitId: unitId
+				startDate: values.startDate ? new Date(format(values.startDate, 'yyyy-MM-dd')) : null
 			}
 
 			const { data } = await axios.post('/api/majors', payload)
@@ -113,7 +102,7 @@ const AddMajor = ({ unitId }: Props) => {
 
 			toast.success('Poymślnie dodano nowy kierunek')
 
-			const {} = axios.get('/api/revalidate?path=/manage/majors')
+			revalidatePaths(['/manage/majors'])
 
 			router.refresh()
 
@@ -127,10 +116,10 @@ const AddMajor = ({ unitId }: Props) => {
 	}, [pathname, searchParams])
 
 	return (
-		<div>
+		<div className='h-full'>
 			<Sheet open={open} onOpenChange={setOpen}>
 				<SheetTrigger asChild>
-					<Button className='rounded-full'>
+					<Button className='h-full shrink-0 rounded-full'>
 						<Plus className='mr-2 h-4 w-4' />
 						<span>Dodaj kierunek</span>
 					</Button>

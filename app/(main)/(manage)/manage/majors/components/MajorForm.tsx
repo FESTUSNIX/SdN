@@ -2,19 +2,22 @@ import { BooleanField } from '@/app/components/Forms/BooleanField'
 import { DateField } from '@/app/components/Forms/DateField'
 import { EditorField } from '@/app/components/Forms/EditorField'
 import { DaysOfWeek } from '@/app/components/Forms/Major/DaysOfWeek'
+import { KeywordsField } from '@/app/components/Forms/Major/Keywords'
 import { QualificationsField } from '@/app/components/Forms/Major/Qualifications'
 import { SelectField } from '@/app/components/Forms/SelectField'
+import { SwitchField } from '@/app/components/Forms/SwitchField'
 import { TextField } from '@/app/components/Forms/TextField'
 import { Form } from '@/app/components/ui/Form'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H3, Muted } from '@/app/components/ui/Typography'
 import { majorLevelOptions } from '@/app/constants/majorLevel'
+import { MAX_KEYWORDS, MAX_KEYWORD_LENGTH } from '@/app/constants/userLimits'
 import { MajorFormType, MajorPayload } from '@/lib/validators/major'
 import { SubmitHandler } from 'react-hook-form'
 
 type Props = {
 	form: MajorFormType
-	onSubmit: SubmitHandler<MajorPayload>
+	onSubmit: SubmitHandler<Omit<MajorPayload, 'status'> & { status: boolean }>
 }
 
 const MajorForm = ({ form, onSubmit }: Props) => {
@@ -22,7 +25,7 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(e => onSubmit(e))} className='py-4' id='major-form'>
+			<form onSubmit={form.handleSubmit(e => onSubmit(e as any))} className='py-4' id='major-form'>
 				<div className='space-y-8 px-6'>
 					<TextField control={control} accessorKey='name' label='Nazwa' placeholder='np. Informatyka' />
 
@@ -31,6 +34,8 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 					<BooleanField control={control} accessorKey='isOnline' label='Tryb' options={['Online', 'Stacjonarny']} />
 
 					<QualificationsField accessorKey='qualifications' control={control} label='Kwalifikacje' />
+
+					<SwitchField control={control} accessorKey='status' label='Opublikuj' />
 				</div>
 
 				<Separator className='my-12' />
@@ -40,6 +45,17 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 						<H3>Nieobowiązkowe</H3>
 						<Muted>Te pola mogą zostać wypełnione później</Muted>
 					</div>
+
+					<KeywordsField
+						control={form.control}
+						accessorKey='keywords'
+						label='Keywords'
+						placeholder='Aa, bb, cc'
+						maxItemLength={MAX_KEYWORD_LENGTH}
+						maxLength={MAX_KEYWORDS}
+						setError={form.setError}
+						clearErrors={form.clearErrors}
+					/>
 
 					<TextField control={control} accessorKey='cost' type='number' label='Cena' placeholder='1234...' />
 
@@ -65,9 +81,6 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 					<DateField control={control} accessorKey='startDate' label='Data rozpoczęcia' />
 
 					<DateField control={control} accessorKey='endDate' label='Data zakończenia' />
-
-					{/* Contact */}
-					{/* <TextField control={control} accessorKey='contact' label='Kontakt' placeholder='' /> */}
 
 					<TextField
 						control={control}

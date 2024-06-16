@@ -249,6 +249,7 @@ export const ManageMajorData = ({ major }: Props) => {
 									})
 							})}
 							preparePayload={item.preparePayload}
+							pathsToRevalidate={[`/manage/majors/${major.slug}`]}
 						/>
 					</div>
 
