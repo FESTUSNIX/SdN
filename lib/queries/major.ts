@@ -92,7 +92,7 @@ export const getMajorSearchResults = async ({
 					},
 					{
 						cost: {
-							gte: typeof minPrice === 'string' ? Number(minPrice) : undefined,
+							gte: typeof minPrice === 'string' ? Number(minPrice) : 0,
 							lte: typeof maxPrice === 'string' ? Number(maxPrice) : undefined
 						}
 					}
