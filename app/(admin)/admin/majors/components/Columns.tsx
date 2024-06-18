@@ -44,7 +44,9 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 			return <ColumnHeader column={column} title='#' />
 		},
 		enableHiding: false,
-		size: 20
+		size: 20,
+		minSize: 20,
+		enableResizing: false
 	},
 	{
 		accessorKey: 'name',
@@ -60,7 +62,7 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 				</Link>
 			)
 		},
-		size: 250
+		size: 350
 	},
 	{
 		accessorKey: 'majorLevel',
@@ -73,6 +75,8 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 		cell: ({ row }) => {
 			const qualifications = row.original.qualifications
 
+			if (!qualifications.length) return <span className='text-muted-foreground'>No data</span>
+
 			return (
 				<ul className='flex flex-wrap'>
 					{qualifications?.map((q, index) => (
@@ -84,12 +88,18 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 				</ul>
 			)
 		},
-		enableSorting: false,
 		filterFn: (row, id, value: number[]) => {
 			const qualifications = row.original.qualifications.map(q => q.id)
 
 			return value.some(r => qualifications.includes(r))
-		}
+		},
+		sortingFn: (a, b) => {
+			const aQualifications = a.original.qualifications.map(q => q.name)
+			const bQualifications = b.original.qualifications.map(q => q.name)
+
+			return aQualifications.join('').localeCompare(bQualifications.join(''))
+		},
+		size: 300
 	},
 	{
 		id: 'keywords',
@@ -115,6 +125,25 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 		}
 	},
 	{
+		accessorKey: 'url',
+		header: ({ column }) => <ColumnHeader column={column} title='URL' />,
+		cell: ({ row }) => {
+			const url = row.original.url
+
+			if (!url) return <span className='text-muted-foreground'>No data</span>
+
+			return (
+				<Link
+					href={url ?? ''}
+					target='_blank'
+					rel='noopener noreferrer'
+					className={cn(buttonVariants({ variant: 'link' }), 'flex min-w-max')}>
+					{url}
+				</Link>
+			)
+		}
+	},
+	{
 		accessorKey: 'unitId',
 		header: ({ column }) => (
 			<div className='flex justify-end'>
@@ -136,7 +165,7 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 			return (
 				<TooltipProvider>
 					<Tooltip delayDuration={300}>
-						<div className='flex  justify-end'>
+						<div className='flex justify-end'>
 							<TooltipTrigger asChild>
 								<Button variant='ghost' className='h-8 w-8 p-0'>
 									<span className='sr-only'>Open menu</span>
@@ -152,6 +181,7 @@ export const columns: ColumnDef<MajorTablePayload>[] = [
 				</TooltipProvider>
 			)
 		},
-		size: 0
+		size: 20,
+		minSize: 20
 	}
 ]

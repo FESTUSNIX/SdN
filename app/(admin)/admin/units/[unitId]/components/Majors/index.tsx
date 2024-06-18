@@ -25,7 +25,8 @@ const Majors = async ({ unitId }: Props) => {
 					type: true
 				}
 			},
-			unitId: true
+			unitId: true,
+			url: true
 		}
 	})
 

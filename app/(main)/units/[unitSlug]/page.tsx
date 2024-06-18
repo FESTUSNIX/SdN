@@ -101,7 +101,9 @@ export default async function UnitPage({ params, searchParams }: Props) {
 				/>
 			</Suspense>
 
-			<Majors unitSlug={params.unitSlug} searchParams={searchParams} />
+			<Suspense>
+				<Majors unitSlug={params.unitSlug} searchParams={searchParams} />
+			</Suspense>
 		</main>
 	)
 }

@@ -88,6 +88,14 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 						clearErrors={form.clearErrors}
 					/>
 
+					{/* URL */}
+					<TextField
+						control={form.control}
+						accessorKey='url'
+						label='Website (URL)'
+						placeholder='https://studiadlanauczycieli.pl'
+					/>
+
 					{/* IS REGULATED */}
 					<SwitchField control={form.control} accessorKey='isRegulated' label='Is regulated' />
 

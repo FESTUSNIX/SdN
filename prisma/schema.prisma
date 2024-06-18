@@ -116,6 +116,7 @@ model Major {
   qualifications        Qualification[] @relation("MajorToQualification")
   keywords              String[]
   status                Status          @default(DRAFT)
+  url                   String?
 
   @@index([name])
 }

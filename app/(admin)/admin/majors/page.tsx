@@ -24,7 +24,8 @@ export default async function MajorsPage() {
 				}
 			},
 			unitId: true,
-			keywords: true
+			keywords: true,
+			url: true
 		}
 	})
 

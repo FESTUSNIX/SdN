@@ -60,7 +60,8 @@ const AddMajor = ({ unitId }: Props) => {
 			recruitmentConditions: [],
 			syllabus: [],
 			keywords: [],
-			status: false
+			status: false,
+			url: ''
 		}
 	})
 

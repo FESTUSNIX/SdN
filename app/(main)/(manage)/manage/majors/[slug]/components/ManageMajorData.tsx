@@ -16,6 +16,7 @@ import { majorLevelEnum, majorLevelOptions } from '@/app/constants/majorLevel'
 import { MAX_KEYWORDS, MAX_KEYWORD_LENGTH } from '@/app/constants/userLimits'
 import { MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { Major, Qualification } from '@prisma/client'
+import Link from 'next/link'
 import { Fragment } from 'react'
 import { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { z } from 'zod'
@@ -46,7 +47,8 @@ export const ManageMajorData = ({ major }: Props) => {
 		recruitmentConditions,
 		startDate,
 		syllabus,
-		qualifications
+		qualifications,
+		url
 	} = major
 
 	const items: {
@@ -91,6 +93,21 @@ export const ManageMajorData = ({ major }: Props) => {
 			),
 			editComponent: props => QualificationsField({ control: props.control, accessorKey: props.accessorKey }),
 			preparePayload: value => value.map((q: { id: number; name: string }) => q.id)
+		},
+		{
+			accessorKey: 'url',
+			title: 'Strona internetowa kierunku',
+			value: url,
+			editComponent: props => TextField({ placeholder: 'np. https://studiadlanauczycieli.com/kierunki/1', ...props }),
+			customComponent: value => {
+				if (!value) return <span className='text-muted-foreground'>Brak danych</span>
+
+				return (
+					<Link href={value} target='_blank' rel='noopener noreferrer' className='text-primary hover:underline'>
+						{value}
+					</Link>
+				)
+			}
 		},
 		{
 			accessorKey: 'cost',

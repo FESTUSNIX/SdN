@@ -54,7 +54,8 @@ const AddMajor = () => {
 			workStatus: 'IN_PROGRESS',
 			syllabus: [],
 			keywords: [],
-			status: 'DRAFT'
+			status: 'DRAFT',
+			url: ''
 		}
 	})
 

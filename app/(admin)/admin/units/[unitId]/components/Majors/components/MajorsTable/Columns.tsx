@@ -1,7 +1,7 @@
 'use client'
 
 import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
-import { Button } from '@/app/components/ui/Button'
+import { Button, buttonVariants } from '@/app/components/ui/Button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
 import { cn } from '@/lib/utils/utils'
 import { MajorPayloadWithFullQualifications } from '@/lib/validators/major'
@@ -10,7 +10,10 @@ import { MoreHorizontal, Pointer } from 'lucide-react'
 import Link from 'next/link'
 
 export const columns: ColumnDef<
-	Pick<MajorPayloadWithFullQualifications, 'id' | 'name' | 'majorLevel' | 'workStatus' | 'qualifications' | 'unitId'>
+	Pick<
+		MajorPayloadWithFullQualifications,
+		'id' | 'name' | 'majorLevel' | 'workStatus' | 'qualifications' | 'unitId' | 'url'
+	>
 >[] = [
 	{
 		id: 'workStatus',
@@ -44,7 +47,9 @@ export const columns: ColumnDef<
 			return <ColumnHeader column={column} title='#' />
 		},
 		enableHiding: false,
-		size: 20
+		size: 20,
+		minSize: 20,
+		enableResizing: false
 	},
 	{
 		accessorKey: 'name',
@@ -84,11 +89,31 @@ export const columns: ColumnDef<
 					))}
 				</ul>
 			)
-		}
+		},
+		minSize: 300
 	},
 	{
 		accessorKey: 'majorLevel',
 		header: ({ column }) => <ColumnHeader column={column} title='Level' />
+	},
+	{
+		accessorKey: 'url',
+		header: ({ column }) => <ColumnHeader column={column} title='URL' />,
+		cell: ({ row }) => {
+			const url = row.original.url
+
+			if (!url) return <span className='text-muted-foreground'>No data</span>
+
+			return (
+				<Link
+					href={url ?? ''}
+					target='_blank'
+					rel='noopener noreferrer'
+					className={cn(buttonVariants({ variant: 'link' }), 'flex min-w-max')}>
+					{url}
+				</Link>
+			)
+		}
 	},
 	{
 		id: 'actions',

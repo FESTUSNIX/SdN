@@ -57,6 +57,13 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 						clearErrors={form.clearErrors}
 					/>
 
+					<TextField
+						control={control}
+						accessorKey='url'
+						label='Strona internetowa kierunku'
+						placeholder='np. https://studiadlanauczycieli.com/kierunki/1'
+					/>
+
 					<TextField control={control} accessorKey='cost' type='number' label='Cena' placeholder='1234...' />
 
 					<BooleanField control={control} accessorKey='canPayInInstallments' label='Płatność w ratach' />

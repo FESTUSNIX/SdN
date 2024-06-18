@@ -15,6 +15,7 @@ const Majors = async ({ unitSlug, searchParams }: Props) => {
 	const majors = await prisma.major.findMany({
 		where: {
 			unitSlug,
+			status: 'PUBLISHED',
 			OR: [
 				{
 					name: {
