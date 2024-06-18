@@ -8,7 +8,7 @@ import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/ui/Table'
 import { cn } from '@/lib/utils/utils'
 import { flexRender, type Row, type Table as TableType } from '@tanstack/react-table'
-import { ComponentType, ReactElement } from 'react'
+import { ComponentType, ReactElement, useMemo } from 'react'
 import { ConditionalWrapper } from '../../ConditionalWrapper'
 
 type PropsTable<TData> = {
@@ -40,6 +40,18 @@ export function DataTableContent<TData>({
 	searchableColumns,
 	sheetType
 }: PropsTable<TData>) {
+	const columnSizeVars = useMemo(() => {
+		const headers = table.getFlatHeaders()
+		const colSizes: { [key: string]: number } = {}
+		for (let i = 0; i < headers.length; i++) {
+			const header = headers[i]!
+			colSizes[`--header-${header.id}-size`] = header.getSize()
+			colSizes[`--col-${header.column.id}-size`] = header.column.getSize()
+		}
+		return colSizes
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [table.getState().columnSizingInfo, table.getState().columnSizing])
+
 	return (
 		<div className='flex h-full w-full flex-1 flex-col'>
 			<Toolbar
@@ -52,7 +64,11 @@ export function DataTableContent<TData>({
 
 			<div className='wrapper relative mt-4 h-max overflow-hidden rounded-md border max-md:mb-20 md:mb-4'>
 				<ScrollArea className='relative h-[75vh] max-w-full md:h-full'>
-					<Table>
+					<Table
+						style={{
+							...columnSizeVars, //Define column sizes on the <table> element
+							width: table.getTotalSize()
+						}}>
 						<TableHeader className='sticky top-0 z-10 border-b border-border bg-background'>
 							{table.getHeaderGroups().map(headerGroup => (
 								<TableRow key={headerGroup.id} className='w-full bg-background'>
@@ -60,7 +76,7 @@ export function DataTableContent<TData>({
 										return (
 											<TableHead
 												key={header.id}
-												style={{ width: header.getSize() }}
+												style={{ width: `calc(var(--header-${header?.id}-size) * 1px)` }}
 												className={cn(
 													'relative border-r first:border-l-0 last:border-r-0',
 													['workStatus'].includes(header.column.id) && '!w-0 !border-none !px-0'
@@ -92,11 +108,6 @@ export function DataTableContent<TData>({
 												{row.getVisibleCells().map((cell, index, cells) => (
 													<TableCell
 														key={cell.id}
-														style={{
-															width: cell.column.columnDef.size || cell.column.getSize(),
-															minWidth: cell.column.columnDef.minSize,
-															maxWidth: cell.column.columnDef.maxSize
-														}}
 														className={cn(
 															'border-r px-4 py-1 first:border-l-0 last:border-r-0',
 															['workStatus'].includes(cell.column.id) && '!w-0 !min-w-0 !border-none !px-0'

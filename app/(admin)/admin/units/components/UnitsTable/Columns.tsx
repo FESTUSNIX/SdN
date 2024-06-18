@@ -1,7 +1,7 @@
 'use client'
 
 import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
-import { Button } from '@/app/components/ui/Button'
+import { Button, buttonVariants } from '@/app/components/ui/Button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
 import { cn } from '@/lib/utils/utils'
 import { TableUnitData } from '@/lib/validators/unit'
@@ -43,7 +43,8 @@ export const columns: ColumnDef<TableUnitData>[] = [
 			return <ColumnHeader column={column} title='#' />
 		},
 		enableHiding: false,
-		size: 10
+		size: 10,
+		minSize: 10
 	},
 	{
 		accessorKey: 'name',
@@ -59,17 +60,23 @@ export const columns: ColumnDef<TableUnitData>[] = [
 				</Link>
 			)
 		},
-		minSize: 400
+		size: 500
 	},
 	{
 		accessorKey: 'email',
 		header: ({ column }) => <ColumnHeader column={column} title='Email' />,
-		maxSize: 300
+		cell: ({ row }) => {
+			const email: string = row.getValue('email')
+
+			return <div className='break-all'>{email}</div>
+		},
+		minSize: 100,
+		size: 300
 	},
 	{
 		accessorKey: 'city.name',
 		header: ({ column }) => <ColumnHeader column={column} title='City' />,
-		minSize: 200
+		size: 200
 	},
 	{
 		accessorKey: 'unitType',
@@ -105,35 +112,26 @@ export const columns: ColumnDef<TableUnitData>[] = [
 			const majorsCount: string = row.getValue('_count_majors')
 
 			return <div className=''>{majorsCount}</div>
-		}
+		},
+		size: 20,
+		minSize: 20
 	},
 	{
 		accessorKey: 'website',
-		header: () => <div className='text-right'>Website</div>,
+		header: ({ column }) => <ColumnHeader column={column} title='Website' />,
 		cell: ({ row }) => {
-			const website: string = row.getValue('website')
+			const website = row.original.website
+
+			if (!website) return <span className='text-muted-foreground'>No data</span>
 
 			return (
-				<TooltipProvider>
-					<Tooltip>
-						<div className='flex w-full justify-end'>
-							<TooltipTrigger>
-								{website ? (
-									<Button variant='secondary' asChild>
-										<Link href={website} target='_blank' rel='noopener' className='w-fit'>
-											URL
-										</Link>
-									</Button>
-								) : (
-									<p>NULL</p>
-								)}
-							</TooltipTrigger>
-						</div>
-						<TooltipContent>
-							<p>{website}</p>
-						</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
+				<Link
+					href={website ?? ''}
+					target='_blank'
+					rel='noopener noreferrer'
+					className={cn(buttonVariants({ variant: 'link' }), 'text-start')}>
+					{website}
+				</Link>
 			)
 		}
 	},

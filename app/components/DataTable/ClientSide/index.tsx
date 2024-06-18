@@ -81,7 +81,11 @@ export function ClientSideDataTable<TData, TValue>({
 		getFacetedRowModel: getFacetedRowModel(),
 		getFacetedUniqueValues: getFacetedUniqueValues(),
 		enableColumnResizing: true,
-		columnResizeMode: 'onChange'
+		columnResizeMode: 'onChange',
+		defaultColumn: {
+			minSize: 150,
+			maxSize: 800
+		}
 	})
 
 	return (
