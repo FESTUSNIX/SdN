@@ -1,12 +1,16 @@
 import { Skeleton } from '@/app/components/ui/skeleton'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
 import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { urlFor } from '@/lib/supabase/getUrlFor'
+import { cn } from '@/lib/utils/utils'
 import { Major } from '@prisma/client'
+import { ArrowDownToLine, ArrowUpToLine, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { StatusEdit } from './StatusEdit'
 
 type Props = {
-	data: Pick<Major, 'name' | 'majorLevel' | 'isOnline' | 'slug'> & {
+	data: Pick<Major, 'id' | 'name' | 'majorLevel' | 'isOnline' | 'slug' | 'status'> & {
 		qualifications: {
 			slug: string
 			name: string
@@ -15,12 +19,12 @@ type Props = {
 }
 
 const MajorCard = ({ data }: Props) => {
-	const { name, isOnline, majorLevel, qualifications, slug } = data
+	const { id, name, isOnline, majorLevel, qualifications, slug, status } = data
 
 	return (
 		<Link
 			href={`/manage/majors/${slug}`}
-			className='flex flex-row gap-4 rounded-lg border p-3 duration-300 hover:shadow dark:hover:border-foreground/40 lg:gap-6'>
+			className='relative flex flex-row gap-4 rounded-lg border p-3 duration-300 hover:shadow dark:hover:border-foreground/40 lg:gap-6'>
 			<div className='relative mt-1 hidden h-12 w-12 shrink-0 md:block lg:mt-0 lg:h-28 lg:w-28'>
 				<Image
 					src={urlFor('qualification_images', `${qualifications[0]?.slug}.jpg`).publicUrl}
@@ -59,6 +63,31 @@ const MajorCard = ({ data }: Props) => {
 						</span>
 					</h4>
 				</div>
+			</div>
+
+			<div className='absolute right-3 top-3'>
+				<TooltipProvider>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<StatusEdit id={id} name={name} status={status} revalidationPath={'/manage/majors'} asChild>
+								<button
+									className={cn(
+										'group flex size-8 items-center justify-center overflow-hidden rounded-full border bg-background transition-colors duration-300 disabled:opacity-50',
+										status === 'DRAFT' ? 'hover:border-green-600' : 'hover:border-destructive'
+									)}>
+									<span className='sr-only'>Status publikacji</span>
+									{status === 'DRAFT' ? (
+										<ArrowUpToLine className='size-4 text-green-600 group-disabled:hidden' />
+									) : (
+										<ArrowDownToLine className='size-4 text-muted-foreground duration-300 group-hover:text-destructive group-disabled:hidden' />
+									)}
+									<Loader2 className='hidden size-4 animate-spin text-muted-foreground group-disabled:block' />
+								</button>
+							</StatusEdit>
+						</TooltipTrigger>
+						<TooltipContent>{status === 'DRAFT' ? 'Opublikuj' : 'Cofnij publikację'}</TooltipContent>
+					</Tooltip>
+				</TooltipProvider>
 			</div>
 		</Link>
 	)

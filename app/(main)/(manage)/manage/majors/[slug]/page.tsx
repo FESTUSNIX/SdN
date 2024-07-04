@@ -4,13 +4,13 @@ import { H1 } from '@/app/components/ui/Typography'
 import { getAuthSession } from '@/lib/auth/auth'
 import { cn } from '@/lib/utils/utils'
 import prisma from '@/prisma/client'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ArrowUpToLine, Undo } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { MajorCompletion } from '../components/MajorCompletion'
+import { StatusEdit } from '../components/StatusEdit'
 import { DeleteMajor } from './components/DeleteMajor'
 import { ManageMajorData } from './components/ManageMajorData'
-import { StatusEdit } from './components/StatusEdit'
 
 export default async function ManageMajorPage({ params: { slug } }: { params: { slug: string } }) {
 	const session = await getAuthSession()
@@ -62,7 +62,20 @@ export default async function ManageMajorPage({ params: { slug } }: { params: { 
 
 			<section className={'flex flex-wrap items-center justify-end gap-2 pb-6'}>
 				<DeleteMajor id={major.id} name={major.name} />
-				<StatusEdit id={major.id} name={major.name} status={major.status} />
+				<StatusEdit
+					id={major.id}
+					name={major.name}
+					status={major.status}
+					className={cn(
+						major.status === 'PUBLISHED' && 'text-destructive hover:border-destructive hover:text-destructive'
+					)}>
+					{major.status === 'PUBLISHED' ? (
+						<Undo className='mr-2 h-4 w-4' />
+					) : (
+						<ArrowUpToLine className='mr-2 h-4 w-4' />
+					)}
+					<span>{major.status === 'PUBLISHED' ? 'Cofnij publikację' : 'Opublikuj'}</span>
+				</StatusEdit>
 			</section>
 		</div>
 	)

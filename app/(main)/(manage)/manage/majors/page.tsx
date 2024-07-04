@@ -48,7 +48,8 @@ export default async function ManageMajorsPage({
 					slug: true,
 					name: true
 				}
-			}
+			},
+			status: true
 		}
 	})
 
