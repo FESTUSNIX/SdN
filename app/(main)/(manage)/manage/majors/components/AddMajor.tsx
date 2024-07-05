@@ -117,10 +117,10 @@ const AddMajor = ({ unitId }: Props) => {
 	}, [pathname, searchParams])
 
 	return (
-		<div className='h-full'>
+		<div className='h-full w-full'>
 			<Sheet open={open} onOpenChange={setOpen}>
 				<SheetTrigger asChild>
-					<Button className='h-full shrink-0 rounded-full'>
+					<Button className='h-full w-full shrink-0 rounded-full'>
 						<Plus className='mr-2 h-4 w-4' />
 						<span>Dodaj kierunek</span>
 					</Button>

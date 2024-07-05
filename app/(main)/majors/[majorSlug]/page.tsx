@@ -16,7 +16,8 @@ import UnitCard from './components/UnitCard'
 const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: string } }) => {
 	const major = await prisma.major.findFirst({
 		where: {
-			slug: majorSlug
+			slug: majorSlug,
+			status: 'PUBLISHED'
 		},
 		include: {
 			qualifications: {

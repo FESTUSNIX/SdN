@@ -70,7 +70,7 @@ const StatusSelect = () => {
 	return (
 		<div className='h-full shrink-0'>
 			<Select onValueChange={setStatus} value={status} defaultValue={options[0].value}>
-				<SelectTrigger className='h-full rounded-full'>
+				<SelectTrigger className='h-full rounded-full gap-2'>
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>

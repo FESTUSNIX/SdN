@@ -1,10 +1,11 @@
 'use client'
 
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
+import { archiveMajor, revalidatePaths } from '@/app/_actions'
 import { Button } from '@/app/components/ui/Button'
 import { Major } from '@prisma/client'
 import { useMutation } from '@tanstack/react-query'
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
@@ -20,9 +21,7 @@ export const DeleteMajor = ({ id, name }: Props) => {
 		mutationFn: async () => {
 			toast.loading('Trwa usuwanie kierunku')
 
-			const { data } = await axios.delete(`/api/majors/${id}?revalidate=/manage/majors`)
-
-			return data
+			await archiveMajor(id, `/manage/majors`)
 		},
 		onError: err => {
 			toast.dismiss()
@@ -46,10 +45,9 @@ export const DeleteMajor = ({ id, name }: Props) => {
 		onSuccess: async data => {
 			toast.dismiss()
 
-			const revalidate = await axios.get('/api/revalidate?path=/manage/majors')
+			revalidatePaths(['/manage/majors'])
 
 			router.push('/manage/majors')
-
 			toast.success('Pomyślnie usunięto kierunek')
 		}
 	})

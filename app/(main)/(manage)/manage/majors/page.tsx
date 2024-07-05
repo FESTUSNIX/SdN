@@ -32,7 +32,10 @@ export default async function ManageMajorsPage({
 					}
 				}
 			},
-			status: ['PUBLISHED', 'DRAFT'].includes(status ?? '') ? status : undefined
+			status: {
+				not: 'ARCHIVED',
+				equals: status
+			}
 		},
 		orderBy: {
 			updatedAt: 'desc'
@@ -71,13 +74,15 @@ export default async function ManageMajorsPage({
 	return (
 		<div className='flex h-full flex-col gap-8 px-1'>
 			<section>
-				<H1>Kierunki</H1>
+				<H1>
+					Kierunki <span>({majors.length})</span>
+				</H1>
 				<Muted className='text-base'>Zarządzaj kierunkami jednostki</Muted>
 
 				<Separator className='mt-4' />
 			</section>
 
-			<section className='flex flex-col justify-between gap-x-2 gap-y-4 sm:flex-row lg:items-center'>
+			<section className='flex flex-col justify-between gap-x-2 gap-y-4 sm:flex-row md:flex-col lg:flex-row lg:items-center'>
 				<div className='h-12'>
 					<StatusSelect />
 				</div>
@@ -86,10 +91,12 @@ export default async function ManageMajorsPage({
 					<SearchBar />
 				</div>
 
-				<div className='ml-auto h-12 shrink-0'>{unit && <AddMajor unitId={unit.id} />}</div>
+				<div className='h-12 shrink-0 grow sm:max-md:grow-0 lg:grow-0'>{unit && <AddMajor unitId={unit.id} />}</div>
 			</section>
 
 			<section className='space-y-2 pb-6'>
+				<h2 className='sr-only'>Lista kierunków</h2>
+
 				<div className='flex flex-col gap-y-2'>
 					{majors.map(major => (
 						<div key={major.id} className=''>

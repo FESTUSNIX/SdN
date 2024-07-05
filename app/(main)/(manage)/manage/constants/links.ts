@@ -1,4 +1,4 @@
-import { GraduationCap, LucideIcon, Receipt, School2, UserCircle2 } from 'lucide-react'
+import { GraduationCap, LucideIcon, Receipt, School2, Trash2, UserCircle2 } from 'lucide-react'
 
 export const links: {
 	title: string
@@ -24,5 +24,10 @@ export const links: {
 		title: 'Subskrypcje',
 		Icon: Receipt,
 		href: '/manage/subscriptions'
+	},
+	{
+		title: 'Kosz',
+		Icon: Trash2,
+		href: '/manage/trash'
 	}
 ]

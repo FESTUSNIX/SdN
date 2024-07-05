@@ -2,22 +2,20 @@
 
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 import { publishMajor, unpublishMajor } from '@/app/_actions'
-import { Button } from '@/app/components/ui/Button'
+import { Button, ButtonProps } from '@/app/components/ui/Button'
 import { Major } from '@prisma/client'
-import { Slot } from '@radix-ui/react-slot'
 import { useMutation } from '@tanstack/react-query'
 import { forwardRef } from 'react'
 import toast from 'react-hot-toast'
 
-type Props = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'id'> &
+type Props = Omit<ButtonProps, 'id'> &
 	Pick<Major, 'id' | 'name' | 'status'> & {
 		children: React.ReactNode
-		asChild?: boolean
 		revalidationPath?: string
 	}
 
 export const StatusEdit = forwardRef<HTMLButtonElement, Props>(
-	({ id, name, status, children, asChild, revalidationPath, className, ...props }, ref) => {
+	({ id, name, status, children, revalidationPath, className, ...props }, ref) => {
 		const { openModal } = useGlobalModalContext()
 
 		const { mutateAsync: toggleStatus, isLoading } = useMutation({
@@ -41,10 +39,8 @@ export const StatusEdit = forwardRef<HTMLButtonElement, Props>(
 			}
 		})
 
-		const Comp = asChild ? Slot : Button
-
 		return (
-			<Comp
+			<Button
 				ref={ref}
 				onClick={async e => {
 					e.stopPropagation()
@@ -65,10 +61,9 @@ export const StatusEdit = forwardRef<HTMLButtonElement, Props>(
 					})
 				}}
 				disabled={isLoading}
-				variant={status === 'PUBLISHED' ? 'outline' : 'default'}
-				className={className}>
+				{...props}>
 				{children}
-			</Comp>
+			</Button>
 		)
 	}
 )

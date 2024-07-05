@@ -16,15 +16,20 @@ type Props = {
 			name: string
 		}[]
 	}
+	useStatusButton?: boolean
+	className?: string
 }
 
-const MajorCard = ({ data }: Props) => {
+const MajorCard = ({ data, useStatusButton = true, className }: Props) => {
 	const { id, name, isOnline, majorLevel, qualifications, slug, status } = data
 
 	return (
 		<Link
 			href={`/manage/majors/${slug}`}
-			className='relative flex flex-row gap-4 rounded-lg border p-3 duration-300 hover:shadow dark:hover:border-foreground/40 lg:gap-6'>
+			className={cn(
+				'relative flex flex-row gap-4 rounded-lg border p-3 duration-300 hover:shadow dark:hover:border-foreground/40 lg:gap-6',
+				className
+			)}>
 			<div className='relative mt-1 hidden h-12 w-12 shrink-0 md:block lg:mt-0 lg:h-28 lg:w-28'>
 				<Image
 					src={urlFor('qualification_images', `${qualifications[0]?.slug}.jpg`).publicUrl}
@@ -65,16 +70,19 @@ const MajorCard = ({ data }: Props) => {
 				</div>
 			</div>
 
-			<div className='absolute right-3 top-3'>
-				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<StatusEdit id={id} name={name} status={status} revalidationPath={'/manage/majors'} asChild>
-								<button
-									className={cn(
-										'group flex size-8 items-center justify-center overflow-hidden rounded-full border bg-background transition-colors duration-300 disabled:opacity-50',
-										status === 'DRAFT' ? 'hover:border-green-600' : 'hover:border-destructive'
-									)}>
+			{useStatusButton && (
+				<div className='absolute right-3 top-3'>
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<StatusEdit
+									id={id}
+									name={name}
+									status={status}
+									revalidationPath={'/manage/majors'}
+									variant={'outline'}
+									size={'iconSm'}
+									className={cn('group', status === 'DRAFT' ? 'hover:border-green-600' : 'hover:border-destructive')}>
 									<span className='sr-only'>Status publikacji</span>
 									{status === 'DRAFT' ? (
 										<ArrowUpToLine className='size-4 text-green-600 group-disabled:hidden' />
@@ -82,13 +90,13 @@ const MajorCard = ({ data }: Props) => {
 										<ArrowDownToLine className='size-4 text-muted-foreground duration-300 group-hover:text-destructive group-disabled:hidden' />
 									)}
 									<Loader2 className='hidden size-4 animate-spin text-muted-foreground group-disabled:block' />
-								</button>
-							</StatusEdit>
-						</TooltipTrigger>
-						<TooltipContent>{status === 'DRAFT' ? 'Opublikuj' : 'Cofnij publikację'}</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
-			</div>
+								</StatusEdit>
+							</TooltipTrigger>
+							<TooltipContent>{status === 'DRAFT' ? 'Opublikuj' : 'Cofnij publikację'}</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
+				</div>
+			)}
 		</Link>
 	)
 }
