@@ -7,7 +7,8 @@ export const getSavedMajors = async (slugs: string[]) => {
 		where: {
 			slug: {
 				in: slugs
-			}
+			},
+			status: 'PUBLISHED'
 		},
 		select: {
 			name: true,

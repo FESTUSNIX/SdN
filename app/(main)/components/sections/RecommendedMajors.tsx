@@ -6,6 +6,9 @@ type Props = {}
 export const RecommendedMajors = async (props: Props) => {
 	const majors = await prisma.major.findMany({
 		take: 8,
+		where: {
+			status: 'PUBLISHED'
+		},
 		select: {
 			id: true,
 			name: true,
