@@ -67,6 +67,10 @@ export default async function UnitsPage() {
 					{
 						id: 'name',
 						title: 'Name'
+					},
+					{
+						id: 'email',
+						title: 'Email'
 					}
 				]}
 				RowActions={RowActions}
