@@ -1,7 +1,7 @@
 import PreviousPageButton from '@/app/(admin)/admin/components/PreviousPageButton'
 import { buttonVariants } from '@/app/components/ui/Button'
 import { H3 } from '@/app/components/ui/Typography'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import prisma from '@/prisma/client'
 import { Metadata } from 'next'
 import Link from 'next/link'

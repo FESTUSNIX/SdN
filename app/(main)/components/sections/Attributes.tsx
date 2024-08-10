@@ -1,6 +1,6 @@
 import { Button } from '@/app/components/ui/Button'
 import { SparklesCore } from '@/app/components/ui/sparkles'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { SearchIcon } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'

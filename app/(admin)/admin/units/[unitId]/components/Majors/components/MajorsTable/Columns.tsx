@@ -3,7 +3,7 @@
 import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
 import { Button, buttonVariants } from '@/app/components/ui/Button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { MajorPayloadWithFullQualifications } from '@/lib/validators/major'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal, Pointer } from 'lucide-react'

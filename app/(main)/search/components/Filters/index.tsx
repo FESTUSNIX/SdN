@@ -1,7 +1,7 @@
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { H3 } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevel'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import prisma from '@/prisma/client'
 import { MajorLevel as MajorLevelObject } from '@prisma/client'
 import CheckboxGroup from './components/CheckboxGroup'

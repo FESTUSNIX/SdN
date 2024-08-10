@@ -2,7 +2,7 @@
 
 import { GoogleMap } from '@/app/components/GoogleMap'
 import { H2, H3 } from '@/app/components/ui/Typography'
-import { capitalize } from '@/lib/utils/capitalize'
+import { capitalize } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 import Geocode from 'react-geocode'
 

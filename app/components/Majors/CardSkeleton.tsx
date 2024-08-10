@@ -1,5 +1,5 @@
 import { Skeleton } from '@/app/components/ui/skeleton'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import React from 'react'
 
 type Props = {

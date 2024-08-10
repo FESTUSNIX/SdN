@@ -1,7 +1,7 @@
 'use client'
 
 import { useDebounce } from '@/app/hooks/useDebounce'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import React, { useEffect } from 'react'
 import { useTransitionLoading } from '../../(main)/search/context/TransitionLoadingContext'
 import MajorCardSkeleton from './CardSkeleton'

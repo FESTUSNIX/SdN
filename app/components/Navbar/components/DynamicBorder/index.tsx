@@ -1,7 +1,7 @@
 'use client'
 
 import { useScrollPosition } from '@/app/hooks/useScrollPosition'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import React from 'react'
 
 export const DynamicBorder = () => {

@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { Suspense } from 'react'
 import MajorCardSkeleton from './CardSkeleton'
 

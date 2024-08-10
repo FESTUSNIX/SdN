@@ -1,5 +1,5 @@
 import './styles/globals.css'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { Metadata } from 'next'
 import { Toaster } from 'react-hot-toast'
 import Providers from './components/Providers'

@@ -1,5 +1,5 @@
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 
 type Props = {
 	children: React.ReactNode

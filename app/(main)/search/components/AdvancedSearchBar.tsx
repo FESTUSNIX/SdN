@@ -2,7 +2,7 @@
 
 import { Input } from '@/app/components/ui/Input'
 import { useDebounce } from '@/app/hooks/useDebounce'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { SearchIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState, useTransition } from 'react'

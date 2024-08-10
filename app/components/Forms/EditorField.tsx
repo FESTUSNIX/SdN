@@ -9,7 +9,7 @@ import {
 	DialogTrigger
 } from '@/app/components/ui/Dialog'
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { useRef, useState } from 'react'
 import { Control, ControllerRenderProps, FieldValues, Path } from 'react-hook-form'
 import Editor from '../EditorJs'

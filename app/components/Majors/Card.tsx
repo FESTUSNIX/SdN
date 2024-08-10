@@ -1,7 +1,7 @@
 import { Skeleton } from '@/app/components/ui/skeleton'
 import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { urlFor } from '@/lib/supabase/getUrlFor'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { Major } from '@prisma/client'
 import { ScrollTextIcon, UniversityIcon } from 'lucide-react'
 import Image from 'next/image'

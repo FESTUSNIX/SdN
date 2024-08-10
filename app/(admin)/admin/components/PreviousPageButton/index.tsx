@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/app/components/ui/Button'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 

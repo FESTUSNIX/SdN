@@ -1,7 +1,7 @@
 'use client'
 
 import { Form, FormControl, FormField, FormItem } from '@/app/components/ui/Form'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AwardIcon, SearchIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'

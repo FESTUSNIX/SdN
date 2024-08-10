@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { buttonVariants } from '../components/ui/Button'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 
 export default function NotFound() {
 	return (

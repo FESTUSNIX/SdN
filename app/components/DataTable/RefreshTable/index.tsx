@@ -4,7 +4,7 @@ import { RefreshCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Button } from '../../ui/Button'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 
 const RefreshTable = () => {
 	const [isRefreshing, setIsRefreshing] = useState(false)

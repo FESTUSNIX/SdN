@@ -1,5 +1,5 @@
 import { buttonVariants } from '@/app/components/ui/Button'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import prisma from '@/prisma/client'
 import { Metadata } from 'next'
 import Link from 'next/link'

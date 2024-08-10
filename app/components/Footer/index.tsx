@@ -1,7 +1,7 @@
 import ThemeSwitch from '@/app/(admin)/admin/components/ThemeSwitch'
 import IconBadge from '@/app/components/IconBadge'
 import { Muted } from '@/app/components/ui/Typography'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { Facebook, Instagram, Mail, Phone } from 'lucide-react'
 import Link from 'next/link'
 import { socialMedia } from '../../constants/socialMedia'

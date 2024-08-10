@@ -3,7 +3,7 @@
 import { Button } from '@/app/components/ui/Button'
 import { Calendar } from '@/app/components/ui/Calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/Popover'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { Major } from '@prisma/client'
 import { format } from 'date-fns'
 import { pl } from 'date-fns/locale'

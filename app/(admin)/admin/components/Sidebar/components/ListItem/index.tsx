@@ -1,7 +1,7 @@
 'use client'
 
 import { NavigationMenuLink } from '@/app/components/ui/NavigationMenu'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { forwardRef } from 'react'
 
 export const ListItem = forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRef<'a'>>(

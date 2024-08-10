@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import GoogleMapReact from 'google-maps-react-markers'
 import { School2Icon } from 'lucide-react'
 import { Skeleton } from './ui/skeleton'

@@ -4,7 +4,7 @@ import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetCo
 import { Button } from '@/app/components/ui/Button'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/Sheet'
-import { getFirstParamValue } from '@/lib/utils/utils'
+import { getFirstParamValue } from '@/lib/utils'
 import { MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'

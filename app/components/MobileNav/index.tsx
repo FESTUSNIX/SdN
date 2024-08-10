@@ -1,5 +1,5 @@
 import { getAuthSession } from '@/lib/auth/auth'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { Heart, LucideProps, Search, UserCircle2 } from 'lucide-react'
 import { ReactElement } from 'react'
 import { Icons } from '../Icons'

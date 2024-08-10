@@ -1,6 +1,6 @@
 import Providers from '@/app/components/Providers'
 import '@/app/styles/globals.css'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { Metadata } from 'next'
 import { Outfit } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<body className={cn(outfit.className, 'flex flex-col')}>

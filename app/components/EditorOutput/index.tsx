@@ -7,7 +7,7 @@ import { CustomLinkToolRenderer } from './components/LinkTool'
 import { CustomListRenderer } from './components/NestedList'
 import { CustomTableRenderer } from './components/Table'
 import { CustomRawHTMLRenderer } from './components/RawHTML'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 
 const Output = dynamic(async () => (await import('editorjs-react-renderer')).default, {
 	ssr: false

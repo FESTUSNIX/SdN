@@ -3,7 +3,7 @@
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 import { Button } from '@/app/components/ui/Button'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { EmailData } from '@/types/unitEmail'
 import { Major, Qualification, Unit } from '@prisma/client'
 import { Mail, ScrollText, X } from 'lucide-react'

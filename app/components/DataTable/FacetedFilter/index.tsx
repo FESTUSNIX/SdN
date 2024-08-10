@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { type Column } from '@tanstack/react-table'
 
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { Badge } from '@/app/components/ui/Badge'
 import { Button } from '@/app/components/ui/Button'
 import {
@@ -29,11 +29,7 @@ interface DataTableFacetedFilter<TData, TValue> {
 	options: FilterOption[]
 }
 
-export function FacetedFilter<TData, TValue>({
-	column,
-	title,
-	options
-}: DataTableFacetedFilter<TData, TValue>) {
+export function FacetedFilter<TData, TValue>({ column, title, options }: DataTableFacetedFilter<TData, TValue>) {
 	const selectedValues = new Set(column?.getFilterValue() as string[])
 
 	return (

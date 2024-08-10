@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { PlusIcon, X } from 'lucide-react'
 import { KeyboardEvent, forwardRef, useCallback, useEffect, useState } from 'react'
 import { Badge } from './ui/Badge'

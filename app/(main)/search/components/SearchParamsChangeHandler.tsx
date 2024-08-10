@@ -4,7 +4,7 @@ import { MajorLevel } from '@prisma/client'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useCallback, useEffect, useTransition } from 'react'
 import { usePrevious } from '@/app/hooks/usePrevious'
-import { deepEqual } from '@/lib/utils/utils'
+import { deepEqual } from '@/lib/utils'
 
 type Props = {
 	params: Partial<{

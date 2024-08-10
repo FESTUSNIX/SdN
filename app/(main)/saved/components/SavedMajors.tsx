@@ -2,7 +2,7 @@
 
 import MajorCard, { MajorCardType } from '@/app/components/Majors/Card'
 import MajorsGrid from '@/app/components/Majors/Grid'
-import { getLocalStorage } from '@/lib/utils/utils'
+import { getLocalStorage } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 import { getSavedMajors } from '../getSavedMajors'
 

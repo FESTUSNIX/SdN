@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import Logo from '@/public/assets/logo.svg'
 import Banner from '@/public/assets/wordmark-horizontal.svg'
 import Image from 'next/image'
