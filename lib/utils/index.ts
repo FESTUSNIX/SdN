@@ -44,3 +44,7 @@ export function deepEqual(object1: any, object2: any) {
 export function isObject(object: any) {
 	return object != null && typeof object === 'object'
 }
+
+export const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1)
+
+export const placeholderImage = '/placeholder-image.jpg'

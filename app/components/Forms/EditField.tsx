@@ -22,6 +22,7 @@ type Props<T extends FieldValues, K extends keyof T> = {
 	PreviewComponent?: (value: T[K]) => React.ReactNode
 	schema: z.ZodObject<any>
 	preparePayload?: (value: T[K]) => Promise<T[K]> | T[K]
+	readOnly?: boolean
 }
 
 export const EditField = <T extends FieldValues, K extends keyof T>({
@@ -32,7 +33,8 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 	apiPath,
 	schema,
 	pathsToRevalidate,
-	preparePayload
+	preparePayload,
+	readOnly = false
 }: Props<T, K>) => {
 	const [isEditing, setIsEditing] = useState(false)
 	const [optimisticValue, setOptimisticValue] = useState(defaultValue)
@@ -108,7 +110,7 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 							((optimisticValue as ReactNode) || 'Brak danych')}
 					</div>
 				)}
-				{isEditing && (
+				{!readOnly && isEditing && (
 					<Form {...form}>
 						<form onSubmit={form.handleSubmit(e => updateField(e))}>
 							<div className='mt-2'>
@@ -123,21 +125,23 @@ export const EditField = <T extends FieldValues, K extends keyof T>({
 					</Form>
 				)}
 			</div>
-			<div className='row-span-full self-center justify-self-end'>
-				<Button
-					variant={'link'}
-					type='button'
-					onClick={() => {
-						if (isEditing) {
-							setIsEditing(false)
-							form.reset()
-						} else {
-							setIsEditing(true)
-						}
-					}}>
-					{isEditing ? 'Anuluj' : 'Edytuj'}
-				</Button>
-			</div>
+			{!readOnly && (
+				<div className='row-span-full self-center justify-self-end'>
+					<Button
+						variant={'link'}
+						type='button'
+						onClick={() => {
+							if (isEditing) {
+								setIsEditing(false)
+								form.reset()
+							} else {
+								setIsEditing(true)
+							}
+						}}>
+						{isEditing ? 'Anuluj' : 'Edytuj'}
+					</Button>
+				</div>
+			)}
 		</>
 	)
 }

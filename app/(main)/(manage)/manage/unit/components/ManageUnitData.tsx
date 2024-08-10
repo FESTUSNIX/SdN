@@ -47,6 +47,7 @@ export const ManageUnitData = ({ unit }: Props) => {
 		customComponent?: <T extends FieldValues, K extends keyof T>(value: T[K]) => React.ReactNode
 		editComponent: <T extends FieldValues>(props: { accessorKey: FieldPath<T>; control?: Control<T> }) => JSX.Element
 		preparePayload?: (value: any) => Promise<any> | any
+		readOnly?: boolean
 	}[] = [
 		{
 			accessorKey: 'logo',
@@ -59,7 +60,7 @@ export const ManageUnitData = ({ unit }: Props) => {
 					alt='Logo uczelni'
 					width={400}
 					height={400}
-					className='size-32 mt-2 rounded-lg object-cover'
+					className='mt-2 size-32 rounded-lg object-cover'
 				/>
 			),
 			preparePayload: async value => {
@@ -125,13 +126,15 @@ export const ManageUnitData = ({ unit }: Props) => {
 			accessorKey: 'nip',
 			title: 'NIP',
 			value: nip,
-			editComponent: props => TextField({ placeholder: '1234567890', type: 'number', ...props })
+			editComponent: props => TextField({ placeholder: '1234567890', type: 'number', ...props }),
+			readOnly: true
 		},
 		{
 			accessorKey: 'regon',
 			title: 'Regon',
 			value: regon,
-			editComponent: props => TextField({ placeholder: '123456789', type: 'number', ...props })
+			editComponent: props => TextField({ placeholder: '123456789', type: 'number', ...props }),
+			readOnly: true
 		}
 	]
 
@@ -150,6 +153,7 @@ export const ManageUnitData = ({ unit }: Props) => {
 							PreviewComponent={item.customComponent}
 							schema={UnitValidator}
 							preparePayload={item.preparePayload}
+							readOnly={item.readOnly}
 						/>
 					</div>
 

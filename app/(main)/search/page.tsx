@@ -1,20 +1,18 @@
-import MajorCard from '@/app/components/Majors/Card'
-import MajorsGrid from '@/app/components/Majors/Grid'
-import { H1, H2, H3 } from '@/app/components/ui/Typography'
+import { H1, H2 } from '@/app/components/ui/Typography'
 import { Skeleton } from '@/app/components/ui/skeleton'
+import { getMajorSearchResults } from '@/lib/queries/major'
 import { MajorLevel } from '@prisma/client'
 import { Metadata } from 'next'
 import { Suspense } from 'react'
-import { ResultsLoading } from '../../components/Majors/ResultsLoading'
 import { AdvancedSearchBar } from './components/AdvancedSearchBar'
 import Filters from './components/Filters'
 import ResetFilters from './components/Filters/components/ResetFilters'
 import { FiltersDialog } from './components/FiltersDialog'
 import ListTypeSelect from './components/ListTypeSelect/'
 import { Pagination } from './components/Pagination'
+import { Results } from './components/Results'
 import Sort from './components/Sort'
 import { TransitionLoadingProvider } from './context/TransitionLoadingContext'
-import { getMajorSearchResults } from '@/lib/queries/major'
 
 export const metadata: Metadata = {
 	title: 'Szukaj kierunku'
@@ -80,13 +78,12 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 		units
 	}
 
-	const { data: majors, pagination } = await getMajorSearchResults(params)
-
-	const pageCount = Math.ceil(pagination.total / limit)
-
 	const listTypeParam =
 		typeof searchParams.list_type === 'string' ? searchParams.list_type : searchParams.list_type?.[0]
 	const listType = listTypeParam === 'grid' ? 'grid' : 'list'
+
+	const { data: majors, pagination } = await getMajorSearchResults(params)
+	const pageCount = Math.ceil(pagination.total / limit)
 
 	return (
 		<main className='wrapper py-12'>
@@ -131,46 +128,17 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 								</div>
 							</div>
 						</div>
+						<Suspense fallback={<p>Loading majors...</p>}>
+							<Results listType={listType} majors={majors} />
+						</Suspense>
 
-						<div className=''>
-							<ResultsLoading listType={listType}>
-								<MajorsGrid listType={listType}>
-									{majors &&
-										majors.length > 0 &&
-										majors?.map(major => (
-											<MajorCard
-												key={major.slug}
-												data={{
-													name: major.name,
-													slug: major.slug,
-													isOnline: major.isOnline,
-													majorLevel: major.majorLevel,
-													qualifications: major.qualifications,
-													unit: major.unit
-												}}
-												type={listType}
-											/>
-										))}
-								</MajorsGrid>
-							</ResultsLoading>
+						<div className='mt-16'>
+							<Pagination
+								pageCount={pageCount}
+								page={typeof page === 'string' ? page : page[0]}
+								per_page={typeof per_page === 'string' ? per_page : per_page[0]}
+							/>
 						</div>
-
-						{!majors.length && (
-							<div className='mx-auto py-4 text-center'>
-								<H3>Nie udało się odnaleźć kierunku z podanymi kryteriami</H3>
-								<p className='text-muted-foreground'>Usuń wybrane filtry aby przywrócić wszystkie wyniki</p>
-							</div>
-						)}
-
-						{majors.length > 0 && (
-							<div className='mt-16'>
-								<Pagination
-									pageCount={pageCount}
-									page={typeof page === 'string' ? page : page[0]}
-									per_page={typeof per_page === 'string' ? per_page : per_page[0]}
-								/>
-							</div>
-						)}
 					</div>
 				</div>
 				{/* <SearchParamsChangeHandler

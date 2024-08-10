@@ -2,16 +2,19 @@ import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
 
 export default withAuth(
-	function middleware(req) {
-		if (req.nextUrl.pathname.startsWith('/admin') && req.nextauth.token?.role !== 'ADMIN') {
+	async function middleware(req) {
+		const pathname = req.nextUrl.pathname
+		const role = req.nextauth.token?.role
+
+		if (pathname.startsWith('/admin') && role !== 'ADMIN') {
 			return NextResponse.redirect(new URL('/login', req.url))
 		}
 
-		if (req.nextUrl.pathname.startsWith('/manage') && req.nextauth.token?.role !== 'UNIT') {
+		if (pathname.startsWith('/manage') && role !== 'UNIT') {
 			return NextResponse.redirect(new URL('/login', req.url))
 		}
 
-		if (['/manage', '/manage/'].includes(req.nextUrl.pathname)) {
+		if (['/manage', '/manage/'].includes(pathname)) {
 			return NextResponse.rewrite(new URL('/manage/account', req.url))
 		}
 	},

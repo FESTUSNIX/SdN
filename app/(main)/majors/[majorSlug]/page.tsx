@@ -1,9 +1,9 @@
 import EditorOutput from '@/app/components/EditorOutput'
 import { Badge } from '@/app/components/ui/Badge'
-import { H1, H2, Muted } from '@/app/components/ui/Typography'
+import { H1, H2, H3, Muted } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { urlFor } from '@/lib/supabase/getUrlFor'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import prisma from '@/prisma/client'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -41,14 +41,26 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 		daysOfWeek,
 		description,
 		endDate,
-		formOfStudy,
 		isOnline,
 		majorLevel,
 		recruitmentConditions,
 		startDate,
 		syllabus,
-		unitId
+		unitId,
+		keywords
 	} = major
+
+	const activeSubscription = await prisma.subscription.findFirst({
+		where: {
+			unitId: unitId,
+			to: {
+				gte: new Date()
+			},
+			type: {
+				in: ['PREMIUM', 'STANDARD']
+			}
+		}
+	})
 
 	const sectionStyles = 'border-b py-8'
 
@@ -76,11 +88,10 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 
 					<div className='items-centr mb-6 mt-4 flex gap-2'>
 						<Badge variant={'secondary'}>{majorLevelEnum[majorLevel]}</Badge>
-						{formOfStudy && <Badge variant={'secondary'}>{formOfStudy}</Badge>}
 						<Badge variant={'secondary'}>{isOnline ? 'Online' : 'Stacjonarne'}</Badge>
 					</div>
 
-					{description && Array.isArray(description) && description.length !== 0 && (
+					{activeSubscription && description && Array.isArray(description) && description.length !== 0 && (
 						<EditorOutput content={description} />
 					)}
 				</div>
@@ -108,21 +119,27 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 						</section>
 					)}
 
-					{recruitmentConditions && Array.isArray(recruitmentConditions) && recruitmentConditions.length !== 0 && (
-						<section className={sectionStyles}>
-							<H2 size='sm'>Warunki rekrutacji</H2>
-							<EditorOutput content={recruitmentConditions} />
-						</section>
-					)}
+					{activeSubscription &&
+						recruitmentConditions &&
+						Array.isArray(recruitmentConditions) &&
+						recruitmentConditions.length !== 0 && (
+							<section className={sectionStyles}>
+								<H2 size='sm'>Warunki rekrutacji</H2>
+								<EditorOutput content={recruitmentConditions} />
+							</section>
+						)}
 
-					{completionConditions && Array.isArray(completionConditions) && completionConditions.length !== 0 && (
-						<section className={sectionStyles}>
-							<H2 size='sm'>Warunki ukończenia</H2>
-							<EditorOutput content={completionConditions} />
-						</section>
-					)}
+					{activeSubscription &&
+						completionConditions &&
+						Array.isArray(completionConditions) &&
+						completionConditions.length !== 0 && (
+							<section className={sectionStyles}>
+								<H2 size='sm'>Warunki ukończenia</H2>
+								<EditorOutput content={completionConditions} />
+							</section>
+						)}
 
-					{syllabus && Array.isArray(syllabus) && syllabus.length !== 0 && (
+					{activeSubscription && syllabus && Array.isArray(syllabus) && syllabus.length !== 0 && (
 						<section className={sectionStyles}>
 							<H2 size='sm'>Program studiów</H2>
 							<EditorOutput content={syllabus} />
@@ -132,15 +149,20 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 					<section className={cn(sectionStyles, 'relative border-none')}>
 						<H2 size='sm'>Czas trwania</H2>
 						{startDate && endDate ? (
-							<Muted className='mb-6'>
+							<H3 className='mb-2 mt-4'>
 								{startDate?.toLocaleDateString()} - {endDate?.toLocaleDateString()}
-							</Muted>
+							</H3>
 						) : (
 							<Muted>Brak danych.</Muted>
 						)}
 						<Duration startDate={startDate} endDate={endDate} />
 
-						{daysOfWeek.length !== 0 && <ActiveDays daysOfWeek={daysOfWeek} />}
+						{daysOfWeek.length !== 0 && (
+							<>
+								<H3 className='mb-2 mt-8'>Zajęcia odbywają się w:</H3>
+								<ActiveDays daysOfWeek={daysOfWeek} />
+							</>
+						)}
 					</section>
 				</div>
 
@@ -156,6 +178,16 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 					<UnitCard unitId={unitId} />
 				</Suspense>
 			</section>
+
+			<div className='sr-only'>
+				<ul>
+					{keywords.map((keyword, i) => (
+						<li key={i}>
+							<h3>{keyword}, </h3>
+						</li>
+					))}
+				</ul>
+			</div>
 		</main>
 	)
 }

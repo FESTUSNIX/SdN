@@ -55,9 +55,13 @@ export default async function ManageSubscriptionsPage() {
 			<section className='space-y-2'>
 				<H2>Aktualne</H2>
 
-				{activeSubscriptions.map(subscription => (
-					<SubscriptionCard key={subscription.slug} subscription={subscription} />
-				))}
+				{activeSubscriptions.length > 0 ? (
+					activeSubscriptions.map(subscription => (
+						<SubscriptionCard key={subscription.slug} subscription={subscription} />
+					))
+				) : (
+					<Muted>Brak aktywnych subskrybcji</Muted>
+				)}
 			</section>
 
 			<section className='space-y-2'>

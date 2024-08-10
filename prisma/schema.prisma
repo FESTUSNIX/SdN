@@ -173,6 +173,13 @@ model Subscription {
   type   String
 }
 
+model statistics {
+  id          Int      @id @default(autoincrement())
+  date        DateTime @default(now())
+  majors_count Int
+  units_count  Int
+}
+
 enum UserRole {
   ADMIN
   USER

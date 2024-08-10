@@ -1,5 +1,6 @@
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { getAuthSession } from '@/lib/auth/auth'
+import prisma from '@/prisma/client'
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import SidebarNav from './components/SidebarNav'
@@ -11,6 +12,31 @@ export const metadata: Metadata = {
 export default async function ManageLayout({ children }: { children: React.ReactNode }) {
 	const session = await getAuthSession()
 	if (!session) redirect('/login')
+
+	// Check if users unit has an active subscription
+	const user = await prisma.user.findFirst({
+		where: {
+			id: session.user.id
+		},
+		select: {
+			unit: {
+				select: {
+					subscriptions: {
+						where: {
+							to: {
+								gte: new Date()
+							},
+							type: { in: ['PREMIUM', 'STANDARD'] }
+						}
+					}
+				}
+			}
+		}
+	})
+
+	const subscriptions = user?.unit?.subscriptions
+
+	if (!subscriptions || subscriptions.length === 0) return redirect('/subscribe')
 
 	return (
 		<>

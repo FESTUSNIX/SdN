@@ -29,6 +29,7 @@ export const Duration = ({ endDate, startDate }: Props) => {
 				numberOfMonths={isLG ? 2 : 1}
 				weekStartsOn={1}
 				locale={pl}
+				className='w-max rounded-lg border'
 				classNames={{
 					caption_label: 'first-letter:uppercase font-medium',
 					months: 'flex flex-row space-y-4 sm:space-x-4 sm:space-y-0'

@@ -3,7 +3,7 @@ import { Card } from '@/app/components/ui/Card'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H3, Muted } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevel'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { Major } from '@prisma/client'
 import Duration from '../SideBarDuration'
 
@@ -14,14 +14,12 @@ const SideBar = ({ major }: Props) => {
 		startDate,
 		endDate,
 		durationInHours,
-		onlineDuration,
 		cost,
 		canPayInInstallments,
 		numberOfSemesters,
 		contact,
 		organisator,
 		address,
-		formOfStudy,
 		majorLevel
 	} = major
 
@@ -30,7 +28,7 @@ const SideBar = ({ major }: Props) => {
 			<aside className='sticky top-navOffset md:pb-8 md:pt-12'>
 				<Card className='flex flex-col gap-4 rounded-none border-0 border-b bg-card py-8 text-card-foreground shadow-sm md:rounded-lg md:border md:p-4'>
 					<div>
-						<H3 size='sm' className='mb-1'>
+						<H3 size='sm' className='mb-2'>
 							Czas trwania
 						</H3>
 						<Duration startDate={startDate} endDate={endDate} />
@@ -45,15 +43,13 @@ const SideBar = ({ major }: Props) => {
 							{
 								name: 'Łącznie',
 								value: durationInHours ? `${durationInHours} godzin` : null
-							},
-							{
-								name: 'Online',
-								value: onlineDuration ? `${onlineDuration} godzin` : null
 							}
 						].map(item => (
-							<div key={item.name} className='mb-2 flex flex-col justify-between lg:mb-1 lg:flex-row lg:items-center'>
+							<div
+								key={item.name}
+								className='mb-2 flex flex-row flex-wrap items-center justify-between gap-x-8 lg:mb-1'>
 								<span>{item.name}</span>
-								<span className={cn(!item.value && 'text-sm text-muted-foreground')}>
+								<span className={cn('text-sm', !item.value && 'text-muted-foreground')}>
 									{item.value || 'Brak danych'}
 								</span>
 							</div>
@@ -74,7 +70,7 @@ const SideBar = ({ major }: Props) => {
 						</>
 					)}
 
-					{(formOfStudy || majorLevel) && (
+					{majorLevel && (
 						<>
 							<Separator />
 							<div>
@@ -84,17 +80,13 @@ const SideBar = ({ major }: Props) => {
 								<div>
 									{[
 										{
-											name: 'Tryb',
-											value: formOfStudy
-										},
-										{
 											name: 'Poziom',
 											value: majorLevelEnum[majorLevel]
 										}
 									].map(item => (
 										<div
 											key={item.name}
-											className='mb-2 flex flex-col justify-between lg:mb-1 lg:flex-row lg:items-center'>
+											className='mb-2 flex flex-row flex-wrap items-center justify-between gap-x-8 lg:mb-1'>
 											<span>{item.name}</span>
 											<span className={cn('text-sm', !item.value && 'text-muted-foreground')}>
 												{item.value || 'Brak danych'}

@@ -15,7 +15,7 @@ type Props = Omit<ButtonProps, 'id'> &
 	}
 
 export const StatusEdit = forwardRef<HTMLButtonElement, Props>(
-	({ id, name, status, children, revalidationPath, className, ...props }, ref) => {
+	({ id, name, status, children, revalidationPath, className, onClick: _onClick, ...props }, ref) => {
 		const { openModal } = useGlobalModalContext()
 
 		const { mutateAsync: toggleStatus, isLoading } = useMutation({
@@ -43,9 +43,10 @@ export const StatusEdit = forwardRef<HTMLButtonElement, Props>(
 			<Button
 				ref={ref}
 				onClick={async e => {
-					e.stopPropagation()
 					e.preventDefault()
+					e.stopPropagation()
 
+					console.log('click')
 					if (status === 'DRAFT') {
 						return await toggleStatus()
 					}

@@ -86,6 +86,7 @@
     "react-input-mask": "^2.0.4",
     "react-responsive": "^9.0.2",
     "react-slugify": "^3.0.2",
+    "recharts": "^2.12.7",
     "tailwind-merge": "^1.13.2",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.6",
