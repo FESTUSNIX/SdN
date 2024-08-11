@@ -8,7 +8,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger
-} from '@/app/components/ui/Dialog'
+} from '@/app/components/ui/dialog'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
 import { Input } from '@/app/components/ui/Input'
 import { PasswordChangeRequest } from '@/lib/validators/password'

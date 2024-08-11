@@ -1,5 +1,5 @@
 import { Button } from '@/app/components/ui/Button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/app/components/ui/Dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/app/components/ui/dialog'
 import { SlidersHorizontal } from 'lucide-react'
 import Filters from './Filters'
 import ResetFilters from './Filters/components/ResetFilters'

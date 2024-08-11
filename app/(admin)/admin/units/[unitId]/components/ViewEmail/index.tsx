@@ -3,7 +3,7 @@
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 import UserAvatar from '@/app/components/UserAvatar'
 import { Button } from '@/app/components/ui/Button'
-import { Dialog, DialogContent, DialogFooter } from '@/app/components/ui/Dialog'
+import { Dialog, DialogContent, DialogFooter } from '@/app/components/ui/dialog'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H3, H4, Muted } from '@/app/components/ui/Typography'

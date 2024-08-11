@@ -7,7 +7,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger
-} from '@/app/components/ui/Dialog'
+} from '@/app/components/ui/dialog'
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
 import { cn } from '@/lib/utils'
 import { useRef, useState } from 'react'

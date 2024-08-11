@@ -1,5 +1,5 @@
 import { ContextMenuItem } from '@/app/components/ui/ContextMenu'
-import { Dialog, DialogContent, DialogTrigger } from '@/app/components/ui/Dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@/app/components/ui/dialog'
 import React, { forwardRef } from 'react'
 
 type Props = {

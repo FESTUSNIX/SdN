@@ -1,7 +1,7 @@
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 import FirstUnitEmail from '@/app/(admin)/admin/email/components/FirstUnitEmail'
 import { Button } from '@/app/components/ui/Button'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/app/components/ui/Dialog'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/app/components/ui/dialog'
 import { ScrollArea } from '@/app/components/ui/ScrollArea'
 import { UnitEmailPayload, UnitEmailValidator } from '@/lib/validators/unitEmail'
 import { zodResolver } from '@hookform/resolvers/zod'
