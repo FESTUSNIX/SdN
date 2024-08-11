@@ -83,7 +83,7 @@ const UnitCard = async ({ unitId }: Props) => {
 					href={`/units/${slug}`}
 					className='aspect-square size-24 min-h-full w-auto shrink-0 overflow-hidden rounded-xl border bg-secondary'>
 					<Image
-						src={urlFor('unit_logos', logo ?? '').publicUrl || placeholderImage}
+						src={urlFor('units', logo ?? '').publicUrl || placeholderImage}
 						alt={`Logo ${name}`}
 						width={200}
 						height={200}

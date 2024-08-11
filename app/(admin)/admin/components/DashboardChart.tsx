@@ -18,8 +18,6 @@ export const DashboardChart = ({ statistics }: Props) => {
 		units: stat.units_count
 	}))
 
-	console.log(format(statistics[0].date, 'yyyy-MM-dd'))
-
 	const chartConfig = {
 		views: {
 			label: 'Amount'

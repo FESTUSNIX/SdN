@@ -37,7 +37,7 @@ export const LogoField = () => {
 							{logo && (
 								<div className='group relative w-full overflow-hidden rounded-md border'>
 									<Image
-										src={logo === form.formState.defaultValues?.logo ? urlFor('unit_logos', logo).publicUrl : logo}
+										src={logo === form.formState.defaultValues?.logo ? urlFor('units', logo).publicUrl : logo}
 										alt={`Logo uczelni`}
 										width={400}
 										height={400}

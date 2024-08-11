@@ -7,7 +7,7 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle
-} from '@/app/components/ui/Dialog'
+} from '@/app/components/ui/dialog'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { useGlobalModalContext } from '../../context/GlobalModalContext'

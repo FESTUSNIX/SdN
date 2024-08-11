@@ -16,9 +16,9 @@ type Props = Pick<Unit, 'name' | 'logo' | 'unitType' | 'isPublic' | 'website' | 
 const Header = ({ isPublic, logo, name, unitType, website, city, voivodeship }: Props) => {
 	return (
 		<header className='mt-12 flex flex-col gap-6 border-b py-6 lg:flex-row'>
-			<div className='max-w-60 sm:max-w-72 lg:max-w-48 aspect-square max-h-full w-full overflow-hidden rounded-lg border bg-muted md:mx-0 md:w-auto'>
+			<div className='aspect-square max-h-full w-full max-w-60 overflow-hidden rounded-lg border bg-muted sm:max-w-72 md:mx-0 md:w-auto lg:max-w-48'>
 				<Image
-					src={logo ? urlFor('unit_logos', logo).publicUrl : placeholderImage}
+					src={logo ? urlFor('units', logo).publicUrl : placeholderImage}
 					alt={`Logo ${name}`}
 					width={300}
 					height={300}

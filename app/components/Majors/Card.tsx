@@ -90,7 +90,7 @@ const MajorCard = ({ data, likeable = true, type = 'grid', onDislike }: Props) =
 				<LikeButton
 					majorSlug={slug}
 					onDislike={onDislike}
-					className='absolute right-2 top-2 z-10 opacity-0 shadow-md active:shadow-sm group-hover:opacity-100'
+					className='absolute right-2 top-2 z-10 opacity-0 shadow-md focus-within:opacity-100 active:shadow-sm group-hover:opacity-100'
 				/>
 			)}
 		</Link>

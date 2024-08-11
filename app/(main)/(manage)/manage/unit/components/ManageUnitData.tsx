@@ -29,12 +29,12 @@ export const ManageUnitData = ({ unit }: Props) => {
 		let filepath = previousLogo
 
 		if (previousLogo !== null && newLogo !== previousLogo) {
-			await deleteFilesFromSupabase('unit_logos', [`${unitId}/unit-logo`])
+			await deleteFilesFromSupabase('units', [`${unitId}/unit-logo`])
 			filepath = null
 		}
 
 		if (newLogo !== null && newLogo !== previousLogo) {
-			filepath = await uploadFileToSupabase('unit_logos', newLogo, `${unitId}/unit-logo?t=${new Date().toString()}`)
+			filepath = await uploadFileToSupabase('units', newLogo, `${unitId}/unit-logo?t=${new Date().toString()}`)
 		}
 
 		return filepath
@@ -56,7 +56,7 @@ export const ManageUnitData = ({ unit }: Props) => {
 			editComponent: props => LogoField(),
 			customComponent: value => (
 				<Image
-					src={urlFor('unit_logos', value).publicUrl ?? ''}
+					src={urlFor('units', value).publicUrl ?? ''}
 					alt='Logo uczelni'
 					width={400}
 					height={400}

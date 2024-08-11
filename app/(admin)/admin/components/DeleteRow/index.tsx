@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/app/components/ui/Button'
-import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/app/components/ui/Dialog'
+import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/app/components/ui/dialog'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { Trash } from 'lucide-react'

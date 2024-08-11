@@ -1,5 +1,4 @@
 import { Button } from '@/app/components/ui/Button'
-import { SparklesCore } from '@/app/components/ui/sparkles'
 import { cn } from '@/lib/utils'
 import { SearchIcon } from 'lucide-react'
 import Image from 'next/image'
@@ -49,15 +48,6 @@ export const Attributes = (props: Props) => {
 							<div className='absolute left-1/2 top-0 h-px w-3/4 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary to-transparent' />
 							<div className='absolute left-1/2 top-0 h-[5px] w-2/5 -translate-x-1/2 bg-gradient-to-r from-transparent via-alternative to-transparent blur-sm duration-300 group-hover/item:h-3 group-hover/item:w-3/5 group-hover/item:blur-md' />
 							<div className='absolute left-1/2 top-0 h-px w-2/5 -translate-x-1/2 bg-gradient-to-r from-transparent via-alternative to-transparent' />
-
-							<SparklesCore
-								background='transparent'
-								minSize={0.4}
-								maxSize={1}
-								particleDensity={400}
-								className='h-full w-full'
-								particleColor='#3361cc'
-							/>
 
 							<div className='absolute inset-0 h-full w-full bg-secondary [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,hsl(var(--secondary)))]'></div>
 						</div>

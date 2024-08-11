@@ -1,4 +1,4 @@
-import './styles/globals.css'
+import '@/app/styles/globals.css'
 import { cn } from '@/lib/utils'
 import { Metadata } from 'next'
 import { Toaster } from 'react-hot-toast'
@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<Providers>
 					<div className='flex flex-col md:flex-row'>
 						<Sidebar />
-						<div className='max-md:h-[73px]'></div>
+						<div className='shrink-0 max-md:h-[73px] md:w-[73px]'></div>
 						{children}
 					</div>
 					<Toaster />

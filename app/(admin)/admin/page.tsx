@@ -24,6 +24,7 @@ export default async function AdminPage() {
 			<div className=''>
 				<DashboardChart statistics={statistics} />
 			</div>
+			<div className='h-16'></div>
 		</div>
 	)
 }

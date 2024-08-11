@@ -82,7 +82,7 @@ const AddUnit = () => {
 		},
 		onSuccess: async (data, variables) => {
 			if (variables.logo) {
-				await uploadFileToSupabase('unit_logos', variables.logo, `${data}/unit-logo`)
+				await uploadFileToSupabase('units', variables.logo, `${data}/unit-logo`)
 			}
 
 			toast.dismiss()

@@ -31,16 +31,12 @@ const EditUnit = ({ defaultValues, city }: Props) => {
 		if (!filepath || !values.logo) return undefined
 
 		if (values.logo !== filepath) {
-			await deleteFilesFromSupabase('unit_logos', [`${values.id}/unit-logo`])
+			await deleteFilesFromSupabase('units', [`${values.id}/unit-logo`])
 			filepath = undefined
 		}
 
 		if (values.logo !== null && values.logo !== filepath) {
-			filepath = await uploadFileToSupabase(
-				'unit_logos',
-				values.logo,
-				`${values.id}/unit-logo?t=${new Date().toString()}`
-			)
+			filepath = await uploadFileToSupabase('units', values.logo, `${values.id}/unit-logo?t=${new Date().toString()}`)
 		}
 
 		return filepath
