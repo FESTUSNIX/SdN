@@ -37,7 +37,7 @@ export function Toolbar<TData>({
 	const isFiltered = table.getState().columnFilters.length > 0
 
 	return (
-		<div className='wrapper flex flex-col flex-wrap gap-y-2 bg-background pb-2 pt-6 md:flex-row md:items-center'>
+		<div className='wrapper flex flex-col flex-wrap gap-y-2 bg-background pb-2 pt-6 md:flex-row md:items-center xl:max-w-[calc(100vw-6rem)] 2xl:max-w-[calc(100vw-8rem)]'>
 			<div className='flex flex-1 flex-wrap items-center gap-2'>
 				<RefreshTable />
 

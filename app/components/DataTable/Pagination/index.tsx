@@ -16,7 +16,7 @@ export function Pagination<TData>({ table, fixed = true }: DataTablePaginationPr
 				'bottom-0 left-0 mt-auto w-full border-t border-border bg-background py-4',
 				fixed && 'max-md:fixed'
 			)}>
-			<div className='wrapper flex flex-col justify-between gap-y-4 md:flex-row md:items-center'>
+			<div className='wrapper flex flex-col justify-between gap-y-4 md:flex-row md:items-center xl:max-w-[calc(100vw-6rem)] 2xl:max-w-[calc(100vw-8rem)]'>
 				<div className='hidden flex-1 text-sm text-muted-foreground md:block'>
 					{table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s)
 					selected.

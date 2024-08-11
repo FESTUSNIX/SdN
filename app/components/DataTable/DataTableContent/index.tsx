@@ -62,12 +62,12 @@ export function DataTableContent<TData>({
 				buttonText={buttonText}
 			/>
 
-			<div className='wrapper relative mt-4 h-max overflow-hidden rounded-md border max-md:mb-20 md:mb-4'>
+			<div className='wrapper relative mt-4 h-max w-full overflow-hidden rounded-md border max-md:mb-20 md:mb-4 xl:max-w-[calc(100vw-6rem)] 2xl:max-w-[calc(100vw-8rem)]'>
 				<ScrollArea className='relative h-[75vh] max-w-full md:h-full'>
 					<Table
 						style={{
 							...columnSizeVars, //Define column sizes on the <table> element
-							width: table.getTotalSize()
+							minWidth: table.getTotalSize()
 						}}>
 						<TableHeader className='sticky top-0 z-10 border-b border-border bg-background'>
 							{table.getHeaderGroups().map(headerGroup => (
@@ -104,7 +104,7 @@ export function DataTableContent<TData>({
 											key={row.id}
 											condition={!!RowActions}
 											wrapper={children => RowActions && <RowActions row={row}>{children}</RowActions>}>
-											<TableRow data-state={row.getIsSelected() && 'selected'} className='relative'>
+											<TableRow data-state={row.getIsSelected() && 'selected'} className='relative odd:bg-secondary/50'>
 												{row.getVisibleCells().map((cell, index, cells) => (
 													<TableCell
 														key={cell.id}
