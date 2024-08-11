@@ -79,6 +79,7 @@ model Unit {
   address       UnitAddress?
   emails        UnitEmail[]
   subscriptions Subscription[]
+  gallery       Json[]         @default([])
 
   @@unique([id, slug])
   @@index([name, slug])
@@ -174,8 +175,8 @@ model Subscription {
 }
 
 model statistics {
-  id          Int      @id @default(autoincrement())
-  date        DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  date         DateTime @unique @default(now())
   majors_count Int
   units_count  Int
 }

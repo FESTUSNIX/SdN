@@ -3,12 +3,15 @@
 import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
 import { Button, buttonVariants } from '@/app/components/ui/Button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
-import { cn } from '@/lib/utils'
+import { cn, placeholderImage } from '@/lib/utils'
 import { TableUnitData } from '@/lib/validators/unit'
 import { type ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal, Pointer } from 'lucide-react'
 import Link from 'next/link'
 import { UNIT_TYPE_OPTIONS } from '../../../constants/unitTypesOptions'
+import Image from 'next/image'
+import { urlFor } from '@/lib/supabase/getUrlFor'
+import { Lightbox, LightboxTrigger } from '@/app/components/Lightbox'
 
 export const columns: ColumnDef<TableUnitData>[] = [
 	{
@@ -45,6 +48,38 @@ export const columns: ColumnDef<TableUnitData>[] = [
 		enableHiding: false,
 		size: 10,
 		minSize: 10
+	},
+	{
+		accessorKey: 'logo',
+		header: ({ column }) => {
+			return <ColumnHeader column={column} title='Logo' />
+		},
+		cell: ({ row }) => {
+			const logo = row.original.logo
+
+			const src = logo ? urlFor('units', logo).publicUrl : placeholderImage
+
+			return (
+				<div>
+					<Lightbox showThumbnails={false} images={[{ src: src, alt: 'Logo' }]}>
+						<LightboxTrigger index={0}>
+							<div className='size-8 overflow-hidden rounded-sm border'>
+								<Image
+									src={logo ? urlFor('units', logo).publicUrl : placeholderImage}
+									alt='Logo'
+									width={36}
+									height={36}
+									className='size-full object-cover'
+								/>
+							</div>
+						</LightboxTrigger>
+					</Lightbox>
+				</div>
+			)
+		},
+		enableSorting: false,
+		size: 50,
+		minSize: 25
 	},
 	{
 		accessorKey: 'name',

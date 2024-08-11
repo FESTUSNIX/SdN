@@ -1,10 +1,11 @@
+import { Lightbox, LightboxTrigger } from '@/app/components/Lightbox'
 import { H2 } from '@/app/components/ui/Typography'
+import { urlFor } from '@/lib/supabase/getUrlFor'
 import Image from 'next/image'
-import React from 'react'
 
 type Props = {
 	images: {
-		src: string
+		url: string
 		alt: string
 	}[]
 }
@@ -14,21 +15,24 @@ export const ImageGallery = ({ images }: Props) => {
 		<section className='py-6'>
 			<H2>Galeria zdjęć</H2>
 
-			<div className='py-4'>
-				<ul className='flex flex-wrap items-center gap-2'>
-					{images.map((image, index) => (
-						<li key={index} className='size-32 overflow-hidden rounded-md border'>
-							<Image
-								src={'/placeholder-image.jpg'}
-								alt={image.alt}
-								width={500}
-								height={500}
-								className='size-full object-cover'
-							/>
+			<ul className='grid grid-cols-6 gap-2 py-4'>
+				<Lightbox images={images.map(img => ({ src: urlFor('units', img.url).publicUrl, ...img }))}>
+					{images.map((image, i) => (
+						<li key={i} className='aspect-square h-auto w-full overflow-hidden rounded-md border'>
+							<LightboxTrigger index={i}>
+								<Image
+									src={urlFor('units', image.url).publicUrl}
+									alt={image.alt || ' '}
+									width={600}
+									height={600}
+									loading='lazy'
+									className='size-full max-h-dvh object-cover'
+								/>
+							</LightboxTrigger>
 						</li>
 					))}
-				</ul>
-			</div>
+				</Lightbox>
+			</ul>
 		</section>
 	)
 }

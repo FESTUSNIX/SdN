@@ -10,12 +10,12 @@ const getUUID = () => {
 	})
 }
 
-export const uploadFileToSupabase = async (bucket: string, file: File, filename?: string) => {
+export const uploadFileToSupabase = async (bucket: string, file: File, filename?: string, upsert?: boolean) => {
 	const _filename = filename ?? `${getUUID()}-${file.name}`
 
 	const { data, error } = await supabase.storage.from(bucket).upload(`${_filename}`, file, {
 		cacheControl: '36000',
-		upsert: false
+		upsert: upsert ?? false
 	})
 
 	if (error) throw new Error(error.message)

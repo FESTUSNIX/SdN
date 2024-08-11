@@ -20,6 +20,7 @@ export default async function UnitsPage() {
 			unitType: true,
 			website: true,
 			workStatus: true,
+			logo: true,
 			city: {
 				select: {
 					name: true

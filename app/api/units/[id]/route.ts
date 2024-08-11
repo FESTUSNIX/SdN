@@ -109,7 +109,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 			notes,
 			postalCode,
 			regon,
-			street
+			street,
+			gallery
 		} = UnitValidator.partial().parse(body)
 
 		await prisma.unit.update({
@@ -140,7 +141,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 							postalCode: postalCode
 						}
 					}
-				}
+				},
+				gallery: gallery
 			}
 		})
 

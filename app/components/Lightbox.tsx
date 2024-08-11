@@ -1,16 +1,16 @@
 'use client'
 
+import { Dialog, DialogClose, DialogOverlay, DialogPortal } from '@/app/components/ui/dialog'
+import { cn } from '@/lib/utils'
 import { DialogContent } from '@radix-ui/react-dialog'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
-import { ReactNode, createContext, useContext, useState } from 'react'
-import { Dialog, DialogClose, DialogOverlay, DialogPortal } from '@/app/components/ui/Dialog'
 import Image from 'next/image'
-import { cn } from '@/lib/utils'
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 
 interface LightboxContextType {
 	isOpen: boolean
 	currentIndex: number
-	images: { alt: string; url: string }[]
+	images: { alt: string; src: string }[]
 	setCurrentIndex: (index: number) => void
 	openLightbox: (index: number) => void
 	closeLightbox: () => void
@@ -20,7 +20,7 @@ const LightboxContext = createContext<LightboxContextType | undefined>(undefined
 
 type LightboxProps = {
 	children: ReactNode
-	images: { alt: string; url: string }[]
+	images: { alt: string; src: string }[]
 	showThumbnails?: boolean
 }
 
@@ -74,7 +74,7 @@ export const LightboxContent = ({ showThumbnails }: { showThumbnails?: boolean }
 						<div className='relative h-full min-h-0 w-full py-8'>
 							<div className='flex size-full max-h-full max-w-full grow items-center justify-center'>
 								<Image
-									src={images[currentIndex].url}
+									src={images[currentIndex].src}
 									alt={images[currentIndex].alt}
 									width={1200}
 									height={900}
@@ -87,7 +87,7 @@ export const LightboxContent = ({ showThumbnails }: { showThumbnails?: boolean }
 						{showThumbnails && (
 							<ul className='pointer-events-auto flex shrink-0 flex-wrap items-center justify-center gap-2 py-4'>
 								{images.map((img, i) => (
-									<li key={img.url}>
+									<li key={img.src + i}>
 										<button
 											onClick={() => setCurrentIndex(i)}
 											className={cn(
@@ -95,7 +95,7 @@ export const LightboxContent = ({ showThumbnails }: { showThumbnails?: boolean }
 												currentIndex === i && 'border-primary'
 											)}>
 											<Image
-												src={img.url}
+												src={img.src}
 												alt={img.alt}
 												width={50}
 												height={50}
@@ -119,7 +119,7 @@ export const LightboxContent = ({ showThumbnails }: { showThumbnails?: boolean }
 }
 
 export const LightboxControls = () => {
-	const { currentIndex, images, setCurrentIndex, closeLightbox } = useLightbox()
+	const { currentIndex, images, setCurrentIndex } = useLightbox()
 
 	const handleNext = () => {
 		if (currentIndex === images.length - 1) return setCurrentIndex(0)
@@ -131,17 +131,38 @@ export const LightboxControls = () => {
 		setCurrentIndex(currentIndex - 1)
 	}
 
+	useEffect(() => {
+		const keyDownHandler = (e: KeyboardEvent) => {
+			if (e.key === 'ArrowRight') {
+				e.preventDefault()
+				handleNext()
+			}
+			if (e.key === 'ArrowLeft') {
+				e.preventDefault()
+				handlePrev()
+			}
+		}
+
+		document.addEventListener('keydown', keyDownHandler)
+
+		return () => {
+			document.removeEventListener('keydown', keyDownHandler)
+		}
+	}, [currentIndex])
+
+	if (images.length < 2) return null
+
 	return (
 		<div className='pointer-events-none absolute left-1/2 top-1/2 z-50 flex w-full -translate-x-1/2 -translate-y-1/2 items-center justify-between'>
 			<button
 				onClick={() => handlePrev()}
-				className='pointer-events-auto flex items-center justify-center rounded-full border bg-secondary p-2 text-secondary-foreground duration-200 active:scale-90'>
+				className='pointer-events-auto flex items-center justify-center rounded-full border bg-secondary p-2 text-secondary-foreground shadow-md duration-200 active:scale-90'>
 				<span className='sr-only'>Poprzednie zdjęcie</span>
 				<ChevronLeft className='size-6' />
 			</button>
 			<button
 				onClick={() => handleNext()}
-				className='pointer-events-auto flex items-center justify-center rounded-full border bg-secondary p-2 text-secondary-foreground duration-200 active:scale-90'>
+				className='pointer-events-auto flex items-center justify-center rounded-full border bg-secondary p-2 text-secondary-foreground shadow-md duration-200 active:scale-90'>
 				<span className='sr-only'>Następne zdjęcie</span>
 				<ChevronRight className='size-6' />
 			</button>
@@ -161,8 +182,8 @@ export const LightboxTrigger = ({
 	const { openLightbox } = useLightbox()
 
 	return (
-		<div onClick={() => openLightbox(index)} className={cn('contents cursor-pointer', className)}>
+		<button onClick={() => openLightbox(index)} className={cn('contents cursor-pointer', className)}>
 			{children}
-		</div>
+		</button>
 	)
 }

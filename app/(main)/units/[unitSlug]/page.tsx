@@ -6,6 +6,7 @@ import Address from './components/Address'
 import Details from './components/Details'
 import Header from './components/Header'
 import Majors from './components/Majors'
+import { ImageGallery } from './components/ImageGallery'
 
 type Props = { params: { unitSlug: string }; searchParams: { [key: string]: string | string[] | undefined } }
 
@@ -58,7 +59,8 @@ export default async function UnitPage({ params, searchParams }: Props) {
 		nip,
 		regon,
 		address,
-		updatedAt
+		updatedAt,
+		gallery
 	} = unit
 
 	return (
@@ -100,6 +102,8 @@ export default async function UnitPage({ params, searchParams }: Props) {
 					street={address?.street ?? null}
 				/>
 			</Suspense>
+
+			<ImageGallery images={gallery as any} />
 
 			<Suspense>
 				<Majors unitSlug={params.unitSlug} searchParams={searchParams} />

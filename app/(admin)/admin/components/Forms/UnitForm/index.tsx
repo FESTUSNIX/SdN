@@ -12,6 +12,7 @@ import { UnitFormType, UnitPayload } from '@/lib/validators/unit'
 import { SubmitHandler } from 'react-hook-form'
 import { WORK_STATUS_OPTIONS } from '../../../../../constants/workStatusOptions'
 import City from './components/City'
+import { Gallery } from './components/Gallery'
 import Logo from './components/Logo'
 import UnitType from './components/UnitType'
 
@@ -76,6 +77,8 @@ const UnitForm = ({ form, onSubmit }: Props) => {
 					<TextField accessorKey='nip' label='Nip' placeholder='1234567890' inputProps={{ maxLength: 10 }} />
 
 					<TextField accessorKey='regon' label='Regon' placeholder='123456789' inputProps={{ maxLength: 9 }} />
+
+					<Gallery form={form} />
 
 					<TextareaField accessorKey='notes' label='Notes' placeholder='Aa...' />
 				</div>

@@ -25,11 +25,13 @@ export const UnitValidator = z.object({
 			message: 'Please select a city'
 		}),
 	notes: z.string().optional(),
-	workStatus: z.enum(['FINISHED', 'IN_PROGRESS', 'TO_CHECK'])
+	workStatus: z.enum(['FINISHED', 'IN_PROGRESS', 'TO_CHECK']),
+	gallery: z.array(z.any()).optional()
 })
 
 export const UnitTableValidator = z.object({
 	id: z.number(),
+	logo: z.string().nullable(),
 	slug: z.string(),
 	name: z.string(),
 	email: z.string(),

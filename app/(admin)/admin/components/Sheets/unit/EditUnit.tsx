@@ -33,30 +33,59 @@ const EditUnit = () => {
 
 	useFormChanges(form.formState)
 
-	const handleImageUpdate = async (values: UnitPayload) => {
+	const handleImage = async (values: UnitPayload) => {
 		let filepath = defaultValues.logo
 
-		if (defaultValues.logo !== null && values.logo !== defaultValues.logo) {
-			await deleteFilesFromSupabase('unit_logos', [`${values.id}/unit-logo`])
+		if ((values.logo === null || values.logo === undefined || !values.logo) && defaultValues.logo) {
+			await deleteFilesFromSupabase('units', [`${values.id}/unit-logo`])
 			filepath = null
 		}
 
-		if (values.logo !== null && values.logo !== defaultValues.logo) {
-			filepath = await uploadFileToSupabase(
-				'unit_logos',
-				values.logo,
-				`${values.id}/unit-logo?t=${new Date().toString()}`
-			)
+		if (values.logo instanceof File) {
+			filepath = await uploadFileToSupabase('units', values.logo, `${values.id}/unit-logo`, true)
 		}
 
 		return filepath
+	}
+
+	const handleGallery = async (values: UnitPayload) => {
+		const gallery = values.gallery ?? []
+		const prevGallery: {
+			url: string
+			alt: string
+		}[] = defaultValues.gallery
+
+		const newGallery = await Promise.all(
+			gallery.map(async (file, i) => {
+				if (file instanceof File) {
+					return {
+						url: await uploadFileToSupabase('units', file, `${values.id}/gallery/${file.name}`, true),
+						alt: 'Temporary alt'
+					}
+				}
+
+				return file
+			})
+		)
+
+		const filesToDelete = prevGallery.filter(file => !newGallery.some(newFile => newFile.url === file.url))
+
+		if (filesToDelete.length > 0) {
+			await deleteFilesFromSupabase(
+				'units',
+				filesToDelete.map(file => file.url)
+			)
+		}
+
+		return newGallery
 	}
 
 	const { mutate: updateUnit, isLoading } = useMutation({
 		mutationFn: async (values: UnitPayload) => {
 			toast.loading('Updating unit...')
 
-			let filepath: string | null = await handleImageUpdate(values)
+			const filepath: string | null = await handleImage(values)
+			const gallery = await handleGallery(values)
 
 			const payload: UnitPayload = {
 				id: defaultValues.id,
@@ -73,7 +102,8 @@ const EditUnit = () => {
 				notes: values.notes,
 				street: values.street ?? '',
 				postalCode: values.postalCode ?? '',
-				workStatus: values.workStatus
+				workStatus: values.workStatus,
+				gallery: gallery
 			}
 
 			const { data } = await axios.patch(`/api/units/${defaultValues.id}`, payload)
