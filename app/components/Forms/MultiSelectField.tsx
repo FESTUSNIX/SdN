@@ -1,4 +1,4 @@
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
 import { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { MultiSelect } from '../MultiSelect'
 import { Skeleton } from '../ui/skeleton'

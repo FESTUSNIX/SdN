@@ -8,14 +8,14 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from '@/app/components/ui/dialog'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
 import { cn } from '@/lib/utils'
 import { useRef, useState } from 'react'
 import { Control, ControllerRenderProps, FieldValues, Path } from 'react-hook-form'
 import Editor from '../EditorJs'
 import EditorOutput from '../EditorOutput'
-import { Button } from '../ui/Button'
-import { ScrollArea } from '../ui/ScrollArea'
+import { Button } from '../ui/button'
+import { ScrollArea } from '../ui/scroll-area'
 import { Muted } from '../ui/Typography'
 
 type Props<T extends FieldValues> = {

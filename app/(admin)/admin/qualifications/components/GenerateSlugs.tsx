@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 import axios from 'axios'
 import slugify from 'react-slugify'
 
@@ -16,7 +16,6 @@ const GenerateSlugs = ({ qualifications }: Props) => {
 					const slug = slugify(q.name, { delimiter: '_' })
 
 					const update = await axios.patch('/api/qualifications/generate-slugs', { id: q.id, slug: slug })
-
 				})
 			}}>
 			Generate slugs

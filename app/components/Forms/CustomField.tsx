@@ -1,6 +1,6 @@
 'use client'
 
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
 import { Control, ControllerRenderProps, FieldPath, FieldValues } from 'react-hook-form'
 
 type Props<T extends FieldValues> = {

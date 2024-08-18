@@ -2,7 +2,7 @@
 
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 import { removeAllMajorsFromUnit } from '@/app/_actions'
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 import { Unit } from '@prisma/client'
 import { useMutation } from '@tanstack/react-query'
 import { Trash2 } from 'lucide-react'

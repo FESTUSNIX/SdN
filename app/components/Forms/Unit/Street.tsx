@@ -1,5 +1,5 @@
-import { FormControl, FormField, FormItem, FormMessage } from '@/app/components/ui/Form'
-import { Input } from '@/app/components/ui/Input'
+import { FormControl, FormField, FormItem, FormMessage } from '@/app/components/ui/form'
+import { Input } from '@/app/components/ui/input'
 import { PublicUnitFormType } from '@/lib/validators/public-unit'
 import FieldTitle from '../FieldTitle'
 

@@ -2,7 +2,7 @@
 
 import MajorCard, { MajorCardType } from '@/app/components/Majors/Card'
 import MajorsGrid from '@/app/components/Majors/Grid'
-import { Input } from '@/app/components/ui/Input'
+import { Input } from '@/app/components/ui/input'
 import { SearchIcon } from 'lucide-react'
 import { useState } from 'react'
 

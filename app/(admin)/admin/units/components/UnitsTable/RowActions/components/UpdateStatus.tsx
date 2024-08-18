@@ -6,7 +6,7 @@ import {
 	ContextMenuSub,
 	ContextMenuSubContent,
 	ContextMenuSubTrigger
-} from '@/app/components/ui/ContextMenu'
+} from '@/app/components/ui/context-menu'
 import { WORK_STATUS_OPTIONS } from '@/app/constants/workStatusOptions'
 import { TableUnitData } from '@/lib/validators/unit'
 import { WorkStatus } from '@prisma/client'

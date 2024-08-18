@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { Input } from '@/app/components/ui/Input'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
+import { Input } from '@/app/components/ui/input'
 import { UnitFormType } from '@/lib/validators/unit'
 import Image from 'next/image'
 import { X } from 'lucide-react'

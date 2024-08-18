@@ -1,4 +1,4 @@
-import { FormControl, FormField, FormItem, FormLabel } from '@/app/components/ui/Form'
+import { FormControl, FormField, FormItem, FormLabel } from '@/app/components/ui/form'
 import { PublicUnitFormType } from '@/lib/validators/public-unit'
 import { RadioGroup, RadioGroupItem } from '../../ui/radio-group'
 import FieldTitle from '../FieldTitle'

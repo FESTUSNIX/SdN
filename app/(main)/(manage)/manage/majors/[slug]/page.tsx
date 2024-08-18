@@ -1,5 +1,5 @@
-import { buttonVariants } from '@/app/components/ui/Button'
-import { Separator } from '@/app/components/ui/Separator/separator'
+import { buttonVariants } from '@/app/components/ui/button'
+import { Separator } from '@/app/components/ui/separator'
 import { H1 } from '@/app/components/ui/Typography'
 import { getAuthSession } from '@/lib/auth/auth'
 import { cn } from '@/lib/utils'

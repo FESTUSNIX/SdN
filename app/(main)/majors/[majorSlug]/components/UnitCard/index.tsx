@@ -1,5 +1,5 @@
 import { PlaceholderImage } from '@/app/components/PlaceholderImage'
-import { buttonVariants } from '@/app/components/ui/Button'
+import { buttonVariants } from '@/app/components/ui/button'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { capitalize, cn } from '@/lib/utils'
 import prisma from '@/prisma/client'

@@ -1,5 +1,5 @@
-import { Button } from '@/app/components/ui/Button'
-import { Separator } from '@/app/components/ui/Separator/separator'
+import { Button } from '@/app/components/ui/button'
+import { Separator } from '@/app/components/ui/separator'
 import { H1, Muted } from '@/app/components/ui/Typography'
 import { getAuthSession } from '@/lib/auth/auth'
 import prisma from '@/prisma/client'
@@ -9,7 +9,7 @@ import MajorCard from '../majors/components/MajorCard'
 import { EmptyTrash } from './components/EmptyTrash'
 import { RemoveArchivedMajor } from './components/RemoveArchivedMajor'
 import { RestoreArchivedMajor } from './components/RestoreArchivedMajor'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/tooltip'
 
 export default async function TrashPage() {
 	const session = await getAuthSession()

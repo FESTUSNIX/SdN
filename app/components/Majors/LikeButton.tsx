@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, ButtonProps } from '@/app/components/ui/Button'
+import { Button, ButtonProps } from '@/app/components/ui/button'
 import { cn, getLocalStorage, setLocalStorage } from '@/lib/utils'
 import { HeartIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'

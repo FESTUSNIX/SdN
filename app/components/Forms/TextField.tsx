@@ -1,7 +1,7 @@
 'use client'
 
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { Input, InputProps } from '@/app/components/ui/Input'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
+import { Input, InputProps } from '@/app/components/ui/input'
 import { HTMLInputTypeAttribute } from 'react'
 import { Control, FieldPath, FieldValues } from 'react-hook-form'
 

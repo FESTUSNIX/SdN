@@ -1,8 +1,8 @@
 'use client'
 
-import { Button } from '@/app/components/ui/Button'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
-import { SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/Sheet'
+import { Button } from '@/app/components/ui/button'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
+import { SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/sheet'
 import { deleteFilesFromSupabase } from '@/lib/supabase/deleteFiles'
 import { uploadFileToSupabase } from '@/lib/supabase/uploadImage'
 import { UnitPayload, UnitValidator } from '@/lib/validators/unit'

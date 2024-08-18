@@ -1,5 +1,5 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/Select'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select'
 import { MajorFormType } from '@/lib/validators/major'
 import { Unit } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'

@@ -1,6 +1,6 @@
 import { City, Email, IsPublic, NIP, Phone, PostalCode, Regon, Street, Website } from '@/app/components/Forms/Unit'
 import Name from '@/app/components/Forms/Unit/Name'
-import { Form } from '@/app/components/ui/Form'
+import { Form } from '@/app/components/ui/form'
 import { PublicUnitFormType, PublicUnitPayload } from '@/lib/validators/public-unit'
 import { SubmitHandler } from 'react-hook-form'
 

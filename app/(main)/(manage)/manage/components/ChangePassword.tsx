@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 import {
 	Dialog,
 	DialogContent,
@@ -9,8 +9,8 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from '@/app/components/ui/dialog'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { Input } from '@/app/components/ui/Input'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
+import { Input } from '@/app/components/ui/input'
 import { PasswordChangeRequest } from '@/lib/validators/password'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DialogClose } from '@radix-ui/react-dialog'

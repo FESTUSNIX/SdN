@@ -1,6 +1,6 @@
 'use client'
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/Select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select'
 import { useDebounce } from '@/app/hooks/useDebounce'
 import { LucideProps } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -70,7 +70,7 @@ const StatusSelect = () => {
 	return (
 		<div className='h-full shrink-0'>
 			<Select onValueChange={setStatus} value={status} defaultValue={options[0].value}>
-				<SelectTrigger className='h-full rounded-full gap-2'>
+				<SelectTrigger className='h-full gap-2 rounded-full'>
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>

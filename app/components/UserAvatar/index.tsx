@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/app/components/ui/Avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/app/components/ui/avatar'
 import { User } from '@prisma/client'
 import { AvatarProps } from '@radix-ui/react-avatar'
 import { UserIcon } from 'lucide-react'

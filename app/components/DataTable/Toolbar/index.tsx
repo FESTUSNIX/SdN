@@ -5,8 +5,8 @@ import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetCo
 import { ViewOptions } from '@/app/components/DataTable/ColumnToggle'
 import { FacetedFilter, type FilterOption } from '@/app/components/DataTable/FacetedFilter'
 import RefreshTable from '@/app/components/DataTable/RefreshTable'
-import { Button } from '@/app/components/ui/Button'
-import { Input } from '@/app/components/ui/Input'
+import { Button } from '@/app/components/ui/button'
+import { Input } from '@/app/components/ui/input'
 import type { Table } from '@tanstack/react-table'
 import { Plus, X } from 'lucide-react'
 

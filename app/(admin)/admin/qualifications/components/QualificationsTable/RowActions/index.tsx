@@ -7,7 +7,7 @@ import {
 	ContextMenuLabel,
 	ContextMenuSeparator,
 	ContextMenuTrigger
-} from '@/app/components/ui/ContextMenu'
+} from '@/app/components/ui/context-menu'
 import { QualificationValidator } from '@/lib/validators/qualification'
 import { Row } from '@tanstack/react-table'
 import React from 'react'

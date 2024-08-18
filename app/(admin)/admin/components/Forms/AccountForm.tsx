@@ -2,7 +2,7 @@
 
 import { SelectField } from '@/app/components/Forms/SelectField'
 import { TextField } from '@/app/components/Forms/TextField'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
 import { RegisterFormType, RegisterPayload } from '@/lib/validators/register'
 import { UserRole } from '@prisma/client'
 import { SubmitHandler } from 'react-hook-form'

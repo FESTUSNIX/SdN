@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/app/components/ui/dialog'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'

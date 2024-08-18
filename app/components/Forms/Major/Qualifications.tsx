@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useEffect, useMemo, useState } from 'react'
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 import { MultiSelect } from '../../MultiSelect'
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/Form'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/form'
 import { Skeleton } from '../../ui/skeleton'
 
 type Props<T extends FieldValues> = {

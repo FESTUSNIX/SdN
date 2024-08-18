@@ -3,7 +3,7 @@
 import { DateField } from '@/app/components/Forms/DateField'
 import { TextField } from '@/app/components/Forms/TextField'
 import { UnitSelect } from '@/app/components/Forms/UnitSelect'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
 import { SubscriptionPayload, SubscriptionFormType } from '@/lib/validators/subscription'
 import { SubmitHandler } from 'react-hook-form'
 

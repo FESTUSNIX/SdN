@@ -3,9 +3,9 @@
 import { cn } from '@/lib/utils'
 import { PlusIcon, X } from 'lucide-react'
 import { KeyboardEvent, forwardRef, useCallback, useEffect, useState } from 'react'
-import { Badge } from './ui/Badge'
-import { Button } from './ui/Button'
-import { InputProps } from './ui/Input'
+import { Badge } from './ui/badge'
+import { Button } from './ui/button'
+import { InputProps } from './ui/input'
 
 type ArrayInputProps = {
 	values: string[]

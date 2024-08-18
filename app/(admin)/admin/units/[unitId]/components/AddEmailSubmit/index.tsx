@@ -1,5 +1,5 @@
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 import { UnitEmailPayload } from '@/lib/validators/unitEmail'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'

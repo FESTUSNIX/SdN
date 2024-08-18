@@ -8,7 +8,7 @@ import { ArrowDown, ChevronDown, X } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState, useTransition } from 'react'
 import { Qualification } from '@prisma/client'
-import { Input } from '@/app/components/ui/Input'
+import { Input } from '@/app/components/ui/input'
 import { useTransitionLoading } from '@/app/(main)/search/context/TransitionLoadingContext'
 
 type Props = {

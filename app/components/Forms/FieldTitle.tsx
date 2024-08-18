@@ -1,5 +1,5 @@
 import { FieldPath, FieldValues, useController } from 'react-hook-form'
-import { FormLabel } from '../ui/Form'
+import { FormLabel } from '../ui/form'
 import ResetField from './ResetField'
 
 type Props<T extends FieldValues> = {

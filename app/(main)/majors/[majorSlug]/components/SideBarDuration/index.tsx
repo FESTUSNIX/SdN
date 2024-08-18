@@ -1,8 +1,8 @@
 'use client'
 
-import { Button } from '@/app/components/ui/Button'
-import { Calendar } from '@/app/components/ui/Calendar'
-import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/Popover'
+import { Button } from '@/app/components/ui/button'
+import { Calendar } from '@/app/components/ui/calendar'
+import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { Major } from '@prisma/client'
 import { format } from 'date-fns'

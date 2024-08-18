@@ -2,7 +2,7 @@
 
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 import { publishMajor, unpublishMajor } from '@/app/_actions'
-import { Button, ButtonProps } from '@/app/components/ui/Button'
+import { Button, ButtonProps } from '@/app/components/ui/button'
 import { Major } from '@prisma/client'
 import { useMutation } from '@tanstack/react-query'
 import { forwardRef } from 'react'

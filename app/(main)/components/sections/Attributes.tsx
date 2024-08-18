@@ -1,4 +1,4 @@
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 import { cn } from '@/lib/utils'
 import { SearchIcon } from 'lucide-react'
 import Image from 'next/image'

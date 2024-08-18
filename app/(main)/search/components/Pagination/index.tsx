@@ -2,7 +2,7 @@
 
 // Thanks to https://github.com/sadmann7 for the component
 
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'

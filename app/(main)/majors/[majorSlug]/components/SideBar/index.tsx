@@ -1,6 +1,6 @@
 import { LikeButton } from '@/app/components/Majors/LikeButton'
-import { Card } from '@/app/components/ui/Card'
-import { Separator } from '@/app/components/ui/Separator/separator'
+import { Card } from '@/app/components/ui/card'
+import { Separator } from '@/app/components/ui/separator'
 import { H3, Muted } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { cn } from '@/lib/utils'

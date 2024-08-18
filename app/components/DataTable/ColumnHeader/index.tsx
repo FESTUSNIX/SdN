@@ -7,8 +7,8 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
-} from '@/app/components/ui/DropdownMenu'
-import { Button } from '@/app/components/ui/Button'
+} from '@/app/components/ui/dropdown-menu'
+import { Button } from '@/app/components/ui/button'
 import { cn } from '@/lib/utils'
 
 interface DataTableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes<HTMLDivElement> {

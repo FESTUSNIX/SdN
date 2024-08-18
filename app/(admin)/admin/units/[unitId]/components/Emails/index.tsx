@@ -1,8 +1,8 @@
 'use client'
 
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
-import { Button } from '@/app/components/ui/Button'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
+import { Button } from '@/app/components/ui/button'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { EmailData } from '@/types/unitEmail'
 import { Major, Qualification, Unit } from '@prisma/client'

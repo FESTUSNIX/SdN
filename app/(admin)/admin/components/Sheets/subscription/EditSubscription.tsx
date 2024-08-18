@@ -1,9 +1,9 @@
 'use client'
 
 import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
-import { Button } from '@/app/components/ui/Button'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
-import { SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/Sheet'
+import { Button } from '@/app/components/ui/button'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
+import { SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/sheet'
 import { SubscriptionPayload, SubscriptionValidator } from '@/lib/validators/subscription'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'

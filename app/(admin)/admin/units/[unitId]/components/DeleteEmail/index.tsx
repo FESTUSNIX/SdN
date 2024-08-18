@@ -1,6 +1,6 @@
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
-import { Button } from '@/app/components/ui/Button'
-import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/Popover'
+import { Button } from '@/app/components/ui/button'
+import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/popover'
 import { H4, Muted } from '@/app/components/ui/Typography'
 import { PopoverClose } from '@radix-ui/react-popover'
 import { useMutation } from '@tanstack/react-query'

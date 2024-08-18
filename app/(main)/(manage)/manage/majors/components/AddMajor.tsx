@@ -1,8 +1,8 @@
 'use client'
 
-import { Button } from '@/app/components/ui/Button'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
-import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/app/components/ui/Sheet'
+import { Button } from '@/app/components/ui/button'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/app/components/ui/sheet'
 import { MajorFormType, MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'

@@ -1,4 +1,4 @@
-import { Separator } from '@/app/components/ui/Separator/separator'
+import { Separator } from '@/app/components/ui/separator'
 import { Skeleton } from '@/app/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import React from 'react'

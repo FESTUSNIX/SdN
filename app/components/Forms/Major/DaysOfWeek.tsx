@@ -1,7 +1,7 @@
 import { DaysOfWeek as DaysOfWeekType } from '@prisma/client'
 import { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { MultiSelect } from '../../MultiSelect'
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/Form'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/form'
 
 type Props<T extends FieldValues> = {
 	accessorKey: FieldPath<T>

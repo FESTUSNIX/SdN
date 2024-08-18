@@ -1,8 +1,8 @@
 'use client'
 
 import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
-import { Button } from '@/app/components/ui/Button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
+import { Button } from '@/app/components/ui/button'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/tooltip'
 import { SubscriptionTablePayload } from '@/lib/validators/subscription'
 import { ColumnDef } from '@tanstack/react-table'
 import { format, isAfter } from 'date-fns'

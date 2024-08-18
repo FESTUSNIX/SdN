@@ -1,4 +1,4 @@
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 
 type Props = {

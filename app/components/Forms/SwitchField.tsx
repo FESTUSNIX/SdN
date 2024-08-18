@@ -1,6 +1,6 @@
-import { FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/app/components/ui/Form'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/app/components/ui/form'
 import { Control } from 'react-hook-form'
-import { Switch } from '../ui/Switch'
+import { Switch } from '../ui/switch'
 
 type Props = {
 	control?: Control<any>

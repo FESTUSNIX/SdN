@@ -1,5 +1,5 @@
 import UserAvatar from '@/app/components/UserAvatar'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/ui/Table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/ui/table'
 import prisma from '@/prisma/client'
 
 type Props = {}

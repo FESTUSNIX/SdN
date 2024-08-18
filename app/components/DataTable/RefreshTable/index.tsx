@@ -3,7 +3,7 @@
 import { RefreshCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Button } from '../../ui/Button'
+import { Button } from '../../ui/button'
 import { cn } from '@/lib/utils'
 
 const RefreshTable = () => {

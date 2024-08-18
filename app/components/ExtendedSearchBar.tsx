@@ -1,6 +1,6 @@
 'use client'
 
-import { Form, FormControl, FormField, FormItem } from '@/app/components/ui/Form'
+import { Form, FormControl, FormField, FormItem } from '@/app/components/ui/form'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AwardIcon, SearchIcon } from 'lucide-react'
@@ -9,8 +9,8 @@ import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { majorLevelOptions } from '../constants/majorLevel'
-import { Button } from './ui/Button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/Select'
+import { Button } from './ui/button'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 
 const formSchema = z.object({
 	searchQuery: z.string().min(1),

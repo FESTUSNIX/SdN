@@ -2,8 +2,8 @@ import * as React from 'react'
 import { type Column } from '@tanstack/react-table'
 
 import { cn } from '@/lib/utils'
-import { Badge } from '@/app/components/ui/Badge'
-import { Button } from '@/app/components/ui/Button'
+import { Badge } from '@/app/components/ui/badge'
+import { Button } from '@/app/components/ui/button'
 import {
 	Command,
 	CommandEmpty,
@@ -12,10 +12,10 @@ import {
 	CommandItem,
 	CommandList,
 	CommandSeparator
-} from '@/app/components/ui/Command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/Popover'
+} from '@/app/components/ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/popover'
 import { CheckIcon, PlusCircle } from 'lucide-react'
-import { Separator } from '../../ui/Separator/separator'
+import { Separator } from '../../ui/separator'
 
 export type FilterOption = {
 	label: string

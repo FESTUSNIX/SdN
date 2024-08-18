@@ -1,5 +1,5 @@
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { Input } from '@/app/components/ui/Input'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
+import { Input } from '@/app/components/ui/input'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { PublicUnitFormType } from '@/lib/validators/public-unit'
 import { X } from 'lucide-react'

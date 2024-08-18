@@ -1,8 +1,8 @@
 'use client'
 
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
 import { Control, FieldPath, FieldValues } from 'react-hook-form'
-import { Textarea, TextareaProps } from '../ui/Textarea/textarea'
+import { Textarea, TextareaProps } from '../ui/textarea'
 
 type Props<T extends FieldValues> = {
 	accessorKey: FieldPath<T>

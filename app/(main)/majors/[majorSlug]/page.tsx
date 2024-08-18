@@ -1,5 +1,5 @@
 import EditorOutput from '@/app/components/EditorOutput'
-import { Badge } from '@/app/components/ui/Badge'
+import { Badge } from '@/app/components/ui/badge'
 import { H1, H2, H3, Muted } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { urlFor } from '@/lib/supabase/getUrlFor'

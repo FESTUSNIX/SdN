@@ -1,6 +1,6 @@
 'use client'
 
-import { Input } from '@/app/components/ui/Input'
+import { Input } from '@/app/components/ui/input'
 import { useDebounce } from '@/app/hooks/useDebounce'
 import { Search as SearchIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'

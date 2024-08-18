@@ -1,5 +1,5 @@
 import { MultiSelect } from '@/app/components/MultiSelect'
-import { FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
 import { MajorFormType } from '@/lib/validators/major'
 import { Qualification } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'

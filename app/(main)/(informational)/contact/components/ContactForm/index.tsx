@@ -1,9 +1,9 @@
 'use client'
 
-import { Button } from '@/app/components/ui/Button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { Input } from '@/app/components/ui/Input'
-import { Textarea } from '@/app/components/ui/Textarea/textarea'
+import { Button } from '@/app/components/ui/button'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
+import { Input } from '@/app/components/ui/input'
+import { Textarea } from '@/app/components/ui/textarea'
 import { H4 } from '@/app/components/ui/Typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'

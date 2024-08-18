@@ -1,7 +1,7 @@
 import { Table } from '@tanstack/react-table'
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/Select'
-import { Button } from '@/app/components/ui/Button'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select'
+import { Button } from '@/app/components/ui/button'
 import { cn } from '@/lib/utils'
 
 interface DataTablePaginationProps<TData> {

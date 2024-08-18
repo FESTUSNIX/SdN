@@ -1,8 +1,8 @@
 'use client'
 
 import { revalidatePaths } from '@/app/_actions'
-import { Button } from '@/app/components/ui/Button'
-import { Form } from '@/app/components/ui/Form'
+import { Button } from '@/app/components/ui/button'
+import { Form } from '@/app/components/ui/form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'

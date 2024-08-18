@@ -1,7 +1,7 @@
 'use client'
 
-import { Button } from '@/app/components/ui/Button'
-import { Separator } from '@/app/components/ui/Separator/separator'
+import { Button } from '@/app/components/ui/button'
+import { Separator } from '@/app/components/ui/separator'
 import { H2 } from '@/app/components/ui/Typography'
 import { deleteFilesFromSupabase } from '@/lib/supabase/deleteFiles'
 import { uploadFileToSupabase } from '@/lib/supabase/uploadImage'

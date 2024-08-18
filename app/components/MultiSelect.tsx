@@ -4,9 +4,9 @@ import { cn } from '@/lib/utils'
 import { Command as CommandPrimitive } from 'cmdk'
 import { ChevronDown, X } from 'lucide-react'
 import * as React from 'react'
-import { Badge } from './ui/Badge'
-import { Button } from './ui/Button'
-import { Command, CommandGroup, CommandItem } from './ui/Command'
+import { Badge } from './ui/badge'
+import { Button } from './ui/button'
+import { Command, CommandGroup, CommandItem } from './ui/command'
 
 interface MultiSelectProps {
 	disabled?: boolean

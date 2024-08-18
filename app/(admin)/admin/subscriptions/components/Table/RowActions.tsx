@@ -2,13 +2,13 @@
 
 import DeleteRow from '@/app/(admin)/admin/components/DeleteRow'
 import {
-    ContextMenu,
-    ContextMenuContent,
-    ContextMenuItem,
-    ContextMenuLabel,
-    ContextMenuSeparator,
-    ContextMenuTrigger
-} from '@/app/components/ui/ContextMenu'
+	ContextMenu,
+	ContextMenuContent,
+	ContextMenuItem,
+	ContextMenuLabel,
+	ContextMenuSeparator,
+	ContextMenuTrigger
+} from '@/app/components/ui/context-menu'
 import { SubscriptionPayload, SubscriptionTableValidator } from '@/lib/validators/subscription'
 import { Row } from '@tanstack/react-table'
 import { Pencil } from 'lucide-react'

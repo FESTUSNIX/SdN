@@ -1,7 +1,7 @@
 'use client'
 
 import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
-import { ContextMenuItem } from '@/app/components/ui/ContextMenu'
+import { ContextMenuItem } from '@/app/components/ui/context-menu'
 import { TableUnitData, UnitPayload } from '@/lib/validators/unit'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'

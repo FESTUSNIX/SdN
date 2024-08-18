@@ -1,6 +1,6 @@
 import { SignOutShell } from '@/app/components/SignOutShell'
-import { Button } from '@/app/components/ui/Button'
-import { Separator } from '@/app/components/ui/Separator/separator'
+import { Button } from '@/app/components/ui/button'
+import { Separator } from '@/app/components/ui/separator'
 import { H1, H2, H3, Muted } from '@/app/components/ui/Typography'
 import { getAuthSession } from '@/lib/auth/auth'
 import prisma from '@/prisma/client'

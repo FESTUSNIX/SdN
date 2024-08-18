@@ -1,6 +1,6 @@
 'use client'
 
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
 import { Control, FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 import { GalleryPanel } from '../../GalleryPanel'
 

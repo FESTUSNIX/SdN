@@ -1,8 +1,8 @@
 import React from 'react'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/tooltip'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { buttonVariants } from '@/app/components/ui/Button'
+import { buttonVariants } from '@/app/components/ui/button'
 
 type Props = {
 	href: string

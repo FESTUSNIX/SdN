@@ -3,7 +3,7 @@
 // Thanks to Josh from https://www.youtube.com/@joshtriedcoding, make sure to subscribe
 
 import '@/app/components/EditorJs/editor.css'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import type EditorJS from '@editorjs/editorjs'
 import { ToolConstructable } from '@editorjs/editorjs'
 import { useCallback, useEffect, useRef } from 'react'

@@ -11,7 +11,7 @@ import {
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { useGlobalModalContext } from '../../context/GlobalModalContext'
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 
 const GlobalDialog = () => {
 	const { modalState, closeModal } = useGlobalModalContext()

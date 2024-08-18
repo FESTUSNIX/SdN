@@ -1,4 +1,4 @@
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/app/components/ui/dialog'
 import { SlidersHorizontal } from 'lucide-react'
 import Filters from './Filters'
@@ -21,7 +21,7 @@ export const FiltersDialog = ({ citiesParam, voivodeshipsParam }: Props) => {
 				</Button>
 			</DialogTrigger>
 
-			<DialogContent className='max-sm:h-full xl:hidden' overlayClassName='xl:hidden'>
+			<DialogContent className='max-sm:h-full xl:hidden'>
 				<DialogHeader className='items-center gap-y-1.5 space-y-0 sm:flex-row sm:gap-4'>
 					<DialogTitle>Filtry</DialogTitle>
 					<ResetFilters />

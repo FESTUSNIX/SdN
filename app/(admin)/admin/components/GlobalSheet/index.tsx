@@ -1,4 +1,4 @@
-import { Sheet, SheetContent } from '@/app/components/ui/Sheet'
+import { Sheet, SheetContent } from '@/app/components/ui/sheet'
 import { useGlobalSheetContext } from '../../context/GlobalSheetContext'
 import { useEffect } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'

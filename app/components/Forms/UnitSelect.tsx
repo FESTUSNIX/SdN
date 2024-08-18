@@ -1,6 +1,6 @@
 'use client'
 
-import { Combobox, ComboboxProps } from '@/app/components/ui/Combobox'
+import { Combobox, ComboboxProps } from '@/app/components/ui/combobox'
 import { Skeleton } from '@/app/components/ui/skeleton'
 import { getUnitSelectOptions } from '@/lib/actions'
 import { useQuery } from '@tanstack/react-query'

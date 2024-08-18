@@ -1,7 +1,7 @@
 'use client'
 
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
-import { InputProps } from '@/app/components/ui/Input'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
+import { InputProps } from '@/app/components/ui/input'
 import { Control, FieldPath, FieldValues, UseFormClearErrors, UseFormSetError } from 'react-hook-form'
 import { ArrayInput } from '../../ArrayInput'
 

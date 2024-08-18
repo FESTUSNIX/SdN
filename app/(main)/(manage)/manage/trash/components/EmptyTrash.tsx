@@ -2,7 +2,7 @@
 
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 import { removeAllArchivedMajorsFromUnit, revalidatePaths } from '@/app/_actions'
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 import { Slot } from '@radix-ui/react-slot'
 import { useMutation } from '@tanstack/react-query'
 import { forwardRef } from 'react'

@@ -1,5 +1,5 @@
 import { TextField } from '@/app/components/Forms/TextField'
-import { Form } from '@/app/components/ui/Form'
+import { Form } from '@/app/components/ui/form'
 import { UnitEmailPayload } from '@/lib/validators/unitEmail'
 import { UseFormReturn } from 'react-hook-form'
 import PreviewTabs from '../PreviewTabs'

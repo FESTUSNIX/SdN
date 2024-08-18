@@ -1,8 +1,8 @@
 'use client'
 
 import { TextField } from '@/app/components/Forms/TextField'
-import { Button } from '@/app/components/ui/Button'
-import { Form } from '@/app/components/ui/Form'
+import { Button } from '@/app/components/ui/button'
+import { Form } from '@/app/components/ui/form'
 import { LoginPayload, LoginValidator } from '@/lib/validators/login'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'

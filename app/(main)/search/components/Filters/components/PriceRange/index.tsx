@@ -1,7 +1,7 @@
 'use client'
 
 import { useTransitionLoading } from '@/app/(main)/search/context/TransitionLoadingContext'
-import { Input } from '@/app/components/ui/Input'
+import { Input } from '@/app/components/ui/input'
 import { H3 } from '@/app/components/ui/Typography'
 import { Slider } from '@/app/components/ui/slider'
 import { useDebounce } from '@/app/hooks/useDebounce'

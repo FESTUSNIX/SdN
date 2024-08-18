@@ -9,7 +9,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
-} from '@/app/components/ui/DropdownMenu'
+} from '@/app/components/ui/dropdown-menu'
 import { getAuthSession } from '@/lib/auth/auth'
 import prisma from '@/prisma/client'
 import Link from 'next/link'

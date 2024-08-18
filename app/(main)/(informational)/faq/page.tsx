@@ -1,4 +1,4 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/app/components/ui/Accordion'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/app/components/ui/accordion'
 import { H1, H2 } from '@/app/components/ui/Typography'
 import Link from 'next/link'
 import { faq } from './constants/faq'

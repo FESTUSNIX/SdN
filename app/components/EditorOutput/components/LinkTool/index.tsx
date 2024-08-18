@@ -1,4 +1,4 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/app/components/ui/Card'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/app/components/ui/card'
 import Link from 'next/link'
 
 export function CustomLinkToolRenderer({ data }: any) {

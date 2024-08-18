@@ -2,10 +2,10 @@
 
 import { useGlobalModalContext } from '@/app/(admin)/admin/context/GlobalModalContext'
 import UserAvatar from '@/app/components/UserAvatar'
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 import { Dialog, DialogContent, DialogFooter } from '@/app/components/ui/dialog'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
-import { Separator } from '@/app/components/ui/Separator/separator'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
+import { Separator } from '@/app/components/ui/separator'
 import { H3, H4, Muted } from '@/app/components/ui/Typography'
 import { EmailData } from '@/types/unitEmail'
 import { format } from 'date-fns'

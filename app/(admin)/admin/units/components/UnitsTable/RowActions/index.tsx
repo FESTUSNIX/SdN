@@ -8,7 +8,7 @@ import {
 	ContextMenuLabel,
 	ContextMenuSeparator,
 	ContextMenuTrigger
-} from '@/app/components/ui/ContextMenu'
+} from '@/app/components/ui/context-menu'
 import { UnitTableValidator } from '@/lib/validators/unit'
 import { Row } from '@tanstack/react-table'
 import { ExternalLink } from 'lucide-react'

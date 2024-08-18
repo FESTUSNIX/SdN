@@ -1,7 +1,7 @@
 'use client'
 
 import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
-import { ContextMenuItem } from '@/app/components/ui/ContextMenu'
+import { ContextMenuItem } from '@/app/components/ui/context-menu'
 import {
 	MajorPayload,
 	MajorPayloadWithFullQualifications,

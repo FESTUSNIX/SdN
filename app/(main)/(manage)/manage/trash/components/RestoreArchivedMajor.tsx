@@ -1,7 +1,7 @@
 'use client'
 
 import { restoreMajor, revalidatePaths } from '@/app/_actions'
-import { Button, ButtonProps } from '@/app/components/ui/Button'
+import { Button, ButtonProps } from '@/app/components/ui/button'
 import { useMutation } from '@tanstack/react-query'
 import React, { forwardRef } from 'react'
 import toast from 'react-hot-toast'

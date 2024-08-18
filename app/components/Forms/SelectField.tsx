@@ -1,6 +1,6 @@
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/Form'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/app/components/ui/form'
 import { Control, FieldPath, FieldValues } from 'react-hook-form'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/Select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
 type Props<T extends FieldValues> = {
 	control?: Control<T>

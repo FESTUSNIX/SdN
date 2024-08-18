@@ -1,4 +1,4 @@
-import { ContextMenuItem } from '@/app/components/ui/ContextMenu'
+import { ContextMenuItem } from '@/app/components/ui/context-menu'
 import { Dialog, DialogContent, DialogTrigger } from '@/app/components/ui/dialog'
 import React, { forwardRef } from 'react'
 

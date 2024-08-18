@@ -1,6 +1,6 @@
 import EditorOutput from '@/app/components/EditorOutput'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/app/components/ui/dialog'
-import { ScrollArea } from '@/app/components/ui/ScrollArea'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { type Prisma } from '@prisma/client'
 
 type Props = {

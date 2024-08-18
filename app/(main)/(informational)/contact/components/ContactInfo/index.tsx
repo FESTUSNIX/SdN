@@ -1,6 +1,6 @@
 import IconBadge from '@/app/components/IconBadge'
-import { Button } from '@/app/components/ui/Button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/Card'
+import { Button } from '@/app/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
 import { socialMedia } from '@/app/constants/socialMedia'
 import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from 'lucide-react'
 

@@ -1,5 +1,5 @@
-import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/app/components/ui/Form'
-import { Input } from '@/app/components/ui/Input'
+import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/app/components/ui/form'
+import { Input } from '@/app/components/ui/input'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { X } from 'lucide-react'
 import Image from 'next/image'

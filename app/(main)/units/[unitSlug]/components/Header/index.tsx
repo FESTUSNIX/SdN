@@ -1,5 +1,5 @@
 import { PlaceholderImage } from '@/app/components/PlaceholderImage'
-import { Badge } from '@/app/components/ui/Badge'
+import { Badge } from '@/app/components/ui/badge'
 import { H1 } from '@/app/components/ui/Typography'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { capitalize } from '@/lib/utils'

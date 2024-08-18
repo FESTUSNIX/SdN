@@ -1,7 +1,7 @@
 'use client'
 
 import { useTransitionLoading } from '@/app/(main)/search/context/TransitionLoadingContext'
-import { Switch } from '@/app/components/ui/Switch'
+import { Switch } from '@/app/components/ui/switch'
 import { Muted } from '@/app/components/ui/Typography'
 import { useDebounce } from '@/app/hooks/useDebounce'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'

@@ -1,6 +1,6 @@
 'use client'
 
-import { Calendar } from '@/app/components/ui/Calendar'
+import { Calendar } from '@/app/components/ui/calendar'
 import useResponsive from '@/app/hooks/useResponsive'
 import { Major } from '@prisma/client'
 import { pl } from 'date-fns/locale'

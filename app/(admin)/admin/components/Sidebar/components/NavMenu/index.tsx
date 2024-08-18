@@ -1,8 +1,8 @@
 'use client'
 
-import { Button } from '@/app/components/ui/Button'
-import { Separator } from '@/app/components/ui/Separator/separator'
-import { Sheet, SheetContent, SheetTrigger } from '@/app/components/ui/Sheet'
+import { Button } from '@/app/components/ui/button'
+import { Separator } from '@/app/components/ui/separator'
+import { Sheet, SheetContent, SheetTrigger } from '@/app/components/ui/sheet'
 import { Menu } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'

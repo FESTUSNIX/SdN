@@ -1,7 +1,7 @@
 'use client'
 
 import { Icons } from '@/app/components/Icons'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/Select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select'
 import { useDebounce } from '@/app/hooks/useDebounce'
 import { LucideProps } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'

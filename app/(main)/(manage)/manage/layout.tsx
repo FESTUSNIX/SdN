@@ -1,4 +1,4 @@
-import { Separator } from '@/app/components/ui/Separator/separator'
+import { Separator } from '@/app/components/ui/separator'
 import { getAuthSession } from '@/lib/auth/auth'
 import prisma from '@/prisma/client'
 import { Metadata } from 'next'

@@ -2,9 +2,9 @@
 
 import { Check, ChevronsUpDown } from 'lucide-react'
 
-import { Button } from '@/app/components/ui/Button'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/app/components/ui/Command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/Popover'
+import { Button } from '@/app/components/ui/button'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/app/components/ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 

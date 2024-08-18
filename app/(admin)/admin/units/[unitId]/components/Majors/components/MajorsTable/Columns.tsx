@@ -1,8 +1,8 @@
 'use client'
 
 import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
-import { Button, buttonVariants } from '@/app/components/ui/Button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
+import { Button, buttonVariants } from '@/app/components/ui/button'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 import { MajorPayloadWithFullQualifications } from '@/lib/validators/major'
 import { ColumnDef } from '@tanstack/react-table'

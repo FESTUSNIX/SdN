@@ -1,4 +1,4 @@
-import { Separator } from '@/app/components/ui/Separator/separator'
+import { Separator } from '@/app/components/ui/separator'
 import { H3 } from '@/app/components/ui/Typography'
 import { City, Unit, UnitAddress } from '@prisma/client'
 import { Fragment } from 'react'

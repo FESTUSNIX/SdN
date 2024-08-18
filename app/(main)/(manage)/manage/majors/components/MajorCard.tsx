@@ -1,5 +1,5 @@
 import { Skeleton } from '@/app/components/ui/skeleton'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/tooltip'
 import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { cn } from '@/lib/utils'

@@ -6,7 +6,7 @@ import { Major } from '@prisma/client'
 import { ScrollTextIcon, UniversityIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Badge } from '../ui/Badge'
+import { Badge } from '../ui/badge'
 import { LikeButton } from './LikeButton'
 
 export type MajorCardType = Pick<Major, 'name' | 'majorLevel' | 'isOnline' | 'slug'> & {

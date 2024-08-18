@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/app/components/ui/Button'
+import { Button } from '@/app/components/ui/button'
 import { LogOut } from 'lucide-react'
 import { signOut } from 'next-auth/react'
 
