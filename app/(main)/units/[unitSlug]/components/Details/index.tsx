@@ -1,6 +1,7 @@
 import { H2, H3 } from '@/app/components/ui/Typography'
 import { Unit } from '@prisma/client'
 import { ClipboardEdit, FileDigit, Globe, Mail, Phone, School, Unlock } from 'lucide-react'
+import Link from 'next/link'
 
 type Props = Pick<Unit, 'website' | 'email' | 'phone' | 'unitType' | 'isPublic' | 'nip' | 'regon'>
 
@@ -24,7 +25,11 @@ const Details = ({ email, isPublic, nip, phone, regon, unitType, website }: Prop
 					},
 					{
 						title: 'Strona internetowa',
-						content: website,
+						content: (
+							<Link href={website} target='_blank' rel='noopener' className='break-all hover:underline'>
+								{website}
+							</Link>
+						),
 						Icon: Globe
 					},
 					{

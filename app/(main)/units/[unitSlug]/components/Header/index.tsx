@@ -1,8 +1,8 @@
+import { PlaceholderImage } from '@/app/components/PlaceholderImage'
 import { Badge } from '@/app/components/ui/Badge'
 import { H1 } from '@/app/components/ui/Typography'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { capitalize } from '@/lib/utils'
-import { placeholderImage } from '@/lib/utils'
 import { Unit } from '@prisma/client'
 import { LinkIcon, MapPin } from 'lucide-react'
 import Image from 'next/image'
@@ -16,14 +16,18 @@ type Props = Pick<Unit, 'name' | 'logo' | 'unitType' | 'isPublic' | 'website' | 
 const Header = ({ isPublic, logo, name, unitType, website, city, voivodeship }: Props) => {
 	return (
 		<header className='mt-12 flex flex-col gap-6 border-b py-6 lg:flex-row'>
-			<div className='aspect-square max-h-full w-full max-w-60 overflow-hidden rounded-lg border bg-muted sm:max-w-72 md:mx-0 md:w-auto lg:max-w-48'>
-				<Image
-					src={logo ? urlFor('units', logo).publicUrl : placeholderImage}
-					alt={`Logo ${name}`}
-					width={300}
-					height={300}
-					className='h-full w-full object-cover'
-				/>
+			<div className='aspect-square max-h-full w-full max-w-60 overflow-hidden rounded-lg border bg-muted sm:max-w-72 md:mx-0 lg:max-w-48'>
+				{logo ? (
+					<Image
+						src={urlFor('units', logo).publicUrl}
+						alt={`Logo ${name}`}
+						width={300}
+						height={300}
+						className='h-full w-full object-cover'
+					/>
+				) : (
+					<PlaceholderImage className='aspect-square size-full' />
+				)}
 			</div>
 
 			<div>
@@ -37,7 +41,7 @@ const Header = ({ isPublic, logo, name, unitType, website, city, voivodeship }: 
 				</div>
 
 				<div>
-					<Link href={website} target='_blank' rel='noopener' className='my-2 block w-max text-sm underline'>
+					<Link href={website} target='_blank' rel='noopener' className='my-2 block w-max break-all text-sm underline'>
 						<span aria-hidden={true}>
 							<LinkIcon className='mr-2 inline h-4 w-4 text-muted-foreground' />
 						</span>

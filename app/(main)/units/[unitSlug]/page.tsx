@@ -106,7 +106,7 @@ export default async function UnitPage({ params, searchParams }: Props) {
 			<ImageGallery images={gallery as any} />
 
 			<Suspense>
-				<Majors unitSlug={params.unitSlug} searchParams={searchParams} />
+				<Majors unitSlug={params.unitSlug} />
 			</Suspense>
 		</main>
 	)

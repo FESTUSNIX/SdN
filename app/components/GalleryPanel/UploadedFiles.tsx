@@ -44,7 +44,7 @@ export function UploadedFiles({ uploadedImages, hoverEffect = true }: Props) {
 						</>
 					) : (
 						<li className='group size-full overflow-hidden rounded-md border bg-muted duration-300 hover:border-muted-foreground/50'>
-							<LightboxTrigger index={3} className='block flex size-full items-center justify-center'>
+							<LightboxTrigger index={3} className='flex size-full items-center justify-center'>
 								<span className='text-muted-foreground'>+{totalImages - 3}</span>
 							</LightboxTrigger>
 						</li>

@@ -33,10 +33,10 @@ export const DashboardChart = ({ statistics }: Props) => {
 	} satisfies ChartConfig
 
 	const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>('majors')
-	const total = React.useMemo(
+	const latest = React.useMemo(
 		() => ({
-			majors: chartData.reduce((acc, curr) => acc + curr.majors, 0),
-			units: chartData.reduce((acc, curr) => acc + curr.units, 0)
+			majors: statistics[statistics.length - 1].majors_count,
+			units: statistics[statistics.length - 1].units_count
 		}),
 		[]
 	)
@@ -59,7 +59,7 @@ export const DashboardChart = ({ statistics }: Props) => {
 								onClick={() => setActiveChart(chart)}>
 								<span className='text-xs text-muted-foreground'>{chartConfig[chart].label}</span>
 								<span className='text-lg font-bold leading-none sm:text-3xl'>
-									{total[key as keyof typeof total].toLocaleString()}
+									{latest[key as keyof typeof latest].toLocaleString()}
 								</span>
 							</button>
 						)

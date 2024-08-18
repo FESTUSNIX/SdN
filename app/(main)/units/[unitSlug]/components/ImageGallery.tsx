@@ -11,6 +11,8 @@ type Props = {
 }
 
 export const ImageGallery = ({ images }: Props) => {
+	if (!images.length) return null
+
 	return (
 		<section className='py-6'>
 			<H2>Galeria zdjęć</H2>

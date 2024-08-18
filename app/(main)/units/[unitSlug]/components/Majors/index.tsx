@@ -1,37 +1,16 @@
-import MajorCard from '@/app/components/Majors/Card'
-import MajorsGrid from '@/app/components/Majors/Grid'
-import SearchBar from '@/app/components/SearchBar'
 import { H2 } from '@/app/components/ui/Typography'
 import prisma from '@/prisma/client'
+import { Results } from './Results'
 
 type Props = {
 	unitSlug: string
-	searchParams: { [key: string]: string | string[] | undefined }
 }
 
-const Majors = async ({ unitSlug, searchParams }: Props) => {
-	const search = searchParams.mq?.toString()
-
+const Majors = async ({ unitSlug }: Props) => {
 	const majors = await prisma.major.findMany({
 		where: {
 			unitSlug,
-			status: 'PUBLISHED',
-			OR: [
-				{
-					name: {
-						contains: search,
-						mode: 'insensitive'
-					}
-				},
-				{
-					unit: {
-						name: {
-							contains: search,
-							mode: 'insensitive'
-						}
-					}
-				}
-			]
+			status: 'PUBLISHED'
 		},
 		select: {
 			name: true,
@@ -60,17 +39,7 @@ const Majors = async ({ unitSlug, searchParams }: Props) => {
 				Kierunki <span className=''>({majors.length})</span>
 			</H2>
 
-			<SearchBar className='mb-8' param='mq' />
-
-			{majors.length > 0 ? (
-				<MajorsGrid listType='grid'>
-					{majors.map(major => (
-						<MajorCard key={major.slug} data={major} type='grid' />
-					))}
-				</MajorsGrid>
-			) : (
-				<p>Nie odnalezliśmy żadnych kierunków w tej jednostce</p>
-			)}
+			<Results majors={majors} />
 		</section>
 	)
 }

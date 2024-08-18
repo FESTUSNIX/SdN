@@ -74,8 +74,8 @@ export const LightboxContent = ({ showThumbnails }: { showThumbnails?: boolean }
 						<div className='relative h-full min-h-0 w-full py-8'>
 							<div className='flex size-full max-h-full max-w-full grow items-center justify-center'>
 								<Image
-									src={images[currentIndex].src}
-									alt={images[currentIndex].alt}
+									src={images[currentIndex]?.src || ' '}
+									alt={images[currentIndex]?.alt || ' '}
 									width={1200}
 									height={900}
 									className='pointer-events-auto mx-4 size-auto max-h-full max-w-full rounded-md object-contain'

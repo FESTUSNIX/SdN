@@ -52,7 +52,7 @@ const MajorCard = ({ data, likeable = true, type = 'grid', onDislike, className 
 					height={400}
 					className='pointer-events-none z-10 h-full w-full select-none object-cover'
 				/>
-				<Skeleton className='absolute inset-0 -z-10' />
+				<Skeleton className='absolute inset-0 -z-10 rounded-none' />
 			</div>
 
 			<div className={cn(type === 'grid' && 'px-3 pb-3', type === 'list' && 'p-3 sm:pl-0')}>
@@ -92,7 +92,7 @@ const MajorCard = ({ data, likeable = true, type = 'grid', onDislike, className 
 				<LikeButton
 					majorSlug={slug}
 					onDislike={onDislike}
-					className='absolute right-2 top-2 z-10 opacity-0 shadow-md focus-within:opacity-100 active:shadow-sm group-hover:opacity-100'
+					className='absolute right-2 top-2 z-10 rounded-full opacity-0 shadow-md focus-within:opacity-100 active:shadow-sm group-hover:opacity-100'
 				/>
 			)}
 		</Link>
