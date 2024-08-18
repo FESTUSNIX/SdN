@@ -34,7 +34,8 @@ const AddUnit = () => {
 			postalCode: '',
 			cityId: 0,
 			notes: '',
-			workStatus: 'IN_PROGRESS'
+			workStatus: 'IN_PROGRESS',
+			gallery: []
 		}
 	})
 

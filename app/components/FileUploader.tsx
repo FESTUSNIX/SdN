@@ -87,6 +87,14 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
 	 * @example disabled
 	 */
 	disabled?: boolean
+
+	/**
+	 * Whether the uploader should show a preview of uploaded files.
+	 * @type boolean
+	 * @default true
+	 * @example showPreview
+	 */
+	showPreview?: boolean
 }
 
 export function FileUploader(props: FileUploaderProps) {
@@ -102,6 +110,7 @@ export function FileUploader(props: FileUploaderProps) {
 		maxFileCount = 1,
 		multiple = false,
 		disabled = false,
+		showPreview = true,
 		className,
 		...dropzoneProps
 	} = props
@@ -114,12 +123,12 @@ export function FileUploader(props: FileUploaderProps) {
 	const onDrop = React.useCallback(
 		(acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
 			if (!multiple && maxFileCount === 1 && acceptedFiles.length > 1) {
-				toast.error('Cannot upload more than 1 file at a time')
+				toast.error('Możesz przesłać tylko jeden plik na raz')
 				return
 			}
 
 			if ((files?.length ?? 0) + acceptedFiles.length > maxFileCount) {
-				toast.error(`Cannot upload more than ${maxFileCount} files`)
+				toast.error(`Możesz przesłać maksymalnie ${maxFileCount} plików`)
 				return
 			}
 
@@ -135,20 +144,20 @@ export function FileUploader(props: FileUploaderProps) {
 
 			if (rejectedFiles.length > 0) {
 				rejectedFiles.forEach(({ file }) => {
-					toast.error(`File ${file.name} was rejected`)
+					toast.error(`Plik ${file.name} nie może zostać przesłany`)
 				})
 			}
 
 			if (onUpload && updatedFiles.length > 0 && updatedFiles.length <= maxFileCount) {
-				const target = updatedFiles.length > 0 ? `${updatedFiles.length} files` : `file`
+				const target = updatedFiles.length > 0 ? `${updatedFiles.length} plików` : `pliku`
 
 				toast.promise(onUpload(updatedFiles), {
-					loading: `Uploading ${target}...`,
+					loading: `Trwa przesyłanie ${target}...`,
 					success: () => {
 						setFiles([])
-						return `${target} uploaded`
+						return `Przesyłanie ${target} zakończone pomyślnie`
 					},
-					error: `Failed to upload ${target}`
+					error: `Nie udało się przesłać ${target}`
 				})
 			}
 		},
@@ -204,7 +213,7 @@ export function FileUploader(props: FileUploaderProps) {
 								<div className='rounded-full border border-dashed p-3'>
 									<UploadIcon className='size-7 text-muted-foreground' aria-hidden='true' />
 								</div>
-								<p className='font-medium text-muted-foreground'>Drop the files here</p>
+								<p className='font-medium text-muted-foreground'>Upuść pliki tutaj, aby je przesłać</p>
 							</div>
 						) : (
 							<div className='flex flex-col items-center justify-center gap-4 sm:px-5'>
@@ -213,14 +222,14 @@ export function FileUploader(props: FileUploaderProps) {
 								</div>
 								<div className='flex flex-col gap-px'>
 									<p className='font-medium text-muted-foreground'>
-										Drag {`'n'`} drop files here, or click to select files
+										Przeciągnij i upuść pliki lub kliknij, aby przesłać
 									</p>
 									<p className='text-sm text-muted-foreground/70'>
-										You can upload
+										Możesz przesłać
 										{maxFileCount > 1
-											? ` ${maxFileCount === Infinity ? 'multiple' : maxFileCount}
-                      files (up to ${formatBytes(maxSize)} each)`
-											: ` a file with ${formatBytes(maxSize)}`}
+											? ` ${maxFileCount === Infinity ? 'wiele' : maxFileCount}
+                      plików (do ${formatBytes(maxSize)} każdy)`
+											: ` plik ważący ${formatBytes(maxSize)}`}
 									</p>
 								</div>
 							</div>
@@ -228,7 +237,7 @@ export function FileUploader(props: FileUploaderProps) {
 					</div>
 				)}
 			</Dropzone>
-			{files?.length ? (
+			{files?.length && showPreview ? (
 				<ScrollArea className='h-fit w-full px-3'>
 					<div className='flex max-h-48 flex-col gap-4'>
 						{files?.map((file, index) => (
@@ -263,7 +272,7 @@ function FileCard({ file, progress, onRemove }: FileCardProps) {
 			<div className='flex items-center gap-2'>
 				<Button type='button' variant='outline' size='icon' className='size-7' onClick={onRemove}>
 					<XIcon className='size-4' aria-hidden='true' />
-					<span className='sr-only'>Remove file</span>
+					<span className='sr-only'>Usuń plik</span>
 				</Button>
 			</div>
 		</div>

@@ -1,17 +1,18 @@
 'use client'
 
 import { ColumnHeader } from '@/app/components/DataTable/ColumnHeader'
+import { Lightbox, LightboxTrigger } from '@/app/components/Lightbox'
+import { PlaceholderImage } from '@/app/components/PlaceholderImage'
 import { Button, buttonVariants } from '@/app/components/ui/Button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/Tooltip'
-import { cn, placeholderImage } from '@/lib/utils'
+import { urlFor } from '@/lib/supabase/getUrlFor'
+import { cn } from '@/lib/utils'
 import { TableUnitData } from '@/lib/validators/unit'
 import { type ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal, Pointer } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { UNIT_TYPE_OPTIONS } from '../../../constants/unitTypesOptions'
-import Image from 'next/image'
-import { urlFor } from '@/lib/supabase/getUrlFor'
-import { Lightbox, LightboxTrigger } from '@/app/components/Lightbox'
 
 export const columns: ColumnDef<TableUnitData>[] = [
 	{
@@ -57,20 +58,15 @@ export const columns: ColumnDef<TableUnitData>[] = [
 		cell: ({ row }) => {
 			const logo = row.original.logo
 
-			const src = logo ? urlFor('units', logo).publicUrl : placeholderImage
+			if (!logo) return <PlaceholderImage animated={false} iconClassName='w-4 h-4' className='size-8 rounded-sm' />
 
+			const src = urlFor('units', logo).publicUrl
 			return (
 				<div>
 					<Lightbox showThumbnails={false} images={[{ src: src, alt: 'Logo' }]}>
 						<LightboxTrigger index={0}>
 							<div className='size-8 overflow-hidden rounded-sm border'>
-								<Image
-									src={logo ? urlFor('units', logo).publicUrl : placeholderImage}
-									alt='Logo'
-									width={36}
-									height={36}
-									className='size-full object-cover'
-								/>
+								<Image src={src} alt='Logo' width={36} height={36} className='size-full object-cover' />
 							</div>
 						</LightboxTrigger>
 					</Lightbox>

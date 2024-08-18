@@ -27,7 +27,6 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
 	try {
 		const body = await req.json()
-
 		const data = UnitValidator.parse(body)
 
 		const unitExists = await prisma.unit.findFirst({
@@ -40,26 +39,45 @@ export async function POST(req: Request) {
 			return new Response('Unit already exists', { status: 409 })
 		}
 
-		const unit = await prisma.unit.create({
-			data: {
+		// TODO: It's a temporary solution, handle it better in the future
+		const latestUnit = await prisma.unit.findFirst({
+			orderBy: {
+				id: 'desc'
+			},
+			select: {
+				id: true
+			}
+		})
+
+		const newId = (latestUnit?.id ?? 0) + 1
+
+		const unit = await prisma.unit.upsert({
+			where: {
+				id: newId
+			},
+			create: {
+				id: newId,
 				name: data.name,
 				logo: null,
 				email: data.email,
-				phone: data.phone ?? '',
+				phone: data.phone ?? null,
 				cityId: data.cityId,
 				isPublic: data.isPublic,
 				unitType: data.unitType,
 				website: data.website,
-				nip: data.nip,
-				regon: data.regon,
-				notes: data.notes,
+				nip: data.nip ?? null,
+				regon: data.regon ?? null,
+				notes: data.notes ?? '',
 				address: {
 					create: {
 						street: data.street ?? '',
 						postalCode: data.postalCode ?? ''
 					}
 				},
-				workStatus: data.workStatus
+				workStatus: data.workStatus ?? 'IN_PROGRESS'
+			},
+			update: {
+				notes: `DEV: TRIED TO UPSERT AS ${data.name}`
 			}
 		})
 
@@ -76,6 +94,8 @@ export async function POST(req: Request) {
 
 		return new Response(unit.id.toString())
 	} catch (error) {
+		console.log('ERROR', error)
+
 		if (error instanceof z.ZodError) {
 			return new Response('Invalid POST request data passed', { status: 422 })
 		}

@@ -16,6 +16,7 @@ import toast from 'react-hot-toast'
 import { useGlobalSheetContext } from '../../../context/GlobalSheetContext'
 import { useFormChanges } from '../../../hooks/useFormChanges'
 import UnitForm from '../../Forms/UnitForm'
+import { handleGallery } from '@/lib/utils/gallery'
 
 const EditUnit = () => {
 	const { closeSheet, sheetState } = useGlobalSheetContext()
@@ -33,7 +34,7 @@ const EditUnit = () => {
 
 	useFormChanges(form.formState)
 
-	const handleImage = async (values: UnitPayload) => {
+	const handleLogo = async (values: UnitPayload) => {
 		let filepath = defaultValues.logo
 
 		if ((values.logo === null || values.logo === undefined || !values.logo) && defaultValues.logo) {
@@ -48,49 +49,21 @@ const EditUnit = () => {
 		return filepath
 	}
 
-	const handleGallery = async (values: UnitPayload) => {
-		const gallery = values.gallery ?? []
-		const prevGallery: {
-			url: string
-			alt: string
-		}[] = defaultValues.gallery
-
-		const newGallery = await Promise.all(
-			gallery.map(async (file, i) => {
-				if (file instanceof File) {
-					return {
-						url: await uploadFileToSupabase('units', file, `${values.id}/gallery/${file.name}`, true),
-						alt: 'Temporary alt'
-					}
-				}
-
-				return file
-			})
-		)
-
-		const filesToDelete = prevGallery.filter(file => !newGallery.some(newFile => newFile.url === file.url))
-
-		if (filesToDelete.length > 0) {
-			await deleteFilesFromSupabase(
-				'units',
-				filesToDelete.map(file => file.url)
-			)
-		}
-
-		return newGallery
-	}
-
 	const { mutate: updateUnit, isLoading } = useMutation({
 		mutationFn: async (values: UnitPayload) => {
 			toast.loading('Updating unit...')
 
-			const filepath: string | null = await handleImage(values)
-			const gallery = await handleGallery(values)
+			if (!values.id) {
+				return toast.error('Invalid unit data')
+			}
+
+			const logo: string | null = await handleLogo(values)
+			const gallery = await handleGallery(values.id, values.gallery as any, defaultValues.gallery)
 
 			const payload: UnitPayload = {
 				id: defaultValues.id,
 				name: values.name,
-				logo: filepath,
+				logo: logo,
 				isPublic: values.isPublic,
 				email: values.email,
 				phone: values.phone ?? '',

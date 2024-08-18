@@ -4,11 +4,15 @@ import { BooleanField } from '@/app/components/Forms/BooleanField'
 import { EditField } from '@/app/components/Forms/EditField'
 import { TextField } from '@/app/components/Forms/TextField'
 import { City as CityField, PostalCode } from '@/app/components/Forms/Unit'
+import { GalleryField } from '@/app/components/Forms/Unit/Gallery'
+import { UploadedFiles } from '@/app/components/GalleryPanel/UploadedFiles'
+import { PlaceholderImage } from '@/app/components/PlaceholderImage'
 import { Separator } from '@/app/components/ui/Separator/separator'
 import { H3 } from '@/app/components/ui/Typography'
 import { deleteFilesFromSupabase } from '@/lib/supabase/deleteFiles'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { uploadFileToSupabase } from '@/lib/supabase/uploadImage'
+import { handleGallery } from '@/lib/utils/gallery'
 import { UnitPayload, UnitValidator } from '@/lib/validators/unit'
 import { City, Unit, UnitAddress } from '@prisma/client'
 import Image from 'next/image'
@@ -23,7 +27,7 @@ type Props = {
 }
 
 export const ManageUnitData = ({ unit }: Props) => {
-	const { id, name, email, website, city, address, isPublic, phone, nip, regon, logo } = unit
+	const { id, name, email, website, city, address, isPublic, phone, nip, regon, logo, gallery } = unit
 
 	const handleImageUpdate = async (newLogo: UnitPayload['logo'], previousLogo: UnitPayload['logo'], unitId: number) => {
 		let filepath = previousLogo
@@ -54,15 +58,18 @@ export const ManageUnitData = ({ unit }: Props) => {
 			title: 'Logo',
 			value: logo,
 			editComponent: props => LogoField(),
-			customComponent: value => (
-				<Image
-					src={urlFor('units', value).publicUrl ?? ''}
-					alt='Logo uczelni'
-					width={400}
-					height={400}
-					className='mt-2 size-32 rounded-lg object-cover'
-				/>
-			),
+			customComponent: value =>
+				value ? (
+					<Image
+						src={urlFor('units', value).publicUrl ?? ''}
+						alt='Logo uczelni'
+						width={400}
+						height={400}
+						className='mt-2 size-32 rounded-lg border object-cover'
+					/>
+				) : (
+					<PlaceholderImage className='mt-2 w-32 rounded-lg border' label='Logo uczelni' />
+				),
 			preparePayload: async value => {
 				const newLogo = value as File
 				const previousLogo = logo
@@ -121,6 +128,24 @@ export const ManageUnitData = ({ unit }: Props) => {
 			title: 'Numer telefonu',
 			value: phone,
 			editComponent: props => TextField({ placeholder: '+48 123 456 789', ...props })
+		},
+		{
+			accessorKey: 'gallery',
+			title: 'Galeria zdjęć',
+			value: gallery,
+			editComponent: props => GalleryField({ ...props }),
+			customComponent: value => {
+				const images = value?.map((img: any) => ({ src: urlFor('units', img.url).publicUrl, alt: img.alt }))
+				return (
+					<div className='mt-2'>
+						<UploadedFiles uploadedImages={images ?? []} hoverEffect={false} />
+					</div>
+				)
+			},
+			preparePayload: async value => {
+				const newGallery = await handleGallery(id, value, gallery as any)
+				return newGallery
+			}
 		},
 		{
 			accessorKey: 'nip',

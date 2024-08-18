@@ -24,16 +24,15 @@ export const LogoField = () => {
 				<FormItem>
 					<FormControl>
 						<>
-							{
-								<Input
-									type='file'
-									name={field.name}
-									ref={field.ref}
-									onBlur={field.onBlur}
-									value={undefined}
-									onChange={handleChange}
-								/>
-							}
+							<Input
+								type='file'
+								name={field.name}
+								ref={field.ref}
+								onBlur={field.onBlur}
+								value={undefined}
+								onChange={handleChange}
+							/>
+
 							{logo && (
 								<div className='group relative w-full overflow-hidden rounded-md border'>
 									<Image

@@ -97,8 +97,9 @@ export const LightboxContent = ({ showThumbnails }: { showThumbnails?: boolean }
 											<Image
 												src={img.src}
 												alt={img.alt}
-												width={50}
-												height={50}
+												width={80}
+												height={80}
+												loading='lazy'
 												className='size-full object-cover duration-200 group-hover:scale-105'
 											/>
 											{currentIndex === i && <div className='absolute inset-0 bg-primary/10' />}
