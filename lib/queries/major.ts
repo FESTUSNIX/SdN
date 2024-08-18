@@ -1,5 +1,5 @@
 import prisma from '@/prisma/client'
-import { MajorLevel, Prisma } from '@prisma/client'
+import { Major, MajorLevel, Prisma, Qualification } from '@prisma/client'
 
 type MajorSearchInput = {
 	orderBy: {
@@ -168,4 +168,89 @@ export const getMajorSearchResults = async ({
 			}[]
 		}[]
 	}
+}
+
+type GetSimiliarMajorsInput = {
+	currentMajor: {
+		qualificationIds: number[]
+		keywords: string[]
+		name: string
+		id: number
+	}
+	take?: number
+}
+
+export type SimiliarMajor = Pick<Major, 'majorLevel' | 'keywords' | 'isOnline' | 'id' | 'name' | 'slug'> & {
+	unit: { name: string; subscriptions: { type: string }[] }
+	qualifications: Pick<Qualification, 'slug' | 'name' | 'id'>[]
+}
+
+export const getSimiliarMajors = async ({
+	currentMajor,
+	take = 10
+}: GetSimiliarMajorsInput): Promise<SimiliarMajor[]> => {
+	const { qualificationIds, keywords, name, id } = currentMajor
+
+	const similarMajors = await prisma.major.findMany({
+		where: {
+			OR: [
+				{ qualifications: { some: { id: { in: qualificationIds.map(q => q) } } } },
+				{ keywords: { hasSome: keywords } },
+				{
+					name: {
+						in: name.split(' ').map(word => word.toLowerCase()),
+						mode: 'insensitive'
+					}
+				}
+			],
+			NOT: {
+				id: { equals: id }
+			}
+		},
+		select: {
+			id: true,
+			name: true,
+			majorLevel: true,
+			isOnline: true,
+			slug: true,
+			keywords: true,
+			qualifications: {
+				select: {
+					id: true,
+					slug: true,
+					name: true
+				}
+			},
+			unit: {
+				select: {
+					name: true,
+					subscriptions: {
+						where: {
+							to: {
+								gte: new Date()
+							},
+							type: {
+								in: ['PREMIUM', 'STANDARD']
+							}
+						},
+						select: {
+							type: true
+						}
+					}
+				}
+			}
+		},
+		orderBy: [
+			{
+				unit: {
+					subscriptions: {
+						_count: 'desc'
+					}
+				}
+			}
+		],
+		take: take
+	})
+
+	return similarMajors
 }

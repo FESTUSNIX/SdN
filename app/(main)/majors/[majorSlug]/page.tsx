@@ -11,6 +11,7 @@ import { Suspense } from 'react'
 import ActiveDays from './components/ActiveDays'
 import { Duration } from './components/Duration'
 import SideBar from './components/SideBar'
+import { SimiliarMajors } from './components/SimiliarMajors'
 import UnitCard from './components/UnitCard'
 
 const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: string } }) => {
@@ -22,10 +23,15 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 		include: {
 			qualifications: {
 				select: {
+					id: true,
 					name: true,
-					type: true,
-					keywords: true,
 					slug: true
+				}
+			},
+			unit: {
+				select: {
+					id: true,
+					name: true
 				}
 			}
 		}
@@ -61,6 +67,7 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 			}
 		}
 	})
+	const hasActiveSubscription = !!activeSubscription
 
 	const sectionStyles = 'border-b py-8'
 
@@ -91,7 +98,7 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 						<Badge variant={'secondary'}>{isOnline ? 'Online' : 'Stacjonarne'}</Badge>
 					</div>
 
-					{activeSubscription && description && Array.isArray(description) && description.length !== 0 && (
+					{hasActiveSubscription && description && Array.isArray(description) && description.length !== 0 && (
 						<EditorOutput content={description} />
 					)}
 				</div>
@@ -111,7 +118,7 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 						</div>
 					</section>
 
-					{certificates && (
+					{certificates && hasActiveSubscription && (
 						<section className={cn(sectionStyles, 'pt-12')}>
 							<H2 size='sm'>Zapewnione certyfikaty</H2>
 
@@ -119,7 +126,7 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 						</section>
 					)}
 
-					{activeSubscription &&
+					{hasActiveSubscription &&
 						recruitmentConditions &&
 						Array.isArray(recruitmentConditions) &&
 						recruitmentConditions.length !== 0 && (
@@ -129,7 +136,7 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 							</section>
 						)}
 
-					{activeSubscription &&
+					{hasActiveSubscription &&
 						completionConditions &&
 						Array.isArray(completionConditions) &&
 						completionConditions.length !== 0 && (
@@ -139,34 +146,36 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 							</section>
 						)}
 
-					{activeSubscription && syllabus && Array.isArray(syllabus) && syllabus.length !== 0 && (
+					{hasActiveSubscription && syllabus && Array.isArray(syllabus) && syllabus.length !== 0 && (
 						<section className={sectionStyles}>
 							<H2 size='sm'>Program studiów</H2>
 							<EditorOutput content={syllabus} />
 						</section>
 					)}
 
-					<section className={cn(sectionStyles, 'relative border-none')}>
-						<H2 size='sm'>Czas trwania</H2>
-						{startDate && endDate ? (
-							<H3 className='mb-2 mt-4'>
-								{startDate?.toLocaleDateString()} - {endDate?.toLocaleDateString()}
-							</H3>
-						) : (
-							<Muted>Brak danych.</Muted>
-						)}
-						<Duration startDate={startDate} endDate={endDate} />
+					{hasActiveSubscription && (
+						<section className={cn(sectionStyles, 'relative border-none')}>
+							<H2 size='sm'>Czas trwania</H2>
+							{startDate && endDate ? (
+								<H3 className='mb-2 mt-4'>
+									{startDate?.toLocaleDateString()} - {endDate?.toLocaleDateString()}
+								</H3>
+							) : (
+								<Muted>Brak danych.</Muted>
+							)}
+							<Duration startDate={startDate} endDate={endDate} />
 
-						{daysOfWeek.length !== 0 && (
-							<>
-								<H3 className='mb-2 mt-8'>Zajęcia odbywają się w:</H3>
-								<ActiveDays daysOfWeek={daysOfWeek} />
-							</>
-						)}
-					</section>
+							{daysOfWeek.length !== 0 && (
+								<>
+									<H3 className='mb-2 mt-8'>Zajęcia odbywają się w:</H3>
+									<ActiveDays daysOfWeek={daysOfWeek} />
+								</>
+							)}
+						</section>
+					)}
 				</div>
 
-				<SideBar major={major} />
+				<SideBar major={major} hasActiveSubscription={hasActiveSubscription} />
 			</div>
 
 			<section className={cn(sectionStyles, 'wrapper border-t border-b-transparent')}>
@@ -178,6 +187,8 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 					<UnitCard unitId={unitId} />
 				</Suspense>
 			</section>
+
+			<SimiliarMajors currentMajor={major} />
 
 			<div className='sr-only'>
 				<ul>

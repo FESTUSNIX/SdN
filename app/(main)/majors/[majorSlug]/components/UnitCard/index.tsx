@@ -1,8 +1,7 @@
+import { PlaceholderImage } from '@/app/components/PlaceholderImage'
 import { buttonVariants } from '@/app/components/ui/Button'
 import { urlFor } from '@/lib/supabase/getUrlFor'
-import { capitalize } from '@/lib/utils'
-import { placeholderImage } from '@/lib/utils'
-import { cn } from '@/lib/utils'
+import { capitalize, cn } from '@/lib/utils'
 import prisma from '@/prisma/client'
 import { ArrowRight, LinkIcon, MailIcon, MapPin, PhoneIcon } from 'lucide-react'
 import Image from 'next/image'
@@ -82,21 +81,29 @@ const UnitCard = async ({ unitId }: Props) => {
 				<Link
 					href={`/units/${slug}`}
 					className='aspect-square size-24 min-h-full w-auto shrink-0 overflow-hidden rounded-xl border bg-secondary'>
-					<Image
-						src={urlFor('units', logo ?? '').publicUrl || placeholderImage}
-						alt={`Logo ${name}`}
-						width={200}
-						height={200}
-						className='h-full w-full object-cover'
-					/>
+					{logo ? (
+						<Image
+							src={urlFor('units', logo).publicUrl}
+							alt={`Logo ${name}`}
+							width={200}
+							height={200}
+							className='h-full w-full object-cover'
+						/>
+					) : (
+						<PlaceholderImage className='h-full w-full border-none object-cover' />
+					)}
 				</Link>
 				<div className='flex max-w-full flex-col'>
-					<Link href={`/units/${slug}`} className='w-max hover:underline'>
-						<h3 className='mb-3 w-max max-w-lg text-lg font-semibold md:text-xl'>{name}</h3>
+					<Link href={`/units/${slug}`} className='w-max max-w-full hover:underline'>
+						<h3 className='mb-3 w-max max-w-full text-lg font-semibold md:text-xl'>{name}</h3>
 					</Link>
 					<div className='flex flex-col gap-2'>
 						<div className='flex max-w-full flex-col gap-2'>
-							<Link href={website} target='_blank' rel='noopener' className='block w-max max-w-full text-sm underline'>
+							<Link
+								href={website}
+								target='_blank'
+								rel='noopener'
+								className='block w-max max-w-full break-all text-sm underline'>
 								<span aria-hidden={true}>
 									<LinkIcon className='mr-2 inline h-4 w-4 text-muted-foreground' />
 								</span>

@@ -4,17 +4,17 @@ import MajorCardSkeleton from './CardSkeleton'
 
 type Props = {
 	children: React.ReactNode
-	listType: 'grid' | 'list'
+	listType?: 'grid' | 'list'
 	className?: string
 }
 
-const MajorsGrid = ({ children, listType, className }: Props) => {
+const MajorsGrid = ({ children, listType = 'grid', className }: Props) => {
 	return (
 		<div
 			className={cn(
-				'grid gap-x-1 gap-y-2 @container',
-				listType === 'grid' && 'grid-cols-1 min-[560px]:grid-cols-2 md:grid-cols-3',
-				listType === 'list' && 'grid-cols-1',
+				'grid @container',
+				listType === 'grid' && 'grid-cols-1 gap-3 min-[560px]:grid-cols-2 md:grid-cols-3',
+				listType === 'list' && 'grid-cols-1 gap-x-1 gap-y-2',
 				className
 			)}>
 			<Suspense

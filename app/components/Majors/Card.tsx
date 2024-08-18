@@ -24,24 +24,26 @@ type Props = {
 	likeable?: boolean
 	type?: 'grid' | 'list'
 	onDislike?: (slug: string) => void
+	className?: string
 }
 
-const MajorCard = ({ data, likeable = true, type = 'grid', onDislike }: Props) => {
+const MajorCard = ({ data, likeable = true, type = 'grid', onDislike, className }: Props) => {
 	const { name, isOnline, majorLevel, qualifications, slug, unit } = data
 
 	return (
 		<Link
 			href={`/majors/${slug}`}
 			className={cn(
-				'group relative flex gap-6 rounded-lg border p-3 duration-300 hover:shadow dark:hover:border-foreground/40',
+				'group relative flex gap-4 rounded-lg border duration-300 hover:shadow dark:hover:border-foreground/40',
 				type === 'grid' && 'flex-col',
-				type === 'list' && 'flex-row'
+				type === 'list' && 'flex-row',
+				className
 			)}>
 			<div
 				className={cn(
-					'relative size-12 shrink-0 overflow-hidden rounded-md',
-					type === 'grid' && 'h-52 w-full',
-					type === 'list' && 'mt-1 hidden size-28 sm:block'
+					'relative size-12 shrink-0 overflow-hidden',
+					type === 'grid' && 'h-52 w-full rounded-t-md',
+					type === 'list' && 'm-3 mr-0 mt-4 hidden size-28 rounded-md sm:block'
 				)}>
 				<Image
 					src={urlFor('qualification_images', `${qualifications[0]?.slug}.jpg`).publicUrl}
@@ -53,15 +55,15 @@ const MajorCard = ({ data, likeable = true, type = 'grid', onDislike }: Props) =
 				<Skeleton className='absolute inset-0 -z-10' />
 			</div>
 
-			<div>
+			<div className={cn(type === 'grid' && 'px-3 pb-3', type === 'list' && 'p-3 sm:pl-0')}>
 				<h3 className='truncate-vertical-2 mb-2 text-lg font-semibold leading-tight'>{name}</h3>
 
 				<div className='mb-6 flex flex-wrap gap-2 gap-y-2'>
-					<Badge variant={'secondary'}>
+					<Badge variant={'secondary'} className='border'>
 						<span className='sr-only'>Poziom: </span>
 						<h4>{majorLevelEnum[majorLevel]}</h4>
 					</Badge>
-					<Badge variant={'secondary'}>
+					<Badge variant={'secondary'} className='border'>
 						<span className='sr-only'>Tryb: </span>
 						<h4>{isOnline ? 'Online' : 'Stacjonarne'}</h4>
 					</Badge>

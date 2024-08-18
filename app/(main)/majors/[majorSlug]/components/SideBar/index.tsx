@@ -7,9 +7,9 @@ import { cn } from '@/lib/utils'
 import { Major } from '@prisma/client'
 import Duration from '../SideBarDuration'
 
-type Props = { major: Major }
+type Props = { major: Major; hasActiveSubscription: boolean }
 
-const SideBar = ({ major }: Props) => {
+const SideBar = ({ major, hasActiveSubscription }: Props) => {
 	const {
 		startDate,
 		endDate,
@@ -20,7 +20,9 @@ const SideBar = ({ major }: Props) => {
 		contact,
 		organisator,
 		address,
-		majorLevel
+		majorLevel,
+		isRegulated,
+		isOnline
 	} = major
 
 	return (
@@ -34,38 +36,39 @@ const SideBar = ({ major }: Props) => {
 						<Duration startDate={startDate} endDate={endDate} />
 					</div>
 
-					<div>
-						{[
-							{
-								name: 'Liczba semestrów',
-								value: numberOfSemesters
-							},
-							{
-								name: 'Łącznie',
-								value: durationInHours ? `${durationInHours} godzin` : null
-							}
-						].map(item => (
-							<div
-								key={item.name}
-								className='mb-2 flex flex-row flex-wrap items-center justify-between gap-x-8 lg:mb-1'>
-								<span>{item.name}</span>
-								<span className={cn('text-sm', !item.value && 'text-muted-foreground')}>
-									{item.value || 'Brak danych'}
-								</span>
-							</div>
-						))}
-					</div>
-
-					{(contact || organisator || address) && (
+					{hasActiveSubscription && (
+						<div>
+							{[
+								{
+									name: 'Liczba semestrów',
+									value: numberOfSemesters
+								},
+								{
+									name: 'Łącznie',
+									value: durationInHours ? `${durationInHours} godzin` : null
+								}
+							].map(item => (
+								<div
+									key={item.name}
+									className='mb-2 flex flex-row flex-wrap items-center justify-between gap-x-8 lg:mb-1'>
+									<span>{item.name}</span>
+									<span className={cn('text-sm', !item.value && 'text-muted-foreground')}>
+										{item.value || 'Brak danych'}
+									</span>
+								</div>
+							))}
+						</div>
+					)}
+					{hasActiveSubscription && (contact || organisator || address) && (
 						<>
 							<Separator />
 							<div>
 								<H3 size='sm' className='mb-1'>
 									Organizowane przez
 								</H3>
-								{organisator && <div>{organisator}</div>}
-								{contact && <div>{contact}</div>}
-								{address && <div>{address}</div>}
+								{organisator && <p>{organisator}</p>}
+								{contact && <p>{contact}</p>}
+								{address && <p>{address}</p>}
 							</div>
 						</>
 					)}
@@ -75,13 +78,21 @@ const SideBar = ({ major }: Props) => {
 							<Separator />
 							<div>
 								<H3 size='sm' className='mb-1'>
-									Detale
+									Informacje
 								</H3>
 								<div>
 									{[
 										{
 											name: 'Poziom',
 											value: majorLevelEnum[majorLevel]
+										},
+										{
+											name: 'Tryb',
+											value: isOnline ? 'Online' : 'Stacjonarne'
+										},
+										{
+											name: 'Regulowany',
+											value: isRegulated ? 'Tak' : 'Nie'
 										}
 									].map(item => (
 										<div
