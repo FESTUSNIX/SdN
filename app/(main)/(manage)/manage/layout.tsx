@@ -36,7 +36,7 @@ export default async function ManageLayout({ children }: { children: React.React
 
 	const subscriptions = user?.unit?.subscriptions
 
-	if (!subscriptions || subscriptions.length === 0) return redirect('/subscribe')
+	if (!subscriptions || subscriptions.length === 0) return redirect('/pricing')
 
 	return (
 		<>
