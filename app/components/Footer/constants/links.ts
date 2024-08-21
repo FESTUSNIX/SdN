@@ -1,20 +1,37 @@
-import { socialMedia } from '@/app/constants/socialMedia';
+import { socialMedia } from '@/app/constants/socialMedia'
 
 export const links: { title: string; links: { label: string; link: string; external?: boolean }[] }[] = [
 	{
 		title: 'Serwis',
 		links: [
 			{
-				label: 'O portalu',
-				link: '/about'
-			},
-			{
 				label: 'Szukaj',
 				link: '/search'
 			},
 			{
-				label: 'Logowanie',
+				label: 'O portalu',
+				link: '/about'
+			},
+			{
+				label: 'Polubione',
+				link: '/saved'
+			}
+		]
+	},
+	{
+		title: 'Dla uczelni',
+		links: [
+			{
+				label: 'Cennik',
+				link: '/pricing'
+			},
+			{
+				label: 'Zaloguj się',
 				link: '/login'
+			},
+			{
+				label: 'Promuj swoją uczelnię',
+				link: '/work-with-us'
 			}
 		]
 	},

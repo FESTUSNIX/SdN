@@ -1,7 +1,10 @@
 type PricingPlan = {
 	name: string
 	description: string
-	price: number
+	price: {
+		monthly: number
+		yearly: number
+	}
 	features: string[]
 	featuresLabel: string | JSX.Element
 	button: {
@@ -15,7 +18,10 @@ export const PRICING_PLANS: PricingPlan[] = [
 	{
 		name: 'Free',
 		description: 'Darmowy plan dostępny dla każdej uczelni',
-		price: 0,
+		price: {
+			monthly: 0,
+			yearly: 0
+		},
 		button: {
 			label: 'Przeglądaj kierunki',
 			href: '/search'
@@ -31,7 +37,10 @@ export const PRICING_PLANS: PricingPlan[] = [
 		primary: true,
 		name: 'Standard',
 		description: 'Idealny plan dla Twojej uczelni',
-		price: 2000,
+		price: {
+			monthly: 495,
+			yearly: 4999
+		},
 		button: {
 			label: 'Zacznij promować',
 			href: '/contact'
@@ -53,7 +62,10 @@ export const PRICING_PLANS: PricingPlan[] = [
 	{
 		name: 'Premium',
 		description: 'Najlepszy plan dla Twojej uczelni',
-		price: 5000,
+		price: {
+			monthly: 999,
+			yearly: 9950
+		},
 		button: {
 			label: 'Zacznij promować',
 			href: '/contact'

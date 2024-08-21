@@ -1,4 +1,5 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/app/components/ui/accordion'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/tabs'
 import { H1, H2, Muted } from '@/app/components/ui/Typography'
 import { PricingCard } from './components/PricingCard'
 import { FAQS } from './constants/faqs'
@@ -7,6 +8,8 @@ import { PRICING_PLANS } from './constants/pricingPlans'
 type Props = {}
 
 const PricingPage = (props: Props) => {
+	const billingPeriods: ('monthly' | 'yearly')[] = ['monthly', 'yearly']
+
 	return (
 		<main className='wrapper py-24'>
 			<header className='mb-16 flex flex-col items-center text-center'>
@@ -22,11 +25,29 @@ const PricingPage = (props: Props) => {
 			<section className='py-8'>
 				<h2 className='sr-only'>Plany</h2>
 
-				<div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6 xl:gap-x-12'>
-					{PRICING_PLANS.map((plan, i) => (
-						<PricingCard key={i} {...plan} />
+				<Tabs defaultValue='monthly' className='flex w-full flex-col items-center gap-12'>
+					<div>
+						<Muted className='mb-2 block text-center'>Typ rozliczenia</Muted>
+						<TabsList>
+							<TabsTrigger value='monthly'>Miesięczne</TabsTrigger>
+							<TabsTrigger value='yearly'>Roczne</TabsTrigger>
+						</TabsList>
+					</div>
+					{billingPeriods.map((type,) => (
+						<TabsContent value={type} key={`billing-${type}`}>
+							<div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6 xl:gap-x-12'>
+								{PRICING_PLANS.map((plan, i, plans) => (
+									<PricingCard
+										key={i}
+										previousPlansFeatures={plans.slice(0, i).flatMap(plan => plan.features)}
+										billingPeriod={type}
+										{...plan}
+									/>
+								))}
+							</div>
+						</TabsContent>
 					))}
-				</div>
+				</Tabs>
 			</section>
 
 			<section className='mt-24 flex flex-col py-8 lg:flex-row lg:justify-between lg:gap-x-16 xl:gap-x-24'>

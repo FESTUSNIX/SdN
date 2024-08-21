@@ -10,17 +10,32 @@ import Link from 'next/link'
 type Props = {
 	name: string
 	description: string
-	price: number
+	price: {
+		monthly: number
+		yearly: number
+	}
 	button: {
 		label: string
 		href: string
 	}
 	features: string[]
+	previousPlansFeatures?: string[]
 	featuresLabel: string | JSX.Element
+	billingPeriod?: 'monthly' | 'yearly'
 	primary?: boolean
 }
 
-export const PricingCard = ({ features, name, price, description, primary, featuresLabel, button }: Props) => {
+export const PricingCard = ({
+	features,
+	name,
+	price,
+	description,
+	primary,
+	featuresLabel,
+	button,
+	previousPlansFeatures,
+	billingPeriod = 'monthly'
+}: Props) => {
 	return (
 		<Card
 			className={cn(
@@ -34,8 +49,10 @@ export const PricingCard = ({ features, name, price, description, primary, featu
 				</div>
 
 				<p>
-					<span className='text-5xl font-bold md:text-5xl'>{price}zł</span>
-					<span className='text-lg font-semibold text-muted-foreground md:text-xl'>/miesiąc</span>
+					<span className='text-5xl font-bold md:text-5xl'>{price[billingPeriod]}zł</span>
+					<span className='text-lg font-semibold text-muted-foreground md:text-xl'>
+						/{billingPeriod === 'monthly' ? 'miesiąc' : 'rok'}
+					</span>
 				</p>
 
 				<CardDescription className='text-pretty text-muted-foreground'>{description}</CardDescription>
@@ -52,9 +69,17 @@ export const PricingCard = ({ features, name, price, description, primary, featu
 			</CardHeader>
 
 			<CardContent className=''>
-				<H3 className='mb-4 font-normal'>{featuresLabel}</H3>
+				{/* <H3 className='mb-4 font-normal'>{featuresLabel}</H3> */}
+				<h3 className='sr-only'>Zalety planu {name}</h3>
 
 				<ul className='flex flex-col gap-1.5'>
+					{previousPlansFeatures &&
+						previousPlansFeatures.map(feature => (
+							<li key={feature} className='flex items-center gap-2'>
+								<CircleCheck className={cn('size-4 shrink-0 text-muted-foreground')} />
+								<span className={cn('text-sm leading-tight text-muted-foreground')}>{feature}</span>
+							</li>
+						))}
 					{features.map(feature => (
 						<li key={feature} className='flex items-center gap-2'>
 							<CircleCheck className={cn('size-4 shrink-0 text-primary')} />
