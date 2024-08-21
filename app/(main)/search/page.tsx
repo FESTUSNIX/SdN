@@ -53,7 +53,7 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 	let orderBy: {
 		[key: string]: string
 	} = {}
-	orderBy[orderByKey] = orderByValue
+	if (orderByKey && orderByValue) orderBy[orderByKey] = orderByValue
 
 	const page = searchParams.page ?? '1'
 	const per_page = searchParams.per_page ?? '30'
@@ -80,7 +80,7 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 
 	const listTypeParam =
 		typeof searchParams.list_type === 'string' ? searchParams.list_type : searchParams.list_type?.[0]
-	const listType = listTypeParam === 'grid' ? 'grid' : 'list'
+	const listType = listTypeParam === 'list' ? 'list' : 'grid'
 
 	const { data: majors, pagination } = await getMajorSearchResults(params)
 	const pageCount = Math.ceil(pagination.total / limit)
@@ -114,9 +114,11 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 					</div>
 
 					<div className='col-start-2 col-end-5 row-start-1 row-end-3 grow'>
-						<div className='mb-12'>
+						<section className='mb-12'>
 							<div className='mb-4 flex items-center gap-2'>
-								<AdvancedSearchBar placeholder={`Szukaj wśród ${pagination.total ?? 2568} wyników`} />
+								<Suspense>
+									<AdvancedSearchBar placeholder={`Szukaj wśród ${pagination.total ?? 2568} wyników`} />
+								</Suspense>
 							</div>
 
 							<div className='flex flex-wrap-reverse items-start justify-between gap-2'>
@@ -127,26 +129,23 @@ const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: str
 									<FiltersDialog citiesParam={cities} voivodeshipsParam={voivodeships} />
 								</div>
 							</div>
-						</div>
+						</section>
+
 						<Suspense fallback={<p>Loading majors...</p>}>
 							<Results listType={listType} majors={majors} />
 						</Suspense>
 
 						<div className='mt-16'>
-							<Pagination
-								pageCount={pageCount}
-								page={typeof page === 'string' ? page : page[0]}
-								per_page={typeof per_page === 'string' ? per_page : per_page[0]}
-							/>
+							<Suspense>
+								<Pagination
+									pageCount={pageCount}
+									page={typeof page === 'string' ? page : page[0]}
+									per_page={typeof per_page === 'string' ? per_page : per_page[0]}
+								/>
+							</Suspense>
 						</div>
 					</div>
 				</div>
-				{/* <SearchParamsChangeHandler
-					params={{
-						...params,
-						page: typeof page === 'string' ? page : page[0]
-					}}
-				/> */}
 			</TransitionLoadingProvider>
 		</main>
 	)

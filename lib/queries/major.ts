@@ -1,5 +1,8 @@
 import prisma from '@/prisma/client'
-import { Major, MajorLevel, Prisma, Qualification } from '@prisma/client'
+import { Major, MajorLevel, Prisma, Qualification, Subscription, Unit } from '@prisma/client'
+import { isEmpty } from '../utils'
+
+// ================== MAJOR SEARCH ==================
 
 type MajorSearchInput = {
 	orderBy: {
@@ -20,6 +23,13 @@ type MajorSearchInput = {
 	offset: number
 }
 
+export type MajorSearchResults = (Pick<Major, 'name' | 'cost' | 'isOnline' | 'majorLevel' | 'slug'> & {
+	unit: Pick<Unit, 'name'> & {
+		subscriptions: Pick<Subscription, 'type'>[]
+	}
+	qualifications: Pick<Qualification, 'name' | 'slug'>[]
+})[]
+
 export const getMajorSearchResults = async ({
 	orderBy,
 	majorLevel,
@@ -35,9 +45,12 @@ export const getMajorSearchResults = async ({
 	units,
 	limit,
 	offset
-}: MajorSearchInput) => {
-	const query: Prisma.MajorFindManyArgs = {
-		orderBy,
+}: MajorSearchInput): Promise<{
+	data: { premium: MajorSearchResults; standard: MajorSearchResults }
+	pagination: any
+}> => {
+	const baseQuery: Prisma.MajorFindManyArgs = {
+		orderBy: orderBy,
 		where: {
 			majorLevel: {
 				in: typeof majorLevel === 'string' ? [majorLevel] : majorLevel
@@ -137,38 +150,114 @@ export const getMajorSearchResults = async ({
 			cost: true,
 			unit: {
 				select: {
-					name: true
+					name: true,
+					subscriptions: {
+						select: {
+							to: true,
+							type: true
+						},
+						where: {
+							to: {
+								gte: new Date()
+							},
+							type: {
+								in: ['STANDARD', 'PREMIUM']
+							}
+						}
+					}
 				}
 			}
 		},
 		take: limit,
 		skip: offset
 	}
-	const [majors, count] = await prisma.$transaction([
-		prisma.major.findMany(query),
-		prisma.major.count({ where: query.where })
+
+	const premiumQuery: Prisma.MajorFindManyArgs = {
+		...baseQuery,
+		where: {
+			...baseQuery.where,
+			unit: {
+				subscriptions: {
+					some: {
+						to: {
+							gt: new Date()
+						},
+						type: 'PREMIUM'
+					}
+				}
+			}
+		}
+	}
+
+	const nonPremiumQuery: Prisma.MajorFindManyArgs = {
+		...baseQuery,
+		where: {
+			...baseQuery.where,
+			NOT: {
+				unit: {
+					subscriptions: {
+						some: {
+							to: {
+								gt: new Date()
+							},
+							type: 'PREMIUM'
+						}
+					}
+				}
+			}
+		}
+	}
+
+	const [premiumMajors, premiumCount] = await prisma.$transaction([
+		prisma.major.findMany(premiumQuery),
+		prisma.major.count({ where: premiumQuery.where })
 	])
+
+	// Calculate remaining offset for non-premium majors after accounting for premium majors
+	const remainingOffset = Math.max(offset - premiumCount, 0)
+	const remainingLimit = limit - premiumMajors.length
+
+	let nonPremiumMajors: MajorSearchResults = []
+	let nonPremiumCount = 0
+
+	if (remainingLimit > 0) {
+		nonPremiumMajors = (await prisma.major.findMany({
+			...nonPremiumQuery,
+			take: remainingLimit,
+			skip: remainingOffset
+		})) as any
+		nonPremiumCount = await prisma.major.count({ where: nonPremiumQuery.where })
+	}
+
+	const totalCount = premiumCount + nonPremiumCount
+
+	if (isEmpty(orderBy)) {
+		nonPremiumMajors = nonPremiumMajors.sort((a, b) => {
+			const aHasActiveSubscription = a.unit.subscriptions.length > 0
+			const bHasActiveSubscription = b.unit.subscriptions.length > 0
+
+			if (aHasActiveSubscription && !bHasActiveSubscription) {
+				return -1
+			} else if (!aHasActiveSubscription && bHasActiveSubscription) {
+				return 1
+			} else {
+				return 0
+			}
+		})
+	}
 
 	return {
 		pagination: {
-			total: count
+			total: totalCount
 		},
-		data: majors as unknown as {
-			name: string
-			cost: number
-			isOnline: boolean
-			majorLevel: MajorLevel
-			slug: string
-			unit: {
-				name: string
-			}
-			qualifications: {
-				name: string
-				slug: string
-			}[]
-		}[]
+		data: {
+			premium: premiumMajors as any,
+			standard: nonPremiumMajors
+		}
 	}
 }
+
+// ================== SIMILIAR MAJORS ==================
 
 type GetSimiliarMajorsInput = {
 	currentMajor: {

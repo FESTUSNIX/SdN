@@ -45,6 +45,10 @@ export function isObject(object: any) {
 	return object != null && typeof object === 'object'
 }
 
+export function isEmpty(object: any) {
+	return Object.keys(object).length === 0
+}
+
 export const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1)
 
 export const placeholderImage = '/placeholder-image.jpg'

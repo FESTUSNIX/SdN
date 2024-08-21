@@ -66,9 +66,19 @@ export function Pagination({ pageCount, page, per_page, siblingCount = -1, class
 	}, [pageCount, page, siblingCount])
 
 	useEffect(() => {
+		scrollToTop()
 		isPending ? startLoading() : stopLoading()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isPending])
+
+	const scrollToTop = () => {
+		if (typeof window === 'undefined') return
+
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		})
+	}
 
 	return (
 		<div className={cn('flex flex-wrap items-center justify-center gap-2', className)} {...props}>
@@ -155,11 +165,13 @@ export function Pagination({ pageCount, page, per_page, siblingCount = -1, class
 				size='icon'
 				className='hidden h-8 w-8 lg:flex'
 				onClick={() => {
-					router.push(
-						`${pathname}?${createQueryString({
-							page: pageCount ?? 10
-						})}`
-					)
+					startTransition(() => {
+						router.push(
+							`${pathname}?${createQueryString({
+								page: pageCount ?? 10
+							})}`
+						)
+					})
 				}}
 				disabled={Number(page) === (pageCount ?? 10) || isPending}>
 				<ChevronsRight className='h-4 w-4' aria-hidden='true' />

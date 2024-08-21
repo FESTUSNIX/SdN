@@ -1,20 +1,23 @@
 import MajorCard from '@/app/components/Majors/Card'
 import MajorsGrid from '@/app/components/Majors/Grid'
 import { ResultsLoading } from '@/app/components/Majors/ResultsLoading'
-import { H3 } from '@/app/components/ui/Typography'
-import { Major, Qualification, Unit } from '@prisma/client'
-import React from 'react'
+import { Separator } from '@/app/components/ui/separator'
+import { H2, H3 } from '@/app/components/ui/Typography'
+import { MajorSearchResults } from '@/lib/queries/major'
+import { PromotionInfoDialog } from './PromotionInfoDialog'
 
 type Props = {
-	majors: (Pick<Major, 'name' | 'slug' | 'isOnline' | 'majorLevel'> & {
-		unit: Pick<Unit, 'name'>
-		qualifications: Pick<Qualification, 'name' | 'slug'>[]
-	})[]
+	majors: {
+		premium: MajorSearchResults
+		standard: MajorSearchResults
+	}
 	listType: 'grid' | 'list'
 }
 
 export const Results = async ({ majors, listType }: Props) => {
-	if (!majors.length) {
+	const totalMajors = [...majors.premium, ...majors.standard]
+
+	if (!totalMajors.length) {
 		return (
 			<div className='mx-auto py-4 text-center'>
 				<H3>Nie udało się odnaleźć kierunku z podanymi kryteriami</H3>
@@ -25,12 +28,39 @@ export const Results = async ({ majors, listType }: Props) => {
 
 	return (
 		<>
-			<div>
+			<section>
 				<ResultsLoading listType={listType}>
+					{majors.premium.length > 0 && (
+						<div>
+							<div className='mb-4 flex items-center gap-2'>
+								<H2 className='p-0'>Promowane kierunki</H2>
+								<PromotionInfoDialog />
+							</div>
+
+							<MajorsGrid listType={listType} className='mb-4'>
+								{majors?.premium.map(major => (
+									<MajorCard
+										key={major.slug}
+										data={{
+											name: major.name,
+											slug: major.slug,
+											isOnline: major.isOnline,
+											majorLevel: major.majorLevel,
+											qualifications: major.qualifications,
+											unit: major.unit
+										}}
+										type={listType}
+										hideBadges
+									/>
+								))}
+							</MajorsGrid>
+
+							{majors.standard.length > 0 && <Separator className='my-8' />}
+						</div>
+					)}
 					<MajorsGrid listType={listType}>
-						{majors &&
-							majors.length > 0 &&
-							majors?.map(major => (
+						{majors.standard.length > 0 &&
+							majors?.standard.map(major => (
 								<MajorCard
 									key={major.slug}
 									data={{
@@ -46,7 +76,7 @@ export const Results = async ({ majors, listType }: Props) => {
 							))}
 					</MajorsGrid>
 				</ResultsLoading>
-			</div>
+			</section>
 		</>
 	)
 }
