@@ -38,6 +38,19 @@ export default async function UnitPage({ params, searchParams }: Props) {
 					street: true,
 					postalCode: true
 				}
+			},
+			subscriptions: {
+				where: {
+					to: {
+						gte: new Date()
+					},
+					type: {
+						in: ['STANDARD', 'PREMIUM']
+					}
+				},
+				select: {
+					type: true
+				}
 			}
 		}
 	})
@@ -60,8 +73,11 @@ export default async function UnitPage({ params, searchParams }: Props) {
 		regon,
 		address,
 		updatedAt,
-		gallery
+		gallery,
+		subscriptions
 	} = unit
+
+	const hasActiveSubscription = subscriptions.length > 0
 
 	return (
 		<main className='wrapper'>
@@ -86,24 +102,26 @@ export default async function UnitPage({ params, searchParams }: Props) {
 				regon={regon}
 			/>
 
-			<Suspense
-				fallback={
-					<div className='border-b py-6'>
-						<Skeleton className='h-7 w-48' />
-						<Skeleton className='my-4 h-6 w-56' />
-						<Skeleton className='h-[60vh] w-full' />
-					</div>
-				}>
-				<Address
-					GOOGLE_MAPS_API_KEY={GOOGLE_MAPS_API_KEY}
-					city={city}
-					voivodeship={voivodeship}
-					postalCode={address?.postalCode ?? null}
-					street={address?.street ?? null}
-				/>
-			</Suspense>
+			{hasActiveSubscription && (
+				<Suspense
+					fallback={
+						<div className='border-b py-6'>
+							<Skeleton className='h-7 w-48' />
+							<Skeleton className='my-4 h-6 w-56' />
+							<Skeleton className='h-[60vh] w-full' />
+						</div>
+					}>
+					<Address
+						GOOGLE_MAPS_API_KEY={GOOGLE_MAPS_API_KEY}
+						city={city}
+						voivodeship={voivodeship}
+						postalCode={address?.postalCode ?? null}
+						street={address?.street ?? null}
+					/>
+				</Suspense>
+			)}
 
-			<ImageGallery images={gallery as any} />
+			{hasActiveSubscription && <ImageGallery images={gallery as any} />}
 
 			<Suspense>
 				<Majors unitSlug={params.unitSlug} />
