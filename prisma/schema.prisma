@@ -86,40 +86,48 @@ model Unit {
 }
 
 model Major {
-  id                    Int             @id @default(autoincrement())
+  id                    Int              @id @default(autoincrement())
   name                  String
   cost                  Int?
   unitId                Int
   address               String?
   certificates          String?
   daysOfWeek            DaysOfWeek[]
-  formOfStudy           String?         @default("zaoczne")
+  formOfStudy           String?          @default("zaoczne")
   numberOfSemesters     Int?
   organisator           String?
-  updatedAt             DateTime        @default(now()) @updatedAt
-  canPayInInstallments  Boolean         @default(false)
+  updatedAt             DateTime         @default(now()) @updatedAt
+  canPayInInstallments  Boolean          @default(false)
   durationInHours       Int?
-  isOnline              Boolean         @default(false)
+  isOnline              Boolean          @default(false)
   onlineDuration        Int?
-  endDate               DateTime?       @db.Date
-  startDate             DateTime?       @db.Date
+  endDate               DateTime?        @db.Date
+  startDate             DateTime?        @db.Date
   contact               String?
-  isRegulated           Boolean         @default(true)
-  majorLevel            MajorLevel      @default(PODYPLOMOWE)
-  workStatus            WorkStatus      @default(IN_PROGRESS)
+  isRegulated           Boolean          @default(true)
+  majorLevel            MajorLevel       @default(PODYPLOMOWE)
+  workStatus            WorkStatus       @default(IN_PROGRESS)
   unitSlug              String
   completionConditions  Json?
   description           Json?
   recruitmentConditions Json?
   syllabus              Json?
-  slug                  String          @unique @default(cuid())
-  unit                  Unit            @relation(fields: [unitId, unitSlug], references: [id, slug])
-  qualifications        Qualification[] @relation("MajorToQualification")
+  slug                  String           @unique @default(cuid())
+  unit                  Unit             @relation(fields: [unitId, unitSlug], references: [id, slug])
+  qualifications        Qualification[]  @relation("MajorToQualification")
   keywords              String[]
-  status                Status          @default(DRAFT)
+  status                Status           @default(DRAFT)
   url                   String?
+  PromotedMajors        PromotedMajors[]
 
   @@index([name])
+}
+
+model PromotedMajors {
+  id         Int      @id @default(autoincrement())
+  major      Major    @relation(fields: [majorId], references: [id])
+  majorId    Int
+  promotedAt DateTime @default(now())
 }
 
 model UnitAddress {
