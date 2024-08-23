@@ -13,6 +13,50 @@ import { Duration } from './components/Duration'
 import SideBar from './components/SideBar'
 import { SimiliarMajors } from './components/SimiliarMajors'
 import UnitCard from './components/UnitCard'
+import { Metadata } from 'next'
+
+export async function generateMetadata({ params: { majorSlug } }: { params: { majorSlug: string } }) {
+	const major = await prisma.major.findFirst({
+		where: {
+			slug: majorSlug,
+			status: 'PUBLISHED'
+		},
+		select: {
+			name: true,
+			keywords: true,
+			qualifications: {
+				select: {
+					name: true,
+					slug: true
+				}
+			},
+			unit: {
+				select: {
+					name: true
+				}
+			}
+		}
+	})
+
+	if (!major) return notFound()
+
+	const image = urlFor('qualification_images', `${major.qualifications[0]?.slug}.jpg`).publicUrl
+
+	const description = `${major.name} to kierunek studiów oferowany przez ${
+		major.unit.name
+	}. Kierunek pozwala na uzyskanie kwalifikacji takich jak: ${major.qualifications.map(q => q.name).join(', ')}.`
+
+	const metadata: Metadata = {
+		title: major.name,
+		description: description,
+		openGraph: {
+			images: [image]
+		},
+		keywords: major.keywords
+	}
+
+	return metadata
+}
 
 const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: string } }) => {
 	const major = await prisma.major.findFirst({
@@ -31,7 +75,17 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 			unit: {
 				select: {
 					id: true,
-					name: true
+					name: true,
+					subscriptions: {
+						where: {
+							to: {
+								gte: new Date()
+							},
+							type: {
+								in: ['PREMIUM', 'STANDARD']
+							}
+						}
+					}
 				}
 			}
 		}
@@ -53,21 +107,11 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 		startDate,
 		syllabus,
 		unitId,
-		keywords
+		keywords,
+		unit: { subscriptions }
 	} = major
 
-	const activeSubscription = await prisma.subscription.findFirst({
-		where: {
-			unitId: unitId,
-			to: {
-				gte: new Date()
-			},
-			type: {
-				in: ['PREMIUM', 'STANDARD']
-			}
-		}
-	})
-	const hasActiveSubscription = !!activeSubscription
+	const hasActiveSubscription = subscriptions?.length > 0
 
 	const sectionStyles = 'border-b py-8'
 
@@ -183,12 +227,14 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 					Organizowane przez
 				</H2>
 
-				<Suspense fallback={<div>Ładowanie...</div>}>
+				<Suspense fallback={<div>Ładowanie organizatora...</div>}>
 					<UnitCard unitId={unitId} />
 				</Suspense>
 			</section>
 
-			<SimiliarMajors currentMajor={major} />
+			<Suspense fallback={<div>Ładowanie podobnych kierunków...</div>}>
+				<SimiliarMajors currentMajor={major} />
+			</Suspense>
 
 			<div className='sr-only'>
 				<ul>
