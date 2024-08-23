@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { Attributes } from './components/sections/Attributes'
+import { CityRecommendations } from './components/sections/CityRecommendations'
 import { Hero } from './components/sections/Hero'
 import { OurStats } from './components/sections/OurStats'
 import { RecommendedMajors } from './components/sections/RecommendedMajors'
@@ -20,6 +21,8 @@ export default function Home() {
 			<Attributes />
 
 			<RecommendedMajors />
+
+			<CityRecommendations />
 		</main>
 	)
 }
