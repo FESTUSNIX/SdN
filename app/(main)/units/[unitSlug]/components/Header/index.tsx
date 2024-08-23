@@ -26,7 +26,7 @@ const Header = ({ isPublic, logo, name, unitType, website, city, voivodeship }: 
 						className='h-full w-full object-cover'
 					/>
 				) : (
-					<PlaceholderImage className='aspect-square size-full' />
+					<PlaceholderImage className='aspect-square size-full border-none' />
 				)}
 			</div>
 

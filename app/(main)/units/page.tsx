@@ -1,16 +1,17 @@
 import prisma from '@/prisma/client'
 import Link from 'next/link'
 
+export const dynamic = 'force-static'
+
 const UnitsPage = async () => {
 	const units = await prisma.unit.findMany({
 		select: {
 			id: true,
 			slug: true,
 			name: true,
-			unitType: true,
-			majors: {
+			_count: {
 				select: {
-					_count: true
+					majors: true
 				}
 			}
 		}
@@ -24,10 +25,8 @@ const UnitsPage = async () => {
 						href={`/units/${unit.slug}`}
 						key={unit.slug}
 						className='flex items-center justify-between border-b py-2'>
-						<span className='mr-12 max-w-max truncate'>
-							#{unit.id} - {unit.name}
-						</span>
-						<span>{unit.slug}</span>
+						<span className='mr-12 max-w-max truncate'>{unit.name}</span>
+						<span>{unit._count.majors} kierunków</span>
 					</Link>
 				))}
 			</div>

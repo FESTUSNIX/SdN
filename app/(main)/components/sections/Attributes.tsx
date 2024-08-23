@@ -1,7 +1,8 @@
-import { Button } from '@/app/components/ui/button'
+import { Button, buttonVariants } from '@/app/components/ui/button'
 import { cn } from '@/lib/utils'
 import { SearchIcon } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 type Props = {}
@@ -34,10 +35,10 @@ export const Attributes = (props: Props) => {
 					Nie musisz przeszukiwać setek stron internetowych - z nami znajdziesz wszystko w jednym miejscu, szybko i
 					wygodnie!
 				</p>
-				<Button className='gap-3 rounded-full'>
+				<Link href={'/search'} className={cn(buttonVariants(), 'gap-3 rounded-full')}>
 					<span className='text-base'>Szukaj teraz</span>
 					<SearchIcon className='size-4' />
-				</Button>
+				</Link>
 			</GridItem>
 
 			<GridItem className='relative flex flex-col gap-12 !pl-0 sm:flex-row sm:items-center md:col-span-full min-[900px]:col-span-1 lg:col-span-full'>

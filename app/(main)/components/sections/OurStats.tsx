@@ -3,7 +3,7 @@ type Props = {}
 const STATS = [
 	{
 		value: '194',
-		label: 'Uczelni w całej Polsce'
+		label: 'Uczelnie z całej Polski'
 	},
 	{
 		value: '2600 +',
