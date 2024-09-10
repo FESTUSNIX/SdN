@@ -1,4 +1,4 @@
-import { GraduationCap, LayoutDashboard, Receipt, School2, ScrollText, Users } from 'lucide-react'
+import { GraduationCap, LayoutDashboard, MapPinHouse, Receipt, School2, ScrollText, Users } from 'lucide-react'
 import { ElementType } from 'react'
 
 export const links: {
@@ -26,7 +26,12 @@ export const links: {
 	{
 		title: 'Qualifications',
 		icon: ScrollText,
-		link: '/admin/qualifications',
+		link: '/admin/qualifications'
+	},
+	{
+		title: 'Cities',
+		icon: MapPinHouse,
+		link: '/admin/cities',
 		separate: true
 	},
 	{

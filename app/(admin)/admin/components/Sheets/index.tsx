@@ -1,4 +1,6 @@
 import AddAccount from './account/AddAccount'
+import AddCity from './city/AddCity'
+import EditCity from './city/EditCity'
 import AddMajor from './major/AddMajor'
 import EditMajor from './major/EditMajor'
 import AddQualification from './qualification/AddQualification'
@@ -19,6 +21,8 @@ export const SHEET_TYPES = [
 	'CLOSE',
 	'ADD_SUBSCRIPTION',
 	'EDIT_SUBSCRIPTION',
+	'ADD_CITY',
+	'EDIT_CITY',
 	'SET_VALUES'
 ] as const
 
@@ -36,6 +40,8 @@ export const SHEETS: {
 	ADD_ACCOUNT: AddAccount,
 	ADD_SUBSCRIPTION: AddSubscription,
 	EDIT_SUBSCRIPTION: EditSubscription,
+	ADD_CITY: AddCity,
+	EDIT_CITY: EditCity,
 	CLOSE: () => null,
 	SET_VALUES: () => null
 }

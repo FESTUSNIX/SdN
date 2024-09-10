@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import AccountDropdown from './components/AccountDropdown'
 import { DynamicBorder } from './components/DynamicBorder'
 import { SearchBar } from './components/SearchBar'
+import UserAvatar from '../UserAvatar'
 
 const Navbar = async () => {
 	return (
@@ -24,7 +25,15 @@ const Navbar = async () => {
 				</div>
 
 				<nav className='hidden md:block'>
-					<AccountDropdown />
+					<Suspense
+						fallback={
+							<UserAvatar
+								user={{ image: null, name: null }}
+								className='cursor-pointer border duration-300 hover:shadow'
+							/>
+						}>
+						<AccountDropdown />
+					</Suspense>
 				</nav>
 			</div>
 		</header>

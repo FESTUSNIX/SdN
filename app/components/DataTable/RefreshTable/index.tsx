@@ -1,22 +1,26 @@
 'use client'
 
 import { RefreshCw } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Button } from '../../ui/button'
 import { cn } from '@/lib/utils'
+import { revalidatePaths } from '@/app/_actions'
 
 const RefreshTable = () => {
 	const [isRefreshing, setIsRefreshing] = useState(false)
-
 	const router = useRouter()
+	const pathname = usePathname()
 
 	return (
 		<Button
 			variant='outline'
 			onClick={() => {
 				setIsRefreshing(true)
+
 				router.refresh()
+				revalidatePaths([pathname])
+
 				setTimeout(() => {
 					setIsRefreshing(false)
 				}, 500)

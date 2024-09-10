@@ -119,3 +119,19 @@ export const restoreMajor = async (majorId: number, revalidationPath?: string) =
 		throw new Error('Could not restore major')
 	}
 }
+
+export const getVoivodeships = async () => {
+	try {
+		const voivodeships = await prisma.voivodeship.findMany({
+			select: {
+				id: true,
+				name: true
+			}
+		})
+
+		return voivodeships
+	} catch (error) {
+		console.error(error)
+		throw new Error('Could not get voivodeships')
+	}
+}

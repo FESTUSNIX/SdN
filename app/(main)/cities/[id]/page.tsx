@@ -1,4 +1,5 @@
 import { H1, H2, H3 } from '@/app/components/ui/Typography'
+import { urlFor } from '@/lib/supabase/getUrlFor'
 import prisma from '@/prisma/client'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -7,13 +8,6 @@ import { CityUnits } from './components/CityUnits'
 import { CityUnitsSkeleton } from './components/CityUnitsSkeleton'
 
 type Props = { params: { id: string } }
-
-const CITY_IMAGES = {
-	88: 'warszawa.jpg',
-	32: 'krakow.jpg',
-	92: 'wroclaw.jpg',
-	56: 'poznan.jpg'
-}
 
 const CityPage = async ({ params }: Props) => {
 	const city = await prisma.city.findFirst({
@@ -31,7 +25,9 @@ const CityPage = async ({ params }: Props) => {
 						}
 					}
 				}
-			}
+			},
+			image: true,
+			description: true
 		}
 	})
 
@@ -39,15 +35,13 @@ const CityPage = async ({ params }: Props) => {
 
 	const majorsCount = city.units.reduce((acc, unit) => acc + unit._count.majors, 0)
 
-	const image = CITY_IMAGES[city.id as keyof typeof CITY_IMAGES]
-
 	return (
 		<main className='wrapper'>
 			<header className='py-16'>
-				{image && (
+				{city.image && (
 					<div className='relative mb-12 aspect-[2/1] h-auto w-full overflow-hidden rounded-lg border md:rounded-xl'>
 						<Image
-							src={`/images/cities/${image}`}
+							src={urlFor('cities', city.image).publicUrl}
 							alt={city.name}
 							width={1400}
 							height={600}
@@ -65,12 +59,7 @@ const CityPage = async ({ params }: Props) => {
 					<H3 size='base'>{majorsCount} kierunków</H3>
 				</div>
 
-				<p className='max-w-3xl text-pretty text-muted-foreground'>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum qui beatae quod animi ipsa culpa temporibus
-					voluptas delectus, nesciunt fugit aut natus? Impedit ullam iusto blanditiis nisi voluptatum libero architecto,
-					tempore doloremque perspiciatis vel nihil corrupti nobis? Quod consequuntur expedita nesciunt inventore facere
-					distinctio magnam nihil fugiat, odit reprehenderit hic.
-				</p>
+				<p className='max-w-3xl text-pretty text-muted-foreground'>{city.description}</p>
 			</header>
 
 			<section>

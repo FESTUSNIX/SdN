@@ -168,6 +168,8 @@ model Voivodeship {
 model City {
   id            Int         @id @default(autoincrement())
   name          String
+  description   String?
+  image         String?
   voivodeshipId Int
   voivodeship   Voivodeship @relation(fields: [voivodeshipId], references: [id])
   units         Unit[]
