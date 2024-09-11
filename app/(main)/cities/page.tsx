@@ -1,9 +1,12 @@
 import { H1 } from '@/app/components/ui/Typography'
 import prisma from '@/prisma/client'
+import { SearchParamsType } from '@/types'
 import { unstable_cache } from 'next/cache'
-import { CityResults } from './[id]/components/CityResults'
+import { CityResults } from './components/CityResults'
 
-type Props = {}
+type Props = {
+	searchParams: SearchParamsType
+}
 
 const getCachedCities = unstable_cache(
 	async () => {
@@ -21,7 +24,7 @@ const getCachedCities = unstable_cache(
 					}
 				},
 				image: true,
-				description: true
+				voivodeshipId: true
 			},
 			orderBy: {
 				name: 'asc'
@@ -31,38 +34,32 @@ const getCachedCities = unstable_cache(
 	[],
 	{
 		tags: ['cities'],
-		// an hour
 		revalidate: 60 * 60
 	}
 )
 
-const CitiesPage = async ({}: Props) => {
+const CitiesPage = async ({ searchParams }: Props) => {
 	const cityData = await getCachedCities()
-
 	const cities = cityData.map(city => {
-		const { name, units, id, image } = city
-
-		const majorsCount = units.reduce((acc, unit) => acc + unit._count.majors, 0)
+		const majorsCount = city.units.reduce((acc, unit) => acc + unit._count.majors, 0)
 
 		return {
-			id,
-			name,
-			unitsCount: units.length,
-			majorsCount,
-			image
+			...city,
+			unitsCount: city.units.length,
+			majorsCount
 		}
 	})
 
 	return (
 		<main className='wrapper'>
 			<header className='py-16'>
-				<H1 size='base'>Wykaz miast ({cities.length})</H1>
+				<H1 size='base'>Wykaz miast</H1>
 			</header>
 
 			<section>
 				<h2 className='sr-only'>Lista miast</h2>
 
-				<CityResults cities={cities} />
+				<CityResults cities={cities} searchParams={searchParams} />
 			</section>
 		</main>
 	)

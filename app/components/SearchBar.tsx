@@ -71,7 +71,7 @@ const SearchBar = ({ placeholder, param, className, debounceTime = 500 }: Props)
 				placeholder={placeholder ?? `Szukaj`}
 				className='h-auto rounded-full py-4 pl-12 pr-6'
 				value={query}
-				onChange={e => setQuery(e.target.value)}
+				onChange={e => setQuery(e.target.value.trim())}
 			/>
 		</div>
 	)

@@ -1,10 +1,11 @@
+import { urlFor } from '@/lib/supabase/getUrlFor'
+import { polishPlural } from '@/lib/utils'
 import { City } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PlaceholderImage } from './PlaceholderImage'
 import { Skeleton } from './ui/skeleton'
 import { H3 } from './ui/Typography'
-import { urlFor } from '@/lib/supabase/getUrlFor'
 
 export type CityCardType = Pick<City, 'id' | 'name' | 'image'> & {
 	unitsCount: number
@@ -25,9 +26,13 @@ export const CityCard = ({ data }: Props) => {
 					{data.name}
 				</H3>
 				<div className='flex items-center gap-2 text-sm text-white'>
-					<p>{data.unitsCount} uczelni</p>
+					<p>
+						{data.unitsCount} {polishPlural('uczelnia', 'uczelnie', 'uczelni', data.unitsCount)}
+					</p>
 					<span>|</span>
-					<p>{data.majorsCount} kierunki</p>
+					<p>
+						{data.majorsCount} {polishPlural('kierunek', 'kierunki', 'kierunków', data.majorsCount)}
+					</p>
 				</div>
 			</div>
 
