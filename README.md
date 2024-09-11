@@ -19,7 +19,6 @@ Open-soruce collection of all postgraduate studies in Poland.
 - **Styling:** TailwindCSS
 - **Components:** shadcn/ui
 - **Auth:** NextAuth (Auth.js)
-- **Emails:** React Email
 - **Database:** Supabase
 - **ORM:** Prisma
 
