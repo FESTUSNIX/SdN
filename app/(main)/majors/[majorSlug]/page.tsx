@@ -1,4 +1,5 @@
 import EditorOutput from '@/app/components/EditorOutput'
+import { PlaceholderImage } from '@/app/components/PlaceholderImage'
 import { Badge } from '@/app/components/ui/badge'
 import { H1, H2, H3, Muted } from '@/app/components/ui/Typography'
 import { majorLevelEnum } from '@/app/constants/majorLevel'
@@ -85,22 +86,17 @@ export async function generateMetadata({ params: { majorSlug } }: { params: { ma
 }
 
 export async function generateStaticParams() {
-	const majors = await prisma.promotedMajors.findMany({
-		select: {
-			major: {
-				select: {
-					slug: true
-				}
-			}
+	const majors = await prisma.major.findMany({
+		where: {
+			status: 'PUBLISHED'
 		},
-		take: 8,
-		orderBy: {
-			promotedAt: 'desc'
+		select: {
+			slug: true
 		}
 	})
 
-	return majors.map(({ major }) => ({
-		majorSlug: major.slug
+	return majors.map(({ slug }) => ({
+		majorSlug: slug
 	}))
 }
 
@@ -135,14 +131,18 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 			<header className='relative overflow-hidden border-b pb-6'>
 				<div className='pointer-events-none relative -z-10 mb-8 h-[35vh] max-h-[500px] min-h-[260px] w-screen overflow-hidden border-b [clip-path:inset(0)] xl:h-[40vh]'>
 					<div className='fixed h-[35vh] max-h-[500px] min-h-[260px] w-screen xl:h-[40vh]'>
-						<Image
-							src={urlFor('qualification_images', `${qualifications[0]?.slug}.jpg`).publicUrl}
-							alt={`Zdjęcie kwalifikacji ${qualifications[0].name}`}
-							fill
-							sizes='100vw'
-							priority
-							className='inset-0 h-full w-full select-none object-cover object-center'
-						/>
+						{qualifications[0] ? (
+							<Image
+								src={urlFor('qualification_images', `${qualifications[0]?.slug}.jpg`).publicUrl}
+								alt={`Zdjęcie kwalifikacji ${qualifications[0]?.name}`}
+								fill
+								sizes='100vw'
+								priority
+								className='inset-0 h-full w-full select-none object-cover object-center'
+							/>
+						) : (
+							<PlaceholderImage className='inset-0 h-full w-full select-none object-cover object-center' />
+						)}
 					</div>
 					<div className='absolute inset-0 bg-black/50'></div>
 				</div>
