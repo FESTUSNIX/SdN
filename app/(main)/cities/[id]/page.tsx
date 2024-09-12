@@ -76,6 +76,22 @@ export async function generateMetadata({ params }: Props) {
 	} satisfies Metadata
 }
 
+export async function generateStaticParams() {
+	const cities = await prisma.city.findMany({
+		select: {
+			id: true
+		},
+		orderBy: {
+			units: {
+				_count: 'desc'
+			}
+		},
+		take: 10
+	})
+
+	return cities.map(({ id }) => ({ id: id.toString() }))
+}
+
 const CityPage = async ({ params }: Props) => {
 	const city = await getCity(parseInt(params.id))
 	if (!city) return notFound()
