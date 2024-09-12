@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { deleteFilesFromSupabase } from '@/lib/supabase/filesServer'
 import prisma from '@/prisma/client'
 import { z } from 'zod'
 
@@ -23,10 +23,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
 		})
 
 		if (cityToDelete.image) {
-			const supabase = createClient()
-
-			const { data, error } = await supabase.storage.from('cities').remove([cityToDelete.image])
-			if (error) throw new Error(error.message)
+			await deleteFilesFromSupabase('cities', [cityToDelete.image])
 		}
 
 		return new Response('OK')

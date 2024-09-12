@@ -1,3 +1,4 @@
+import { uploadFileToSupabase } from '@/lib/supabase/filesServer'
 import { CityValidator } from '@/lib/validators/city'
 import prisma from '@/prisma/client'
 import { revalidatePath } from 'next/cache'
@@ -67,6 +68,10 @@ export async function POST(req: NextRequest) {
 
 			return newCity
 		})
+
+		if (image) {
+			await uploadFileToSupabase('cities', image, `${city.id}/main-image`)
+		}
 
 		revalidatePath('/admin/cities')
 

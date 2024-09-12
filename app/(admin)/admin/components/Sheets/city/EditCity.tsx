@@ -14,8 +14,8 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useFormChanges } from '../../../hooks/useFormChanges'
 import { CityForm } from '../../Forms/CityForm'
-import { uploadFileToSupabase } from '@/lib/supabase/uploadImage'
-import { deleteFilesFromSupabase } from '@/lib/supabase/deleteFiles'
+import { uploadFileToSupabase } from '@/lib/supabase/filesClient'
+import { deleteFilesFromSupabase } from '@/lib/supabase/filesClient'
 import { revalidatePaths } from '@/app/_actions'
 
 const EditCity = () => {

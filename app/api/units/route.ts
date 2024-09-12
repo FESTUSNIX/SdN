@@ -1,3 +1,4 @@
+import { uploadFileToSupabase } from '@/lib/supabase/filesServer'
 import { UnitValidator } from '@/lib/validators/unit'
 import prisma from '@/prisma/client'
 import { z } from 'zod'
@@ -51,45 +52,57 @@ export async function POST(req: Request) {
 
 		const newId = (latestUnit?.id ?? 0) + 1
 
-		const unit = await prisma.unit.upsert({
-			where: {
-				id: newId
-			},
-			create: {
-				id: newId,
-				name: data.name,
-				logo: null,
-				email: data.email,
-				phone: data.phone ?? null,
-				cityId: data.cityId,
-				isPublic: data.isPublic,
-				unitType: data.unitType,
-				website: data.website,
-				nip: data.nip ?? null,
-				regon: data.regon ?? null,
-				notes: data.notes ?? '',
-				address: {
-					create: {
-						street: data.street ?? '',
-						postalCode: data.postalCode ?? ''
-					}
+		const unit = await prisma.$transaction(async tx => {
+			const newUnit = await tx.unit.upsert({
+				where: {
+					id: newId
 				},
-				workStatus: data.workStatus ?? 'IN_PROGRESS'
-			},
-			update: {
-				notes: `DEV: TRIED TO UPSERT AS ${data.name}`
+				create: {
+					id: newId,
+					name: data.name,
+					logo: null,
+					email: data.email,
+					phone: data.phone ?? null,
+					cityId: data.cityId,
+					isPublic: data.isPublic,
+					unitType: data.unitType,
+					website: data.website,
+					nip: data.nip ?? null,
+					regon: data.regon ?? null,
+					notes: data.notes ?? '',
+					address: {
+						create: {
+							street: data.street ?? '',
+							postalCode: data.postalCode ?? ''
+						}
+					},
+					workStatus: data.workStatus ?? 'IN_PROGRESS'
+				},
+				update: {
+					notes: `DEV: TRIED TO UPSERT AS ${data.name}`
+				}
+			})
+
+			if (!newUnit) {
+				throw new Error('Could not create a unit')
 			}
+
+			if (data.logo) {
+				await tx.unit.update({
+					where: {
+						id: unit.id
+					},
+					data: {
+						logo: `${unit.id}/unit-logo`
+					}
+				})
+			}
+
+			return newUnit
 		})
 
 		if (data.logo) {
-			await prisma.unit.update({
-				where: {
-					id: unit.id
-				},
-				data: {
-					logo: `${unit.id}/unit-logo`
-				}
-			})
+			await uploadFileToSupabase('units', data.logo, `${data}/unit-logo`)
 		}
 
 		return new Response(unit.id.toString())

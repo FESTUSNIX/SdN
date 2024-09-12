@@ -4,7 +4,6 @@ import { useFormChanges } from '@/app/(admin)/admin/hooks/useFormChanges'
 import { Button } from '@/app/components/ui/button'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/sheet'
-import { uploadFileToSupabase } from '@/lib/supabase/uploadImage'
 import { UnitPayload, UnitValidator } from '@/lib/validators/unit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -82,10 +81,6 @@ const AddUnit = () => {
 			return toast.error('Something went wrong.')
 		},
 		onSuccess: async (data, variables) => {
-			if (variables.logo) {
-				await uploadFileToSupabase('units', variables.logo, `${data}/unit-logo`)
-			}
-
 			toast.dismiss()
 			toast.success('Added a new unit.')
 			form.reset()

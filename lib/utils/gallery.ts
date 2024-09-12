@@ -1,5 +1,5 @@
-import { deleteFilesFromSupabase } from '../supabase/deleteFiles'
-import { uploadFileToSupabase } from '../supabase/uploadImage'
+import { deleteFilesFromSupabase } from '../supabase/filesClient'
+import { uploadFileToSupabase } from '../supabase/filesClient'
 
 export const handleGallery = async (
 	unitId: number,

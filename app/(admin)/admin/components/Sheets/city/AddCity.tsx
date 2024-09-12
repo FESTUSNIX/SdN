@@ -1,23 +1,19 @@
 'use client'
 
 import { useGlobalSheetContext } from '@/app/(admin)/admin/context/GlobalSheetContext'
+import { revalidatePaths } from '@/app/_actions'
 import { Button } from '@/app/components/ui/button'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { SheetFooter, SheetHeader, SheetTitle } from '@/app/components/ui/sheet'
+import { CityPayload, CityValidator } from '@/lib/validators/city'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createId } from '@paralleldrive/cuid2'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { z } from 'zod'
 import { useFormChanges } from '../../../hooks/useFormChanges'
-import { SubscriptionForm } from '../../Forms/SubscriptionForm'
-import { CityPayload, CityValidator } from '@/lib/validators/city'
 import { CityForm } from '../../Forms/CityForm'
-import { uploadFileToSupabase } from '@/lib/supabase/uploadImage'
-import { revalidatePaths } from '@/app/_actions'
 
 const AddCity = () => {
 	const { closeSheet } = useGlobalSheetContext()
@@ -69,10 +65,6 @@ const AddCity = () => {
 			return toast.error('Something went wrong.')
 		},
 		onSuccess: async (data, variables) => {
-			if (variables.image) {
-				await uploadFileToSupabase('cities', variables.image, `${data}/main-image`)
-			}
-
 			revalidatePaths(['/admin/cities'])
 
 			toast.dismiss()
