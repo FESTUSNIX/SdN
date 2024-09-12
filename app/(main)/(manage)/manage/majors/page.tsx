@@ -8,6 +8,10 @@ import MajorCard from './components/MajorCard'
 import { SearchBar } from './components/SearchBar'
 import StatusSelect from './components/StatusSelect'
 
+export const metadata = {
+	title: 'Kierunki'
+}
+
 export default async function ManageMajorsPage({
 	searchParams
 }: {

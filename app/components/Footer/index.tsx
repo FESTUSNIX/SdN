@@ -4,9 +4,9 @@ import { Muted } from '@/app/components/ui/Typography'
 import { cn } from '@/lib/utils'
 import { Facebook, Instagram, Mail, Phone } from 'lucide-react'
 import Link from 'next/link'
-import { socialMedia } from '../../constants/socialMedia'
 import { Icons } from '../Icons'
 import { links as linkGroups } from './constants/links'
+import { siteConfig } from '@/config/site'
 
 const Footer = () => {
 	const date = new Date()
@@ -62,8 +62,8 @@ const Footer = () => {
 					</div>
 					<div className='flex flex-wrap items-center justify-center gap-4'>
 						<ThemeSwitch />
-						<IconBadge href={socialMedia.facebook} name='Facebook' Icon={Facebook} />
-						<IconBadge href={socialMedia.instagram} name='Instagram' Icon={Instagram} />
+						<IconBadge href={siteConfig.links.facebook} name='Facebook' Icon={Facebook} />
+						<IconBadge href={siteConfig.links.instagram} name='Instagram' Icon={Instagram} />
 					</div>
 				</div>
 			</div>

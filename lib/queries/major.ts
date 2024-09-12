@@ -282,6 +282,7 @@ export const getSimiliarMajors = async ({
 
 	const similarMajors = await prisma.major.findMany({
 		where: {
+			status: 'PUBLISHED',
 			OR: [
 				{ qualifications: { some: { id: { in: qualificationIds.map(q => q) } } } },
 				{ keywords: { hasSome: keywords } },

@@ -18,7 +18,6 @@ export const VoiovodeshipFilter = ({ defaultValues }: Props) => {
 	const { data: voivodeships, isLoading } = useQuery({
 		queryKey: ['voivodeships'],
 		queryFn: async () => {
-			console.log('FETCHING VOIVODESHIPS')
 			const res = await getVoivodeships()
 
 			const options = res.map(voivodeship => ({

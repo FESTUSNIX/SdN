@@ -1,11 +1,18 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/app/components/ui/accordion'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/tabs'
 import { H1, H2, Muted } from '@/app/components/ui/Typography'
+import { Metadata } from 'next'
 import { PricingCard } from './components/PricingCard'
 import { FAQS } from './constants/faqs'
 import { PRICING_PLANS } from './constants/pricingPlans'
 
 type Props = {}
+
+export const metadata: Metadata = {
+	title: 'Cennik',
+	description:
+		'Sprawdź ceny i funkcje dostępne w naszej ofercie. Wybierz plan, który najlepiej odpowiada potrzebom Twojej uczelni.'
+}
 
 const PricingPage = (props: Props) => {
 	const billingPeriods: ('monthly' | 'yearly')[] = ['monthly', 'yearly']
@@ -33,7 +40,7 @@ const PricingPage = (props: Props) => {
 							<TabsTrigger value='yearly'>Roczne</TabsTrigger>
 						</TabsList>
 					</div>
-					{billingPeriods.map((type,) => (
+					{billingPeriods.map(type => (
 						<TabsContent value={type} key={`billing-${type}`}>
 							<div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6 xl:gap-x-12'>
 								{PRICING_PLANS.map((plan, i, plans) => (

@@ -11,6 +11,10 @@ import { RemoveArchivedMajor } from './components/RemoveArchivedMajor'
 import { RestoreArchivedMajor } from './components/RestoreArchivedMajor'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/components/ui/tooltip'
 
+export const metadata = {
+	title: 'Kosz'
+}
+
 export default async function TrashPage() {
 	const session = await getAuthSession()
 	if (!session) redirect('/login')

@@ -1,6 +1,7 @@
 import { H1 } from '@/app/components/ui/Typography'
 import prisma from '@/prisma/client'
 import { SearchParamsType } from '@/types'
+import { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import { CityResults } from './components/CityResults'
 
@@ -38,6 +39,12 @@ const getCachedCities = unstable_cache(
 	}
 )
 
+export const metadata: Metadata = {
+	title: 'Miasta',
+	description:
+		'Odkryj miasta z ofertą edukacyjną w Polsce - porównaj studia w różnych lokalizacjach. Wybierz spośród tysięcy kierunków i uczelni w największych miastach akademickich.'
+}
+
 const CitiesPage = async ({ searchParams }: Props) => {
 	const cityData = await getCachedCities()
 	const cities = cityData.map(city => {
@@ -50,10 +57,16 @@ const CitiesPage = async ({ searchParams }: Props) => {
 		}
 	})
 
+	const totalUnits = cities.reduce((acc, city) => acc + city.unitsCount, 0)
+	const totalMajors = cities.reduce((acc, city) => acc + city.majorsCount, 0)
+
 	return (
 		<main className='wrapper'>
 			<header className='py-16'>
-				<H1 size='base'>Wykaz miast</H1>
+				<H1 size='base'>Miasta oferujące studia</H1>
+				<p className='mt-4 text-muted-foreground'>
+					Odkryj miasta z łącznie ponad {totalUnits} uczelniami oferującymi studia na aż {totalMajors} kierunkach.
+				</p>
 			</header>
 
 			<section>

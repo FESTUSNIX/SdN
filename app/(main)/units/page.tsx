@@ -1,7 +1,17 @@
 import prisma from '@/prisma/client'
+import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const dynamic = 'force-static'
+
+export const metadata: Metadata = {
+	title: 'Uczelnie',
+	description: 'Lista wszystkich uczelni w Polsce dostępnych na naszym portalu.',
+	openGraph: {
+		title: 'Uczelnie | Studia dla Nauczycieli',
+		description: 'Lista wszystkich uczelni w Polsce dostępnych na naszym portalu.'
+	}
+}
 
 const UnitsPage = async () => {
 	const units = await prisma.unit.findMany({

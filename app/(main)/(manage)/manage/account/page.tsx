@@ -8,6 +8,10 @@ import { LogOut } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import ChangePassword from '../components/ChangePassword'
 
+export const metadata = {
+	title: 'Konto'
+}
+
 export default async function ManageAccountPage() {
 	const session = await getAuthSession()
 	if (!session) redirect('/login')

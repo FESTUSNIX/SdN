@@ -53,7 +53,7 @@ const MajorCard = ({ data, likeable = true, type = 'grid', onDislike, className,
 					<StarIcon className='size-3 fill-primary-foreground sm:hidden' />
 				</Badge>
 			)}
-			{isPremium && (
+			{!hideBadges && isPremium && (
 				<Badge
 					variant={'alternative'}
 					className='absolute z-20 hover:bg-alternative max-sm:bottom-2 max-sm:right-2 sm:left-2 sm:top-2'>

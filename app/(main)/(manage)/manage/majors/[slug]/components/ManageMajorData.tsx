@@ -13,7 +13,7 @@ import { Separator } from '@/app/components/ui/separator'
 import { H3 } from '@/app/components/ui/Typography'
 import { DAYS_OF_WEEK_ENUM } from '@/app/constants/daysOfWeek'
 import { majorLevelEnum, majorLevelOptions } from '@/app/constants/majorLevel'
-import { MAX_KEYWORDS, MAX_KEYWORD_LENGTH } from '@/app/constants/userLimits'
+import { USER_LIMITS } from '@/app/constants/CONFIG'
 import { MajorPayload, MajorValidator } from '@/lib/validators/major'
 import { Major, Qualification } from '@prisma/client'
 import Link from 'next/link'
@@ -230,8 +230,8 @@ export const ManageMajorData = ({ major }: Props) => {
 			editComponent: props => {
 				return KeywordsField({
 					placeholder: 'Aa, bb, cc',
-					maxItemLength: MAX_KEYWORD_LENGTH,
-					maxLength: MAX_KEYWORDS,
+					maxItemLength: USER_LIMITS.MAJOR.MAX_KEYWORD_LENGTH,
+					maxLength: USER_LIMITS.MAJOR.MAX_KEYWORDS,
 					setError: props.control?.setError!,
 					clearErrors: ((accessorKey: string) =>
 						props.control?.setError(props.accessorKey, { type: 'custom', message: '' }, { shouldFocus: false })) as any,

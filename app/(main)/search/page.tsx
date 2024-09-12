@@ -15,7 +15,14 @@ import Sort from './components/Sort'
 import { TransitionLoadingProvider } from './context/TransitionLoadingContext'
 
 export const metadata: Metadata = {
-	title: 'Szukaj kierunku'
+	title: 'Wyszukiwarka',
+	description:
+		'Znajdź kierunek studiów dla siebie - porównaj studia dla nauczycieli w Polsce, wybierz spośród tysięcy kierunków i uczelni.',
+	openGraph: {
+		title: 'Wyszukiwarka | Studia dla Nauczycieli',
+		description:
+			'Znajdź kierunek studiów dla siebie - porównaj studia dla nauczycieli w Polsce, wybierz spośród tysięcy kierunków i uczelni.'
+	}
 }
 
 const SearchPage = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {

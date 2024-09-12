@@ -1,4 +1,4 @@
-import { socialMedia } from '@/app/constants/socialMedia'
+import { siteConfig } from "@/config/site";
 
 export const links: { title: string; links: { label: string; link: string; external?: boolean }[] }[] = [
 	{
@@ -15,6 +15,10 @@ export const links: { title: string; links: { label: string; link: string; exter
 			{
 				label: 'Polubione',
 				link: '/saved'
+			},
+			{
+				label: 'Miasta',
+				link: '/cities'
 			}
 		]
 	},
@@ -40,12 +44,12 @@ export const links: { title: string; links: { label: string; link: string; exter
 		links: [
 			{
 				label: 'Instagram',
-				link: socialMedia.instagram,
+				link: siteConfig.links.instagram,
 				external: true
 			},
 			{
 				label: 'Facebook',
-				link: socialMedia.facebook,
+				link: siteConfig.links.facebook,
 				external: true
 			}
 		]

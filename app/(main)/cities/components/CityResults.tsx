@@ -60,7 +60,7 @@ export const CityResults = ({ cities, searchParams }: Props) => {
 		<div>
 			<SearchBar debounceTime={0} param='cityName' className='mb-4' />
 
-			<div className='mb-8 flex items-center justify-between gap-x-8 gap-y-2'>
+			<div className='mb-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-2'>
 				<Suspense>
 					<VoiovodeshipFilter defaultValues={voivodeships} />
 				</Suspense>

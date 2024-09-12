@@ -1,6 +1,12 @@
 import Link from 'next/link'
 import { buttonVariants } from '../components/ui/button'
 import { cn } from '@/lib/utils'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: '404: Strona nie odnaleziona',
+	description: 'Nie udało się znaleźć żądanego zasobu.'
+}
 
 export default function NotFound() {
 	return (

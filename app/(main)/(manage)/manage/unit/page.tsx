@@ -6,6 +6,10 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { ManageUnitData } from './components/ManageUnitData'
 
+export const metadata = {
+	title: 'Jednostka'
+}
+
 export default async function ManageUnitPage() {
 	const session = await getAuthSession()
 	if (!session) redirect('/login')

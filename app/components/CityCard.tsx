@@ -53,3 +53,13 @@ export const CityCard = ({ data }: Props) => {
 		</Link>
 	)
 }
+
+export const CityCardSkeleton = () => {
+	return (
+		<div className='group relative aspect-[3/4] h-auto w-full overflow-hidden rounded-lg border px-3 py-2 duration-300 hover:shadow-sm'>
+			<Skeleton className='absolute inset-0 z-10' />
+			<Skeleton className='absolute inset-0 z-0 bg-black/25' />
+			<Skeleton className='absolute inset-0 -z-20 size-full' />
+		</div>
+	)
+}

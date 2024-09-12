@@ -1,6 +1,13 @@
 import { H1, H2, H3, H4, List, Muted } from '@/app/components/ui/Typography'
+import { Metadata } from 'next'
 import Link from 'next/link'
 import React from 'react'
+
+export const metadata: Metadata = {
+	title: 'Polityka prywatności',
+	description:
+		'Dowiedz się, jak chronimy Twoje dane osobowe. Przeczytaj naszą Politykę prywatności i zobacz, w jaki sposób gromadzimy, przetwarzamy i zabezpieczamy informacje na naszej platformie.'
+}
 
 const PrivacyPolicyPage = () => {
 	return (

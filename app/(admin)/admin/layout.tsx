@@ -12,6 +12,10 @@ export const metadata: Metadata = {
 	title: {
 		template: '%s | SdN Admin',
 		default: 'Admin'
+	},
+	robots: {
+		index: false,
+		follow: false
 	}
 }
 

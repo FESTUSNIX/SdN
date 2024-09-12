@@ -2,6 +2,13 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { H1, H2 } from '@/app/components/ui/Typography'
 import Link from 'next/link'
 import { faq } from './constants/faq'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Często zadawane pytania',
+	description:
+		'Masz pytania? Sprawdź nasze FAQ, gdzie znajdziesz odpowiedzi na najczęściej zadawane pytania dotyczące studiów dla nauczycieli, rekrutacji oraz współpracy z naszą platformą.'
+}
 
 const FAQPage = () => {
 	return (

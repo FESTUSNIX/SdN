@@ -12,6 +12,21 @@ import { StatusEdit } from '../components/StatusEdit'
 import { DeleteMajor } from './components/DeleteMajor'
 import { ManageMajorData } from './components/ManageMajorData'
 
+export async function generateMetadata({ params: { slug } }: { params: { slug: string } }) {
+	const major = await prisma.major.findFirst({
+		where: {
+			slug: slug
+		},
+		select: {
+			name: true
+		}
+	})
+
+	return {
+		title: major?.name
+	}
+}
+
 export default async function ManageMajorPage({ params: { slug } }: { params: { slug: string } }) {
 	const session = await getAuthSession()
 	if (!session) redirect('/login')

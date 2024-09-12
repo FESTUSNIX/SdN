@@ -6,7 +6,14 @@ import { redirect } from 'next/navigation'
 import SidebarNav from './components/SidebarNav'
 
 export const metadata: Metadata = {
-	title: 'Zarządzaj uczelnią'
+	title: {
+		template: 'Panel zarządzania: %s | Studia dla Nauczycieli',
+		default: 'Panel zarządzania'
+	},
+	robots: {
+		index: false,
+		follow: false
+	}
 }
 
 export default async function ManageLayout({ children }: { children: React.ReactNode }) {

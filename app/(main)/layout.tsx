@@ -8,6 +8,8 @@ import localFont from 'next/font/local'
 import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 import Footer from '../components/Footer'
+import { siteConfig } from '@/config/site'
+import { Metadata, Viewport } from 'next'
 
 const body = Outfit({ subsets: ['latin-ext'], variable: '--font-body' })
 const heading = localFont({
@@ -16,16 +18,41 @@ const heading = localFont({
 	display: 'swap'
 })
 
-export const metadata = {
+export const metadata: Metadata = {
 	title: {
-		template: '%s | Studia dla Nauczycieli',
-		default: 'Studia dla Nauczycieli'
+		default: siteConfig.name,
+		template: `%s | ${siteConfig.name}`
+	},
+	metadataBase: new URL(siteConfig.url),
+	description:
+		'Znajdź idealne studia dla nauczycieli! Porównaj oferty uczelni, kierunki, formy kształcenia i wymagania rekrutacyjne. Odkryj najlepsze opcje edukacyjne i rozwijaj swoją karierę nauczycielską.',
+	keywords: siteConfig.keywords,
+	openGraph: {
+		title: 'Studia dla Nauczycieli',
+		description: siteConfig.description,
+		url: siteConfig.url,
+		type: 'website',
+		locale: 'pl'
+	},
+	twitter: {
+		title: 'Studia dla Nauczycieli',
+		description: siteConfig.description,
+		card: 'summary_large_image',
+		images: [`${siteConfig.url}/opengraph-image.jpg`]
 	}
+}
+
+export const viewport: Viewport = {
+	colorScheme: 'dark light',
+	themeColor: [
+		{ media: '(prefers-color-scheme: light)', color: '#3361cc' },
+		{ media: '(prefers-color-scheme: dark)', color: '#3361cc' }
+	]
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang='en' suppressHydrationWarning>
+		<html lang='pl' suppressHydrationWarning>
 			<body className={cn(`${body.variable} ${heading.variable}`, 'flex flex-col')}>
 				<Providers>
 					<Suspense>

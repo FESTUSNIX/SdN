@@ -12,7 +12,7 @@ import { UnitSelect } from '@/app/components/Forms/UnitSelect'
 import { Form } from '@/app/components/ui/form'
 import { Separator } from '@/app/components/ui/separator'
 import { H4, Muted } from '@/app/components/ui/Typography'
-import { MAX_KEYWORDS, MAX_KEYWORD_LENGTH } from '@/app/constants/userLimits'
+import { USER_LIMITS } from '@/app/constants/CONFIG'
 import { MajorFormType, MajorPayload } from '@/lib/validators/major'
 import { SubmitHandler } from 'react-hook-form'
 import { WORK_STATUS_OPTIONS } from '../../../../../constants/workStatusOptions'
@@ -82,8 +82,8 @@ const MajorForm = ({ form, onSubmit }: Props) => {
 						accessorKey='keywords'
 						label='Keywords'
 						placeholder='Aa, bb, cc'
-						maxItemLength={MAX_KEYWORD_LENGTH}
-						maxLength={MAX_KEYWORDS}
+						maxItemLength={USER_LIMITS.MAJOR.MAX_KEYWORD_LENGTH}
+						maxLength={USER_LIMITS.MAJOR.MAX_KEYWORDS}
 						setError={form.setError}
 						clearErrors={form.clearErrors}
 					/>

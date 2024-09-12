@@ -30,7 +30,7 @@ const CitiesPage = async (props: Props) => {
 		<main className='flex w-full flex-col items-center md:h-screen'>
 			<ClientSideDataTable
 				columns={columns}
-				data={cities}
+				data={cities.reverse()}
 				searchableColumns={[
 					{
 						id: 'name',

@@ -1,7 +1,13 @@
 import prisma from '@/prisma/client'
+import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const dynamic = 'force-static'
+
+export const metadata: Metadata = {
+	title: 'Lista kierunków studiów',
+	description: 'Lista wszystkich kierunków studiów dla nauczycieli w Polsce dostępnych na naszym portalu.'
+}
 
 const MajorsPage = async () => {
 	const majors = await prisma.major.findMany({

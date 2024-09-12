@@ -5,6 +5,8 @@ import { majorLevelEnum } from '@/app/constants/majorLevel'
 import { urlFor } from '@/lib/supabase/getUrlFor'
 import { cn } from '@/lib/utils'
 import prisma from '@/prisma/client'
+import { Metadata } from 'next'
+import { unstable_cache } from 'next/cache'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
@@ -13,31 +15,54 @@ import { Duration } from './components/Duration'
 import SideBar from './components/SideBar'
 import { SimiliarMajors } from './components/SimiliarMajors'
 import UnitCard from './components/UnitCard'
-import { Metadata } from 'next'
 
-export async function generateMetadata({ params: { majorSlug } }: { params: { majorSlug: string } }) {
-	const major = await prisma.major.findFirst({
-		where: {
-			slug: majorSlug,
-			status: 'PUBLISHED'
-		},
-		select: {
-			name: true,
-			keywords: true,
-			qualifications: {
-				select: {
-					name: true,
-					slug: true
-				}
+const getMajor = unstable_cache(
+	async (majorSlug: string) => {
+		const major = await prisma.major.findFirst({
+			where: {
+				slug: majorSlug,
+				status: 'PUBLISHED'
 			},
-			unit: {
-				select: {
-					name: true
+			include: {
+				qualifications: {
+					select: {
+						id: true,
+						name: true,
+						slug: true
+					}
+				},
+				unit: {
+					select: {
+						id: true,
+						name: true,
+						subscriptions: {
+							where: {
+								to: {
+									gte: new Date()
+								},
+								type: {
+									in: ['PREMIUM', 'STANDARD']
+								}
+							}
+						}
+					}
 				}
 			}
-		}
-	})
+		})
 
+		if (!major) return notFound()
+
+		return major
+	},
+	undefined,
+	{
+		revalidate: 60 * 60,
+		tags: [`majors`]
+	}
+)
+
+export async function generateMetadata({ params: { majorSlug } }: { params: { majorSlug: string } }) {
+	const major = await getMajor(majorSlug)
 	if (!major) return notFound()
 
 	const image = urlFor('qualification_images', `${major.qualifications[0]?.slug}.jpg`).publicUrl
@@ -50,6 +75,7 @@ export async function generateMetadata({ params: { majorSlug } }: { params: { ma
 		title: major.name,
 		description: description,
 		openGraph: {
+			title: `${major.name} | Studia dla Nauczycieli`,
 			images: [image]
 		},
 		keywords: major.keywords
@@ -58,39 +84,28 @@ export async function generateMetadata({ params: { majorSlug } }: { params: { ma
 	return metadata
 }
 
-const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: string } }) => {
-	const major = await prisma.major.findFirst({
-		where: {
-			slug: majorSlug,
-			status: 'PUBLISHED'
-		},
-		include: {
-			qualifications: {
+export async function generateStaticParams() {
+	const majors = await prisma.promotedMajors.findMany({
+		select: {
+			major: {
 				select: {
-					id: true,
-					name: true,
 					slug: true
 				}
-			},
-			unit: {
-				select: {
-					id: true,
-					name: true,
-					subscriptions: {
-						where: {
-							to: {
-								gte: new Date()
-							},
-							type: {
-								in: ['PREMIUM', 'STANDARD']
-							}
-						}
-					}
-				}
 			}
+		},
+		take: 8,
+		orderBy: {
+			promotedAt: 'desc'
 		}
 	})
 
+	return majors.map(({ major }) => ({
+		majorSlug: major.slug
+	}))
+}
+
+const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: string } }) => {
+	const major = await getMajor(majorSlug)
 	if (!major) return notFound()
 
 	const {
@@ -197,7 +212,7 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 						</section>
 					)}
 
-					{hasActiveSubscription && (
+					{hasActiveSubscription && startDate && endDate && (
 						<section className={cn(sectionStyles, 'relative border-none')}>
 							<H2 size='sm'>Czas trwania</H2>
 							{startDate && endDate ? (

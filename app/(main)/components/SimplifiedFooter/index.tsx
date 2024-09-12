@@ -1,8 +1,8 @@
 import ThemeSwitch from '@/app/(admin)/admin/components/ThemeSwitch'
 import IconBadge from '@/app/components/IconBadge'
+import { siteConfig } from '@/config/site'
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
 import Link from 'next/link'
-import { socialMedia } from '../../../constants/socialMedia'
 
 const links = [
 	{
@@ -35,10 +35,10 @@ const SimplifiedFooter = () => {
 				</div>
 				<div className='flex flex-wrap items-center justify-center gap-4'>
 					<ThemeSwitch />
-					<IconBadge href={socialMedia.twitter} name='Twitter' Icon={Twitter} />
-					<IconBadge href={socialMedia.facebook} name='Facebook' Icon={Facebook} />
-					<IconBadge href={socialMedia.instagram} name='Instagram' Icon={Instagram} />
-					<IconBadge href={socialMedia.linkedIn} name='Linkedin' Icon={Linkedin} />
+					<IconBadge href={siteConfig.links.twitter} name='Twitter' Icon={Twitter} />
+					<IconBadge href={siteConfig.links.facebook} name='Facebook' Icon={Facebook} />
+					<IconBadge href={siteConfig.links.instagram} name='Instagram' Icon={Instagram} />
+					<IconBadge href={siteConfig.links.linkedIn} name='Linkedin' Icon={Linkedin} />
 				</div>
 			</div>
 			<div>

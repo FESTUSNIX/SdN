@@ -1,7 +1,7 @@
 import IconBadge from '@/app/components/IconBadge'
 import { Button } from '@/app/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
-import { socialMedia } from '@/app/constants/socialMedia'
+import { siteConfig } from '@/config/site'
 import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from 'lucide-react'
 
 type Props = {}
@@ -42,10 +42,10 @@ const ContactInfo = (props: Props) => {
 
 			<div className='mb-12 mt-8 lg:mb-0 lg:mt-auto'>
 				<div className='flex flex-wrap items-center gap-4'>
-					<IconBadge href={socialMedia.twitter} name='Twitter' Icon={Twitter} />
-					<IconBadge href={socialMedia.facebook} name='Facebook' Icon={Facebook} />
-					<IconBadge href={socialMedia.instagram} name='Instagram' Icon={Instagram} />
-					<IconBadge href={socialMedia.linkedIn} name='Linkedin' Icon={Linkedin} />
+					<IconBadge href={siteConfig.links.twitter} name='Twitter' Icon={Twitter} />
+					<IconBadge href={siteConfig.links.facebook} name='Facebook' Icon={Facebook} />
+					<IconBadge href={siteConfig.links.instagram} name='Instagram' Icon={Instagram} />
+					<IconBadge href={siteConfig.links.linkedIn} name='Linkedin' Icon={Linkedin} />
 				</div>
 			</div>
 		</div>

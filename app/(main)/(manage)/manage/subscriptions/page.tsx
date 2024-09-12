@@ -6,6 +6,10 @@ import { isBefore } from 'date-fns'
 import { redirect } from 'next/navigation'
 import { SubscriptionCard } from './components/SubscriptionCard'
 
+export const metadata = {
+	title: 'Subskrypcje'
+}
+
 export default async function ManageSubscriptionsPage() {
 	const session = await getAuthSession()
 	if (!session) redirect('/login')

@@ -1,7 +1,13 @@
 import { H1 } from '@/app/components/ui/Typography'
-import React from 'react'
+import { Metadata } from 'next'
 import ContactForm from './components/ContactForm'
 import ContactInfo from './components/ContactInfo'
+
+export const metadata: Metadata = {
+	title: 'Kontakt',
+	description:
+		'Skontaktuj się z nami! Masz pytania dotyczące oferty studiów dla nauczycieli lub współpracy z nami? Zapraszamy do kontaktu - chętnie pomożemy i udzielimy szczegółowych informacji.'
+}
 
 const ContactPage = () => {
 	return (
