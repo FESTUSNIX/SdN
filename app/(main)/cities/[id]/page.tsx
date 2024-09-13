@@ -14,28 +14,33 @@ type Props = { params: { id: string } }
 
 const getCity = unstable_cache(
 	async (id: number) => {
-		const city = await prisma.city.findFirst({
-			where: { id },
-			select: {
-				id: true,
-				name: true,
-				units: {
-					select: {
-						_count: {
-							select: {
-								majors: true
+		try {
+			const city = await prisma.city.findFirst({
+				where: { id },
+				select: {
+					id: true,
+					name: true,
+					units: {
+						select: {
+							_count: {
+								select: {
+									majors: true
+								}
 							}
 						}
-					}
-				},
-				image: true,
-				description: true
-			}
-		})
+					},
+					image: true,
+					description: true
+				}
+			})
 
-		if (!city) return notFound()
+			if (!city) return notFound()
 
-		return city
+			return city
+		} catch (error) {
+			console.error(error)
+			return notFound()
+		}
 	},
 	undefined,
 	{

@@ -86,16 +86,53 @@ export async function generateMetadata({ params: { majorSlug } }: { params: { ma
 }
 
 export async function generateStaticParams() {
-	const majors = await prisma.major.findMany({
+	const PRERENDER_LIMIT = 100
+
+	const premiumMajors = await prisma.major.findMany({
 		where: {
-			status: 'PUBLISHED'
+			status: 'PUBLISHED',
+			unit: {
+				subscriptions: {
+					some: {
+						to: {
+							gte: new Date()
+						},
+						type: {
+							in: ['PREMIUM', 'STANDARD']
+						}
+					}
+				}
+			}
 		},
 		select: {
 			slug: true
-		}
+		},
+		take: PRERENDER_LIMIT
 	})
 
-	return majors.map(({ slug }) => ({
+	const nonPremiumMajors = await prisma.major.findMany({
+		where: {
+			status: 'PUBLISHED',
+			unit: {
+				subscriptions: {
+					none: {
+						to: {
+							gte: new Date()
+						},
+						type: {
+							in: ['PREMIUM', 'STANDARD']
+						}
+					}
+				}
+			}
+		},
+		select: {
+			slug: true
+		},
+		take: PRERENDER_LIMIT - premiumMajors.length
+	})
+
+	return [...premiumMajors, ...nonPremiumMajors].map(({ slug }) => ({
 		majorSlug: slug
 	}))
 }
