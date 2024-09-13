@@ -10,6 +10,8 @@ import { Toaster } from 'react-hot-toast'
 import Footer from '../components/Footer'
 import { siteConfig } from '@/config/site'
 import { Metadata, Viewport } from 'next'
+import GoogleAnalytics from '../components/GoogleAnalytics'
+import { CookieBanner } from '../components/CookieBanner'
 
 const body = Outfit({ subsets: ['latin-ext'], variable: '--font-body' })
 const heading = localFont({
@@ -53,8 +55,18 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang='pl' suppressHydrationWarning>
+			{process.env.NEXT_PUBLIC_GA_MEASURMENT_ID ? (
+				<Suspense>
+					<GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_MEASURMENT_ID} />
+				</Suspense>
+			) : null}
+
 			<body className={cn(`${body.variable} ${heading.variable}`, 'flex flex-col')}>
 				<Providers>
+					<Suspense>
+						<CookieBanner />
+					</Suspense>
+
 					<Suspense>
 						<Navbar />
 					</Suspense>
