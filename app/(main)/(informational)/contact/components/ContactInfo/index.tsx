@@ -1,55 +1,94 @@
-import IconBadge from '@/app/components/IconBadge'
-import { Button } from '@/app/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
+import { H3, Muted } from '@/app/components/ui/Typography'
 import { siteConfig } from '@/config/site'
-import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from 'lucide-react'
+import { capitalize, cn } from '@/lib/utils'
+import { Facebook, Instagram, LucideIcon, MailIcon, MessageCircleHeartIcon, PhoneIcon } from 'lucide-react'
+import Link from 'next/link'
 
 type Props = {}
+
+const INFO = [
+	{
+		title: 'Napisz do nas',
+		description: 'Odpowiadamy w ciągu 24 godzin.',
+		Icon: MailIcon,
+		links: [
+			{
+				href: `mailto:${siteConfig.contact.emails.contact}`,
+				text: siteConfig.contact.emails.contact,
+				Icon: MailIcon
+			}
+		]
+	},
+	{
+		title: 'Zadzwoń',
+		description: 'Pon-pt w godzinach 9:00-17:00.',
+		Icon: PhoneIcon,
+		links: [
+			{
+				href: `tel:${siteConfig.contact.phones.contact}`,
+				text: siteConfig.contact.phones.contact,
+				Icon: PhoneIcon
+			}
+		]
+	},
+	{
+		title: 'Śledź nas',
+		description: 'Bądź na bieżąco z najnowszymi informacjami.',
+		Icon: MessageCircleHeartIcon,
+		links: Object.entries(siteConfig.links).map(([key, value]) => {
+			const Icon = {
+				facebook: Facebook,
+				instagram: Instagram
+			}[key] as LucideIcon
+
+			return { href: value, text: capitalize(key), Icon }
+		})
+	}
+]
 
 const ContactInfo = (props: Props) => {
 	return (
 		<div className='flex grow flex-col gap-4'>
-			<Card>
-				<CardHeader className='flex flex-row items-center gap-x-4'>
-					<Button variant={'outline'} size={'icon'}>
-						<Phone className='h-5 w-5' />
-					</Button>
-					<div>
-						<CardTitle>Telefon</CardTitle>
-						<CardDescription>Pon-Pt od 8 do 16.</CardDescription>
-					</div>
-				</CardHeader>
-				<CardContent>
-					<p>+48 123 346 019</p>
-					<p>+48 634 456 742</p>
-				</CardContent>
-			</Card>
+			<div className='grid grid-cols-1 gap-x-12 gap-y-12'>
+				{INFO.map((info, i) => (
+					<div key={`${i}-${info.title}`} className='flex'>
+						<div className='h-max rounded-md border p-2'>
+							<info.Icon className='size-4' />
+						</div>
+						<div className='px-4'>
+							<H3 className='text-lg font-semibold'>{info.title}</H3>
+							<Muted className=''>{info.description}</Muted>
 
-			<Card>
-				<CardHeader className='flex flex-row items-center gap-x-4'>
-					<Button variant={'outline'} size={'icon'}>
-						<Mail className='h-5 w-5' />
-					</Button>
-					<div>
-						<CardTitle>Email</CardTitle>
-						<CardDescription>Odpisujemy do 4 godzin.</CardDescription>
+							<div className='mt-2 space-y-1'>
+								{info.links.map((link, i) => (
+									<DetailsLink key={i} href={link.href} text={link.text} />
+								))}
+							</div>
+						</div>
 					</div>
-				</CardHeader>
-				<CardContent>
-					<p>kontakt@studiadlanauczycieli.pl</p>
-				</CardContent>
-			</Card>
-
-			<div className='mb-12 mt-8 lg:mb-0 lg:mt-auto'>
-				<div className='flex flex-wrap items-center gap-4'>
-					<IconBadge href={siteConfig.links.twitter} name='Twitter' Icon={Twitter} />
-					<IconBadge href={siteConfig.links.facebook} name='Facebook' Icon={Facebook} />
-					<IconBadge href={siteConfig.links.instagram} name='Instagram' Icon={Instagram} />
-					<IconBadge href={siteConfig.links.linkedIn} name='Linkedin' Icon={Linkedin} />
-				</div>
+				))}
 			</div>
 		</div>
 	)
 }
 
 export default ContactInfo
+
+const DetailsLink = ({
+	href,
+	text,
+
+	className
+}: {
+	href: string
+	text: string
+	className?: string
+}) => {
+	return (
+		<Link
+			href={href}
+			className={cn('flex items-center gap-2 font-medium underline duration-300 hover:decoration-primary', className)}>
+			<span>{text}</span>
+		</Link>
+	)
+}

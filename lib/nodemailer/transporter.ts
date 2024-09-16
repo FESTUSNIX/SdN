@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 
 export const mailTransporter = nodemailer.createTransport({
-	host: 'h26.seohost.pl',
+	host: 'smtp.titan.email',
 	port: 465,
 	secure: true,
 	auth: {
