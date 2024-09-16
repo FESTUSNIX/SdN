@@ -69,7 +69,7 @@ export const CookieBanner = (props: Props) => {
 						</div>
 
 						<div className='flex shrink-0 flex-wrap gap-2'>
-							<Button className='grow' size={'sm'} variant={'ghost'} onClick={() => declineCookie()}>
+							<Button className='grow rounded-full' size={'sm'} variant={'ghost'} onClick={() => declineCookie()}>
 								Odrzuć
 							</Button>
 							<Button className='grow rounded-full px-4' size={'sm'} onClick={() => acceptCookie()}>

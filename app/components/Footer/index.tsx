@@ -21,16 +21,10 @@ const Footer = () => {
 							<Icons.brand.wordmark className='h-12 w-auto text-primary' />
 						</div>
 
-						<div className='flex flex-col gap-2 text-foreground'>
-							<div className='flex items-center gap-4'>
-								<Phone className='h-4 w-4' />
-								<span>+48 123 456 789</span>
-							</div>
-							<div className='flex items-center gap-4'>
-								<Mail className='h-4 w-4' />
-								<span>kontakt@studiadlanauczycieli.pl</span>
-							</div>
-						</div>
+						<Muted className='max-w-md [text-wrap:pretty;]'>
+							Pomagamy nauczycielom znaleźć idealne studia, rozwijać karierę i odkrywać nowe możliwości edukacyjne.
+							Twoja przyszłość w edukacji zaczyna się tutaj.
+						</Muted>
 					</div>
 
 					<div className='flex flex-col gap-6 md:w-full md:flex-row md:gap-16 lg:w-auto'>

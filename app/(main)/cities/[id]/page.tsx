@@ -1,10 +1,13 @@
+import { buttonVariants } from '@/app/components/ui/button'
 import { H1, H2, H3 } from '@/app/components/ui/Typography'
 import { urlFor } from '@/lib/supabase/getUrlFor'
-import { polishPlural } from '@/lib/utils'
+import { cn, polishPlural } from '@/lib/utils'
 import prisma from '@/prisma/client'
+import { ArrowLeftIcon } from 'lucide-react'
 import { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import Image from 'next/image'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { CityUnits } from './components/CityUnits'
@@ -106,6 +109,16 @@ const CityPage = async ({ params }: Props) => {
 	return (
 		<main className='wrapper'>
 			<header className='py-16'>
+				<Link
+					href={`/cities`}
+					className={cn(
+						buttonVariants({ variant: 'link' }),
+						'mb-4 flex w-max items-center gap-2 pl-0 hover:underline'
+					)}>
+					<ArrowLeftIcon className='size-5' />
+					<span>Wróć do listy miast</span>
+				</Link>
+
 				{city.image && (
 					<div className='relative mb-12 aspect-[2/1] h-auto w-full overflow-hidden rounded-lg border md:rounded-xl'>
 						<Image

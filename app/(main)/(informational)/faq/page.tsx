@@ -12,10 +12,12 @@ export const metadata: Metadata = {
 
 const FAQPage = () => {
 	return (
-		<main className='wrapper mt-12'>
-			<H1 className='mb-12'>Często zadawane pytania</H1>
+		<main className='wrapper mt-12 flex flex-col items-center'>
+			<H1 size='base' className='mb-16'>
+				Często zadawane pytania
+			</H1>
 
-			<Accordion type='single' collapsible className='w-full'>
+			<Accordion type='single' collapsible className='w-full max-w-2xl'>
 				{faq.map((item, index) => (
 					<AccordionItem key={`item-${index}`} value={`item-${index}`}>
 						<AccordionTrigger>{item.title}</AccordionTrigger>

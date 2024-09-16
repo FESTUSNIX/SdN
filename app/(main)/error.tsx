@@ -9,8 +9,8 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
 	}, [error])
 
 	return (
-		<div>
-			<H2>Coś poszło nie tak</H2>
+		<div className='mx-auto flex flex-col items-center py-24'>
+			<H2 size='base'>Coś poszło nie tak</H2>
 			<Button onClick={() => reset()}>Spróbuj ponownie</Button>
 		</div>
 	)
