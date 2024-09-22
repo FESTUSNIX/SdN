@@ -25,7 +25,7 @@ const UserAccountNav = ({ user, triggerClassName }: Props) => {
 		<DropdownMenu>
 			<DropdownMenuTrigger className={triggerClassName}>
 				<UserAvatar
-					className='h-8 w-8'
+					className='h-10 w-10'
 					user={{
 						name: user.name || null,
 						image: user.image || null
@@ -44,9 +44,9 @@ const UserAccountNav = ({ user, triggerClassName }: Props) => {
 				<DropdownMenuSeparator />
 
 				<DropdownMenuItem asChild>
-					<Link href={'/admin/settings'}>
+					<Link href={'/account'}>
 						<Settings className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-						Settings
+						Account settings
 					</Link>
 				</DropdownMenuItem>
 

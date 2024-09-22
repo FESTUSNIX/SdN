@@ -135,7 +135,7 @@
 		@apply grid gap-x-4 md:gap-x-8;
 		grid-template-columns:
 			[full-start] 1fr [wrapper-start]
-			minmax(0, 75rem) [wrapper-end] 1fr [full-end];
+			minmax(0, 80rem) [wrapper-end] 1fr [full-end];
 	}
 
 	.grid-container > * {
@@ -144,6 +144,60 @@
 
 	.grid-container > .container-fill {
 		@apply col-start-[full] col-end-[full];
+	}
+
+	.isometric-bg-pattern {
+		background-color: theme(colors.background);
+		background-image: linear-gradient(
+				30deg,
+				theme(colors.secondary.DEFAULT) 12%,
+				transparent 12.5%,
+				transparent 87%,
+				theme(colors.secondary.DEFAULT) 87.5%,
+				theme(colors.secondary.DEFAULT)
+			),
+			linear-gradient(
+				150deg,
+				theme(colors.secondary.DEFAULT) 12%,
+				transparent 12.5%,
+				transparent 87%,
+				theme(colors.secondary.DEFAULT) 87.5%,
+				theme(colors.secondary.DEFAULT)
+			),
+			linear-gradient(
+				30deg,
+				theme(colors.secondary.DEFAULT) 12%,
+				transparent 12.5%,
+				transparent 87%,
+				theme(colors.secondary.DEFAULT) 87.5%,
+				theme(colors.secondary.DEFAULT)
+			),
+			linear-gradient(
+				150deg,
+				theme(colors.secondary.DEFAULT) 12%,
+				transparent 12.5%,
+				transparent 87%,
+				theme(colors.secondary.DEFAULT) 87.5%,
+				theme(colors.secondary.DEFAULT)
+			),
+			linear-gradient(
+				60deg,
+				theme(colors.secondary.DEFAULT / 60%) 25%,
+				transparent 25.5%,
+				transparent 75%,
+				theme(colors.secondary.DEFAULT / 60%) 75%,
+				theme(colors.secondary.DEFAULT / 60%)
+			),
+			linear-gradient(
+				60deg,
+				theme(colors.secondary.DEFAULT / 60%) 25%,
+				transparent 25.5%,
+				transparent 75%,
+				theme(colors.secondary.DEFAULT / 60%) 75%,
+				theme(colors.secondary.DEFAULT / 60%)
+			);
+		background-size: 28px 49px;
+		background-position: 0 0, 0 0, 14px 25px, 14px 25px, 0 0, 14px 25px;
 	}
 }
 

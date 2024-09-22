@@ -15,7 +15,7 @@ export default withAuth(
 		}
 
 		if (['/manage', '/manage/'].includes(pathname)) {
-			return NextResponse.rewrite(new URL('/manage/account', req.url))
+			return NextResponse.rewrite(new URL('/manage/unit', req.url))
 		}
 	},
 	{

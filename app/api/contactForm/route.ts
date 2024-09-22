@@ -1,4 +1,4 @@
-import ContactEmailTemplate from '@/app/components/ContactEmailTemplate'
+import ContactEmailTemplate from '@/app/components/Emails/ContactEmailTemplate'
 import { mailTransporter } from '@/lib/nodemailer/transporter'
 import { ContactEmailValidator, EMAIL_TOPICS } from '@/lib/validators/contactForm'
 import { render } from '@react-email/render'

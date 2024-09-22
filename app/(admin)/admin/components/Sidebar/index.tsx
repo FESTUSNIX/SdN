@@ -18,7 +18,7 @@ const Sidebar = async () => {
 			<NavLinks />
 			<NavMenu />
 
-			<div className='ml-auto flex items-center gap-2 md:mt-auto md:flex-col md:gap-8'>
+			<div className='ml-auto flex items-center gap-2 md:mt-auto md:flex-col md:gap-4'>
 				<ThemeSwitch variant={'ghost'} />
 
 				<UserAccountNav
@@ -27,6 +27,7 @@ const Sidebar = async () => {
 						name: session?.user.name,
 						image: session?.user.image
 					}}
+					triggerClassName='rounded-full border'
 				/>
 			</div>
 		</nav>

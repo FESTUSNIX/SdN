@@ -254,7 +254,7 @@ const MajorPage = async ({ params: { majorSlug } }: { params: { majorSlug: strin
 							<H2 size='sm'>Czas trwania</H2>
 							{startDate && endDate ? (
 								<H3 className='mb-2 mt-4'>
-									{startDate?.toLocaleDateString()} - {endDate?.toLocaleDateString()}
+									{new Date(startDate)?.toLocaleDateString()} - {new Date(endDate)?.toLocaleDateString()}
 								</H3>
 							) : (
 								<Muted>Brak danych.</Muted>
