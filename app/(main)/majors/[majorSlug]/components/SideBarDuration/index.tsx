@@ -47,8 +47,8 @@ const SideBarDuration = ({ startDate, endDate }: Props) => {
 			</PopoverTrigger>
 			<PopoverContent className='!z-40 w-auto p-0' align='end'>
 				<Calendar
-					fromYear={2023}
-					initialFocus
+					startMonth={new Date(2024, 0)}
+					autoFocus
 					mode='range'
 					defaultMonth={date?.from}
 					selected={date}

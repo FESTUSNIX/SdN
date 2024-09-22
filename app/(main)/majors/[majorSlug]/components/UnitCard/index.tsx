@@ -129,7 +129,10 @@ const UnitCard = async ({ unitId }: Props) => {
 					{phone && (
 						<Link
 							href={createPhoneHref(phone)}
-							className={cn(buttonVariants({ size: 'sm', variant: 'secondary' }), 'gap-2 px-3 sm:px-6 lg:w-full')}>
+							className={cn(
+								buttonVariants({ size: 'sm', variant: 'secondary' }),
+								'gap-2 rounded-md px-3 sm:px-6 lg:w-full'
+							)}>
 							<PhoneIcon className='size-3.5' />
 							<span>Zadzwoń</span>
 						</Link>
@@ -137,7 +140,10 @@ const UnitCard = async ({ unitId }: Props) => {
 					{email && (
 						<Link
 							href={createMailHref(email)}
-							className={cn(buttonVariants({ size: 'sm', variant: 'secondary' }), 'gap-2 px-3 sm:px-6 lg:w-full')}>
+							className={cn(
+								buttonVariants({ size: 'sm', variant: 'secondary' }),
+								'gap-2 rounded-md px-3 sm:px-6 lg:w-full'
+							)}>
 							<MailIcon className='size-3.5' />
 							<span>Napisz</span>
 						</Link>

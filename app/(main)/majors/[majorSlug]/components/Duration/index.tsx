@@ -19,8 +19,8 @@ export const Duration = ({ endDate, startDate }: Props) => {
 	return (
 		<Suspense fallback={<div>Ładowanie...</div>}>
 			<Calendar
-				fromYear={2023}
-				initialFocus
+				startMonth={new Date(2024, 0)}
+				autoFocus
 				mode='range'
 				defaultMonth={startDate || undefined}
 				selected={{ from: startDate || undefined, to: endDate || undefined }}
@@ -30,10 +30,6 @@ export const Duration = ({ endDate, startDate }: Props) => {
 				weekStartsOn={1}
 				locale={pl}
 				className='w-max rounded-lg border'
-				classNames={{
-					caption_label: 'first-letter:uppercase font-medium',
-					months: 'flex flex-row space-y-4 sm:space-x-4 sm:space-y-0'
-				}}
 			/>
 		</Suspense>
 	)
