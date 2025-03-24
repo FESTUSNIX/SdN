@@ -86,7 +86,7 @@ export async function generateMetadata({ params: { majorSlug } }: { params: { ma
 }
 
 export async function generateStaticParams() {
-	const PRERENDER_LIMIT = 100
+	const PRERENDER_LIMIT = 15
 
 	const premiumMajors = await prisma.major.findMany({
 		where: {
